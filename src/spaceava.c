@@ -2,11 +2,9 @@
 	sgx_test.c being mangled
 */
 
-
 #include <huc.h>
 
 #incbin(pal,"pce_pal1.bin");
-
 
 main()
 {
