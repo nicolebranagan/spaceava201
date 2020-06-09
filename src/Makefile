@@ -5,13 +5,13 @@ HUC_ROOT = /mnt/c/Users/nicol/apps/huc
 CC = PCE_INCLUDE=$(HUC_ROOT)/include/pce PCE_PCEAS=$(HUC_ROOT)/bin/pceas $(HUC_ROOT)/bin/huc
 ISOLINK = $(HUC_ROOT)/bin/isolink
 
-SRC = spaceava.c
+SRC = logo.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
 spaceava.iso: %.ovl cuefile
-	$(ISOLINK) ../build/spaceava.iso ../build/*.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl
 
 %.ovl: $(SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(SRC) $(LIBS)
