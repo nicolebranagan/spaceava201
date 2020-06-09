@@ -20,5 +20,8 @@ spaceava.iso: %.ovl cuefile
 cuefile: spaceava.cue
 	cp spaceava.cue ../build/
 
+pce: $(SRC)
+	$(CC) $(CFLAGS) $(SRC) $(LIBS)
+
 clean:
 	rm -f ../build/*
