@@ -10,8 +10,8 @@ SRC = logo.c
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: %.ovl cuefile
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl
+spaceava.iso: %.ovl adpcm_ovl cuefile
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin
 
 %.ovl: $(SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(SRC) $(LIBS)
@@ -19,6 +19,9 @@ spaceava.iso: %.ovl cuefile
 
 cuefile: spaceava.cue
 	cp spaceava.cue ../build/
+
+adpcm_ovl: whistle.vox
+	cat whistle.vox > ../build/adpcm.bin
 
 pce: $(SRC)
 	$(CC) $(CFLAGS) $(SRC) $(LIBS)

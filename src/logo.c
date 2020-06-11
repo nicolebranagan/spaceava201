@@ -7,21 +7,23 @@
 #incspr(chr, "images/train.png");
 #incpal(trainpal,"images/train.png");
 
-#incchr(logo_gfx, "images/logo.png")
-#incpal(logo_pal, "images/logo.png")
-#incbat(logo_bat, "images/logo.png", 0x1000)
+#incchr(logo_gfx, "images/logo.png");
+#incpal(logo_pal, "images/logo.png");
+#incbat(logo_bat, "images/logo.png", 0x1000);
 
 main()
 {
 	unsigned char joyt;
 	char logox = 0;
 	char timer = 0;
+	int i;
 	
 	disp_off();
 	spr_set();
 	spr_hide();
 	set_screen_size(SCR_SIZE_32x32);
 
+	ad_reset();
 	init_satb();
 	load_vram(0x5000,chr,0x200);
 	spr_set(0);
@@ -33,9 +35,8 @@ main()
 	spr_pri(1);
 
 	load_background(logo_gfx, logo_pal, logo_bat, 32, 28);
-
+	ad_trans(2, 0, 5, 0);
 	disp_on();
-	
 	load_palette(16,trainpal,1);
 				
 	for(;;)
@@ -53,6 +54,10 @@ main()
 				spr_pattern(0x5040);
 				timer = 0;
 			}
+		}
+
+		if (logox == 70 || logox == 150) {
+			ad_play(0, 0x2370, 15, 0);
 		}
 	}		
 }
