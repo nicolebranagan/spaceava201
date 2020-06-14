@@ -7,6 +7,11 @@
 #incspr(avachr, "images/ava.png");
 #incpal(avapal, "images/ava.png");
 
+#inctile(roomtile, "images/tiles.png", 2, 1);
+#incpal(tilepal1, "images/tiles.png");
+
+const char palette_ref[] = {0x10, 0x10};
+
 #define SPR_SIZE_16x16 0x40
 
 #define UP 0
@@ -35,6 +40,10 @@ initialize()
     ava_y = 1;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
+
+    set_tile_data(roomtile, 2, palette_ref, 16);
+    load_palette(1, tilepal1, 1);
+    load_tile(0x1000);
 
     disp_on();
 }
@@ -156,20 +165,30 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
+fill_screen() {
+    char x, y;
+    for (x = 0; x < 16; x++) {
+        for (y = 0; y < 16; y++) {
+            put_tile(1, x, y);
+        }
+    }
+}
+
 main()
 {
     char joyt;
 
     initialize();
+    fill_screen();
 
     set_font_pal(0);
     set_font_color(4, 0);
-    load_palette(0, avapal, 1);
     load_default_font();
 
     for (;;)
     {
         vsync();
+        satb_update();
         timer++;
 
         joyt = joytrg(0);
