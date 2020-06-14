@@ -45,22 +45,25 @@ main()
 		satb_update();
 		logox++;
 		spr_x(logox);
-		joyt = joy(0);
-		if (!(joyt & JOY_I)) {
-			timer++;
-			if (timer == 10) {
-				spr_pattern(0x5000);
-			} else if (timer == 20) {
-				spr_pattern(0x5040);
-				timer = 0;
-			}
+		joyt = joytrg(0);
+
+		timer++;
+		if (timer == 10) {
+			spr_pattern(0x5000);
+		} else if (timer == 20) {
+			spr_pattern(0x5040);
+			timer = 0;
 		}
+		
 
 		if (logox == 70 || logox == 150) {
 			ad_play(0, 0x2370, 15, 0);
 		}
 
-		if (logox == 255) {
+		if (logox == 255 || (joyt & JOY_STRT) ) {
+			spr_hide();
+			satb_update();
+			vsync();
 			cd_execoverlay(3);
 		}
 	}		
