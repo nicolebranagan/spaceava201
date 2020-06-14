@@ -59,5 +59,9 @@ main()
 		if (logox == 70 || logox == 150) {
 			ad_play(0, 0x2370, 15, 0);
 		}
+
+		if (logox == 255) {
+			cd_execoverlay(3);
+		}
 	}		
 }
