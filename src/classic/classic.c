@@ -7,10 +7,27 @@
 #incspr(avachr, "images/ava.png");
 #incpal(avapal, "images/ava.png");
 
-#inctile(roomtile, "images/tiles.png", 2, 1);
+#inctile(roomtile, "images/tiles.png", 16, 1);
 #incpal(tilepal1, "images/tiles.png");
 
-const char palette_ref[] = {0x10, 0x10};
+const char palette_ref[] = {
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10,
+    0x10
+};
 
 #define SPR_SIZE_16x16 0x40
 
@@ -41,7 +58,7 @@ initialize()
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
 
-    set_tile_data(roomtile, 2, palette_ref, 16);
+    set_tile_data(roomtile, 16, palette_ref, 16);
     load_palette(1, tilepal1, 1);
     load_tile(0x1000);
 
@@ -165,11 +182,30 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
-fill_screen() {
-    char x, y;
-    for (x = 0; x < 16; x++) {
-        for (y = 0; y < 16; y++) {
-            put_tile(1, x, y);
+fill_screen()
+{
+    char x, y, tile;
+    for (x = 0; x < 16; x++)
+    {
+        for (y = 0; y < 16; y++)
+        {
+            if (y == 0)
+            {
+                tile = 6;
+            }
+            else if (y == 1)
+            {
+                tile = 10;
+            }
+            else if (y == 2)
+            {
+                tile = 11;
+            }
+            else
+            {
+                tile = 1;
+            }
+            put_tile(tile, x, y);
         }
     }
 }
