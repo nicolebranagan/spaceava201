@@ -11,8 +11,8 @@ CLASSIC_SRC = classic/classic.c
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl adpcm_ovl cuefile
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl
+spaceava.iso: logo.ovl classic.ovl adpcm_ovl classicdata cuefile
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -27,6 +27,9 @@ cuefile: spaceava.cue
 
 adpcm_ovl: adpcm/whistle.vox
 	cat adpcm/whistle.vox > ../build/adpcm.bin
+
+classicdata: classicdata/classicdata.bin
+	cp classicdata/classicdata.bin ../build/classicdata.bin
 
 pce: $(SRC)
 	$(CC) $(CFLAGS) $(SRC) $(LIBS)

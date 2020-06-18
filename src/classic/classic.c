@@ -26,8 +26,7 @@ const char palette_ref[] = {
     0x10,
     0x10,
     0x10,
-    0x10
-};
+    0x10};
 
 #define SPR_SIZE_16x16 0x40
 
@@ -40,6 +39,8 @@ char ava_x;
 char ava_y;
 char ava_facing;
 char timer;
+
+char tiles[2048];
 
 initialize()
 {
@@ -57,10 +58,6 @@ initialize()
     ava_y = 1;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
-
-    set_tile_data(roomtile, 16, palette_ref, 16);
-    load_palette(1, tilepal1, 1);
-    load_tile(0x1000);
 
     disp_on();
 }
@@ -182,32 +179,31 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
-fill_screen()
+load_room()
 {
-    char x, y, tile;
-    for (x = 0; x < 16; x++)
+    int i;
+    char x, y, tile, err;
+
+    set_tile_data(roomtile, 16, palette_ref, 16);
+    load_palette(1, tilepal1, 1);
+    load_tile(0x1000);
+
+    set_font_pal(0);
+    set_font_color(4, 0);
+    load_default_font();
+
+    err = cd_loaddata(4, 0, tiles, 0x7ff);
+
+    if (err)
     {
-        for (y = 0; y < 16; y++)
-        {
-            if (y == 0)
-            {
-                tile = 6;
-            }
-            else if (y == 1)
-            {
-                tile = 10;
-            }
-            else if (y == 2)
-            {
-                tile = 11;
-            }
-            else
-            {
-                tile = 1;
-            }
-            put_tile(tile, x, y);
-        }
+        put_hex(err, 4, 10, 5);
+        put_hex(tiles, 4, 10, 6);
+        return;
     }
+
+    i = 0;
+    set_map_data(tiles, 64, 32);
+    load_map(0, 0, 0, 0, 17, 12);
 }
 
 main()
@@ -215,11 +211,7 @@ main()
     char joyt;
 
     initialize();
-    fill_screen();
-
-    set_font_pal(0);
-    set_font_color(4, 0);
-    load_default_font();
+    load_room();
 
     for (;;)
     {
