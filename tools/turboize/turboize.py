@@ -68,7 +68,6 @@ pixelgrid = PixelGrid([(0,0,0)])
 
 with open(inputfile, "r") as fileo:
     pixelgrid.load(json.load(fileo))
-pixelgrid.changepage(1)
 
 bytelist = turboize(pixelgrid)
 with open(outputfile, "wb") as fileo:
