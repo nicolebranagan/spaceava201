@@ -4,8 +4,8 @@
 
 #include <huc.h>
 
-#incspr(avachr, "images/ava.png");
-#incpal(avapal, "images/ava.png");
+#incbin(avachr, "classic/ava.bin");
+#incbin(avapal, "classic/avapal.bin");
 
 #inctile(roomtile, "images/tiles.png", 16, 1);
 #incpal(tilepal1, "images/tiles.png");
