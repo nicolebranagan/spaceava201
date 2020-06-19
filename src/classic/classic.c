@@ -54,8 +54,8 @@ initialize()
     load_palette(16, avapal, 1);
 
     timer = 0;
-    ava_x = 1;
-    ava_y = 1;
+    ava_x = 4;
+    ava_y = 8;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
 
@@ -66,6 +66,25 @@ draw_ava(char moving, int x, int y)
 {
     char frame, frame_offset;
     char ctrl_flags = SZ_16x16;
+    int sx, sy; // scroll x, scroll y
+    int dx, dy; // display x, display y
+
+    sx = x - 128;
+    if (sx < 0)
+    {
+        sx = 0;
+    }
+    sy = y - 128;
+    if (sy < 0)
+    {
+        sy = 0;
+    }
+
+    dx = x - sx;
+    dy = y - sy;
+
+    scroll(0, sx, sy, 0, 223, 0xC0);
+    load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
 
     switch (ava_facing)
     {
@@ -108,8 +127,8 @@ draw_ava(char moving, int x, int y)
     }
 
     spr_set(0);
-    spr_x(x);
-    spr_y(y - 16);
+    spr_x(dx);
+    spr_y(dy - 16);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16));
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
     spr_pal(0);
@@ -117,8 +136,8 @@ draw_ava(char moving, int x, int y)
     spr_show();
 
     spr_set(1);
-    spr_x(x);
-    spr_y(y);
+    spr_x(dx);
+    spr_y(dy);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16) + SPR_SIZE_16x16);
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
     spr_pal(0);
@@ -186,7 +205,7 @@ load_room()
 
     set_tile_data(roomtile, 16, palette_ref, 16);
     load_palette(1, tilepal1, 1);
-    load_tile(0x1000);
+    load_tile(0x2000);
 
     set_font_pal(0);
     set_font_color(4, 0);
@@ -203,7 +222,7 @@ load_room()
 
     i = 0;
     set_map_data(tiles, 64, 32);
-    load_map(0, 0, 0, 0, 17, 12);
+    load_map(0, 0, 0, 0, 17, 15);
 }
 
 main()
