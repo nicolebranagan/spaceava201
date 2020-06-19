@@ -42,6 +42,10 @@ char timer;
 
 char tiles[2048];
 
+// TODO: Make this a bitfield if you need to
+const char TILE_SOLIDITY[] = {
+    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+
 initialize()
 {
     disp_off();
@@ -225,6 +229,13 @@ load_room()
     load_map(0, 0, 0, 0, 17, 15);
 }
 
+char is_solid(char x, char y)
+{
+    char tile;
+    tile = map_get_tile(x, y);
+    return TILE_SOLIDITY[tile] == 0;
+}
+
 main()
 {
     char joyt;
@@ -239,25 +250,26 @@ main()
         timer++;
 
         joyt = joytrg(0);
-        if (joyt & JOY_UP)
+        if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1))
         {
             ava_facing = UP;
             move_ava(1, 0, 1);
         }
-        if (joyt & JOY_DOWN)
+        if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1))
         {
             ava_facing = DOWN;
             move_ava(0, 0, 1);
         }
-        if (joyt & JOY_LEFT)
+        if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y))
         {
             ava_facing = LEFT;
             move_ava(1, 1, 0);
         }
-        if (joyt & JOY_RIGHT)
+        if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y))
         {
             ava_facing = RIGHT;
             move_ava(0, 1, 0);
         }
+        put_hex(map_get_tile(ava_x, ava_y), 4, 10, 11);
     }
 }
