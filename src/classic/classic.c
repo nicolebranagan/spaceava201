@@ -5,7 +5,12 @@
 #include <huc.h>
 #include "images/images.h"
 
+#define SPR_SIZE_16x16 0x40
 #define IMAGE_OVERLAY 5
+
+int sx, sy; // scroll x, scroll y
+
+#include "classic/enemy.c"
 
 #incbin(avapal, "palettes/ava.pal");
 #incbin(tilepal1, "palettes/starbase.pal");
@@ -28,8 +33,6 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-#define SPR_SIZE_16x16 0x40
-
 #define UP 0
 #define DOWN 1
 #define LEFT 2
@@ -48,7 +51,6 @@ const char TILE_SOLIDITY[] = {
 
 initialize()
 {
-    spr_set();
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
     reset_satb();
@@ -67,7 +69,6 @@ draw_ava(char moving, int x, int y)
 {
     char frame, frame_offset;
     char ctrl_flags = SZ_16x16;
-    int sx, sy; // scroll x, scroll y
     int dx, dy; // display x, display y
 
     sx = x - 128;
@@ -155,10 +156,6 @@ move_ava(char negative, char delx, char dely)
 
     x = ava_x * 16;
     y = ava_y * 16;
-    put_hex(delx, 4, 10, 8);
-    put_hex(dely, 4, 10, 9);
-    put_hex(x, 4, 10, 10);
-    put_hex(y, 4, 10, 11);
 
     for (i = 0; i < 16; i++)
     {
@@ -243,11 +240,13 @@ main()
     disp_off();
     initialize();
     load_room();
+    init_enemy();
+    create_enemy(0x5000 + AVA_SIZE_IN_BYTES, TYPE_BIGMOUTH, 6, 4);
     disp_on();
 
     for (;;)
     {
-        vsync();
+        draw_enemies();
         satb_update();
         timer++;
 
@@ -272,6 +271,5 @@ main()
             ava_facing = RIGHT;
             move_ava(0, 1, 0);
         }
-        put_hex(map_get_tile(ava_x, ava_y), 4, 10, 11);
     }
 }
