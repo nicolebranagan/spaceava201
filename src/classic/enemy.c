@@ -28,7 +28,7 @@ init_enemy()
     char i;
     enemy_count = 0;
 
-    for (i; i < ENEMY_TYPE_COUNT; i++)
+    for (i = 0; i < ENEMY_TYPE_COUNT; i++)
     {
         enemy_vram[i] = 0;
     }
@@ -78,7 +78,7 @@ char draw_enemy(char sprite_offset, char enemyIndex)
     spr_set(sprite_offset);
     spr_x(dx);
     spr_y(dy - 16);
-    spr_pattern(enemy_vram[enemies[enemyIndex].type]);
+    spr_pattern(enemy_vram[enemies[enemyIndex].type] + (2 * frame * SPR_SIZE_16x16));
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(1 + enemies[enemyIndex].type);
     spr_pri(1);
@@ -87,7 +87,7 @@ char draw_enemy(char sprite_offset, char enemyIndex)
     spr_set(sprite_offset + 1);
     spr_x(dx);
     spr_y(dy);
-    spr_pattern(enemy_vram[enemies[enemyIndex].type] + SPR_SIZE_16x16);
+    spr_pattern(enemy_vram[enemies[enemyIndex].type] + SPR_SIZE_16x16 + (2 * frame * SPR_SIZE_16x16));
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(1 + enemies[enemyIndex].type);
     spr_pri(1);
@@ -103,7 +103,7 @@ draw_enemies()
     char i, offset;
 
     offset = SPRITE_START;
-    for (i; i < enemy_count; i++)
+    for (i = 0; i < enemy_count; i++)
     {
         offset = draw_enemy(offset, i);
     }

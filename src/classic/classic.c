@@ -59,7 +59,7 @@ initialize()
     load_palette(16, avapal, 1);
 
     timer = 0;
-    ava_x = 4;
+    ava_x = 10;
     ava_y = 8;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
@@ -81,12 +81,15 @@ draw_ava(char moving, int x, int y)
     {
         sy = 0;
     }
-
+    
     dx = x - sx;
     dy = y - sy;
 
     scroll(0, sx, sy, 0, 223, 0xC0);
     load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
+    if (moving) {
+        draw_enemies();
+    }
 
     switch (ava_facing)
     {
