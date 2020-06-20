@@ -4,12 +4,12 @@
 
 #include <huc.h>
 
-#incspr(chr, "images/train.png");
-#incpal(trainpal,"images/train.png");
+#incspr(chr, "logo/images/train.png");
+#incpal(trainpal,"logo/images/train.png");
 
-#incchr(logo_gfx, "images/logo.png");
-#incpal(logo_pal, "images/logo.png");
-#incbat(logo_bat, "images/logo.png", 0x1000);
+#incchr(logo_gfx, "logo/images/logo.png");
+#incpal(logo_pal, "logo/images/logo.png");
+#incbat(logo_bat, "logo/images/logo.png", 0x1000);
 
 main()
 {

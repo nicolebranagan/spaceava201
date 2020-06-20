@@ -4,11 +4,11 @@
 
 #include <huc.h>
 
-#incbin(avachr, "imagebuild/ava.bin");
-#incbin(avapal, "imagebuild/ava.pal.bin");
+#incbin(avachr, "images/ava.bin");
+#incbin(avapal, "images/ava.pal.bin");
 
-#inctile(roomtile, "images/tiles.png", 16, 1);
-#incpal(tilepal1, "images/tiles.png");
+#incbin(roomtile, "images/starbase.bin");
+#incbin(tilepal1, "images/starbase.pal.bin");
 
 const char palette_ref[] = {
     0x10,
@@ -48,7 +48,6 @@ const char TILE_SOLIDITY[] = {
 
 initialize()
 {
-    disp_off();
     spr_set();
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
@@ -62,8 +61,6 @@ initialize()
     ava_y = 8;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
-
-    disp_on();
 }
 
 draw_ava(char moving, int x, int y)
@@ -240,8 +237,10 @@ main()
 {
     char joyt;
 
+    disp_off();
     initialize();
     load_room();
+    disp_on();
 
     for (;;)
     {

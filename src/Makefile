@@ -18,7 +18,7 @@ logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 
-classic.ovl: $(CLASSIC_SRC) images
+classic.ovl: $(CLASSIC_SRC) sprites tiles
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CLASSIC_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 
@@ -31,11 +31,18 @@ adpcm_ovl: adpcm/whistle.vox
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin
 
-images: ../images/*.terra
-	FILES=../images/*.terra;\
+sprites: ../images/sprites/*.terra
+	FILES=../images/sprites/*.terra;\
 	for f in $$FILES; \
 	do \
-		python3 ../tools/turboize/turboize.py $$f ./imagebuild/$$(basename $$f .terra).bin ./imagebuild/$$(basename $$f .terra).pal.bin; \
+		python3 ../tools/turboize/turboize.py sprite $$f ./images/$$(basename $$f .terra).bin ./images/$$(basename $$f .terra).pal.bin; \
+	done;
+
+tiles: ../images/tiles/*.terra
+	FILES=../images/tiles/*.terra;\
+	for f in $$FILES; \
+	do \
+		python3 ../tools/turboize/turboize.py tile $$f ./images/$$(basename $$f .terra).bin ./images/$$(basename $$f .terra).pal.bin; \
 	done;
 
 pce: $(SRC)

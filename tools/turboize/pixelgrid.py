@@ -140,7 +140,7 @@ class PixelGrid:
         return self.drawTkSubset(photo, zoom, x, y, r, r, 0, 0)
 
     def getTkStrip(self, height, block=True):
-        max_ = self._getmaxtuple()
+        max_ = self.getmaxtuple()
         rows = math.ceil((1+max_[1])/height)
         
         strip = tk.PhotoImage(width=rows*self.width*8,
@@ -155,7 +155,7 @@ class PixelGrid:
             self._tiles[loc].draw(strip, 1, self.palette, x, y)
         return strip
 
-    def _getmaxtuple(self):
+    def getmaxtuple(self):
         ys = [x[1] for x in self._tiles]
         xs = [x[0] for x in self._tiles if x[1] == max(ys)]
         return (max(xs), max(ys))
