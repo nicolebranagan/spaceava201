@@ -3,12 +3,12 @@
 */
 
 #include <huc.h>
+#include "images/images.h"
 
-#incbin(avachr, "images/ava.bin");
-#incbin(avapal, "images/ava.pal.bin");
+#define IMAGE_OVERLAY 5
 
-#incbin(roomtile, "images/starbase.bin");
-#incbin(tilepal1, "images/starbase.pal.bin");
+#incbin(avapal, "palettes/ava.pal");
+#incbin(tilepal1, "palettes/starbase.pal");
 
 const char palette_ref[] = {
     0x10,
@@ -53,7 +53,7 @@ initialize()
     ad_reset();
     reset_satb();
 
-    load_vram(0x5000, avachr, SPR_SIZE_16x16 * 16);
+    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, 0x5000, AVA_SIZE_IN_BYTES);
     load_palette(16, avapal, 1);
 
     timer = 0;
@@ -203,8 +203,11 @@ load_room()
 {
     int i;
     char x, y, tile, err;
+    char tiledata[STARBASE_SIZE_IN_BYTES];
 
-    set_tile_data(roomtile, 16, palette_ref, 16);
+    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE_IN_BYTES);
+
+    set_tile_data(tiledata, 16, palette_ref, 16);
     load_palette(1, tilepal1, 1);
     load_tile(0x2000);
 

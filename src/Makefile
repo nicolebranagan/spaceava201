@@ -11,14 +11,14 @@ CLASSIC_SRC = classic/classic.c
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl adpcm_ovl classicdata cuefile
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin
+spaceava.iso: logo.ovl classic.ovl adpcm_ovl classicdata cuefile images
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 
-classic.ovl: $(CLASSIC_SRC) sprites tiles
+classic.ovl: $(CLASSIC_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CLASSIC_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 
@@ -31,18 +31,21 @@ adpcm_ovl: adpcm/whistle.vox
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin
 
+images: sprites tiles
+	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr
+
 sprites: ../images/sprites/*.terra
 	FILES=../images/sprites/*.terra;\
 	for f in $$FILES; \
 	do \
-		python3 ../tools/turboize/turboize.py sprite $$f ./images/$$(basename $$f .terra).bin ./images/$$(basename $$f .terra).pal.bin; \
+		python3 ../tools/turboize/turboize.py sprite $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
 	done;
 
 tiles: ../images/tiles/*.terra
 	FILES=../images/tiles/*.terra;\
 	for f in $$FILES; \
 	do \
-		python3 ../tools/turboize/turboize.py tile $$f ./images/$$(basename $$f .terra).bin ./images/$$(basename $$f .terra).pal.bin; \
+		python3 ../tools/turboize/turboize.py tile $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
 	done;
 
 pce: $(SRC)
