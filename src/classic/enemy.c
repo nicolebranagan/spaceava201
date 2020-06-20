@@ -55,7 +55,7 @@ int create_enemy(int vram_offset, char type, char x, char y)
         if (!enemy_vram[type])
         {
             cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE_IN_BYTES);
-            enemy_vram[type] = vram_offset;
+            enemy_vram[TYPE_BIGMOUTH] = vram_offset;
             vram_offset += BIGMOUTH_SIZE_IN_BYTES;
         }
     }
