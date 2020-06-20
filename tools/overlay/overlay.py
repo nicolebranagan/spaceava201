@@ -38,6 +38,7 @@ fulldata = b''
 
 with open(headerfile, "w") as header:
     header.write("// This is an auto-generated file. Do not alter.\n\n")
+    header.write("#ifndef IMAGES_H\n#define IMAGES_H\n\n")
     sector_offset = 0
     for filedata in parsed_files:
         header.write(f'// {filedata["name"]}\n')
@@ -47,6 +48,7 @@ with open(headerfile, "w") as header:
         header.write(f'#define {variable_name}_SIZE_IN_BYTES {filedata["size"]} \n\n')
         sector_offset = sector_offset + filedata["sectorcount"]
         fulldata = fulldata + filedata["data"]
+    header.write("#endif")
 
 with open(outputfile, "wb") as output:
     output.write(fulldata)
