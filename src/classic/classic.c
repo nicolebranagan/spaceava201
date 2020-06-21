@@ -5,10 +5,21 @@
 #include <huc.h>
 #include "images/images.h"
 
+//TODO: factor these out into a global include
+
 #define SPR_SIZE_16x16 0x40
 #define IMAGE_OVERLAY 5
 
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
+
 int sx, sy; // scroll x, scroll y
+char ava_x;
+char ava_y;
+char ava_facing;
+char timer;
 
 #include "classic/enemy.c"
 
@@ -33,16 +44,6 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
-
-char ava_x;
-char ava_y;
-char ava_facing;
-char timer;
-
 char tiles[2048];
 
 // TODO: Make this a bitfield if you need to
@@ -51,6 +52,7 @@ const char TILE_SOLIDITY[] = {
 
 initialize()
 {
+    set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
     reset_satb();
@@ -231,9 +233,22 @@ load_room()
 
 char is_solid(char x, char y)
 {
-    char tile;
+    char tile, tilesolid, i;
     tile = map_get_tile(x, y);
-    return TILE_SOLIDITY[tile] == 0;
+
+
+    if (TILE_SOLIDITY[tile] == 0) {
+        return 1;
+    }
+
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (enemies[i].active && enemies[i].x == x && enemies[i].y == y) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 main()
@@ -244,7 +259,7 @@ main()
     initialize();
     load_room();
     init_enemy();
-    create_enemy(0x5000 + AVA_SIZE_IN_BYTES, TYPE_BIGMOUTH, 6, 4);
+    create_enemy(0x5000 + AVA_SIZE_IN_BYTES, TYPE_BIGMOUTH, 6, 4, DOWN);
     disp_on();
 
     for (;;)
@@ -258,21 +273,25 @@ main()
         {
             ava_facing = UP;
             move_ava(1, 0, 1);
+            update_enemies();
         }
         if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1))
         {
             ava_facing = DOWN;
             move_ava(0, 0, 1);
+            update_enemies();
         }
         if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y))
         {
             ava_facing = LEFT;
             move_ava(1, 1, 0);
+            update_enemies();
         }
         if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y))
         {
             ava_facing = RIGHT;
             move_ava(0, 1, 0);
+            update_enemies();
         }
     }
 }
