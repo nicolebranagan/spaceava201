@@ -52,6 +52,16 @@ const char TILE_SOLIDITY[] = {
 
 initialize()
 {
+    int vram_offset, i;
+
+    disp_off();
+    reset_satb();
+    for (i = 0; i < 64; i++) {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    cls();
     set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
@@ -65,6 +75,14 @@ initialize()
     ava_y = 8;
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
+
+    vram_offset = 0x5000 + AVA_SIZE_IN_BYTES;
+
+    load_room();
+    init_enemy();
+    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 3, DOWN, 0, 0);
+    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 9, UP, 0, 0);
+    disp_on();
 }
 
 draw_ava(char moving, int x, int y)
@@ -202,6 +220,29 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
+const char FRAMES[] = {8, 9, 10};
+kill_ava()
+{
+    char i;
+    for (i = 0; i < 3; i++)
+    {
+        spr_set(0);
+        spr_pattern(0x5000 + (2 * FRAMES[i] * SPR_SIZE_16x16));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_set(1);
+        spr_pattern(0x5000 + (2 * FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        satb_update();
+        vsync(4);
+    }
+    spr_set(0);
+    spr_hide();
+    spr_set(1);
+    spr_hide();
+
+    initialize();
+}
+
 load_room()
 {
     int i;
@@ -247,18 +288,9 @@ char is_solid(char x, char y)
 
 main()
 {
-    int vram_offset;
     char joyt;
 
-    vram_offset = 0x5000 + AVA_SIZE_IN_BYTES;
-
-    disp_off();
     initialize();
-    load_room();
-    init_enemy();
-    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 4, DOWN, 0, 0);
-    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 8, UP, 0, 0);
-    disp_on();
 
     for (;;)
     {
@@ -289,6 +321,10 @@ main()
         {
             ava_facing = RIGHT;
             move_ava(0, 1, 0);
+            update_enemies();
+        }
+        if (joyt & JOY_I)
+        {
             update_enemies();
         }
     }

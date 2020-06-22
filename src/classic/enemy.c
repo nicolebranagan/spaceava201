@@ -18,6 +18,7 @@ int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
 
 char enemy_count;
+char ava_dead;
 
 struct enemy
 {
@@ -123,7 +124,14 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y)
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
     spr_pal(PALETTE_BY_TYPE[enemies[enemyIndex].type]);
     spr_pri(1);
-    spr_show();
+    if (enemies[enemyIndex].active)
+    {
+        spr_show();
+    }
+    else
+    {
+        spr_hide();
+    }
 
     spr_set(sprite_offset + 1);
     spr_x(dx);
@@ -151,7 +159,8 @@ quick_draw_enemies()
     char i, offset;
     int dx, dy;
 
-    if (!enemy_count) {
+    if (!enemy_count)
+    {
         return;
     }
 
@@ -160,6 +169,10 @@ quick_draw_enemies()
     {
         if (!enemies[i].active)
         {
+            spr_set(offset);
+            spr_hide();
+            spr_set(offset + 1);
+            spr_hide();
             offset = offset + 2;
             continue;
         }
@@ -181,7 +194,8 @@ draw_enemies(char time_offset)
 {
     char i, offset;
 
-    if (!enemy_count) {
+    if (!enemy_count)
+    {
         return;
     }
 
@@ -244,6 +258,11 @@ update_bigmouth(char index)
 
 update_ball(char index)
 {
+    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    {
+        kill_ava();
+        return;
+    }
     switch (enemies[index].facing)
     {
     case UP:
@@ -287,6 +306,13 @@ update_ball(char index)
         }
         break;
     }
+    if (
+        (enemies[index].x + enemies[index].delx) == ava_x &&
+        (enemies[index].y + enemies[index].dely) == ava_y)
+    {
+        ava_dead = 1;
+        return;
+    }
 }
 
 update_enemies()
@@ -294,6 +320,7 @@ update_enemies()
     char i, j, any_moved;
 
     any_moved = 0;
+    ava_dead = 0;
 
     for (i = 0; i < enemy_count; i++)
     {
@@ -345,5 +372,8 @@ update_enemies()
                 enemies[i].y += enemies[i].dely;
             }
         }
+    }
+    if (ava_dead) {
+        kill_ava();
     }
 }
