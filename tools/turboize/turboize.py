@@ -71,36 +71,39 @@ def turboize_tiles(inputgrid):
 
 def turboize_sprite(inputgrid):
     output = []
-    for ygroup in range(0, inputgrid.height // 2):
-        bitplane1 = []
-        bitplane2 = []
-        bitplane3 = []
-        bitplane4 = []
-        for y in range(0, 16):
-            rowplane1 = []
-            rowplane2 = []
-            rowplane3 = []
-            rowplane4 = []
-            for x in range(0, 16):
-                true_x = x
-                true_y = y + 16 * ygroup
-                val = index_to_binary(inputgrid.get(true_x, true_y))
-                rowplane1.append(val[3])
-                rowplane2.append(val[2])
-                rowplane3.append(val[1])
-                rowplane4.append(val[0])
-            bitplane1.append(int(''.join(rowplane1[8:]), 2))
-            bitplane1.append(int(''.join(rowplane1[:8]), 2))
+    max_ = inputgrid.getmaxytuple()
+    cols = math.ceil((1+max_[0])/2)
+    for xgroup in range(0, cols):
+        for ygroup in range(0, inputgrid.height // 2):
+            bitplane1 = []
+            bitplane2 = []
+            bitplane3 = []
+            bitplane4 = []
+            for y in range(0, 16):
+                rowplane1 = []
+                rowplane2 = []
+                rowplane3 = []
+                rowplane4 = []
+                for x in range(0, 16):
+                    true_x = x + xgroup * 16
+                    true_y = y + 16 * ygroup
+                    val = index_to_binary(inputgrid.get(true_x, true_y))
+                    rowplane1.append(val[3])
+                    rowplane2.append(val[2])
+                    rowplane3.append(val[1])
+                    rowplane4.append(val[0])
+                bitplane1.append(int(''.join(rowplane1[8:]), 2))
+                bitplane1.append(int(''.join(rowplane1[:8]), 2))
 
-            bitplane2.append(int(''.join(rowplane2[8:]), 2))
-            bitplane2.append(int(''.join(rowplane2[:8]), 2))
+                bitplane2.append(int(''.join(rowplane2[8:]), 2))
+                bitplane2.append(int(''.join(rowplane2[:8]), 2))
 
-            bitplane3.append(int(''.join(rowplane3[8:]), 2))
-            bitplane3.append(int(''.join(rowplane3[:8]), 2))
+                bitplane3.append(int(''.join(rowplane3[8:]), 2))
+                bitplane3.append(int(''.join(rowplane3[:8]), 2))
 
-            bitplane4.append(int(''.join(rowplane4[8:]), 2))
-            bitplane4.append(int(''.join(rowplane4[:8]), 2))
-        output.extend(bitplane1 + bitplane2 + bitplane3 + bitplane4)
+                bitplane4.append(int(''.join(rowplane4[8:]), 2))
+                bitplane4.append(int(''.join(rowplane4[:8]), 2))
+            output.extend(bitplane1 + bitplane2 + bitplane3 + bitplane4)
     return output
 
 if (len(sys.argv) < 5):

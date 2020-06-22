@@ -159,6 +159,11 @@ class PixelGrid:
         ys = [x[1] for x in self._tiles]
         xs = [x[0] for x in self._tiles if x[1] == max(ys)]
         return (max(xs), max(ys))
+    
+    def getmaxytuple(self):
+        xs = [x[0] for x in self._tiles]
+        ys = [x[1] for x in self._tiles if x[1] == max(xs)]
+        return (max(xs), max(ys))
 
     def dump(self):
         output = {}

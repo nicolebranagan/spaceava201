@@ -151,10 +151,15 @@ quick_draw_enemies()
     char i, offset;
     int dx, dy;
 
+    if (!enemy_count) {
+        return;
+    }
+
     offset = SPRITE_START;
     for (i = 0; i < enemy_count; i++)
     {
-        if (!enemies[i].active) {
+        if (!enemies[i].active)
+        {
             offset = offset + 2;
             continue;
         }
@@ -172,14 +177,22 @@ quick_draw_enemies()
     }
 }
 
-draw_enemies()
+draw_enemies(char time_offset)
 {
     char i, offset;
+
+    if (!enemy_count) {
+        return;
+    }
 
     offset = SPRITE_START;
     for (i = 0; i < enemy_count; i++)
     {
-        offset = draw_enemy(offset, i, (enemies[i].x * 16), (enemies[i].y * 16));
+        offset = draw_enemy(
+            offset,
+            i,
+            (enemies[i].x * 16) + (enemies[i].delx * time_offset),
+            (enemies[i].y * 16) + (enemies[i].dely * time_offset));
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
@@ -188,47 +201,6 @@ draw_enemies()
         spr_set(offset + 1);
         spr_hide();
         offset = offset + 2;
-    }
-    return;
-}
-
-draw_moving_enemies()
-{
-    char i, j, offset, any_moved;
-
-    for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
-    {
-        spr_set(offset);
-        spr_hide();
-        spr_set(offset + 1);
-        spr_hide();
-        offset = offset + 2;
-    }
-
-    for (j = 0; j < 16; j++)
-    {
-        any_moved = 0;
-        offset = SPRITE_START;
-        for (i = 0; i < enemy_count; i++)
-        {
-            if (enemies[i].delx || enemies[i].dely)
-            {
-                offset = draw_enemy(offset, i, (enemies[i].x * 16) + (enemies[i].delx * j), (enemies[i].y * 16) + (enemies[i].dely * j));
-                any_moved = 1;
-            }
-            else
-            {
-                offset = draw_enemy(offset, i, (enemies[i].x * 16), (enemies[i].y * 16));
-            }
-        }
-        if (any_moved)
-        {
-            vsync();
-        }
-        else
-        {
-            break;
-        }
     }
     return;
 }
@@ -319,7 +291,9 @@ update_ball(char index)
 
 update_enemies()
 {
-    char i;
+    char i, j, any_moved;
+
+    any_moved = 0;
 
     for (i = 0; i < enemy_count; i++)
     {
@@ -342,23 +316,34 @@ update_enemies()
             break;
         }
         }
+        if (!any_moved && enemies[i].delx != 0 || enemies[i].dely != 0)
+        {
+            any_moved = 1;
+        }
     }
 
-    //draw_moving_enemies();
-
-    for (i = 0; i < enemy_count; i++)
+    if (any_moved)
     {
-        if (!enemies[i].active)
+        for (j = 2; j < 16; j += 2)
         {
-            continue;
+            draw_enemies(j);
+            satb_update();
+            vsync();
         }
-        if (enemies[i].delx)
+        for (i = 0; i < enemy_count; i++)
         {
-            enemies[i].x += enemies[i].delx;
-        }
-        if (enemies[i].dely)
-        {
-            enemies[i].y += enemies[i].dely;
+            if (!enemies[i].active)
+            {
+                continue;
+            }
+            if (enemies[i].delx)
+            {
+                enemies[i].x += enemies[i].delx;
+            }
+            if (enemies[i].dely)
+            {
+                enemies[i].y += enemies[i].dely;
+            }
         }
     }
 }

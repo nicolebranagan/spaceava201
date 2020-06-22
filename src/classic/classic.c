@@ -257,12 +257,12 @@ main()
     load_room();
     init_enemy();
     vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 4, DOWN, 0, 0);
-    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 4, DOWN, 0, 0);
+    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 8, UP, 0, 0);
     disp_on();
 
     for (;;)
     {
-        draw_enemies();
+        draw_enemies(0);
         satb_update();
         timer++;
 
