@@ -62,6 +62,7 @@ main()
 
 		if (logox == 255 || (joyt & JOY_STRT) ) {
 			spr_hide();
+			cls();
 			satb_update();
 			vsync();
 			cd_execoverlay(3);

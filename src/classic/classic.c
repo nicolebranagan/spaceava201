@@ -83,14 +83,15 @@ draw_ava(char moving, int x, int y)
     {
         sy = 0;
     }
-    
+
     dx = x - sx;
     dy = y - sy;
 
     scroll(0, sx, sy, 0, 223, 0xC0);
     load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
-    if (moving) {
-        draw_enemies();
+    if (moving)
+    {
+        quick_draw_enemies();
     }
 
     switch (ava_facing)
@@ -162,17 +163,17 @@ move_ava(char negative, char delx, char dely)
     x = ava_x * 16;
     y = ava_y * 16;
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < 8; i++)
     {
         if (negative)
         {
-            x = x - delx;
-            y = y - dely;
+            x = x - 2 * delx;
+            y = y - 2 * dely;
         }
         else
         {
-            x = x + delx;
-            y = y + dely;
+            x = x + 2 * delx;
+            y = y + 2 * dely;
         }
 
         draw_ava(1, x, y);
@@ -228,7 +229,7 @@ load_room()
 
     i = 0;
     set_map_data(tiles, 64, 32);
-    load_map(0, 0, 0, 0, 17, 15);
+    load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
 }
 
 char is_solid(char x, char y)
@@ -236,16 +237,9 @@ char is_solid(char x, char y)
     char tile, tilesolid, i;
     tile = map_get_tile(x, y);
 
-
-    if (TILE_SOLIDITY[tile] == 0) {
-        return 1;
-    }
-
-    for (i = 0; i < enemy_count; i++)
+    if (TILE_SOLIDITY[tile] == 0)
     {
-        if (enemies[i].active && enemies[i].x == x && enemies[i].y == y) {
-            return 1;
-        }
+        return 1;
     }
 
     return 0;
@@ -253,13 +247,17 @@ char is_solid(char x, char y)
 
 main()
 {
+    int vram_offset;
     char joyt;
+
+    vram_offset = 0x5000 + AVA_SIZE_IN_BYTES;
 
     disp_off();
     initialize();
     load_room();
     init_enemy();
-    create_enemy(0x5000 + AVA_SIZE_IN_BYTES, TYPE_BIGMOUTH, 6, 4, DOWN);
+    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 4, DOWN, 0, 0);
+    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 4, DOWN, 0, 0);
     disp_on();
 
     for (;;)

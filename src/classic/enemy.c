@@ -21,7 +21,7 @@ char enemy_count;
 
 struct enemy
 {
-    char type, x, y, timer, active, facing, frame;
+    char type, x, y, timer, active, facing, frame, delx, dely;
 };
 
 struct enemy enemies[MAX_ENEMY_COUNT];
@@ -40,7 +40,7 @@ init_enemy()
 }
 
 // Returns a new VRAM offset
-int create_enemy(int vram_offset, char type, char x, char y, char facing)
+int create_enemy(int vram_offset, char type, char x, char y, char facing, char delx, char dely)
 {
     char i, new_index;
 
@@ -67,6 +67,8 @@ int create_enemy(int vram_offset, char type, char x, char y, char facing)
     enemies[new_index].type = type;
     enemies[new_index].x = x;
     enemies[new_index].y = y;
+    enemies[new_index].delx = delx;
+    enemies[new_index].dely = dely;
     enemies[new_index].timer = 0;
     enemies[new_index].active = 1;
     enemies[new_index].facing = facing;
@@ -86,15 +88,15 @@ int create_enemy(int vram_offset, char type, char x, char y, char facing)
 }
 
 // Returns a new sprite offset
-char draw_enemy(char sprite_offset, char enemyIndex)
+char draw_enemy(char sprite_offset, char enemyIndex, int x, int y)
 {
     char frame;
     char ctrl_flags = SZ_16x16;
     int dx, dy; // display x, display y
 
     frame = enemies[enemyIndex].frame;
-    dx = (enemies[enemyIndex].x * 16) - sx;
-    dy = (enemies[enemyIndex].y * 16) - sy;
+    dx = x - sx;
+    dy = y - sy;
 
     if (enemies[enemyIndex].type != TYPE_BALL)
     {
@@ -144,6 +146,32 @@ char draw_enemy(char sprite_offset, char enemyIndex)
 
 #define SPRITE_START 2;
 
+quick_draw_enemies()
+{
+    char i, offset;
+    int dx, dy;
+
+    offset = SPRITE_START;
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (!enemies[i].active) {
+            offset = offset + 2;
+            continue;
+        }
+        dx = (enemies[i].x * 16) - sx;
+        dy = (enemies[i].y * 16) - sy;
+        spr_set(offset);
+        spr_x(dx);
+        spr_y(dy - 16);
+
+        spr_set(offset + 1);
+        spr_x(dx);
+        spr_y(dy);
+
+        offset = offset + 2;
+    }
+}
+
 draw_enemies()
 {
     char i, offset;
@@ -151,7 +179,7 @@ draw_enemies()
     offset = SPRITE_START;
     for (i = 0; i < enemy_count; i++)
     {
-        offset = draw_enemy(offset, i);
+        offset = draw_enemy(offset, i, (enemies[i].x * 16), (enemies[i].y * 16));
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
@@ -160,6 +188,47 @@ draw_enemies()
         spr_set(offset + 1);
         spr_hide();
         offset = offset + 2;
+    }
+    return;
+}
+
+draw_moving_enemies()
+{
+    char i, j, offset, any_moved;
+
+    for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
+    {
+        spr_set(offset);
+        spr_hide();
+        spr_set(offset + 1);
+        spr_hide();
+        offset = offset + 2;
+    }
+
+    for (j = 0; j < 16; j++)
+    {
+        any_moved = 0;
+        offset = SPRITE_START;
+        for (i = 0; i < enemy_count; i++)
+        {
+            if (enemies[i].delx || enemies[i].dely)
+            {
+                offset = draw_enemy(offset, i, (enemies[i].x * 16) + (enemies[i].delx * j), (enemies[i].y * 16) + (enemies[i].dely * j));
+                any_moved = 1;
+            }
+            else
+            {
+                offset = draw_enemy(offset, i, (enemies[i].x * 16), (enemies[i].y * 16));
+            }
+        }
+        if (any_moved)
+        {
+            vsync();
+        }
+        else
+        {
+            break;
+        }
     }
     return;
 }
@@ -178,7 +247,21 @@ update_bigmouth(char index)
 
     if (enemies[index].timer == 3)
     {
-        create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing);
+        switch (enemies[index].facing)
+        {
+        case UP:
+            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, -1);
+            break;
+        case DOWN:
+            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, 1);
+            break;
+        case LEFT:
+            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, -1, 0);
+            break;
+        case RIGHT:
+            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, +1, 0);
+            break;
+        }
     }
 
     if (enemies[index].timer > 3)
@@ -194,7 +277,7 @@ update_ball(char index)
     case UP:
         if (!is_solid(enemies[index].x, enemies[index].y - 1))
         {
-            enemies[index].y -= 1;
+            enemies[index].dely = -1;
         }
         else
         {
@@ -204,7 +287,7 @@ update_ball(char index)
     case DOWN:
         if (!is_solid(enemies[index].x, enemies[index].y + 1))
         {
-            enemies[index].y += 1;
+            enemies[index].dely = 1;
         }
         else
         {
@@ -214,7 +297,7 @@ update_ball(char index)
     case LEFT:
         if (!is_solid(enemies[index].x - 1, enemies[index].y))
         {
-            enemies[index].x -= 1;
+            enemies[index].delx = -1;
         }
         else
         {
@@ -224,7 +307,7 @@ update_ball(char index)
     case RIGHT:
         if (!is_solid(enemies[index].x + 1, enemies[index].y))
         {
-            enemies[index].x += 1;
+            enemies[index].delx = 1;
         }
         else
         {
@@ -237,11 +320,15 @@ update_ball(char index)
 update_enemies()
 {
     char i;
+
     for (i = 0; i < enemy_count; i++)
     {
-        if (!enemies[i].active) {
+        if (!enemies[i].active)
+        {
             continue;
         }
+        enemies[i].delx = 0;
+        enemies[i].dely = 0;
         switch (enemies[i].type)
         {
         case TYPE_BIGMOUTH:
@@ -254,6 +341,24 @@ update_enemies()
             update_ball(i);
             break;
         }
+        }
+    }
+
+    //draw_moving_enemies();
+
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (!enemies[i].active)
+        {
+            continue;
+        }
+        if (enemies[i].delx)
+        {
+            enemies[i].x += enemies[i].delx;
+        }
+        if (enemies[i].dely)
+        {
+            enemies[i].y += enemies[i].dely;
         }
     }
 }
