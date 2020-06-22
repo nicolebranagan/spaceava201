@@ -15,6 +15,8 @@
 #define LEFT 2
 #define RIGHT 3
 
+#define AVA_VRAM 0x5000
+
 int sx, sy; // scroll x, scroll y
 char ava_x;
 char ava_y;
@@ -22,6 +24,7 @@ char ava_facing;
 char timer;
 
 #include "classic/enemy.c"
+#include "classic/object.c"
 
 #incbin(avapal, "palettes/ava.pal");
 #incbin(tilepal1, "palettes/starbase.pal");
@@ -67,7 +70,7 @@ initialize()
     ad_reset();
     reset_satb();
 
-    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, 0x5000, AVA_SIZE_IN_BYTES);
+    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE_IN_BYTES);
     load_palette(16, avapal, 1);
 
     timer = 0;
@@ -76,12 +79,15 @@ initialize()
     ava_facing = DOWN;
     draw_ava(0, ava_x * 16, ava_y * 16);
 
-    vram_offset = 0x5000 + AVA_SIZE_IN_BYTES;
+    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
 
     load_room();
     init_enemy();
     vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 3, DOWN, 0, 0);
     vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 9, UP, 0, 0);
+    init_object();
+    create_object(OBJ_PHOTON, 6, 5);
+    create_object(OBJ_ANTIPHOTON, 8, 5);
     disp_on();
 }
 
@@ -110,6 +116,7 @@ draw_ava(char moving, int x, int y)
     if (moving)
     {
         quick_draw_enemies();
+        draw_objects();
     }
 
     switch (ava_facing)
@@ -294,7 +301,9 @@ main()
 
     for (;;)
     {
+        vsync();
         draw_enemies(0);
+        draw_objects();
         satb_update();
         timer++;
 
