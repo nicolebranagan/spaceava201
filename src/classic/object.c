@@ -6,6 +6,7 @@
 #define OBJECT_SPRITE_START 2 + (MAX_ENEMY_COUNT * 2)
 
 char object_count;
+char obtained_object_count;
 
 #define OBJ_PHOTON 0
 #define OBJ_ANTIPHOTON 1
@@ -20,6 +21,7 @@ struct object objects[MAX_OBJECT_COUNT];
 init_object()
 {
     object_count = 0;
+    obtained_object_count = 0;
 }
 
 create_object(char type, char x, char y)
@@ -84,4 +86,24 @@ char draw_objects()
     {
         offset = draw_object(offset, i);
     }
+}
+
+char update_objects()
+{
+    char i;
+
+    if (!object_count)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < object_count; i++)
+    {
+        if (objects[i].active && ava_x == objects[i].x && ava_y == objects[i].y) {
+            objects[i].active = 0;
+            obtained_object_count++;
+        }
+    }
+
+    return obtained_object_count == object_count;
 }

@@ -336,5 +336,10 @@ main()
         {
             update_enemies();
         }
+
+        if (update_objects()) {
+            // TODO: Have this win rather than kill ava
+            kill_ava();
+        }
     }
 }
