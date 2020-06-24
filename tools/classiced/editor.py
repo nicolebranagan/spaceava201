@@ -2,7 +2,7 @@ import math
 import json
 import tkinter as tk
 from tkinter import filedialog
-from PIL import ImageTk, Image
+from PIL import ImageTk, Image, ImageDraw
 from pixelgrid import *
 
 class Application(tk.Frame):
@@ -63,6 +63,10 @@ class Application(tk.Frame):
         self.yentry = tk.Entry(controls, width=3)
         self.yentry.insert(0, "0")
         self.yentry.grid(row=2, column=1)
+        
+        self.setstartmode = False
+        setstartbutton = tk.Button(controls, text="Set Start", command=self.setstart)
+        setstartbutton.grid(row=3, column=0, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -83,7 +87,14 @@ class Application(tk.Frame):
     def viewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
         clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
-        
+
+        if (self.setstartmode):
+            self.setstartmode = False 
+            self.room.startx = clickX
+            self.room.starty = clickY 
+            self.drawroom()
+            return 
+            
         if self.room.get(clickX, clickY) != self.select:
             self.room.set(clickX, clickY, self.select)
             self.drawroom()
@@ -108,6 +119,9 @@ class Application(tk.Frame):
         self.statusbar.config(
                 text="Coordinates: {}, {}".format(clickX, clickY))
 
+    def setstart(self):
+        self.setstartmode = True
+
     def save(self):
         filen = filedialog.asksaveasfilename(
                 defaultextension=".bin",
@@ -118,7 +132,7 @@ class Application(tk.Frame):
                 title="Save")
         if filen != () and filen != "":
             with open(filen, "wb") as fileo:
-                fileo.write(bytes(self.room.tiles))
+                fileo.write(self.room.dump())
 
     def open(self):
         filen = filedialog.askopenfilename(
@@ -140,6 +154,9 @@ class Room:
         self.tileset = tileset
         self.tiles = [0 for x in range(0,self.width*self.height)]
         self.objects = []
+        self.startx = 0
+        self.starty = 0
+        self.enemies = []
 
     def set(self, x, y, v):
         if x >= self.width or y >= self.height or x < 0 or y < 0:
@@ -158,16 +175,45 @@ class Room:
             for x in range(0, self.width):
                 image.paste(self.tileset[self.tiles[i]],(x*16, y*16))
                 i = i+1
+        draw = ImageDraw.Draw(image)
+        draw.text((self.startx*16 + 4, self.starty*16 + 4), "S", (255, 0, 0))
         return image
 
     def dump(self):
-        return {"tiles": self.tiles}
+        objects = b''
+        for obj in self.objects:
+            objects = objects + obj.dump()
+        enemies = b''
+        for enem in self.enemies:
+            enemies = enemies + enem.dump()
+        return bytes(self.tiles) + bytes([self.startx, self.starty]) + objects + bytes([255]) + enemies  
 
     @staticmethod
     def load(tiles, tileset):
         self = Room(tileset)
         self.tiles = tiles
         return self
+
+class Object:
+    def __init__(self, x, y, type):
+        self.x = x
+        self.y = y
+        self.type = type 
+    
+    def dump(self):
+        return bytes([self.x, self.y, self.type])
+
+class Enemy:
+    def __init__(self, x, y, type, facing, delx, dely):
+        self.x = x
+        self.y = y
+        self.type = type 
+        self.facing = facing 
+        self.delx = delx 
+        self.dely = dely
+    
+    def dump(self):
+        return bytes([self.x, self.y, self.type, self.facing, self.delx, self.dely])
 
 root = tk.Tk()
 app = Application(master=root)

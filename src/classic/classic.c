@@ -47,13 +47,7 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-struct RoomData {
-    char tiles[2048];
-};
-
-struct RoomData* room;
-
-char tiles[2048]; // Placeholder for memory
+char tiles[2050]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY[] = {
@@ -80,14 +74,13 @@ initialize()
     load_palette(16, avapal, 1);
 
     timer = 0;
-    ava_x = 10;
-    ava_y = 8;
     ava_facing = DOWN;
-    draw_ava(0, ava_x * 16, ava_y * 16);
+    
 
     vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
 
     load_room();
+    draw_ava(0, ava_x * 16, ava_y * 16);
     init_enemy();
     vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 3, DOWN, 0, 0);
     vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 9, UP, 0, 0);
@@ -258,7 +251,6 @@ kill_ava()
 
 load_room()
 {
-    int i;
     char x, y, tile, err;
     char tiledata[STARBASE_SIZE_IN_BYTES];
 
@@ -272,19 +264,17 @@ load_room()
     set_font_color(4, 0);
     load_default_font();
 
-    room = tiles;
-    err = cd_loaddata(4, 0, room, 0x7ff);
+    err = cd_loaddata(4, 0, tiles, 2050);
 
     if (err)
     {
+        put_hex(tiles, 4, 10, 4);
         put_hex(err, 4, 10, 5);
-        put_hex(tiles, 4, 10, 6);
         return;
     }
-
-    i = 0;
-    set_map_data(room->tiles, 64, 32);
-    load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
+    ava_x = tiles[2048];
+    ava_y = tiles[2049];
+    set_map_data(tiles, 64, 32);
 }
 
 char is_solid(char x, char y)
