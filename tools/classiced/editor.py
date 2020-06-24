@@ -3,6 +3,7 @@ import json
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image
+from pixelgrid import *
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -12,12 +13,15 @@ class Application(tk.Frame):
 
         self.select = 0
 
-        self.tiles = Image.open("../../src/images/tiles.png")
-        self.tiles = self.tiles.resize(
+        pixelgrid = PixelGrid([(0,0,0)])
+        with open("../../images/tiles/starbase.terra", "r") as fileo:
+            pixelgrid.load(json.load(fileo))
+        self.tiles = pixelgrid.getStrip(2)
+        self.tiles2x = self.tiles.resize(
                 (self.tiles.width * 2, self.tiles.height * 2),
                 Image.NEAREST)
         self.tileset = self._getTileset()
-        self.tilesTk = ImageTk.PhotoImage(self.tiles)
+        self.tilesTk = ImageTk.PhotoImage(self.tiles2x)
 
         self.room = Room(self.tileset)
 
@@ -25,18 +29,18 @@ class Application(tk.Frame):
         self.drawroom()
 
     def _getTileset(self):
-        return [self.tiles.crop((x*32,0,(x+1)*32,32)) for x in
-                range(0, int(self.tiles.width // 32))]
+        return [self.tiles.crop((x*16,0,(x+1)*16,16)) for x in
+                range(0, int(self.tiles.width // 16))]
 
     def createWidgets(self):
-        self.tilecanvas = tk.Canvas(self, width=self.tiles.width,
-                                    height=self.tiles.height)
+        self.tilecanvas = tk.Canvas(self, width=self.tiles2x.width,
+                                    height=self.tiles2x.height)
         self.tilecanvasimg = self.tilecanvas.create_image(
                 0,0,anchor=tk.NW,image=self.tilesTk)
         self.tilecanvas.grid(row=0, column=0, columnspan = 3)
         self.tilecanvas.bind("<Button-1>", self.tileclick)
         
-        self.viewcanvas = tk.Canvas(self, width=self.room.width*16*2, height=self.room.height*16*2)
+        self.viewcanvas = tk.Canvas(self, width=self.room.width*16, height=self.room.height*16)
         self.viewcanvas.grid(row=1, column=1)
         self.viewcanvasimage = self.viewcanvas.create_image(0,0,anchor=tk.NW)
         self.viewcanvas.bind("<Button-1>", self.viewclick)
@@ -77,29 +81,29 @@ class Application(tk.Frame):
         self.select = x
 
     def viewclick(self, event):
-        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)
-        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 32)
+        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
+        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
         
         if self.room.get(clickX, clickY) != self.select:
             self.room.set(clickX, clickY, self.select)
             self.drawroom()
 
     def cviewclick(self, event):
-        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)
-        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 32)
+        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
+        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
         self.xentry.delete(0, tk.END)
         self.xentry.insert(0, str(clickX))
         self.yentry.delete(0, tk.END)
         self.yentry.insert(0, str(clickY))
 
     def rviewclick(self, event):
-        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)
-        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 32)
+        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
+        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
         self.select = self.room.get(clickX, clickY)
 
     def viewmove(self, event):
-        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)
-        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 32)
+        clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
+        clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
         
         self.statusbar.config(
                 text="Coordinates: {}, {}".format(clickX, clickY))
@@ -107,8 +111,8 @@ class Application(tk.Frame):
     def save(self):
         filen = filedialog.asksaveasfilename(
                 defaultextension=".bin",
-                initialfile="worldbytes.bin",
-                initialdir="./",
+                initialfile="classicdata.bin",
+                initialdir="../../src/classicdata",
                 filetypes=(("Binary files", "*.bin"),
                            ("All files", "*")),
                 title="Save")
@@ -119,8 +123,8 @@ class Application(tk.Frame):
     def open(self):
         filen = filedialog.askopenfilename(
                 defaultextension=".bin",
-                initialfile="worldbytes.bin",
-                initialdir="./",
+                initialfile="classicdata.bin",
+                initialdir="../../src/classicdata",
                 filetypes=(("Binary files", "*.bin"),
                            ("All files", "*")),
                 title="Open")
@@ -135,6 +139,7 @@ class Room:
         self.height = 32
         self.tileset = tileset
         self.tiles = [0 for x in range(0,self.width*self.height)]
+        self.objects = []
 
     def set(self, x, y, v):
         if x >= self.width or y >= self.height or x < 0 or y < 0:
@@ -147,11 +152,11 @@ class Room:
         return self.tiles[x + y*self.width]
 
     def draw(self):
-        image = Image.new("RGB",(self.width*32, self.height*32))
+        image = Image.new("RGB",(self.width*16, self.height*16))
         i = 0
         for y in range(0, self.height):
             for x in range(0, self.width):
-                image.paste(self.tileset[self.tiles[i]],(x*32, y*32))
+                image.paste(self.tileset[self.tiles[i]],(x*16, y*16))
                 i = i+1
         return image
 

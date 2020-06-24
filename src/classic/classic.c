@@ -47,7 +47,13 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-char tiles[2048];
+struct RoomData {
+    char tiles[2048];
+};
+
+struct RoomData* room;
+
+char tiles[2048]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY[] = {
@@ -266,7 +272,8 @@ load_room()
     set_font_color(4, 0);
     load_default_font();
 
-    err = cd_loaddata(4, 0, tiles, 0x7ff);
+    room = tiles;
+    err = cd_loaddata(4, 0, room, 0x7ff);
 
     if (err)
     {
@@ -276,7 +283,7 @@ load_room()
     }
 
     i = 0;
-    set_map_data(tiles, 64, 32);
+    set_map_data(room->tiles, 64, 32);
     load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
 }
 
