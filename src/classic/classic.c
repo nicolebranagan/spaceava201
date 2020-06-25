@@ -47,7 +47,7 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-char tiles[2050]; // Placeholder for memory
+char tiles[3000]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY[] = {
@@ -264,7 +264,7 @@ load_room()
     set_font_color(4, 0);
     load_default_font();
 
-    err = cd_loaddata(4, 0, tiles, 2050);
+    err = cd_loaddata(4, 0, tiles, 3000);
 
     if (err)
     {

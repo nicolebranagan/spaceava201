@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
 from pixelgrid import *
+from enemybox import EnemyBox
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -68,6 +69,15 @@ class Application(tk.Frame):
         setstartbutton = tk.Button(controls, text="Set Start", command=self.setstart)
         setstartbutton.grid(row=3, column=0, columnspan=2)
 
+        def onclickaddenemy():
+            def onsave(x, y, type, facing, delx, dely):
+                self.room.enemies.append(Enemy(x, y, type, facing, delx, dely))
+                self.drawroom()
+            EnemyBox(root, onsave)
+
+        addenemybutton = tk.Button(controls, text="Add Enemy", command=onclickaddenemy)
+        addenemybutton.grid(row=4, column=0, columnspan=2)
+
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
@@ -94,7 +104,7 @@ class Application(tk.Frame):
             self.room.starty = clickY 
             self.drawroom()
             return 
-            
+
         if self.room.get(clickX, clickY) != self.select:
             self.room.set(clickX, clickY, self.select)
             self.drawroom()
@@ -145,6 +155,29 @@ class Application(tk.Frame):
         if filen != () and filen != "":
             with open(filen, "rb") as fileo:
                 self.room = Room.load(list(fileo.read(2048)), self.tileset)
+                self.room.startx = fileo.read(1)[0]
+                self.room.starty = fileo.read(1)[0]
+                while True:
+                    xbyte = fileo.read(1)
+                    if (xbyte[0] == 255):
+                        break
+                    self.room.objects.append(Object(
+                        xbyte[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0]
+                    ))
+                while True:
+                    xbyte = fileo.read(1)
+                    if (xbyte == b''):
+                        break
+                    self.room.enemies.append(Enemy(
+                        xbyte[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0]
+                    ))
             self.drawroom()
 
 class Room:
@@ -177,6 +210,8 @@ class Room:
                 i = i+1
         draw = ImageDraw.Draw(image)
         draw.text((self.startx*16 + 4, self.starty*16 + 4), "S", (255, 0, 0))
+        for enem in self.enemies:
+            draw.text((enem.x*16 + 4, enem.y*16 + 4), "E", (0, 128, 0))
         return image
 
     def dump(self):
