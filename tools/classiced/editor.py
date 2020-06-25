@@ -5,6 +5,7 @@ from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
 from pixelgrid import *
 from enemybox import EnemyBox
+from objectbox import ObjectBox
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -71,6 +72,15 @@ class Application(tk.Frame):
         addenemybutton = tk.Button(controls, text="Add Enemy", command=onclickaddenemy)
         addenemybutton.grid(row=4, column=0, columnspan=2)
 
+        def onclickaddobject():
+            def onsave(x, y, type):
+                self.room.objects.append(Object(x, y, type))
+                self.drawroom()
+            ObjectBox(root, onsave, Object(self.savedx, self.savedy, 0))
+
+        addobjectbutton = tk.Button(controls, text="Add Object", command=onclickaddobject)
+        addobjectbutton.grid(row=5, column=0, columnspan=2)
+
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
@@ -113,6 +123,17 @@ class Application(tk.Frame):
                 self.room.enemies[idx] = Enemy(x, y, type, facing, delx, dely)
                 self.drawroom()
             EnemyBox(root, onsave, enem)
+            return
+        for idx, obj in enumerate(self.room.objects):
+            if (obj.x != clickX or obj.y != clickY):
+                continue
+            def onsave(x, y, type):
+                self.room.enemies[idx] = Enemy(x, y, type)
+                self.drawroom()
+            ObjectBox(root, onsave, obj)
+            return
+        self.savedx = clickX 
+        self.savedy = clickY
 
     def rviewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
@@ -165,7 +186,7 @@ class Application(tk.Frame):
                     ))
                 while True:
                     xbyte = fileo.read(1)
-                    if (xbyte == b''):
+                    if (xbyte[0] == 255):
                         break
                     self.room.enemies.append(Enemy(
                         xbyte[0],
@@ -209,6 +230,8 @@ class Room:
         draw.text((self.startx*16 + 4, self.starty*16 + 4), "S", (255, 0, 0))
         for enem in self.enemies:
             draw.text((enem.x*16 + 4, enem.y*16 + 4), "E", (0, 128, 0))
+        for obj in self.objects:
+            draw.text((obj.x*16 + 4, obj.y*16 + 4), "O", (0, 0, 255))
         return image
 
     def dump(self):
@@ -218,7 +241,9 @@ class Room:
         enemies = b''
         for enem in self.enemies:
             enemies = enemies + enem.dump()
-        return bytes(self.tiles) + bytes([self.startx, self.starty]) + objects + bytes([255]) + enemies  
+        data = bytes(self.tiles) + bytes([self.startx, self.starty]) + objects + bytes([255]) + enemies  
+        # Ensure all data is sector-aligned
+        return data + bytes([255 for _ in range(0, 4096 - len(data))])
 
     @staticmethod
     def load(tiles, tileset):
