@@ -13,6 +13,8 @@ class Application(tk.Frame):
         self.pack()
 
         self.select = 0
+        self.savedx = 0
+        self.savedy = 0
 
         pixelgrid = PixelGrid([(0,0,0)])
         with open("../../images/tiles/starbase.terra", "r") as fileo:
@@ -55,15 +57,6 @@ class Application(tk.Frame):
         loadbutton.grid(row=0, column=0)
         savebutton = tk.Button(controls, text="Save", command=self.save)
         savebutton.grid(row=0, column=1)
-
-        self.objectlist = tk.Listbox(controls)
-        self.objectlist.grid(row=1, column=0, columnspan=2)
-        self.xentry = tk.Entry(controls, width=3)
-        self.xentry.insert(0, "0")
-        self.xentry.grid(row=2, column=0)
-        self.yentry = tk.Entry(controls, width=3)
-        self.yentry.insert(0, "0")
-        self.yentry.grid(row=2, column=1)
         
         self.setstartmode = False
         setstartbutton = tk.Button(controls, text="Set Start", command=self.setstart)
@@ -73,7 +66,7 @@ class Application(tk.Frame):
             def onsave(x, y, type, facing, delx, dely):
                 self.room.enemies.append(Enemy(x, y, type, facing, delx, dely))
                 self.drawroom()
-            EnemyBox(root, onsave)
+            EnemyBox(root, onsave, Enemy(self.savedx, self.savedy, 0, 0, 0, 0))
 
         addenemybutton = tk.Button(controls, text="Add Enemy", command=onclickaddenemy)
         addenemybutton.grid(row=4, column=0, columnspan=2)
@@ -112,10 +105,14 @@ class Application(tk.Frame):
     def cviewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
         clickY = math.floor(self.viewcanvas.canvasy(event.y) / 16)
-        self.xentry.delete(0, tk.END)
-        self.xentry.insert(0, str(clickX))
-        self.yentry.delete(0, tk.END)
-        self.yentry.insert(0, str(clickY))
+
+        for idx, enem in enumerate(self.room.enemies):
+            if (enem.x != clickX or enem.y != clickY):
+                continue
+            def onsave(x, y, type, facing, delx, dely):
+                self.room.enemies[idx] = Enemy(x, y, type, facing, delx, dely)
+                self.drawroom()
+            EnemyBox(root, onsave, enem)
 
     def rviewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 16)
