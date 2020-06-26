@@ -41,11 +41,17 @@ char draw_object(char sprite_offset, char i)
 {
     char row, frame;
     int dx, dy;
-    row = objects[i].type == OBJ_PHOTON ? 2 : 3;
-    frame = row * 16 + objects[i].frame;
 
     dx = (objects[i].x * 16) - sx;
     dy = (objects[i].y * 16) - sy;
+
+    if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
+    {
+        return sprite_offset + 1;
+    }
+
+    row = objects[i].type == OBJ_PHOTON ? 2 : 3;
+    frame = row * 16 + objects[i].frame;
 
     spr_set(sprite_offset);
     spr_x(dx);
@@ -99,7 +105,8 @@ char update_objects()
 
     for (i = 0; i < object_count; i++)
     {
-        if (objects[i].active && ava_x == objects[i].x && ava_y == objects[i].y) {
+        if (objects[i].active && ava_x == objects[i].x && ava_y == objects[i].y)
+        {
             objects[i].active = 0;
             obtained_object_count++;
         }

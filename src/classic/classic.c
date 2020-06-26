@@ -55,11 +55,12 @@ const char TILE_SOLIDITY[] = {
 
 initialize()
 {
-    int vram_offset, i;
+    char i;
 
     disp_off();
     reset_satb();
-    for (i = 0; i < 64; i++) {
+    for (i = 0; i < 64; i++)
+    {
         spr_set(i);
         spr_hide();
     }
@@ -75,19 +76,26 @@ initialize()
 
     timer = 0;
     ava_facing = DOWN;
-    
 
-    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
-
-    load_room();
-    draw_ava(0, ava_x * 16, ava_y * 16);
     init_enemy();
-    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 6, 3, DOWN, 0, 0);
-    vram_offset = create_enemy(vram_offset, TYPE_BIGMOUTH, 8, 9, UP, 0, 0);
     init_object();
-    create_object(OBJ_PHOTON, 6, 5);
-    create_object(OBJ_ANTIPHOTON, 8, 5);
+    load_room();
+    init_ava_sprite();
+    draw_ava(0, ava_x * 16, ava_y * 16);
     disp_on();
+}
+
+init_ava_sprite()
+{
+    spr_set(0);
+    spr_pal(0);
+    spr_pri(1);
+    spr_show();
+
+    spr_set(1);
+    spr_pal(0);
+    spr_pri(1);
+    spr_show();
 }
 
 draw_ava(char moving, int x, int y)
@@ -95,6 +103,9 @@ draw_ava(char moving, int x, int y)
     char frame, frame_offset;
     char ctrl_flags = SZ_16x16;
     int dx, dy; // display x, display y
+    int osx, osy;
+    osx = sx;
+    osy = sy;
 
     sx = x - 128;
     if (sx < 0)
@@ -114,7 +125,7 @@ draw_ava(char moving, int x, int y)
     load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
     if (moving)
     {
-        quick_draw_enemies();
+        scroll_enemies(osx - sx, osy - sy);
         draw_objects();
     }
 
@@ -163,18 +174,12 @@ draw_ava(char moving, int x, int y)
     spr_y(dy - 16);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16));
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
-    spr_pal(0);
-    spr_pri(1);
-    spr_show();
 
     spr_set(1);
     spr_x(dx);
     spr_y(dy);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16) + SPR_SIZE_16x16);
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
-    spr_pal(0);
-    spr_pri(1);
-    spr_show();
 
     return;
 }
@@ -251,7 +256,8 @@ kill_ava()
 
 load_room()
 {
-    char x, y, tile, err;
+    int vram_offset, i;
+    char err, x, y, type, facing, delx, dely;
     char tiledata[STARBASE_SIZE_IN_BYTES];
 
     cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE_IN_BYTES);
@@ -274,6 +280,35 @@ load_room()
     }
     ava_x = tiles[2048];
     ava_y = tiles[2049];
+    
+    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
+
+    i = 2049;
+    for (;;)
+    {
+        x = tiles[++i];
+        if (x == 255) {
+            break;
+        }
+        y = tiles[++i];
+        type = tiles[++i];
+        create_object(type, x, y);
+    }
+
+    for (;;)
+    {
+        x = tiles[++i];
+        if (x == 255) {
+            break;
+        }
+        y = tiles[++i];
+        type = tiles[++i];
+        facing = tiles[++i];
+        delx = tiles[++i];
+        dely = tiles[++i];
+        vram_offset = create_enemy(vram_offset, type, x, y, facing, delx, dely);
+    }
+
     set_map_data(tiles, 64, 32);
 }
 
@@ -334,7 +369,8 @@ main()
             update_enemies();
         }
 
-        if (update_objects()) {
+        if (update_objects())
+        {
             // TODO: Have this win rather than kill ava
             kill_ava();
         }

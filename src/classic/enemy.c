@@ -5,7 +5,7 @@
 #include "images/images.h"
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 
-#define MAX_ENEMY_COUNT 8
+#define MAX_ENEMY_COUNT 16
 
 // Enemy types
 #define ENEMY_TYPE_COUNT 2
@@ -22,7 +22,8 @@ char ava_dead;
 
 struct enemy
 {
-    char type, x, y, timer, active, facing, frame, delx, dely;
+    char type, x, y, timer, active, facing, frame;
+    signed char delx, dely;
 };
 
 struct enemy enemies[MAX_ENEMY_COUNT];
@@ -154,6 +155,30 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y)
 
 #define SPRITE_START 2;
 
+scroll_enemies(signed char dx, signed char dy)
+{
+    char i, offset;
+    offset = SPRITE_START;
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (!enemies[i].active)
+        {
+            spr_set(offset);
+            spr_hide();
+            spr_set(offset + 1);
+            spr_hide();
+            offset = offset + 2;
+            continue;
+        }
+        spr_set(offset++);
+        spr_x(spr_get_x() + dx);
+        spr_y(spr_get_y() + dy);
+        spr_set(offset++);
+        spr_x(spr_get_x() + dx);
+        spr_y(spr_get_y() + dy);
+    }
+}
+
 quick_draw_enemies()
 {
     char i, offset;
@@ -178,6 +203,11 @@ quick_draw_enemies()
         }
         dx = (enemies[i].x * 16) - sx;
         dy = (enemies[i].y * 16) - sy;
+        if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
+        {
+            offset = offset + 2;
+            continue;
+        }
         spr_set(offset);
         spr_x(dx);
         spr_y(dy - 16);
@@ -192,7 +222,8 @@ quick_draw_enemies()
 
 draw_enemies(char time_offset)
 {
-    char i, offset;
+    char i, offset, j;
+    int ex, ey, edx, edy;
 
     if (!enemy_count)
     {
@@ -202,11 +233,15 @@ draw_enemies(char time_offset)
     offset = SPRITE_START;
     for (i = 0; i < enemy_count; i++)
     {
+        ex = enemies[i].x * 16;
+        ey = enemies[i].y * 16;
+        edx = enemies[i].delx * time_offset;
+        edy = enemies[i].dely * time_offset;
         offset = draw_enemy(
             offset,
             i,
-            (enemies[i].x * 16) + (enemies[i].delx * time_offset),
-            (enemies[i].y * 16) + (enemies[i].dely * time_offset));
+            ex + edx,
+            ey + edy);
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
@@ -373,7 +408,8 @@ update_enemies()
             }
         }
     }
-    if (ava_dead) {
+    if (ava_dead)
+    {
         kill_ava();
     }
 }

@@ -128,7 +128,7 @@ class Application(tk.Frame):
             if (obj.x != clickX or obj.y != clickY):
                 continue
             def onsave(x, y, type):
-                self.room.enemies[idx] = Enemy(x, y, type)
+                self.room.objects[idx] = Object(x, y, type)
                 self.drawroom()
             ObjectBox(root, onsave, obj)
             return
