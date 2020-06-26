@@ -59,11 +59,6 @@ initialize()
 
     disp_off();
     reset_satb();
-    for (i = 0; i < 64; i++)
-    {
-        spr_set(i);
-        spr_hide();
-    }
     satb_update();
     cls();
     set_xres(256);
@@ -73,16 +68,30 @@ initialize()
 
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE_IN_BYTES);
     load_palette(16, avapal, 1);
+    load_level_data();
 
-    timer = 0;
-    ava_facing = DOWN;
-
-    init_enemy();
-    init_object();
     load_room();
-    init_ava_sprite();
-    draw_ava(0, ava_x * 16, ava_y * 16);
-    disp_on();
+}
+
+load_level_data()
+{
+    int vram_offset;
+    char tiledata[STARBASE_SIZE_IN_BYTES];
+
+    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE_IN_BYTES);
+
+    set_tile_data(tiledata, 16, palette_ref, 16);
+    load_palette(1, tilepal1, 1);
+    load_tile(0x2000);
+
+    set_font_pal(0);
+    set_font_color(4, 0);
+    load_default_font();
+
+    cd_loaddata(4, 0, tiles, 3000);
+
+    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
+    populate_enemies_vram(vram_offset, tiles + 2049);
 }
 
 init_ava_sprite()
@@ -251,50 +260,29 @@ kill_ava()
     spr_set(1);
     spr_hide();
 
-    initialize();
+    load_room();
 }
 
 load_room()
 {
-    int vram_offset, i;
+    int i;
     char err, x, y, type, facing, delx, dely;
-    char tiledata[STARBASE_SIZE_IN_BYTES];
 
-    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE_IN_BYTES);
-
-    set_tile_data(tiledata, 16, palette_ref, 16);
-    load_palette(1, tilepal1, 1);
-    load_tile(0x2000);
-
-    set_font_pal(0);
-    set_font_color(4, 0);
-    load_default_font();
-
-    err = cd_loaddata(4, 0, tiles, 3000);
-
-    if (err)
+    for (i = 0; i < 64; i++)
     {
-        put_hex(tiles, 4, 10, 4);
-        put_hex(err, 4, 10, 5);
-        return;
+        spr_set(i);
+        spr_hide();
     }
+
+    timer = 0;
+    ava_facing = DOWN;
+
     ava_x = tiles[2048];
     ava_y = tiles[2049];
     
-    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
-
+    init_object();
+    init_enemy();
     i = 2049;
-    for (;;)
-    {
-        x = tiles[++i];
-        if (x == 255) {
-            break;
-        }
-        y = tiles[++i];
-        type = tiles[++i];
-        create_object(type, x, y);
-    }
-
     for (;;)
     {
         x = tiles[++i];
@@ -306,10 +294,24 @@ load_room()
         facing = tiles[++i];
         delx = tiles[++i];
         dely = tiles[++i];
-        vram_offset = create_enemy(vram_offset, type, x, y, facing, delx, dely);
+        create_enemy(type, x, y, facing, delx, dely);
+    }
+
+    for (;;)
+    {
+        x = tiles[++i];
+        if (x == 255) {
+            break;
+        }
+        y = tiles[++i];
+        type = tiles[++i];
+        create_object(type, x, y);
     }
 
     set_map_data(tiles, 64, 32);
+    init_ava_sprite();
+    draw_ava(0, ava_x * 16, ava_y * 16);
+    disp_on();
 }
 
 char is_solid(char x, char y)

@@ -179,8 +179,11 @@ class Application(tk.Frame):
                     xbyte = fileo.read(1)
                     if (xbyte[0] == 255):
                         break
-                    self.room.objects.append(Object(
+                    self.room.enemies.append(Enemy(
                         xbyte[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0],
+                        fileo.read(1)[0],
                         fileo.read(1)[0],
                         fileo.read(1)[0]
                     ))
@@ -188,11 +191,8 @@ class Application(tk.Frame):
                     xbyte = fileo.read(1)
                     if (xbyte[0] == 255):
                         break
-                    self.room.enemies.append(Enemy(
+                    self.room.objects.append(Object(
                         xbyte[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0],
                         fileo.read(1)[0],
                         fileo.read(1)[0]
                     ))
@@ -241,7 +241,7 @@ class Room:
         enemies = b''
         for enem in self.enemies:
             enemies = enemies + enem.dump()
-        data = bytes(self.tiles) + bytes([self.startx, self.starty]) + objects + bytes([255]) + enemies  
+        data = bytes(self.tiles) + bytes([self.startx, self.starty]) + enemies + bytes([255]) + objects  
         # Ensure all data is sector-aligned
         return data + bytes([255 for _ in range(0, 4096 - len(data))])
 

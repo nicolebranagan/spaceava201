@@ -47,6 +47,8 @@ char draw_object(char sprite_offset, char i)
 
     if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
     {
+        spr_set(sprite_offset);
+        spr_hide();
         return sprite_offset + 1;
     }
 

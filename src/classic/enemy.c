@@ -28,21 +28,57 @@ struct enemy
 
 struct enemy enemies[MAX_ENEMY_COUNT];
 
+int populate_enemies_vram(int vram_offset, char* enemy_data) {
+    int i;
+    char x, y, type, facing, delx, dely;
+
+    i = 0;
+    for (;;)
+    {
+        x = enemy_data[++i];
+        if (x == 255) {
+            break;
+        }
+        y = enemy_data[++i];
+        type = enemy_data[++i];
+        facing = enemy_data[++i];
+        delx = enemy_data[++i];
+        dely = enemy_data[++i];
+        vram_offset = populate_enemy_vram(vram_offset, type);
+    }
+
+    return vram_offset;
+}
+
+int populate_enemy_vram(int vram_offset, char type) {
+    if (vram_offset && type == TYPE_BIGMOUTH || type == TYPE_BALL)
+    {
+        if (vram_offset && !enemy_vram[TYPE_BIGMOUTH])
+        {
+            cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE_IN_BYTES);
+            enemy_vram[TYPE_BIGMOUTH] = vram_offset;
+            // The ball is on the Bigmouth graphics file
+            enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
+            vram_offset += BIGMOUTH_SIZE_IN_BYTES;
+        }
+    }
+    else
+    {
+        for(;;) vsync();
+    }
+
+    return vram_offset;
+}
+
 init_enemy()
 {
     char i;
     enemy_count = 0;
-
-    for (i = 0; i < ENEMY_TYPE_COUNT; i++)
-    {
-        enemy_vram[i] = 0;
-    }
-
     load_palette(17, bigmouthpal, 1);
 }
 
 // Returns a new VRAM offset
-int create_enemy(int vram_offset, char type, char x, char y, char facing, char delx, char dely)
+create_enemy(char type, char x, char y, char facing, char delx, char dely)
 {
     char i, new_index;
 
@@ -75,18 +111,6 @@ int create_enemy(int vram_offset, char type, char x, char y, char facing, char d
     enemies[new_index].active = 1;
     enemies[new_index].facing = facing;
     enemies[new_index].frame = 0;
-    if (vram_offset && type == TYPE_BIGMOUTH || type == TYPE_BALL)
-    {
-        if (vram_offset && !enemy_vram[TYPE_BIGMOUTH])
-        {
-            cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE_IN_BYTES);
-            enemy_vram[TYPE_BIGMOUTH] = vram_offset;
-            enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
-            vram_offset += BIGMOUTH_SIZE_IN_BYTES;
-        }
-    }
-
-    return vram_offset;
 }
 
 // Returns a new sprite offset
@@ -271,16 +295,16 @@ update_bigmouth(char index)
         switch (enemies[index].facing)
         {
         case UP:
-            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, -1);
+            create_enemy(TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, -1);
             break;
         case DOWN:
-            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, 1);
+            create_enemy(TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, 0, 1);
             break;
         case LEFT:
-            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, -1, 0);
+            create_enemy(TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, -1, 0);
             break;
         case RIGHT:
-            create_enemy(0, TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, +1, 0);
+            create_enemy(TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, +1, 0);
             break;
         }
     }
