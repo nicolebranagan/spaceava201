@@ -65,6 +65,7 @@ main()
 			cls();
 			satb_update();
 			vsync();
+			current_level = 0;
 			cd_execoverlay(3);
 		}
 	}		

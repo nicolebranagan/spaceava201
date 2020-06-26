@@ -68,12 +68,12 @@ initialize()
 
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE_IN_BYTES);
     load_palette(16, avapal, 1);
-    load_level_data();
+    load_level_data(current_level);
 
     load_room();
 }
 
-load_level_data()
+load_level_data(char level)
 {
     int vram_offset;
     char tiledata[STARBASE_SIZE_IN_BYTES];
@@ -88,7 +88,8 @@ load_level_data()
     set_font_color(4, 0);
     load_default_font();
 
-    cd_loaddata(4, 0, tiles, 3000);
+    // Each level data takes up two offsets
+    cd_loaddata(4, 2*level, tiles, 3000);
 
     vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
     populate_enemies_vram(vram_offset, tiles + 2049);
@@ -240,17 +241,17 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
-const char FRAMES[] = {8, 9, 10};
+const char DEATH_FRAMES[] = {8, 9, 10};
 kill_ava()
 {
     char i;
     for (i = 0; i < 3; i++)
     {
         spr_set(0);
-        spr_pattern(0x5000 + (2 * FRAMES[i] * SPR_SIZE_16x16));
+        spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16));
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         spr_set(1);
-        spr_pattern(0x5000 + (2 * FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
+        spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         satb_update();
         vsync(4);
@@ -261,6 +262,32 @@ kill_ava()
     spr_hide();
 
     load_room();
+}
+
+const char WIN_FRAMES[] = {0, 0, 11, 12, 13, 13, 13, 14, 14, 15};
+win_ava()
+{
+    char i;
+    for (i = 0; i < 10; i++)
+    {
+        spr_set(0);
+        spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_set(1);
+        spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        satb_update();
+        vsync(4);
+    }
+    spr_set(0);
+    spr_hide();
+    spr_set(1);
+    spr_hide();
+    satb_update();
+    vsync(8);
+    
+    // TODO: Have this move to what's next rather than reset
+    //load_room();
 }
 
 load_room()
@@ -371,10 +398,14 @@ main()
             update_enemies();
         }
 
+        if (joyt & JOY_II)
+        {
+            win_ava();
+        }
+
         if (update_objects())
         {
-            // TODO: Have this win rather than kill ava
-            kill_ava();
+            win_ava();
         }
     }
 }
