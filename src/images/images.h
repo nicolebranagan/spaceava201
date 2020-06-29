@@ -13,14 +13,14 @@
 #define BIGMOUTH_SECTOR_COUNT 1 
 #define BIGMOUTH_SIZE 2048 
 
-// ./images/starbase-rotate.chr
-#define STARBASE_ROTATE_SECTOR_OFFSET 5 
-#define STARBASE_ROTATE_SECTOR_COUNT 1 
-#define STARBASE_ROTATE_SIZE 2048 
-
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 6 
+#define STARBASE_SECTOR_OFFSET 5 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
+
+// ./images/starrot.chr
+#define STARROT_SECTOR_OFFSET 6 
+#define STARROT_SECTOR_COUNT 1 
+#define STARROT_SIZE 2048 
 
 #endif

@@ -1,11 +1,10 @@
 import math
-import json
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
-from pixelgrid import *
 from enemybox import EnemyBox
 from objectbox import ObjectBox
+from tileset import getStarbase
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -17,24 +16,15 @@ class Application(tk.Frame):
         self.savedx = 0
         self.savedy = 0
 
-        pixelgrid = PixelGrid([(0,0,0)])
-        with open("../../images/tiles/starbase.terra", "r") as fileo:
-            pixelgrid.load(json.load(fileo))
-        self.tiles = pixelgrid.getStrip(2)
-        self.tiles2x = self.tiles.resize(
-                (self.tiles.width * 2, self.tiles.height * 2),
-                Image.NEAREST)
-        self.tileset = self._getTileset()
-        self.tilesTk = ImageTk.PhotoImage(self.tiles2x)
+        tiles2x, tileset, tilesTk = getStarbase()
+        self.tiles2x = tiles2x
+        self.tileset = tileset
+        self.tilesTk = tilesTk
 
         self.room = Room(self.tileset)
 
         self.createWidgets()
         self.drawroom()
-
-    def _getTileset(self):
-        return [self.tiles.crop((x*16,0,(x+1)*16,16)) for x in
-                range(0, int(self.tiles.width // 16))]
 
     def createWidgets(self):
         self.tilecanvas = tk.Canvas(self, width=self.tiles2x.width,

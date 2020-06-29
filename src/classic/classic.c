@@ -13,6 +13,7 @@
 
 #incbin(avapal, "palettes/ava.pal");
 #incbin(tilepal1, "palettes/starbase.pal");
+#incbin(tilepal2, "palettes/starrot.pal");
 
 const char palette_ref[] = {
     0x10,
@@ -30,7 +31,23 @@ const char palette_ref[] = {
     0x10,
     0x10,
     0x10,
-    0x10};
+    0x10,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20,
+    0x20};
 
 char tiles[500]; // Placeholder for memory
 
@@ -38,10 +55,10 @@ char tiles[500]; // Placeholder for memory
 const char TILE_SOLIDITY[] = {
     0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
 
+char pal_rotate_step;
+
 initialize()
 {
-    char i;
-
     disp_off();
     reset_satb();
     satb_update();
@@ -50,6 +67,8 @@ initialize()
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
     reset_satb();
+
+    pal_rotate_step = 0;
 
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
     load_palette(16, avapal, 1);
@@ -61,23 +80,33 @@ initialize()
 load_level_data(char level)
 {
     int vram_offset;
-    char tiledata[STARBASE_SIZE+STARBASE_ROTATE_SIZE];
+    char tiledata[STARBASE_SIZE + STARROT_SIZE];
 
-    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE);
+    cd_loaddata(
+        IMAGE_OVERLAY,
+        STARBASE_SECTOR_OFFSET,
+        tiledata,
+        STARBASE_SIZE);
+    cd_loaddata(
+        IMAGE_OVERLAY,
+        STARROT_SECTOR_OFFSET,
+        tiledata + STARROT_SIZE,
+        STARROT_SIZE);
 
-    set_tile_data(tiledata, 16, palette_ref, 16);
+    set_tile_data(tiledata, 32, palette_ref, 32);
     load_palette(1, tilepal1, 1);
+    load_palette(2, tilepal2, 1);
     load_tile(0x2000);
 
     set_font_pal(0);
     set_font_color(4, 0);
     load_default_font();
-    
+
     // Level data is the first sector of the level
-    cd_loaddata(4, 2*level, tiledata, 2048);
+    cd_loaddata(4, 2 * level, tiledata, 2048);
     set_map_data(tiledata, 64, 32);
 
-    cd_loaddata(4, 2*level+1, tiles, 500);
+    cd_loaddata(4, 2 * level + 1, tiles, 500);
 
     vram_offset = AVA_VRAM + AVA_SIZE;
     populate_enemies_vram(vram_offset, tiles + 2);
@@ -96,11 +125,17 @@ init_ava_sprite()
     spr_show();
 }
 
-wait_for_sync(char cycles) {
+wait_for_sync(char cycles)
+{
     char i;
-    for (i = 0; i < cycles; i++) {
+    for (i = 0; i < cycles; i++)
+    {
         draw_objects();
+        load_palette(2, tilepal2 + (pal_rotate_step << 5), 1);
         vsync();
+        timer++;
+        if (!(timer % 16))
+            pal_rotate_step = (pal_rotate_step + 1) % 4;
     }
 }
 
@@ -213,12 +248,10 @@ move_ava(char negative, char delx, char dely)
         draw_ava(1, x, y);
         satb_update();
         wait_for_sync(1);
-        timer++;
 
         draw_ava(1, x, y);
         satb_update();
         wait_for_sync(1);
-        timer++;
     }
 
     if (negative)
@@ -280,7 +313,7 @@ win_ava()
     spr_hide();
     satb_update();
     wait_for_sync(8);
-    
+
     // TODO: Have this move to what's next rather than reset
     //load_room();
 }
@@ -301,14 +334,15 @@ load_room()
 
     ava_x = tiles[0];
     ava_y = tiles[1];
-    
+
     init_object();
     init_enemy();
     i = 1;
     for (;;)
     {
         x = tiles[++i];
-        if (x == 255) {
+        if (x == 255)
+        {
             break;
         }
         y = tiles[++i];
@@ -322,7 +356,8 @@ load_room()
     for (;;)
     {
         x = tiles[++i];
-        if (x == 255) {
+        if (x == 255)
+        {
             break;
         }
         y = tiles[++i];
@@ -359,7 +394,6 @@ main()
         wait_for_sync(1);
         draw_enemies(0);
         satb_update();
-        timer++;
 
         joyt = joytrg(0);
         if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1))

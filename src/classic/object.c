@@ -15,7 +15,8 @@ char obtained_object_count;
 
 struct object
 {
-    char type, x, y, active, frame;
+    char type, active, frame;
+    int x, y;
 };
 
 struct object objects[MAX_OBJECT_COUNT];
@@ -33,8 +34,8 @@ create_object(char type, char x, char y)
     object_count++;
 
     objects[new_index].type = type;
-    objects[new_index].x = x;
-    objects[new_index].y = y;
+    objects[new_index].x = x*16;
+    objects[new_index].y = y*16;
     objects[new_index].active = 1;
     objects[new_index].frame = 0;
 
@@ -57,8 +58,8 @@ draw_object(char i)
         return;
     }
 
-    dx = (objects[i].x * 16) - sx;
-    dy = (objects[i].y * 16) - sy;
+    dx = (objects[i].x) - sx;
+    dy = (objects[i].y) - sy;
 
     if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
     {
