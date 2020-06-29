@@ -7,22 +7,7 @@
 
 //TODO: factor these out into a global include
 
-#define SPR_SIZE_16x16 0x40
-#define IMAGE_OVERLAY 5
-
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
-
-#define AVA_VRAM 0x5000
-
-int sx, sy; // scroll x, scroll y
-char ava_x;
-char ava_y;
-char ava_facing;
-char timer;
-
+#include "classic/classic.h"
 #include "classic/enemy.c"
 #include "classic/object.c"
 
@@ -108,6 +93,14 @@ init_ava_sprite()
     spr_show();
 }
 
+wait_for_sync(char cycles) {
+    char i;
+    for (i = 0; i < cycles; i++) {
+        draw_objects();
+        vsync();
+    }
+}
+
 draw_ava(char moving, int x, int y)
 {
     char frame, frame_offset;
@@ -136,7 +129,6 @@ draw_ava(char moving, int x, int y)
     if (moving)
     {
         scroll_enemies(osx - sx, osy - sy);
-        draw_objects();
     }
 
     switch (ava_facing)
@@ -217,12 +209,12 @@ move_ava(char negative, char delx, char dely)
 
         draw_ava(1, x, y);
         satb_update();
-        vsync();
+        wait_for_sync(1);
         timer++;
 
         draw_ava(1, x, y);
         satb_update();
-        vsync();
+        wait_for_sync(1);
         timer++;
     }
 
@@ -254,7 +246,7 @@ kill_ava()
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         satb_update();
-        vsync(4);
+        wait_for_sync(4);
     }
     spr_set(0);
     spr_hide();
@@ -277,14 +269,14 @@ win_ava()
         spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         satb_update();
-        vsync(4);
+        wait_for_sync(4);
     }
     spr_set(0);
     spr_hide();
     spr_set(1);
     spr_hide();
     satb_update();
-    vsync(8);
+    wait_for_sync(8);
     
     // TODO: Have this move to what's next rather than reset
     //load_room();
@@ -362,9 +354,8 @@ main()
 
     for (;;)
     {
-        vsync();
+        wait_for_sync(1);
         draw_enemies(0);
-        draw_objects();
         satb_update();
         timer++;
 

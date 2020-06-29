@@ -2,6 +2,7 @@
 	Enemy logic
 */
 
+#include "classic/classic.h"
 #include "images/images.h"
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 
@@ -61,10 +62,6 @@ int populate_enemy_vram(int vram_offset, char type) {
             enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
             vram_offset += BIGMOUTH_SIZE_IN_BYTES;
         }
-    }
-    else
-    {
-        for(;;) vsync();
     }
 
     return vram_offset;
@@ -414,7 +411,7 @@ update_enemies()
         {
             draw_enemies(j);
             satb_update();
-            vsync();
+            wait_for_sync(1);
         }
         for (i = 0; i < enemy_count; i++)
         {
