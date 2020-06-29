@@ -10,8 +10,7 @@ def palettize(inputgrid):
     def to_binary(input):
         return bin(input)[2:].zfill(3) # strip 0b and make 3 digits
     output = []
-    palette = inputgrid.palette[0:16]
-    for color in palette:
+    for color in inputgrid.palette:
         red = to_binary(color[0] // 32)
         green = to_binary(color[1] // 32)
         blue = to_binary(color[2] // 32)

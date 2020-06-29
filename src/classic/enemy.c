@@ -29,7 +29,8 @@ struct enemy
 
 struct enemy enemies[MAX_ENEMY_COUNT];
 
-int populate_enemies_vram(int vram_offset, char* enemy_data) {
+int populate_enemies_vram(int vram_offset, char *enemy_data)
+{
     int i;
     char x, y, type, facing, delx, dely;
 
@@ -37,7 +38,8 @@ int populate_enemies_vram(int vram_offset, char* enemy_data) {
     for (;;)
     {
         x = enemy_data[++i];
-        if (x == 255) {
+        if (x == 255)
+        {
             break;
         }
         y = enemy_data[++i];
@@ -51,16 +53,17 @@ int populate_enemies_vram(int vram_offset, char* enemy_data) {
     return vram_offset;
 }
 
-int populate_enemy_vram(int vram_offset, char type) {
+int populate_enemy_vram(int vram_offset, char type)
+{
     if (vram_offset && type == TYPE_BIGMOUTH || type == TYPE_BALL)
     {
         if (vram_offset && !enemy_vram[TYPE_BIGMOUTH])
         {
-            cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE_IN_BYTES);
+            cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE);
             enemy_vram[TYPE_BIGMOUTH] = vram_offset;
             // The ball is on the Bigmouth graphics file
             enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
-            vram_offset += BIGMOUTH_SIZE_IN_BYTES;
+            vram_offset += BIGMOUTH_SIZE;
         }
     }
 

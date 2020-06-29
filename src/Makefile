@@ -18,7 +18,7 @@ logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 
-classic.ovl: $(CLASSIC_SRC)
+classic.ovl: $(CLASSIC_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CLASSIC_SRC) $(LIBS)
 	mv */*.s */*.ovl */*.sym ../build
 

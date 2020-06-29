@@ -42,10 +42,10 @@ with open(headerfile, "w") as header:
     sector_offset = 0
     for filedata in parsed_files:
         header.write(f'// {filedata["name"]}\n')
-        variable_name = Path(filedata["name"]).stem.upper().replace('.', '_')
+        variable_name = Path(filedata["name"]).stem.upper().replace('.', '_').replace('-', '_')
         header.write(f'#define {variable_name}_SECTOR_OFFSET {sector_offset} \n')
         header.write(f'#define {variable_name}_SECTOR_COUNT {filedata["sectorcount"]} \n')
-        header.write(f'#define {variable_name}_SIZE_IN_BYTES {filedata["size"]} \n\n')
+        header.write(f'#define {variable_name}_SIZE {filedata["size"]} \n\n')
         sector_offset = sector_offset + filedata["sectorcount"]
         fulldata = fulldata + filedata["data"]
     header.write("#endif")

@@ -32,7 +32,7 @@ const char palette_ref[] = {
     0x10,
     0x10};
 
-char tiles[3000]; // Placeholder for memory
+char tiles[500]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY[] = {
@@ -51,7 +51,7 @@ initialize()
     ad_reset();
     reset_satb();
 
-    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE_IN_BYTES);
+    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
     load_palette(16, avapal, 1);
     load_level_data(current_level);
 
@@ -61,9 +61,9 @@ initialize()
 load_level_data(char level)
 {
     int vram_offset;
-    char tiledata[STARBASE_SIZE_IN_BYTES];
+    char tiledata[STARBASE_SIZE+STARBASE_ROTATE_SIZE];
 
-    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE_IN_BYTES);
+    cd_loaddata(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, tiledata, STARBASE_SIZE);
 
     set_tile_data(tiledata, 16, palette_ref, 16);
     load_palette(1, tilepal1, 1);
@@ -72,12 +72,15 @@ load_level_data(char level)
     set_font_pal(0);
     set_font_color(4, 0);
     load_default_font();
+    
+    // Level data is the first sector of the level
+    cd_loaddata(4, 2*level, tiledata, 2048);
+    set_map_data(tiledata, 64, 32);
 
-    // Each level data takes up two offsets
-    cd_loaddata(4, 2*level, tiles, 3000);
+    cd_loaddata(4, 2*level+1, tiles, 500);
 
-    vram_offset = AVA_VRAM + AVA_SIZE_IN_BYTES;
-    populate_enemies_vram(vram_offset, tiles + 2049);
+    vram_offset = AVA_VRAM + AVA_SIZE;
+    populate_enemies_vram(vram_offset, tiles + 2);
 }
 
 init_ava_sprite()
@@ -296,12 +299,12 @@ load_room()
     timer = 0;
     ava_facing = DOWN;
 
-    ava_x = tiles[2048];
-    ava_y = tiles[2049];
+    ava_x = tiles[0];
+    ava_y = tiles[1];
     
     init_object();
     init_enemy();
-    i = 2049;
+    i = 1;
     for (;;)
     {
         x = tiles[++i];
@@ -327,7 +330,6 @@ load_room()
         create_object(type, x, y);
     }
 
-    set_map_data(tiles, 64, 32);
     init_ava_sprite();
     draw_ava(0, ava_x * 16, ava_y * 16);
     disp_on();
