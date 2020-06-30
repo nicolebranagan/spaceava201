@@ -7,20 +7,23 @@ ISOLINK = $(HUC_ROOT)/bin/isolink
 
 LOGO_SRC = logo/logo.c
 CLASSIC_SRC = classic/classic.c
+GOVERNOR_SRC = governor/governor.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl adpcm_ovl classicdata cuefile images
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images
+	mv */*.s */*.ovl */*.sym ../build
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
-	mv */*.s */*.ovl */*.sym ../build
 
 classic.ovl: $(CLASSIC_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(CLASSIC_SRC) $(LIBS)
-	mv */*.s */*.ovl */*.sym ../build
+
+governor.ovl: $(GOVERNOR_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(GOVERNOR_SRC) $(LIBS)
 
 cuefile: spaceava.cue
 	cp spaceava.cue ../build/
@@ -31,7 +34,7 @@ adpcm_ovl: adpcm/whistle.vox
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin
 
-images: sprites tiles
+images: sprites tiles 8x8fonts
 	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr
 
 sprites: ../images/sprites/*.terra
@@ -46,6 +49,13 @@ tiles: ../images/tiles/*.terra
 	for f in $$FILES; \
 	do \
 		python3 ../tools/turboize/turboize.py tile $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
+	done;
+
+8x8fonts: ../images/8x8fonts/*.terra
+	FILES=../images/8x8fonts/*.terra;\
+	for f in $$FILES; \
+	do \
+		python3 ../tools/turboize/turboize.py 8x8font $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
 	done;
 
 pce: $(SRC)

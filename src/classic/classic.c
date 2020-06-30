@@ -66,7 +66,6 @@ initialize()
     set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
-    reset_satb();
 
     pal_rotate_step = 0;
 
@@ -314,8 +313,17 @@ win_ava()
     satb_update();
     wait_for_sync(8);
 
-    // TODO: Have this move to what's next rather than reset
-    //load_room();
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    vsync(); // Deliberately not wait_for_sync
+
+    // Return to governor
+    victory = 1;
+    cd_execoverlay(6);
 }
 
 load_room()

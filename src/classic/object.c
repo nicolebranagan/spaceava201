@@ -15,7 +15,7 @@ char obtained_object_count;
 
 struct object
 {
-    char type, active, frame, xpos, ypos;
+    char type, active, xpos, ypos;
     int xdraw, ydraw;
 };
 
@@ -39,7 +39,6 @@ create_object(char type, char x, char y)
     objects[new_index].xpos = x;
     objects[new_index].ypos = y;
     objects[new_index].active = 1;
-    objects[new_index].frame = 0;
 
     spr_set(OBJECT_SPRITE_START + new_index);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
@@ -70,17 +69,11 @@ draw_object(char i)
     }
 
     row = objects[i].type == OBJ_PHOTON ? 2 : 3;
-    frame = (((int)row) << 4) + objects[i].frame;
+    frame = (((int)row) << 4) + (timer & 15);
 
     spr_x(dx);
     spr_y(dy);
     spr_pattern(AVA_VRAM + (frame * SPR_SIZE_16x16));
-
-    objects[i].frame += 1;
-    if (objects[i].frame == 16)
-    {
-        objects[i].frame = 0;
-    }
 }
 
 char draw_objects()

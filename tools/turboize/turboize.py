@@ -1,6 +1,6 @@
 # turboize.py
 #
-# usage: turboize.py [sprite|tile] <input> <output> <pal_output>
+# usage: turboize.py [sprite|tile|8x8font] <input> <output> <pal_output>
 
 from pixelgrid import *
 import sys
@@ -52,6 +52,15 @@ def turboize_tile(inputgrid, x_start, y_start):
     for i in range(0, 8):
         output.append(bitplane3[i])
         output.append(bitplane4[i])
+    return output
+
+def turboize_8x8(inputgrid):
+    max_ = inputgrid.getmaxtuple()
+    rows = (1+max_[1])
+    output = []
+    for y in range(0, rows):
+        for x in range(0, inputgrid.width):
+            output.extend(turboize_tile(inputgrid, x*8, y*8))
     return output
 
 def turboize_tiles(inputgrid):
@@ -106,7 +115,7 @@ def turboize_sprite(inputgrid):
     return output
 
 if (len(sys.argv) < 5):
-    print("usage: turboize.py [sprite|tile] <input> <output> <palette>")
+    print("usage: turboize.py [sprite|tile|8x8font] <input> <output> <palette>")
     sys.exit()
 
 mode = sys.argv[1]
@@ -123,6 +132,8 @@ if mode == "sprite":
     bytelist = turboize_sprite(pixelgrid)
 elif mode == "tile":
     bytelist = turboize_tiles(pixelgrid)
+elif mode == "8x8font":
+    bytelist = turboize_8x8(pixelgrid)
 else:
     print("Unsupported type")
     sys.exit(2)

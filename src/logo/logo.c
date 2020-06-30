@@ -65,8 +65,12 @@ main()
 			cls();
 			satb_update();
 			vsync();
+			
+			// Clear global state
 			current_level = 0;
-			cd_execoverlay(3);
+			governor_step = 0;
+			victory = 0;
+			cd_execoverlay(6);
 		}
 	}		
 }

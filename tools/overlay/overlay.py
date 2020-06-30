@@ -7,6 +7,14 @@ import sys
 from pathlib import Path
 import math
 
+def get_file_name(filename):
+    cleaned_name = Path(filename).stem.upper().replace('.', '_').replace('-', '_')
+    try:
+        int(cleaned_name[0])
+        return '_' + cleaned_name
+    except ValueError:
+        return cleaned_name
+
 def get_binary_data(filename):
     with open(filename, "rb") as fileo:
         return fileo.read()
@@ -42,7 +50,7 @@ with open(headerfile, "w") as header:
     sector_offset = 0
     for filedata in parsed_files:
         header.write(f'// {filedata["name"]}\n')
-        variable_name = Path(filedata["name"]).stem.upper().replace('.', '_').replace('-', '_')
+        variable_name = get_file_name(filedata["name"])
         header.write(f'#define {variable_name}_SECTOR_OFFSET {sector_offset} \n')
         header.write(f'#define {variable_name}_SECTOR_COUNT {filedata["sectorcount"]} \n')
         header.write(f'#define {variable_name}_SIZE {filedata["size"]} \n\n')
