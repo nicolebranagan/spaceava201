@@ -15,8 +15,8 @@ char obtained_object_count;
 
 struct object
 {
-    char type, active, frame;
-    int x, y;
+    char type, active, frame, xpos, ypos;
+    int xdraw, ydraw;
 };
 
 struct object objects[MAX_OBJECT_COUNT];
@@ -34,8 +34,10 @@ create_object(char type, char x, char y)
     object_count++;
 
     objects[new_index].type = type;
-    objects[new_index].x = x*16;
-    objects[new_index].y = y*16;
+    objects[new_index].xdraw = x*16;
+    objects[new_index].ydraw = y*16;
+    objects[new_index].xpos = x;
+    objects[new_index].ypos = y;
     objects[new_index].active = 1;
     objects[new_index].frame = 0;
 
@@ -58,8 +60,8 @@ draw_object(char i)
         return;
     }
 
-    dx = (objects[i].x) - sx;
-    dy = (objects[i].y) - sy;
+    dx = (objects[i].xdraw) - sx;
+    dy = (objects[i].ydraw) - sy;
 
     if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
     {
@@ -107,7 +109,7 @@ char update_objects()
 
     for (i = 0; i < object_count; i++)
     {
-        if (objects[i].active && ava_x == objects[i].x && ava_y == objects[i].y)
+        if (objects[i].active && ava_x == objects[i].xpos && ava_y == objects[i].ypos)
         {
             objects[i].active = 0;
             obtained_object_count++;
