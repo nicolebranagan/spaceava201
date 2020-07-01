@@ -47,10 +47,11 @@ create_object(char type, char x, char y)
     spr_show();
 }
 
-draw_object(char i)
+char i;
+int dx, dy;
+draw_object()
 {
     char row, frame;
-    int dx, dy;
 
     spr_set(OBJECT_SPRITE_START + i);
 
@@ -79,7 +80,7 @@ draw_object(char i)
 
 char draw_objects()
 {
-    char i, offset;
+    char offset;
 
     if (!object_count)
     {
@@ -88,14 +89,12 @@ char draw_objects()
 
     for (i = 0; i < object_count; i++)
     {
-        draw_object(i);
+        draw_object();
     }
 }
 
 char update_objects()
 {
-    char i;
-
     if (!object_count)
     {
         return 0;
@@ -107,8 +106,11 @@ char update_objects()
         {
             objects[i].active = 0;
             obtained_object_count++;
-            if (obtained_object_count < object_count)
-                ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
+            if (ad_stat())
+            {
+                ad_stop();
+            }
+            ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
             spr_set(OBJECT_SPRITE_START + i);
             spr_hide();
             satb_update();

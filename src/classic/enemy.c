@@ -13,6 +13,10 @@
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
 
+// Sound effects
+#define ENEMY_NO_SOUND 0
+#define ENEMY_CANNON 1
+
 const char PALETTE_BY_TYPE[] = {17, 17};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
@@ -278,6 +282,16 @@ draw_enemies(char time_offset)
     return;
 }
 
+char current_snd;
+
+play_sound(char new_sound)
+{
+    if (new_sound > current_snd)
+    {
+        current_snd = new_sound;
+    }
+}
+
 update_bigmouth(char index)
 {
     enemies[index].timer++;
@@ -307,6 +321,7 @@ update_bigmouth(char index)
             create_enemy(TYPE_BALL, enemies[index].x, enemies[index].y, enemies[index].facing, +1, 0);
             break;
         }
+        play_sound(ENEMY_CANNON);
     }
 
     if (enemies[index].timer > 3)
@@ -380,6 +395,7 @@ update_enemies()
 
     any_moved = 0;
     ava_dead = 0;
+    current_snd = 0;
 
     for (i = 0; i < enemy_count; i++)
     {
@@ -432,6 +448,13 @@ update_enemies()
             }
         }
     }
+
+    switch (current_snd) {
+        case ENEMY_CANNON:
+            ad_play(CANNON_LOC, CANNON_SIZE, 14, 0);
+        break;
+    }
+
     if (ava_dead)
     {
         kill_ava();

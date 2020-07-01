@@ -57,6 +57,13 @@ char pal_rotate_step;
 
 initialize()
 {
+    pal_rotate_step = 0;
+
+    ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, EUREKA_LOC);
+    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
+    ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
+    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
+
     disp_off();
     reset_satb();
     satb_update();
@@ -65,12 +72,6 @@ initialize()
     set_screen_size(SCR_SIZE_64x32);
     ad_reset();
 
-    pal_rotate_step = 0;
-
-    ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, EUREKA_LOC);
-    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
-
-    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
     load_palette(16, avapal, 1);
     load_level_data(current_level);
 
@@ -296,7 +297,12 @@ const char WIN_FRAMES[] = {0, 0, 11, 12, 13, 13, 13, 14, 14, 15};
 win_ava()
 {
     char i;
+    if (ad_stat())
+    {
+        ad_stop();
+    }
     ad_play(EUREKA_LOC, EUREKA_SIZE, 15, 0);
+
     for (i = 0; i < 10; i++)
     {
         spr_set(0);
