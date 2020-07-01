@@ -18,13 +18,18 @@
 #define BIGMOUTH_SECTOR_COUNT 1 
 #define BIGMOUTH_SIZE 2048 
 
+// ./images/bizcat.chr
+#define BIZCAT_SECTOR_OFFSET 9 
+#define BIZCAT_SECTOR_COUNT 3 
+#define BIZCAT_SIZE 6144 
+
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 9 
+#define STARBASE_SECTOR_OFFSET 12 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 10 
+#define STARROT_SECTOR_OFFSET 13 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

@@ -34,7 +34,7 @@ adpcm_ovl: adpcm/whistle.vox
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin
 
-images: sprites tiles 8x8fonts
+images: sprites tiles 8x8fonts 8x16fonts
 	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr
 
 sprites: ../images/sprites/*.terra
@@ -56,6 +56,13 @@ tiles: ../images/tiles/*.terra
 	for f in $$FILES; \
 	do \
 		python3 ../tools/turboize/turboize.py 8x8font $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
+	done;
+
+8x16fonts:../images/8x16fonts/*.terra
+	FILES=../images/8x16fonts/*.terra;\
+	for f in $$FILES; \
+	do \
+		python3 ../tools/turboize/turboize.py 8x16font $$f ./images/$$(basename $$f .terra).chr ./palettes/$$(basename $$f .terra).pal; \
 	done;
 
 pce: $(SRC)

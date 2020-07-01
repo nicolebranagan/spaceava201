@@ -1,6 +1,6 @@
 # turboize.py
 #
-# usage: turboize.py [sprite|tile|8x8font] <input> <output> <pal_output>
+# usage: turboize.py [sprite|tile|8x8font|8x16font] <input> <output> <pal_output>
 
 from pixelgrid import *
 import sys
@@ -63,7 +63,19 @@ def turboize_8x8(inputgrid):
             output.extend(turboize_tile(inputgrid, x*8, y*8))
     return output
 
-def turboize_tiles(inputgrid):
+def turboize_8x16(inputgrid):
+    max_ = inputgrid.getmaxtuple()
+    rows = math.ceil((1+max_[1])/2)
+    output = []
+    for ygroup in range(0, rows):
+        for tile in range(0, inputgrid.width):
+            true_x = tile * 8
+            true_y = ygroup * 16
+            output.extend(turboize_tile(inputgrid, true_x, true_y))
+            output.extend(turboize_tile(inputgrid, true_x, true_y + 8))
+    return output
+
+def turboize_16x16(inputgrid):
     max_ = inputgrid.getmaxtuple()
     rows = math.ceil((1+max_[1])/2)
     output = []
@@ -115,7 +127,7 @@ def turboize_sprite(inputgrid):
     return output
 
 if (len(sys.argv) < 5):
-    print("usage: turboize.py [sprite|tile|8x8font] <input> <output> <palette>")
+    print("usage: turboize.py [sprite|tile|8x8font|8x16font] <input> <output> <palette>")
     sys.exit()
 
 mode = sys.argv[1]
@@ -131,9 +143,11 @@ with open(inputfile, "r") as fileo:
 if mode == "sprite":
     bytelist = turboize_sprite(pixelgrid)
 elif mode == "tile":
-    bytelist = turboize_tiles(pixelgrid)
+    bytelist = turboize_16x16(pixelgrid)
 elif mode == "8x8font":
     bytelist = turboize_8x8(pixelgrid)
+elif mode == "8x16font":
+    bytelist = turboize_8x16(pixelgrid)
 else:
     print("Unsupported type")
     sys.exit(2)
