@@ -34,8 +34,8 @@ create_object(char type, char x, char y)
     object_count++;
 
     objects[new_index].type = type;
-    objects[new_index].xdraw = x*16;
-    objects[new_index].ydraw = y*16;
+    objects[new_index].xdraw = x * 16;
+    objects[new_index].ydraw = y * 16;
     objects[new_index].xpos = x;
     objects[new_index].ypos = y;
     objects[new_index].active = 1;
@@ -54,7 +54,8 @@ draw_object(char i)
 
     spr_set(OBJECT_SPRITE_START + i);
 
-    if (!objects[i].active) {
+    if (!objects[i].active)
+    {
         spr_hide();
         return;
     }
@@ -106,6 +107,8 @@ char update_objects()
         {
             objects[i].active = 0;
             obtained_object_count++;
+            if (obtained_object_count < object_count)
+                ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
             spr_set(OBJECT_SPRITE_START + i);
             spr_hide();
             satb_update();

@@ -29,7 +29,7 @@ cuefile: spaceava.cue
 	cp spaceava.cue ../build/
 
 adpcm_ovl: adpcm/whistle.vox
-	cat adpcm/whistle.vox > ../build/adpcm.bin
+	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
 
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin

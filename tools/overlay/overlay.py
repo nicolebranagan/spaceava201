@@ -22,7 +22,7 @@ def get_binary_data(filename):
 def get_sector_aligned_data(filename):
     binarydata = get_binary_data(filename)
     size = len(binarydata)
-    sectorcount = math.ceil(size // 2048)
+    sectorcount = math.ceil(size / 2048)
     paddeddata = binarydata + bytes([0 for _ in range(0, (sectorcount * 2048) - size)])
 
     return {
@@ -46,7 +46,8 @@ fulldata = b''
 
 with open(headerfile, "w") as header:
     header.write("// This is an auto-generated file. Do not alter.\n\n")
-    header.write("#ifndef IMAGES_H\n#define IMAGES_H\n\n")
+    header_name = get_file_name(headerfile)
+    header.write(f"#ifndef {header_name}_H\n#define {header_name}_H\n\n")
     sector_offset = 0
     for filedata in parsed_files:
         header.write(f'// {filedata["name"]}\n')

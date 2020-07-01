@@ -3,6 +3,9 @@
 */
 
 #include <huc.h>
+#include "adpcm/adpcm.h"
+
+#define ADPCM_OVERLAY 2
 
 #incspr(chr, "logo/images/train.png");
 #incpal(trainpal,"logo/images/train.png");
@@ -35,7 +38,7 @@ main()
 	spr_pri(1);
 
 	load_background(logo_gfx, logo_pal, logo_bat, 32, 28);
-	ad_trans(2, 0, 5, 0);
+	ad_trans(ADPCM_OVERLAY, WHISTLE_SECTOR_OFFSET, WHISTLE_SECTOR_COUNT, 0);
 	disp_on();
 	load_palette(16,trainpal,1);
 				
@@ -65,7 +68,7 @@ main()
 			cls();
 			satb_update();
 			vsync();
-			
+
 			// Clear global state
 			current_level = 0;
 			governor_step = 0;

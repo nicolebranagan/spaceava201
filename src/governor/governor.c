@@ -21,6 +21,7 @@ initialize()
 {
     char err;
     cls();
+    scroll(0, 0, 0, 0, 223, 0xC0);
     reset_satb();
     satb_update();
     set_xres(256);

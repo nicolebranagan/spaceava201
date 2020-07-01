@@ -1,6 +1,12 @@
 #ifndef CLASSIC
-
 #define CLASSIC 1
+
+#include "adpcm/adpcm.h"
+
+#define ADPCM_OVERLAY 2
+
+#define EUREKA_LOC 0
+#define PHOTON_LOC (EUREKA_LOC + EUREKA_SIZE)
 
 #define SPR_SIZE_16x16 0x40
 #define IMAGE_OVERLAY 5
