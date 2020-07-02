@@ -7,5 +7,6 @@
 #define CLASSIC_DATA_OVERLAY 4
 #define IMAGE_OVERLAY 5
 #define GOVERNOR_OVERLAY 6
+#define STORY_OVERLAY 7
 
 #endif

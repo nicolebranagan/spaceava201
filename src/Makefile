@@ -8,13 +8,14 @@ ISOLINK = $(HUC_ROOT)/bin/isolink
 LOGO_SRC = logo/logo.c
 CLASSIC_SRC = classic/classic.c
 GOVERNOR_SRC = governor/governor.c
+STORY_SRC = story/story.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images story.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -24,6 +25,9 @@ classic.ovl: $(CLASSIC_SRC) images
 
 governor.ovl: $(GOVERNOR_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(GOVERNOR_SRC) $(LIBS)
+
+story.ovl: $(STORY_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(STORY_SRC) $(LIBS)
 
 cuefile: spaceava.cue
 	cp spaceava.cue ../build/

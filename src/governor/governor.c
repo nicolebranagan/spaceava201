@@ -1,5 +1,5 @@
 /*
-	Classic style Space Ava grid-based gameplay
+	Governor. Handles the flow of the game.
 */
 
 #include <huc.h>
