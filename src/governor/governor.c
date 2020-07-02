@@ -10,10 +10,8 @@
 #define FONT_VRAM 0x4000
 #incbin(fontpal, "palettes/8x8.pal");
 
-#define CLASSIC 3
-
 const char STEP_ORDER[] = {
-    CLASSIC, 0};
+    STORY_OVERLAY, 0};
 
 initialize()
 {
@@ -29,7 +27,6 @@ initialize()
     err = cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, 0x4000, _8X8_SIZE);
 }
 
-#define TEXT_BASE 1024
 write_text(char x, char y, char *text)
 {
     char i;
@@ -52,13 +49,7 @@ continue_cycle()
 {
     char state;
     current_level = STEP_ORDER[(governor_step << 1) + 1];
-
-    switch (STEP_ORDER[governor_step << 1])
-    {
-    case CLASSIC:
-        cd_execoverlay(CLASSIC_OVERLAY);
-        break;
-    }
+    cd_execoverlay(STEP_ORDER[governor_step << 1]);
 }
 
 main()
