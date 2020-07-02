@@ -60,6 +60,7 @@ initialize()
     pal_rotate_step = 0;
 
     ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, EUREKA_LOC);
+    ad_trans(ADPCM_OVERLAY, DIE_SECTOR_OFFSET, DIE_SECTOR_COUNT, DIE_LOC);
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
@@ -270,11 +271,17 @@ move_ava(char negative, char delx, char dely)
     satb_update();
 }
 
-const char DEATH_FRAMES[] = {8, 9, 10};
+const char DEATH_FRAMES[] = {0, 0, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 10, 10};
 kill_ava()
 {
     char i;
-    for (i = 0; i < 3; i++)
+
+    if (ad_stat())
+    {
+        ad_stop();
+    }
+    ad_play(DIE_LOC, DIE_SIZE, 14, 0);
+    for (i = 0; i < 16; i++)
     {
         spr_set(0);
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16));

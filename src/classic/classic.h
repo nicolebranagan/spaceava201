@@ -5,7 +5,8 @@
 #include "cd.h"
 
 #define EUREKA_LOC 0
-#define PHOTON_LOC (EUREKA_LOC + EUREKA_SIZE)
+#define DIE_LOC (EUREKA_LOC + EUREKA_SIZE)
+#define PHOTON_LOC (DIE_LOC + DIE_SIZE)
 #define CANNON_LOC (PHOTON_LOC + PHOTON_SIZE)
 
 #define SPR_SIZE_16x16 0x40
