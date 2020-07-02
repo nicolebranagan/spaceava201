@@ -5,9 +5,7 @@
 #include <huc.h>
 
 #include "./images/images.h"
-
-#define CLASSIC_OVERLAY 3
-#define IMAGE_OVERLAY 5
+#include "cd.h"
 
 #define FONT_VRAM 0x4000
 #incbin(fontpal, "palettes/8x8.pal");

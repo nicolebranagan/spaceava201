@@ -2,15 +2,13 @@
 #define CLASSIC 1
 
 #include "adpcm/adpcm.h"
-
-#define ADPCM_OVERLAY 2
+#include "cd.h"
 
 #define EUREKA_LOC 0
 #define PHOTON_LOC (EUREKA_LOC + EUREKA_SIZE)
 #define CANNON_LOC (PHOTON_LOC + PHOTON_SIZE)
 
 #define SPR_SIZE_16x16 0x40
-#define IMAGE_OVERLAY 5
 
 #define UP 0
 #define DOWN 1

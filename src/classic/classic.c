@@ -331,7 +331,7 @@ win_ava()
 
     // Return to governor
     victory = 1;
-    cd_execoverlay(6);
+    cd_execoverlay(GOVERNOR_OVERLAY);
 }
 
 load_room()

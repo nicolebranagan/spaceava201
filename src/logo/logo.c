@@ -4,8 +4,7 @@
 
 #include <huc.h>
 #include "adpcm/adpcm.h"
-
-#define ADPCM_OVERLAY 2
+#include "cd.h"
 
 #incspr(chr, "logo/images/train.png");
 #incpal(trainpal,"logo/images/train.png");
@@ -73,7 +72,7 @@ main()
 			current_level = 0;
 			governor_step = 0;
 			victory = 0;
-			cd_execoverlay(6);
+			cd_execoverlay(GOVERNOR_OVERLAY);
 		}
 	}		
 }
