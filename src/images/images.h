@@ -33,8 +33,13 @@
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
+// ./images/stardrop.chr
+#define STARDROP_SECTOR_OFFSET 16 
+#define STARDROP_SECTOR_COUNT 2 
+#define STARDROP_SIZE 4096 
+
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 16 
+#define STARROT_SECTOR_OFFSET 18 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 
