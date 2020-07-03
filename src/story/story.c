@@ -16,7 +16,7 @@ initialize()
     scroll(0, 0, 0, 0, 223, 0xC0);
     reset_satb();
     satb_update();
-    set_xres(512);
+    set_xres(320);
     set_screen_size(SCR_SIZE_64x32);
     load_palette(0, fontpal, 1);
 
@@ -57,8 +57,8 @@ write_text(char x, char y, char *text)
 main()
 {
     initialize();
-    write_text(8, 16, "AVA: Wow! What a great day! Nothing could go");
-    write_text(8, 18, "wrong today!");
+    write_text(3, 16, "AVA: Wow! What a great day! Nothing");
+    write_text(3, 18, "could go wrong today!");
     vsync();
     for (;;)
     {
