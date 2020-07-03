@@ -13,23 +13,28 @@
 #define AVA_SECTOR_COUNT 4 
 #define AVA_SIZE 8192 
 
+// ./images/ava_face.chr
+#define AVA_FACE_SECTOR_OFFSET 8 
+#define AVA_FACE_SECTOR_COUNT 3 
+#define AVA_FACE_SIZE 6144 
+
 // ./images/bigmouth.chr
-#define BIGMOUTH_SECTOR_OFFSET 8 
+#define BIGMOUTH_SECTOR_OFFSET 11 
 #define BIGMOUTH_SECTOR_COUNT 1 
 #define BIGMOUTH_SIZE 2048 
 
 // ./images/bizcat.chr
-#define BIZCAT_SECTOR_OFFSET 9 
+#define BIZCAT_SECTOR_OFFSET 12 
 #define BIZCAT_SECTOR_COUNT 3 
 #define BIZCAT_SIZE 6144 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 12 
+#define STARBASE_SECTOR_OFFSET 15 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 13 
+#define STARROT_SECTOR_OFFSET 16 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

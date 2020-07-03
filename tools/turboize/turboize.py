@@ -89,45 +89,78 @@ def turboize_16x16(inputgrid):
             output.extend(turboize_tile(inputgrid, true_x + 8, true_y + 8))
     return output
 
+def turboize_sprite_16x16(inputgrid, x_start, y_start):
+    bitplane1 = []
+    bitplane2 = []
+    bitplane3 = []
+    bitplane4 = []
+    for y in range(0, 16):
+        rowplane1 = []
+        rowplane2 = []
+        rowplane3 = []
+        rowplane4 = []
+        for x in range(0, 16):
+            true_x = x + x_start
+            true_y = y + y_start
+            val = index_to_binary(inputgrid.get(true_x, true_y))
+            rowplane1.append(val[3])
+            rowplane2.append(val[2])
+            rowplane3.append(val[1])
+            rowplane4.append(val[0])
+        bitplane1.append(int(''.join(rowplane1[8:]), 2))
+        bitplane1.append(int(''.join(rowplane1[:8]), 2))
+
+        bitplane2.append(int(''.join(rowplane2[8:]), 2))
+        bitplane2.append(int(''.join(rowplane2[:8]), 2))
+
+        bitplane3.append(int(''.join(rowplane3[8:]), 2))
+        bitplane3.append(int(''.join(rowplane3[:8]), 2))
+
+        bitplane4.append(int(''.join(rowplane4[8:]), 2))
+        bitplane4.append(int(''.join(rowplane4[:8]), 2))
+    return bitplane1 + bitplane2 + bitplane3 + bitplane4
+
 def turboize_sprite(inputgrid):
     output = []
     max_ = inputgrid.getmaxytuple()
     cols = math.ceil((1+max_[0])/2)
     for xgroup in range(0, cols):
         for ygroup in range(0, inputgrid.height // 2):
-            bitplane1 = []
-            bitplane2 = []
-            bitplane3 = []
-            bitplane4 = []
-            for y in range(0, 16):
-                rowplane1 = []
-                rowplane2 = []
-                rowplane3 = []
-                rowplane4 = []
-                for x in range(0, 16):
-                    true_x = x + xgroup * 16
-                    true_y = y + 16 * ygroup
-                    val = index_to_binary(inputgrid.get(true_x, true_y))
-                    rowplane1.append(val[3])
-                    rowplane2.append(val[2])
-                    rowplane3.append(val[1])
-                    rowplane4.append(val[0])
-                bitplane1.append(int(''.join(rowplane1[8:]), 2))
-                bitplane1.append(int(''.join(rowplane1[:8]), 2))
+            output.extend(
+                turboize_sprite_16x16(inputgrid, xgroup * 16, ygroup*16)
+            )
+    return output
 
-                bitplane2.append(int(''.join(rowplane2[8:]), 2))
-                bitplane2.append(int(''.join(rowplane2[:8]), 2))
-
-                bitplane3.append(int(''.join(rowplane3[8:]), 2))
-                bitplane3.append(int(''.join(rowplane3[:8]), 2))
-
-                bitplane4.append(int(''.join(rowplane4[8:]), 2))
-                bitplane4.append(int(''.join(rowplane4[:8]), 2))
-            output.extend(bitplane1 + bitplane2 + bitplane3 + bitplane4)
+def turboize_face(inputgrid):
+    output = []
+    max_ = inputgrid.getmaxtuple()
+    cols = math.ceil((1+max_[1])/6)
+    for ygroup in range(0, cols):
+        for xgroup in range(0, inputgrid.width // 4):
+            basex = xgroup * 32
+            basey = ygroup * 48
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex, basey)
+            )
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex + 16, basey)
+            )
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex, basey + 16)
+            )
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex + 16, basey + 16)
+            )
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex, basey + 32)
+            )
+            output.extend(
+                turboize_sprite_16x16(inputgrid, basex + 16, basey + 32)
+            )
     return output
 
 if (len(sys.argv) < 5):
-    print("usage: turboize.py [sprite|tile|8x8font|8x16font] <input> <output> <palette>")
+    print("usage: turboize.py [sprite|tile|8x8font|8x16font|face] <input> <output> <palette>")
     sys.exit()
 
 mode = sys.argv[1]
@@ -148,6 +181,8 @@ elif mode == "8x8font":
     bytelist = turboize_8x8(pixelgrid)
 elif mode == "8x16font":
     bytelist = turboize_8x16(pixelgrid)
+elif mode == "face":
+    bytelist = turboize_face(pixelgrid)
 else:
     print("Unsupported type")
     sys.exit(2)
