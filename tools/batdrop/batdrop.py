@@ -11,7 +11,7 @@ class Application(tk.Frame):
         self.pack()
 
         self.select = 0
-        self.vramoffset = 0x8000
+        self.vramoffset = 0x2800
 
         tiles2x, tileset, tilesTk = getStarbase()
         self.tiles2x = tiles2x
@@ -103,14 +103,32 @@ class Application(tk.Frame):
                 title="Save")
         if filen != () and filen != "":
             with open(filen, "wb") as fileo:
+                tiles_by_offset = [
+                    0 for _ in range(0, len(self.room.tiles) * 4)
+                ]
+                for y in range(0, self.room.height):
+                    for x in range(0, self.room.width):
+                            tile = self.room.get(x, y) * 4
+                            tiles_by_offset[
+                                ((y * 2) * self.room.width * 2) + (x * 2)
+                            ] = tile
+                            tiles_by_offset[
+                                ((y * 2) * self.room.width * 2) + (x * 2) + 1
+                            ] = tile + 1
+                            tiles_by_offset[
+                                (((y * 2) + 1) * self.room.width * 2) + (x * 2)
+                            ] = tile + 2
+                            tiles_by_offset[
+                                (((y * 2) + 1) * self.room.width * 2) + (x * 2) + 1
+                            ] = tile + 3
                 tile_base = self.vramoffset // 16
                 output = []
                 def to_binary(input):
                     return bin(input)[2:].zfill(12) # strip 0b and make 12 digits
-                for tile in self.room.tiles:
+                for tile in tiles_by_offset:
                     index = to_binary(tile_base + tile)
-                    output.append(int(f'0001{index[0:4]}', 2))
                     output.append(int(f'{index[4:]}', 2))
+                    output.append(int(f'0001{index[0:4]}', 2))
                 output.append(self.room.width)
                 output.append(self.room.height)
                 offsetbytes = hex(self.vramoffset)[2:]
@@ -134,7 +152,7 @@ class Application(tk.Frame):
 class Room:
     def __init__(self, tileset):
         self.width = 16
-        self.height = 6
+        self.height = 5
         self.tileset = tileset
         self.tiles = [0 for x in range(0,self.width*self.height)]
 
