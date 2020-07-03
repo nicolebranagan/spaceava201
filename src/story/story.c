@@ -81,6 +81,8 @@ draw_person(char face, char x_start)
 
 main()
 {
+    char joyt;
+
     initialize();
     write_text(3, 16, "AVA: Wow! What a great day! Nothing");
     write_text(3, 18, "could go wrong today!");
@@ -90,5 +92,13 @@ main()
     for (;;)
     {
         vsync();
+
+        joyt = joytrg(0);
+
+        if (joyt & JOY_RUN)
+        {
+            victory = 1;
+            cd_execoverlay(GOVERNOR_OVERLAY);
+        }
     }
 }
