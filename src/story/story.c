@@ -18,6 +18,8 @@
 #define FRAME_VRAM 0x2000
 #define BACKDROP_VRAM 0x2800
 
+char timer;
+
 initialize()
 {
     cd_loadvram(IMAGE_OVERLAY, AVA_FACE_SECTOR_OFFSET, FACE_VRAM, AVA_FACE_SIZE);
@@ -33,6 +35,7 @@ initialize()
     load_palette(16, facepal, 1);
     load_palette(0, fontpal, 1);
     load_palette(1, backdroppal, 1);
+    timer = 0;
 }
 
 #define BACKDROP_WIDTH 16 * 2
@@ -122,7 +125,7 @@ draw_frame()
     addr = vram_addr(XTOP - 2, YLEFT - 1);
     load_vram(addr, data, BACKDROP_WIDTH + 4);
 
-    for (y = YLEFT; y < (YLEFT + BACKDROP_HEIGHT); y++) 
+    for (y = YLEFT; y < (YLEFT + BACKDROP_HEIGHT); y++)
     {
         data[0] = FRAME_START + (y % 2 ? 12 : 14);
         data[1] = FRAME_START + (y % 2 ? 13 : 15);
@@ -199,35 +202,60 @@ draw_frame()
     load_vram(addr, data, BACKDROP_WIDTH + 4);
 }
 
-write_text(char x, char y, char *text)
-{
-    char i;
-    int vaddr, parsedtext[100];
-    vaddr = vram_addr(x, y);
-    i = 0;
-    for (;;)
-    {
-        if (text[i] == 0)
-        {
-            break;
-        }
-        parsedtext[i] = (text[i] << 1) + (FONT_VRAM >> 4) - 64;
-        i++;
-    }
-    load_vram(vaddr, parsedtext, i);
+#define TEXT_X 3
+#define TEXT_Y 17
 
+#define BLOCK_TO_CLEAR ((32 - TEXT_Y) * 64)
+clear_text()
+{
+    int i;
+    int vaddr, zero_string[BLOCK_TO_CLEAR];
+    for (i = 0; i < BLOCK_TO_CLEAR; i++)
+    {
+        zero_string[i] = 0x0080;
+    }
+    vaddr = vram_addr(0, TEXT_Y);
+    load_vram(vaddr, zero_string, BLOCK_TO_CLEAR);
+}
+
+write_char(char x, char y, char character)
+{
+    int parsed[1], vaddr;
+    vaddr = vram_addr(x, y);
+    parsed[0] = (character << 1) + (FONT_VRAM >> 4) - 64;
+    load_vram(vaddr, parsed, 1);
     vaddr = vram_addr(x, y + 1);
+    (parsed[0])++;
+    load_vram(vaddr, parsed, 1);
+}
+
+write_text(char *text)
+{
+    char x, y, i;
+    x = TEXT_X;
+    y = TEXT_Y;
     i = 0;
+    clear_text();
     for (;;)
     {
         if (text[i] == 0)
         {
             break;
         }
-        parsedtext[i] = (text[i] << 1) + (FONT_VRAM >> 4) - 63;
+        if (text[i] == 10)
+        {
+            x = TEXT_X;
+            y += 2;
+            i++;
+            continue;
+        }
+
+        write_char(x, y, text[i]);
+        x++;
         i++;
+        vsync();
     }
-    load_vram(vaddr, parsedtext, i);
+    return;
 }
 
 #define LEVEL_GROUND 56
@@ -248,6 +276,15 @@ draw_person(char face, char x_start)
             spr_show();
             i++;
         }
+    satb_update();
+}
+
+draw_block(char more)
+{
+    int parsed[1], vaddr;
+    vaddr = vram_addr(39, 25);
+    parsed[0] = (timer & 32) ? ((127 << 1) + (FONT_VRAM >> 4) - (more ? 64 : 63)) : 0x0080;
+    load_vram(vaddr, parsed, 1);
 }
 
 main()
@@ -258,15 +295,14 @@ main()
 
     draw_background();
     draw_frame();
-    write_text(3, 17, "AVA: Wow! What a great day! Nothing");
-    write_text(3, 19, "could go wrong today!");
     draw_person(3, 5);
-    satb_update();
-
+    write_text("AVA: Wow! What a great day! Nothing\ncould go wrong today!");
     vsync();
     for (;;)
     {
         vsync();
+        timer++;
+        draw_block(0);
 
         joyt = joytrg(0);
 
