@@ -191,7 +191,8 @@ with open(outputfile, "wb") as fileo:
     fileo.write(bytes(bytelist))
 
 palette = palettize(pixelgrid)
-if mode == "sprite":
+if mode == "sprite" or mode == "face":
     palette[0] = 0
+    palette[1] = 0
 with open(palettefile, "wb") as fileo:
     fileo.write(bytes(palette))
