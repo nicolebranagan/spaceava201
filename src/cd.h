@@ -8,5 +8,6 @@
 #define IMAGE_OVERLAY 5
 #define GOVERNOR_OVERLAY 6
 #define STORY_OVERLAY 7
+#define STORY_DATA_OVERLAY 8
 
 #endif

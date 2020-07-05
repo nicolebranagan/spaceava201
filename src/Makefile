@@ -13,9 +13,9 @@ STORY_SRC = story/story.c
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images story.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images story.ovl storydata
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -37,6 +37,9 @@ adpcm_ovl: adpcm/whistle.vox
 
 classicdata: classicdata/classicdata.bin
 	cp classicdata/classicdata.bin ../build/classicdata.bin
+
+storydata: story/script.json
+	python3 ../tools/storyparser/story.py story/script.json ../build/storydata.bin
 
 images: sprites tiles 8x8fonts 8x16fonts faces
 	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr

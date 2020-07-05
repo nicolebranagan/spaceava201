@@ -1,0 +1,24 @@
+[
+  [
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wow! What a great day! Nothing could go wrong today!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Of course, it is a bit lonely in here..."
+    }
+  ]
+]
