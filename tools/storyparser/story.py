@@ -38,7 +38,8 @@ def parse_single_script(script):
     cast = []
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
-            cast.append(SPRITES[command["sprite"]])
+            if (SPRITES[command["sprite"]] not in cast):
+                cast.append(SPRITES[command["sprite"]])
             output = (
                 output + bytes(
                     [COMMANDS["SHOW_SPRITE"],

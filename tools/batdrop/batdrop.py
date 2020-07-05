@@ -129,6 +129,7 @@ class Application(tk.Frame):
                     index = to_binary(tile_base + tile)
                     output.append(int(f'{index[4:]}', 2))
                     output.append(int(f'0001{index[0:4]}', 2))
+                output.append(0)
                 output.append(self.room.width)
                 output.append(self.room.height)
                 offsetbytes = hex(self.vramoffset)[2:]
@@ -147,15 +148,15 @@ class Application(tk.Frame):
         if filen != () and filen != "":
             with open(filen, "rb") as fileo:
                 data = fileo.read()
-            signature = data[(len(data)-4):]
+            signature = data[(len(data)-5):]
             vram_offset = int(
-                f'{hex(signature[2])[2:].zfill(2)}{hex(signature[3])[2:].zfill(2)}',
+                f'{hex(signature[3])[2:].zfill(2)}{hex(signature[4])[2:].zfill(2)}',
                 16
             )
-            tiledata = data[:(len(data)-4)]
+            tiledata = data[:(len(data)-5)]
             tiles = []
-            width = signature[0]
-            height = signature[1]
+            width = signature[1]
+            height = signature[2]
             for y in range (0, height):
                 for x in range(0, width):
                     topleft = 2*((y*4*width)+(2*x))

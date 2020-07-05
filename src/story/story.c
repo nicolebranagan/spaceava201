@@ -25,7 +25,7 @@ char has_next_command;
 
 initialize()
 {
-    cd_loaddata(STORY_DATA_OVERLAY, 0, script, 2048);
+    cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
     cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
     cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
     build_cast();
