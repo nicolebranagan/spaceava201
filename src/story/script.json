@@ -1,6 +1,10 @@
 [
   [
     {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARBASE_EXTERIOR"
+    },
+    {
       "command": "SHOW_CENTERED_TEXT",
       "text": "Starbase 'Chip'\nSmall Magellanic Cloud"
     },
