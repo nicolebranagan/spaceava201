@@ -18,6 +18,17 @@ SPRITES = {
 
 SCREEN_WIDTH = 36
 
+def parse_and_center_text(text):
+    initlines = text.split('\n')
+    wrappedlines = []
+    for line in initlines:
+        lines = textwrap.wrap(line, SCREEN_WIDTH)
+        for wrappedline in lines:
+            length = len(wrappedline)
+            dellength = (SCREEN_WIDTH - length) // 2
+            wrappedlines.append(wrappedline.rjust(dellength + length))
+    return '\n'.join(wrappedlines)
+
 def parse_text(text):
     lines = textwrap.wrap(text, SCREEN_WIDTH)
     return '\n'.join(lines)
@@ -39,6 +50,14 @@ def parse_single_script(script):
             )
         elif (command["command"] == "SHOW_TEXT"):
             newtext = parse_text(command["text"])
+            output = (
+                output + 
+                bytes([COMMANDS["SHOW_TEXT"]]) + 
+                newtext.encode('ascii') + 
+                bytes([0])
+            )
+        elif (command["command"] == "SHOW_CENTERED_TEXT"):
+            newtext = parse_and_center_text(command["text"])
             output = (
                 output + 
                 bytes([COMMANDS["SHOW_TEXT"]]) + 

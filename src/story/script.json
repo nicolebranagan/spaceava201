@@ -1,6 +1,10 @@
 [
   [
     {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Starbase 'Chip'\nSmall Magellanic Cloud"
+    },
+    {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
