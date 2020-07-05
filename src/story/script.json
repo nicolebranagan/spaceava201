@@ -3,6 +3,7 @@
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
+      "slot": 0,
       "face": 3,
       "x": 5
     },
@@ -13,8 +14,9 @@
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
+      "slot": 1,
       "face": 0,
-      "x": 5
+      "x": 12
     },
     {
       "command": "SHOW_TEXT",

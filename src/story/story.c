@@ -301,10 +301,11 @@ int write_text(char *text)
 }
 
 #define LEVEL_GROUND 56
-draw_person(char index, char face, char x_start)
+draw_person(char slot, char cast_index, char face, char x_start)
 {
-    char i, x, y;
-    i = 0;
+    char i, j, x, y;
+    i = slot*6;
+    j = 0;
     for (y = 0; y < 3; y++)
         for (x = 0; x < 2; x++)
         {
@@ -312,11 +313,12 @@ draw_person(char index, char face, char x_start)
             spr_y(LEVEL_GROUND + (y << 4));
             spr_x((((int)(x_start + x)) << 4));
             spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-            spr_pattern(face_vram[index] + (face * 6 * SPR_SIZE_16x16) + (i * SPR_SIZE_16x16));
+            spr_pattern(face_vram[cast_index] + (face * 6 * SPR_SIZE_16x16) + (j * SPR_SIZE_16x16));
             spr_pal(16);
             spr_pri(1);
             spr_show();
             i++;
+            j++;
         }
     satb_update();
 }
@@ -345,8 +347,9 @@ loop:
         draw_person(
             script[pointer_to_data + 1],
             script[pointer_to_data + 2],
-            script[pointer_to_data + 3]);
-        pointer_to_data += 4;
+            script[pointer_to_data + 3],
+            script[pointer_to_data + 4]);
+        pointer_to_data += 5;
         goto loop;
         break;
     case CMD_SHOW_TEXT:

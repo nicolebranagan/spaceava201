@@ -31,6 +31,7 @@ def parse_single_script(script):
             output = (
                 output + bytes(
                     [COMMANDS["SHOW_SPRITE"],
+                    command["slot"],
                     cast.index(SPRITES[command["sprite"]]),
                     command["face"],
                     command["x"]]
