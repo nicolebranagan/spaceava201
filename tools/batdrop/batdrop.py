@@ -139,14 +139,33 @@ class Application(tk.Frame):
     def open(self):
         filen = filedialog.askopenfilename(
                 defaultextension=".bin",
-                initialfile="classicdata.bin",
-                initialdir="../../src/classicdata",
+                initialfile="starbase.bin",
+                initialdir="../../src/bats",
                 filetypes=(("Binary files", "*.bin"),
                            ("All files", "*")),
                 title="Open")
         if filen != () and filen != "":
             with open(filen, "rb") as fileo:
-                self.room = Room.load(list(fileo.read(2048)), self.tileset)
+                data = fileo.read()
+            signature = data[(len(data)-4):]
+            vram_offset = int(
+                f'{hex(signature[2])[2:].zfill(2)}{hex(signature[3])[2:].zfill(2)}',
+                16
+            )
+            tiledata = data[:(len(data)-4)]
+            tiles = []
+            width = signature[0]
+            height = signature[1]
+            for y in range (0, height):
+                for x in range(0, width):
+                    topleft = 2*((y*4*width)+(2*x))
+                    binary1 = bin(tiledata[topleft])[2:].zfill(8)
+                    binary2 = bin(tiledata[topleft + 1])[2:].zfill(8)
+                    pointer = int(f'{binary2[4:]}{binary1}', 2)
+                    tile_base = vram_offset // 16
+                    tiles.append((pointer - tile_base) // 4)
+            self.room = Room.load(tiles, self.tileset, width, height)
+            self.vramoffset = vram_offset
             self.drawroom()
 
 class Room:
@@ -176,9 +195,11 @@ class Room:
         return image
 
     @staticmethod
-    def load(tiles, tileset):
+    def load(tiles, tileset, width, height):
         self = Room(tileset)
         self.tiles = tiles
+        self.width = width
+        self.height = height
         return self
 
 root = tk.Tk()
