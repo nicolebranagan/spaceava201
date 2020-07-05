@@ -24,7 +24,21 @@
       "sprite": "CINDY",
       "slot": 1,
       "face": 0,
-      "x": 8
+      "x": 9
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "slot": 2,
+      "face": 0,
+      "x": 12
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BOB",
+      "slot": 3,
+      "face": 0,
+      "x": 15
     },
     {
       "command": "SHOW_TEXT",

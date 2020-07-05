@@ -28,28 +28,38 @@
 #define BIZCAT_SECTOR_COUNT 3 
 #define BIZCAT_SIZE 6144 
 
+// ./images/bob_face.chr
+#define BOB_FACE_SECTOR_OFFSET 15 
+#define BOB_FACE_SECTOR_COUNT 3 
+#define BOB_FACE_SIZE 6144 
+
 // ./images/cindy_face.chr
-#define CINDY_FACE_SECTOR_OFFSET 15 
+#define CINDY_FACE_SECTOR_OFFSET 18 
 #define CINDY_FACE_SECTOR_COUNT 3 
 #define CINDY_FACE_SIZE 6144 
 
 // ./images/frames.chr
-#define FRAMES_SECTOR_OFFSET 18 
+#define FRAMES_SECTOR_OFFSET 21 
 #define FRAMES_SECTOR_COUNT 1 
 #define FRAMES_SIZE 2048 
 
+// ./images/nelehu_face.chr
+#define NELEHU_FACE_SECTOR_OFFSET 22 
+#define NELEHU_FACE_SECTOR_COUNT 3 
+#define NELEHU_FACE_SIZE 6144 
+
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 19 
+#define STARBASE_SECTOR_OFFSET 25 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 20 
+#define STARDROP_SECTOR_OFFSET 26 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 22 
+#define STARROT_SECTOR_OFFSET 28 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

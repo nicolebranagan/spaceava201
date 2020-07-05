@@ -7,18 +7,23 @@
 #include "cd.h"
 
 #incbin(fontpal, "palettes/frames.pal");
+
 #incbin(ava_facepal, "palettes/ava_face.pal");
 #incbin(cindy_facepal, "palettes/cindy_face.pal");
+#incbin(nelehu_facepal, "palettes/nelehu_face.pal");
+#incbin(bob_facepal, "palettes/bob_face.pal");
+
 #incbin(starbasepal, "palettes/stardrop.pal");
+
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
 
-#define FONT_VRAM 0x4000
+#define FONT_VRAM 0x1800
 #define FACE_VRAM (FONT_VRAM + BIZCAT_SIZE)
 #define SPR_SIZE_16x16 0x40
 
-#define FRAME_VRAM 0x2000
-#define BACKDROP_VRAM 0x2800
+#define FRAME_VRAM 0x0800
+#define BACKDROP_VRAM 0x1000
 
 char timer;
 int pointer_to_data;
@@ -28,20 +33,21 @@ char has_next_command;
 initialize()
 {
     cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
-    cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
     build_cast();
-    cls();
+    cls(FONT_VRAM / 16);
+    cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
     cd_loadvram(IMAGE_OVERLAY, BIZCAT_SECTOR_OFFSET, FONT_VRAM, BIZCAT_SIZE);
     scroll(0, 0, 0, 0, 223, 0xC0);
     reset_satb();
     satb_update();
     set_xres(320);
     set_screen_size(SCR_SIZE_64x32);
+    cls(FONT_VRAM / 16);
     load_palette(0, fontpal, 1);
     timer = 0;
 }
 
-#define MAX_CAST 8
+#define MAX_CAST 4
 int face_vram[MAX_CAST];
 char palettes[MAX_CAST];
 
@@ -79,9 +85,23 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
             break;
+        
+        case 3: // Nelehu
+            load_palette(current_palette, nelehu_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, NELEHU_FACE_SECTOR_OFFSET, vram, NELEHU_FACE_SIZE);
+            break;
+
+        case 4: // Cindy
+            load_palette(current_palette, bob_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, BOB_FACE_SECTOR_OFFSET, vram, BOB_FACE_SIZE);
+            break;
         }
         face_vram[index] = vram;
-        vram = vram + AVA_FACE_SIZE;
+        vram = vram + (AVA_FACE_SIZE / 2);
         index++;
         pointer_to_data++;
     }
@@ -282,7 +302,7 @@ clear_text()
     int vaddr, zero_string[BLOCK_TO_CLEAR];
     for (i = 0; i < BLOCK_TO_CLEAR; i++)
     {
-        zero_string[i] = 0x0080;
+        zero_string[i] = 0x0180;
     }
     vaddr = vram_addr(0, TEXT_Y);
     load_vram(vaddr, zero_string, BLOCK_TO_CLEAR);
@@ -360,7 +380,7 @@ draw_block(char more)
 {
     int parsed[1], vaddr;
     vaddr = vram_addr(39, 25);
-    parsed[0] = (timer & 32) ? ((127 << 1) + (FONT_VRAM >> 4) - (more ? 64 : 63)) : 0x0080;
+    parsed[0] = (timer & 32) ? ((127 << 1) + (FONT_VRAM >> 4) - (more ? 64 : 63)) : 0x0180;
     load_vram(vaddr, parsed, 1);
 }
 
