@@ -15,7 +15,7 @@ CDFLAGS = -scd -over
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images story.ovl storydata
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/bats.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)

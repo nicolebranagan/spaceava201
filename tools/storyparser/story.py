@@ -9,11 +9,16 @@ import math
 
 COMMANDS = {
     "SHOW_SPRITE": 1,
-    "SHOW_TEXT": 2
+    "SHOW_TEXT": 2,
+    "SHOW_BACKGROUND": 3
 }
 
 SPRITES = {
     "AVA": 1
+}
+
+BACKGROUNDS = {
+    "STARBASE": 0
 }
 
 SCREEN_WIDTH = 36
@@ -64,6 +69,13 @@ def parse_single_script(script):
                 bytes([COMMANDS["SHOW_TEXT"]]) + 
                 newtext.encode('ascii') + 
                 bytes([0])
+            )
+        elif (command["command"] == "SHOW_BACKGROUND"):
+            output = (
+                output + bytes(
+                    [COMMANDS["SHOW_BACKGROUND"],
+                    BACKGROUNDS[command["background"]]]
+                )
             )
     return bytes(cast) + bytes([255]) + output + bytes([255])
 

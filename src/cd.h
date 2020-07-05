@@ -9,5 +9,6 @@
 #define GOVERNOR_OVERLAY 6
 #define STORY_OVERLAY 7
 #define STORY_DATA_OVERLAY 8
+#define BATS_OVERLAY 9
 
 #endif

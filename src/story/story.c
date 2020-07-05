@@ -8,8 +8,8 @@
 
 #incbin(fontpal, "palettes/frames.pal");
 #incbin(facepal, "palettes/ava_face.pal");
-#incbin(backdroppal, "palettes/stardrop.pal");
-#incbin(backdrop, "bats/starbase.bin");
+#incbin(starbasepal, "palettes/stardrop.pal");
+#incbin(starbasebat, "bats/starbase-bg.bin")
 
 #define FONT_VRAM 0x4000
 #define FACE_VRAM (FONT_VRAM + BIZCAT_SIZE)
@@ -27,7 +27,6 @@ initialize()
 {
     cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
     cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
     build_cast();
     cls();
     cd_loadvram(IMAGE_OVERLAY, BIZCAT_SECTOR_OFFSET, FONT_VRAM, BIZCAT_SIZE);
@@ -38,7 +37,6 @@ initialize()
     set_screen_size(SCR_SIZE_64x32);
     load_palette(16, facepal, 1);
     load_palette(0, fontpal, 1);
-    load_palette(1, backdroppal, 1);
     timer = 0;
 }
 
@@ -79,15 +77,25 @@ build_cast()
 #define BACKDROP_HEIGHT 5 * 2 // In units of 8x8 tiles
 #define XTOP 5
 #define YLEFT 3
-draw_background()
+
+draw_background(char index)
 {
-    char y;
+    char y, background;
     int addr;
 
-    for (y = 0; y < BACKDROP_HEIGHT; y++)
+    switch (index)
     {
-        addr = vram_addr(XTOP, YLEFT + y);
-        load_vram(addr, backdrop + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+    case 0:
+    {
+        load_palette(1, starbasepal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, starbasebat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    }
     }
 }
 
@@ -304,7 +312,7 @@ int write_text(char *text)
 draw_person(char slot, char cast_index, char face, char x_start)
 {
     char i, j, x, y;
-    i = slot*6;
+    i = slot * 6;
     j = 0;
     for (y = 0; y < 3; y++)
         for (x = 0; x < 2; x++)
@@ -333,6 +341,7 @@ draw_block(char more)
 
 #define CMD_SHOW_SPRITE 1
 #define CMD_SHOW_TEXT 2
+#define CMD_SHOW_BACKGROUND 3
 
 perform_command()
 {
@@ -356,6 +365,11 @@ loop:
         text_len = write_text(script + pointer_to_data + 1);
         pointer_to_data += (text_len + 1);
         break;
+    case CMD_SHOW_BACKGROUND:
+        draw_background(script[pointer_to_data + 1]);
+        pointer_to_data += 2;
+        goto loop;
+        break;
     }
 
     if (script[pointer_to_data] == 255)
@@ -374,7 +388,6 @@ main()
 
     initialize();
 
-    draw_background();
     draw_frame();
     perform_command();
     vsync();

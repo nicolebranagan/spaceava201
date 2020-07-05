@@ -5,6 +5,10 @@
       "text": "Starbase 'Chip'\nSmall Magellanic Cloud"
     },
     {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARBASE"
+    },
+    {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
