@@ -14,7 +14,8 @@ COMMANDS = {
 }
 
 SPRITES = {
-    "AVA": 1
+    "AVA": 1,
+    "CINDY": 2,
 }
 
 BACKGROUNDS = {

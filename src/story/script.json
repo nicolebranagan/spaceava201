@@ -16,23 +16,45 @@
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
-      "face": 3,
-      "x": 5
+      "face": 2,
+      "x": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "slot": 1,
+      "face": 0,
+      "x": 8
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Wow! What a great day! Nothing could go wrong today!"
+      "text": "AVA: Wow! What an awful day! Everything's gone wrong today!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "slot": 1,
+      "face": 0,
+      "x": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip, have called you all here today. In the Small Magellanic"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Cloud, we're so far from Earth, but since the no-communication theorem has been lifted, I know you've all heard the news."
     },
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
-      "slot": 1,
-      "face": 0,
-      "x": 12
+      "slot": 0,
+      "face": 5,
+      "x": 4
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Of course, it is a bit lonely in here..."
+      "text": "AVA: Earth?! My food replicator's been out all day and no one has done anything to fix it! I don't even remember which planet Earth is!"
     }
   ]
 ]

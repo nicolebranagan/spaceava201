@@ -7,7 +7,8 @@
 #include "cd.h"
 
 #incbin(fontpal, "palettes/frames.pal");
-#incbin(facepal, "palettes/ava_face.pal");
+#incbin(ava_facepal, "palettes/ava_face.pal");
+#incbin(cindy_facepal, "palettes/cindy_face.pal");
 #incbin(starbasepal, "palettes/stardrop.pal");
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -36,22 +37,24 @@ initialize()
     satb_update();
     set_xres(320);
     set_screen_size(SCR_SIZE_64x32);
-    load_palette(16, facepal, 1);
     load_palette(0, fontpal, 1);
     timer = 0;
 }
 
 #define MAX_CAST 8
 int face_vram[MAX_CAST];
+char palettes[MAX_CAST];
 
 build_cast()
 {
     char current_face;
+    char current_palette;
     char index;
     int vram;
     index = 0;
     pointer_to_data = 0;
     vram = FACE_VRAM;
+    current_palette = 16;
     for (;;)
     {
         current_face = script[pointer_to_data];
@@ -64,11 +67,21 @@ build_cast()
         switch (current_face)
         {
         case 1: // Ava
+            load_palette(current_palette, ava_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
             cd_loadvram(IMAGE_OVERLAY, AVA_FACE_SECTOR_OFFSET, vram, AVA_FACE_SIZE);
-            face_vram[index] = vram;
-            vram = vram + AVA_FACE_SIZE;
+            break;
+
+        case 2: // Cindy
+            load_palette(current_palette, cindy_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
             break;
         }
+        face_vram[index] = vram;
+        vram = vram + AVA_FACE_SIZE;
         index++;
         pointer_to_data++;
     }
@@ -334,7 +347,7 @@ draw_person(char slot, char cast_index, char face, char x_start)
             spr_x((((int)(x_start + x)) << 4));
             spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
             spr_pattern(face_vram[cast_index] + (face * 6 * SPR_SIZE_16x16) + (j * SPR_SIZE_16x16));
-            spr_pal(16);
+            spr_pal(palettes[cast_index]);
             spr_pri(1);
             spr_show();
             i++;
