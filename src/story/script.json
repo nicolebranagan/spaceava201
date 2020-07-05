@@ -46,25 +46,18 @@
     },
     {
       "command": "SHOW_SPRITE",
-      "sprite": "CINDY",
       "slot": 1,
-      "face": 0,
-      "x": 8
+      "face": 0
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip, have called you all here today. In the Small Magellanic"
-    },
-    {
-      "command": "SHOW_TEXT",
-      "text": "Cloud, we're so far from Earth, but since the no-communication theorem has been lifted, I know you've all heard the news."
+      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip, have called you all here today. In the Small Magellanic Cloud, we're so far from Earth, but since the no-communication theorem has been lifted, I know you've all heard the news."
     },
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
-      "face": 5,
-      "x": 4
+      "face": 5
     },
     {
       "command": "SHOW_TEXT",

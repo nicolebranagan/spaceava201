@@ -93,7 +93,7 @@ build_cast()
             cd_loadvram(IMAGE_OVERLAY, NELEHU_FACE_SECTOR_OFFSET, vram, NELEHU_FACE_SIZE);
             break;
 
-        case 4: // Cindy
+        case 4: // Bob
             load_palette(current_palette, bob_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;

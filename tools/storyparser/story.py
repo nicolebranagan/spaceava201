@@ -26,6 +26,7 @@ BACKGROUNDS = {
 }
 
 SCREEN_WIDTH = 36
+LINE_COUNT = 4
 
 def parse_and_center_text(text):
     initlines = text.split('\n')
@@ -40,32 +41,51 @@ def parse_and_center_text(text):
 
 def parse_text(text):
     lines = textwrap.wrap(text, SCREEN_WIDTH)
-    return '\n'.join(lines)
+    return ['\n'.join(lines[(x*4):((x+1)*4)]) for x in range(0, math.ceil(len(lines) / 4))]
 
 def parse_single_script(script):
     output = b''
     cast = []
+
+    last_slot = 0
+    last_sprite = [0 for _ in range(0, 10)]
+    last_face = [0 for _ in range(0, 10)]
+    last_x = [0 for _ in range(0, 10)]
+
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
-            if (SPRITES[command["sprite"]] not in cast):
+            if ("sprite" in command and SPRITES[command["sprite"]] not in cast):
                 cast.append(SPRITES[command["sprite"]])
+            
+            slot = last_slot
+            if "slot" in command:
+                slot = command["slot"]
+                last_slot = command["slot"]
+            if "sprite" in command:
+                last_sprite[slot] = command["sprite"]
+            if "face" in command:
+                last_face[slot] = command["face"]
+            if "x" in command:
+                last_x[slot] = command["x"]
+
             output = (
                 output + bytes(
                     [COMMANDS["SHOW_SPRITE"],
-                    command["slot"],
-                    cast.index(SPRITES[command["sprite"]]),
-                    command["face"],
-                    command["x"]]
+                    slot,
+                    cast.index(SPRITES[last_sprite[slot]]),
+                    last_face[slot],
+                    last_x[slot]]
                 )
             )
         elif (command["command"] == "SHOW_TEXT"):
-            newtext = parse_text(command["text"])
-            output = (
-                output + 
-                bytes([COMMANDS["SHOW_TEXT"]]) + 
-                newtext.encode('ascii') + 
-                bytes([0])
-            )
+            parsedsets = parse_text(command["text"])
+            for newtext in parsedsets:
+                output = (
+                    output + 
+                    bytes([COMMANDS["SHOW_TEXT"]]) + 
+                    newtext.encode('ascii') + 
+                    bytes([0])
+                )
         elif (command["command"] == "SHOW_CENTERED_TEXT"):
             newtext = parse_and_center_text(command["text"])
             output = (
