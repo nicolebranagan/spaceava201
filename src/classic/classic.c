@@ -68,9 +68,9 @@ initialize()
     disp_off();
     reset_satb();
     satb_update();
-    cls();
     set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
+    cls();
     ad_reset();
 
     load_palette(16, avapal, 1);

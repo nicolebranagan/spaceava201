@@ -1,0 +1,27 @@
+AVA:
+0. Blank expression
+1. Smile, eyes at an upward angle
+2. Open-mouth
+3. Smile
+4. Big smile
+5. Angry look
+6. What's a war?
+
+BOB:
+0. Bob
+1. Bob
+
+CINDY:
+0. Blank expression
+1. Sad
+2. Smile
+3. Shock and horror
+4. Wink
+5. Rolleyes
+
+NELEHU:
+0. Blank expression
+1. Wink
+2. Communing with the ship
+3. Really?!
+4. Annoyed

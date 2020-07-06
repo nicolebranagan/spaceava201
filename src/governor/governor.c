@@ -7,7 +7,7 @@
 #include "./images/images.h"
 #include "cd.h"
 
-#define FONT_VRAM 0x4000
+#define FONT_VRAM 0x0800
 #incbin(fontpal, "palettes/8x8.pal");
 
 const char STEP_ORDER[] = {
@@ -17,19 +17,24 @@ const char STEP_ORDER[] = {
 initialize()
 {
     char i;
-    cls();
-    scroll(0, 0, 0, 0, 223, 0xC0);
-    reset_satb();
-    for(i = 0; i < 64; i++) {
+
+    for (i = 0; i < 64; i++)
+    {
         spr_set(i);
         spr_hide();
     }
     satb_update();
+
+    disp_off();
+    cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
+    load_palette(0, fontpal, 1);
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
-    load_palette(0, fontpal, 1);
+    scroll(0, 0, 0, 0, 223, 0xC0);
+    disp_on();
 
-    cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, 0x4000, _8X8_SIZE);
+    cls();
+    reset_satb();
 }
 
 write_text(char x, char y, char *text)

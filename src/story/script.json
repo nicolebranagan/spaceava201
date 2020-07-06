@@ -16,14 +16,14 @@
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
-      "face": 2,
+      "face": 5,
       "x": 4
     },
     {
       "command": "SHOW_SPRITE",
       "sprite": "CINDY",
       "slot": 1,
-      "face": 0,
+      "face": 1,
       "x": 9
     },
     {
@@ -37,7 +37,7 @@
       "command": "SHOW_SPRITE",
       "sprite": "BOB",
       "slot": 3,
-      "face": 0,
+      "face": 1,
       "x": 15
     },
     {
@@ -51,17 +51,205 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip, have called you all here today. In the Small Magellanic Cloud, we're so far from Earth, but since the no-communication theorem has been lifted, I know you've all heard the news."
+      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip--"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BOB: ..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I know, Lieutenant Bob, you know who I am. I've just been so excited since getting my promotion."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: In any case, ever since the no communication theorem was lifted, I know you all have been glued to the news coming from Earth."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 5
     },
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
-      "face": 5
+      "face": 2
     },
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Earth?! My food replicator's been out all day and no one has done anything to fix it! I don't even remember which planet Earth is!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Perhaps it was due to misuse. The amount of matter in the universe is limited, after all."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Excuse me?!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: In any case! The Earth has been encased in a quantum field! Quantum ships patrol the Milky Way galaxy! The Amalgamation of Worlds... is at war."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Question. What's a war?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: And I was about to say, the only one here who's defeated quantum before... is Ava."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BOB: ..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I don't think I'd have put it like that, Lieutenant, but you have a good point. Ava, it's been awhile since you've done quantum stuff. Do you remember how it works?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Of course I remember! You grab the photon and the antiphoton and they merge, and then there's... there's a cat involved, and... well, Lily helped me with the math a bit, but I'm sure it'll come right back!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: This may be for the best. The amount of days in the universe is also limited."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm sure it'll come right back to me if I try!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BOB: ..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: That's a great idea, Lieutenant! Nelehu, you can set up a quantum field in the landing bay. I'm sure Ava will get right back into the swing of things with a little practice!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Yeah... I'll do just fine..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "*gulp*"
     }
   ]
 ]

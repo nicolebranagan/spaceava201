@@ -85,7 +85,7 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
             break;
-        
+
         case 3: // Nelehu
             load_palette(current_palette, nelehu_facepal, 1);
             palettes[index] = current_palette;
@@ -427,6 +427,20 @@ loop:
     }
 }
 
+done()
+{
+    char i;
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    victory = 1;
+    cls(0x0180);
+    cd_execoverlay(GOVERNOR_OVERLAY);
+}
+
 main()
 {
     char joyt;
@@ -446,8 +460,7 @@ main()
 
         if (joyt & JOY_RUN)
         {
-            victory = 1;
-            cd_execoverlay(GOVERNOR_OVERLAY);
+            done();
         }
 
         if (joyt & JOY_I || joyt & JOY_II)
@@ -458,8 +471,7 @@ main()
             }
             else
             {
-                victory = 1;
-                cd_execoverlay(GOVERNOR_OVERLAY);
+                done();
             }
         }
     }
