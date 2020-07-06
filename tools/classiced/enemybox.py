@@ -22,7 +22,7 @@ def TypeBox(window):
     var = tk.StringVar(window)
     return (tk.OptionMenu(window, var, *list(ENEMY_NAME.keys())), var)
 
-def EnemyBox(root, onsave, enemy):        
+def EnemyBox(root, onsave, enemy, ondelete=None):        
     x = enemy.x 
     y = enemy.y
     _type = enemy.type 
@@ -77,3 +77,10 @@ def EnemyBox(root, onsave, enemy):
 
     savebutton = tk.Button(window, text="Save", command=onclicksave)
     savebutton.grid(row=6, column=1)
+
+    if (ondelete is not None):
+        def onclickdelete():
+            ondelete()
+            window.destroy()
+        deletebutton = tk.Button(window, text="Delete", command=onclickdelete)
+        deletebutton.grid(row=7, column=1)

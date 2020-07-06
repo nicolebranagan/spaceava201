@@ -112,7 +112,10 @@ class Application(tk.Frame):
             def onsave(x, y, type, facing, delx, dely):
                 self.room.enemies[idx] = Enemy(x, y, type, facing, delx, dely)
                 self.drawroom()
-            EnemyBox(root, onsave, enem)
+            def ondelete():
+                self.room.enemies.pop(idx)
+                self.drawroom()
+            EnemyBox(root, onsave, enem, onsave)
             return
         for idx, obj in enumerate(self.room.objects):
             if (obj.x != clickX or obj.y != clickY):
@@ -120,7 +123,10 @@ class Application(tk.Frame):
             def onsave(x, y, type):
                 self.room.objects[idx] = Object(x, y, type)
                 self.drawroom()
-            ObjectBox(root, onsave, obj)
+            def ondelete():
+                self.room.objects.pop(idx)
+                self.drawroom()
+            ObjectBox(root, onsave, obj, ondelete)
             return
         self.savedx = clickX 
         self.savedy = clickY

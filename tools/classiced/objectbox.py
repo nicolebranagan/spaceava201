@@ -10,7 +10,7 @@ def TypeBox(window):
     var = tk.StringVar(window)
     return (tk.OptionMenu(window, var, *list(OBJECT_NAME.keys())), var)
 
-def ObjectBox(root, onsave, _object):        
+def ObjectBox(root, onsave, _object, ondelete=None):        
     x = _object.x 
     y = _object.y
     _type = _object.type 
@@ -44,3 +44,10 @@ def ObjectBox(root, onsave, _object):
 
     savebutton = tk.Button(window, text="Save", command=onclicksave)
     savebutton.grid(row=3, column=1)
+
+    if (ondelete is not None):
+        def onclickdelete():
+            ondelete()
+            window.destroy()
+        deletebutton = tk.Button(window, text="Delete", command=onclickdelete)
+        deletebutton.grid(row=4, column=1)
