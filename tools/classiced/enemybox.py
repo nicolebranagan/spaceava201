@@ -15,6 +15,7 @@ def DirectionBox(window):
 ENEMY_NAME = {
     "Bigmouth": 0,
     "Ball": 1,
+    "Eyewalk": 2
 }
 NAME_ENEMY = {v: k for k, v in ENEMY_NAME.items()}
 

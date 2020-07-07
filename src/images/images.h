@@ -38,28 +38,33 @@
 #define CINDY_FACE_SECTOR_COUNT 3 
 #define CINDY_FACE_SIZE 6144 
 
+// ./images/eyewalk.chr
+#define EYEWALK_SECTOR_OFFSET 21 
+#define EYEWALK_SECTOR_COUNT 1 
+#define EYEWALK_SIZE 2048 
+
 // ./images/frames.chr
-#define FRAMES_SECTOR_OFFSET 21 
+#define FRAMES_SECTOR_OFFSET 22 
 #define FRAMES_SECTOR_COUNT 1 
 #define FRAMES_SIZE 2048 
 
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 22 
+#define NELEHU_FACE_SECTOR_OFFSET 23 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 25 
+#define STARBASE_SECTOR_OFFSET 26 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 26 
+#define STARDROP_SECTOR_OFFSET 27 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 28 
+#define STARROT_SECTOR_OFFSET 29 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

@@ -5,19 +5,21 @@
 #include "classic/classic.h"
 #include "images/images.h"
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
+#incbin(eyewalkpal, "palettes/eyewalk.pal");
 
 #define MAX_ENEMY_COUNT 16
 
 // Enemy types
-#define ENEMY_TYPE_COUNT 2
+#define ENEMY_TYPE_COUNT 3
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
+#define TYPE_EYEWALK 2
 
 // Sound effects
 #define ENEMY_NO_SOUND 0
 #define ENEMY_CANNON 1
 
-const char PALETTE_BY_TYPE[] = {17, 17};
+const char PALETTE_BY_TYPE[] = {17, 17, 18};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -59,15 +61,24 @@ int populate_enemies_vram(int vram_offset, char *enemy_data)
 
 int populate_enemy_vram(int vram_offset, char type)
 {
-    if (vram_offset && type == TYPE_BIGMOUTH || type == TYPE_BALL)
+    if (type == TYPE_BIGMOUTH || type == TYPE_BALL)
     {
-        if (vram_offset && !enemy_vram[TYPE_BIGMOUTH])
+        if (!enemy_vram[TYPE_BIGMOUTH])
         {
             cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE);
             enemy_vram[TYPE_BIGMOUTH] = vram_offset;
             // The ball is on the Bigmouth graphics file
             enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
             vram_offset += BIGMOUTH_SIZE;
+        }
+    }
+    else if (type == TYPE_EYEWALK)
+    {
+        if (!enemy_vram[TYPE_EYEWALK])
+        {
+            cd_loadvram(IMAGE_OVERLAY, EYEWALK_SECTOR_OFFSET, vram_offset, EYEWALK_SIZE);
+            enemy_vram[TYPE_EYEWALK] = vram_offset;
+            vram_offset += EYEWALK_SIZE;
         }
     }
 
@@ -79,6 +90,7 @@ init_enemy()
     char i;
     enemy_count = 0;
     load_palette(17, bigmouthpal, 1);
+    load_palette(18, eyewalkpal, 1);
 }
 
 // Returns a new VRAM offset
@@ -118,7 +130,7 @@ create_enemy(char type, char x, char y, char facing, char delx, char dely)
 }
 
 // Returns a new sprite offset
-char draw_enemy(char sprite_offset, char enemyIndex, int x, int y)
+char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
 {
     char frame;
     char ctrl_flags = SZ_16x16;
@@ -143,6 +155,11 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y)
         case RIGHT:
             frame += 4;
             break;
+        }
+
+        if (moving && timer >> 4)
+        {
+            frame += 2;
         }
     }
 
@@ -269,7 +286,8 @@ draw_enemies(char time_offset)
             offset,
             i,
             ex + edx,
-            ey + edy);
+            ey + edy,
+            edx > 0 || edy > 0);
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
@@ -389,6 +407,23 @@ update_ball(char index)
     }
 }
 
+update_eyewalk(char index)
+{
+    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    {
+        kill_ava();
+        return;
+    }
+    enemies[index].delx = 1;
+    if (
+        (enemies[index].x + enemies[index].delx) == ava_x &&
+        (enemies[index].y + enemies[index].dely) == ava_y)
+    {
+        ava_dead = 1;
+        return;
+    }
+}
+
 update_enemies()
 {
     char i, j, any_moved;
@@ -415,6 +450,11 @@ update_enemies()
         case TYPE_BALL:
         {
             update_ball(i);
+            break;
+        }
+        case TYPE_EYEWALK:
+        {
+            update_eyewalk(i);
             break;
         }
         }
@@ -449,9 +489,10 @@ update_enemies()
         }
     }
 
-    switch (current_snd) {
-        case ENEMY_CANNON:
-            ad_play(CANNON_LOC, CANNON_SIZE, 14, 0);
+    switch (current_snd)
+    {
+    case ENEMY_CANNON:
+        ad_play(CANNON_LOC, CANNON_SIZE, 14, 0);
         break;
     }
 
