@@ -43,16 +43,86 @@ class Application(tk.Frame):
         self.viewcanvas.bind("<Motion>", self.viewmove)
         self.viewcanvas.bind("<Button-2>", self.cviewclick)
         self.viewcanvas.bind("<Button-3>", self.rviewclick)
-        controls = tk.Frame(self, width=6*32, height=6*32)
+        controls = tk.Frame(self, width=6*32)
         controls.grid(row=1, column=2)
         loadbutton = tk.Button(controls, text="Open", command=self.open)
         loadbutton.grid(row=0, column=0)
         savebutton = tk.Button(controls, text="Save", command=self.save)
         savebutton.grid(row=0, column=1)
+
+        roomselect = tk.Frame(controls, width=6*32)
+        roomselect.grid(row=1, column=0, columnspan=2)
+
+        self.roomcount = tk.Label(roomselect, text="1/1")
+        self.roomcount.grid(row=0, column=0)
+
+        def move_room(dist):
+            idx = self.rooms.index(self.room)
+            newidx = idx + dist
+            self.room = self.rooms[newidx]
+            self.roomcount.config(
+                text="{0}/{1}".format(newidx + 1, len(self.rooms)))
+            if (newidx == 0 or len(self.rooms) == 1):
+                self.previousroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.previousroom.config(
+                    state=tk.NORMAL
+                )
+            if (newidx == len(self.rooms) + 1):
+                self.nextroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.nextroom.config(
+                    state=tk.NORMAL
+                )
+            self.drawroom()
+
+        self.previousroom =  tk.Button(
+            roomselect, 
+            text="<<", 
+            state=tk.DISABLED,
+            command=lambda: move_room(-1)
+        )
+        self.previousroom.grid(row=0, column=1)
+        self.nextroom =  tk.Button(
+            roomselect, 
+            text=">>", 
+            state=tk.DISABLED,
+            command=lambda: move_room(1)
+        )
+        self.nextroom.grid(row=0, column=2)
+
+        def addroom():
+            newidx = len(self.rooms)
+            self.rooms.append(Room(self.tileset))
+            self.room = self.rooms[newidx]
+            if (newidx == 0 or len(self.rooms) == 1):
+                self.previousroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.previousroom.config(
+                    state=tk.NORMAL
+                )
+            self.nextroom.config(
+                state=tk.DISABLED
+            )
+            self.roomcount.config(
+                text="{0}/{1}".format(newidx + 1, len(self.rooms)))
+            self.drawroom()
+
+        newroombutton = tk.Button(roomselect, text="Add room", command=addroom)
+        newroombutton.grid(row=1, column=1, columnspan=2)
         
+        roomcontrols = tk.Frame(controls, width=6*32)
+        roomcontrols.grid(row=2, column=0, columnspan=2)
+
         self.setstartmode = False
-        setstartbutton = tk.Button(controls, text="Set Start", command=self.setstart)
-        setstartbutton.grid(row=3, column=0, columnspan=2)
+        setstartbutton = tk.Button(roomcontrols, text="Set Start", command=self.setstart)
+        setstartbutton.grid(row=0, column=0, columnspan=2)
 
         def onclickaddenemy():
             def onsave(x, y, type, facing, delx, dely):
@@ -60,8 +130,8 @@ class Application(tk.Frame):
                 self.drawroom()
             EnemyBox(root, onsave, Enemy(self.savedx, self.savedy, 0, 0, 0, 0))
 
-        addenemybutton = tk.Button(controls, text="Add Enemy", command=onclickaddenemy)
-        addenemybutton.grid(row=4, column=0, columnspan=2)
+        addenemybutton = tk.Button(roomcontrols, text="Add Enemy", command=onclickaddenemy)
+        addenemybutton.grid(row=1, column=0, columnspan=2)
 
         def onclickaddobject():
             def onsave(x, y, type):
@@ -69,8 +139,8 @@ class Application(tk.Frame):
                 self.drawroom()
             ObjectBox(root, onsave, Object(self.savedx, self.savedy, 0))
 
-        addobjectbutton = tk.Button(controls, text="Add Object", command=onclickaddobject)
-        addobjectbutton.grid(row=5, column=0, columnspan=2)
+        addobjectbutton = tk.Button(roomcontrols, text="Add Object", command=onclickaddobject)
+        addobjectbutton.grid(row=2, column=0, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -179,6 +249,19 @@ class Application(tk.Frame):
                     self.loadroom_from_binary(data[x*4096:(x+1)*4096])
                 )
             self.room = self.rooms[0]
+            self.roomcount.config(
+                text="1/{0}".format(len(self.rooms)))
+            self.previousroom.config(
+                state=tk.DISABLED
+            )
+            if (len(self.rooms) == 1):
+                self.nextroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.nextroom.config(
+                    state=tk.NORMAL
+                )
             self.drawroom()
 
     def loadroom_from_binary(self, data):
