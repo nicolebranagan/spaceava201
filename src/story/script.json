@@ -6,7 +6,7 @@
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Starbase 'Chip'\nSmall Magellanic Cloud"
+      "text": "Spacebase 'Chip'\nSmall Magellanic Cloud"
     },
     {
       "command": "SHOW_BACKGROUND",
@@ -51,7 +51,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Starbase Chip--"
+      "text": "CINDY: That's why I, Captain Cynthia \"Cindy\" Palisade of the Spacebase Chip--"
     },
     {
       "command": "SHOW_SPRITE",

@@ -100,10 +100,6 @@ load_level_data(char level)
     load_palette(2, tilepal2, 1);
     load_tile(0x2000);
 
-    set_font_pal(0);
-    set_font_color(4, 0);
-    load_default_font();
-
     // Level data is the first sector of the level
     cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level, tiledata, 2048);
     set_map_data(tiledata, 64, 32);
