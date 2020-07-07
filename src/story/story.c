@@ -41,7 +41,7 @@ initialize()
     scroll(0, 0, 0, 0, 223, 0xC0);
     reset_satb();
     satb_update();
-    set_xres(320);
+    set_xres(336);
     set_screen_size(SCR_SIZE_64x32);
     cls(FONT_VRAM / 16);
     load_palette(0, fontpal, 1);
