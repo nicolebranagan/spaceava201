@@ -5,6 +5,7 @@
 #include <huc.h>
 #include "./images/images.h"
 #include "cd.h"
+#include "./story/chirp.c"
 
 #incbin(fontpal, "palettes/frames.pal");
 
@@ -320,7 +321,7 @@ clear_text()
     load_vram(vaddr, zero_string, BLOCK_TO_CLEAR);
 }
 
-write_char(char x, char y, char character)
+write_char(char x, char y, char character, char chirp_type)
 {
     int parsed[1], vaddr;
     vaddr = vram_addr(x, y);
@@ -329,9 +330,10 @@ write_char(char x, char y, char character)
     vaddr = vram_addr(x, y + 1);
     (parsed[0])++;
     load_vram(vaddr, parsed, 1);
+    chirp(chirp_type);
 }
 
-int write_text(char *text)
+int write_text(char *text, char chirp_type)
 {
     char x, y, i;
     int len;
@@ -356,11 +358,12 @@ int write_text(char *text)
             continue;
         }
 
-        write_char(x, y, text[i]);
+        write_char(x, y, text[i], chirp_type);
         x++;
         i++;
         len++;
         vsync();
+        chirp(0);
     }
     return len;
 }
@@ -402,7 +405,7 @@ draw_block(char more)
 
 perform_command()
 {
-    char current_command;
+    char current_command, chirp_type;
     int text_len;
 loop:
     current_command = script[pointer_to_data];
@@ -419,8 +422,9 @@ loop:
         goto loop;
         break;
     case CMD_SHOW_TEXT:
-        text_len = write_text(script + pointer_to_data + 1);
-        pointer_to_data += (text_len + 1);
+        chirp_type = script[pointer_to_data + 1];
+        text_len = write_text(script + pointer_to_data + 2, chirp_type);
+        pointer_to_data += (text_len + 2);
         break;
     case CMD_SHOW_BACKGROUND:
         draw_background(script[pointer_to_data + 1]);

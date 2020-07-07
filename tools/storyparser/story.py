@@ -80,18 +80,20 @@ def parse_single_script(script):
             )
         elif (command["command"] == "SHOW_TEXT"):
             parsedsets = parse_text(command["text"])
+            chirp = int(command["chirp"]) if "chirp" in command else 0
             for newtext in parsedsets:
                 output = (
                     output + 
-                    bytes([COMMANDS["SHOW_TEXT"]]) + 
+                    bytes([COMMANDS["SHOW_TEXT"], chirp]) + 
                     newtext.encode('ascii') + 
                     bytes([0])
                 )
         elif (command["command"] == "SHOW_CENTERED_TEXT"):
             newtext = parse_and_center_text(command["text"])
+            chirp = int(command["chirp"]) if "chirp" in command else 0
             output = (
                 output + 
-                bytes([COMMANDS["SHOW_TEXT"]]) + 
+                bytes([COMMANDS["SHOW_TEXT"], chirp]) + 
                 newtext.encode('ascii') + 
                 bytes([0])
             )

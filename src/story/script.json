@@ -6,7 +6,8 @@
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Spacebase 'Chip'\nSmall Magellanic Cloud"
+      "text": "Spacebase Chip-1\nSmall Magellanic Cloud",
+      "chirp": 76
     },
     {
       "command": "SHOW_BACKGROUND",
@@ -270,7 +271,8 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: This is Lieutenant Nelehu. We have a minor issue."
+      "text": "NELEHU: This is Lieutenant Nelehu. We have a minor issue.",
+      "chirp": 210
     },
     {
       "command": "SHOW_SPRITE",
@@ -278,7 +280,8 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Minor?! Nelehu, this is no time for understatement!"
+      "text": "CINDY: Minor?! Nelehu, this is no time for understatement!",
+      "chirp": 200
     },
     {
       "command": "SHOW_TEXT",
@@ -286,7 +289,8 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Hang tight, Ava! You might have to stay in the quantum world just a little longer."
+      "text": "CINDY: Hang tight, Ava! You might have to stay in the quantum world just a little longer.",
+      "chirp": 200
     },
     {
       "command": "SHOW_SPRITE",
@@ -294,7 +298,8 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Oh my editor! They're getting into my computer, I swear if they delete any of my manuscripts"
+      "text": "CINDY: Oh my editor! They're getting into my computer, I swear if they delete any of my manuscripts",
+      "chirp": 200
     },
     {
       "command": "SHOW_SPRITE",
@@ -302,7 +307,8 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "*beep*"
+      "text": "*beep*",
+      "chirp": 66
     },
     {
       "command": "SHOW_TEXT",
