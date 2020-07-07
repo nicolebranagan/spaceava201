@@ -83,5 +83,6 @@ def EnemyBox(root, onsave, enemy, ondelete=None):
         def onclickdelete():
             ondelete()
             window.destroy()
+            
         deletebutton = tk.Button(window, text="Delete", command=onclickdelete)
         deletebutton.grid(row=7, column=1)

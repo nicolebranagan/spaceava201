@@ -51,7 +51,8 @@ char tiles[500]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY[] = {
-    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0};
+    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 char pal_rotate_step;
 
@@ -104,10 +105,10 @@ load_level_data(char level)
     cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level, tiledata, 2048);
     set_map_data(tiledata, 64, 32);
 
-    cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level + 1, tiles, 500);
+    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * level) + 1, tiles, 500);
 
-    vram_offset = AVA_VRAM + AVA_SIZE;
-    populate_enemies_vram(vram_offset, tiles + 2);
+    vram_offset = AVA_VRAM + (AVA_SIZE / 2);
+    populate_enemies_vram(vram_offset, tiles + 1);
 }
 
 init_ava_sprite()

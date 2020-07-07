@@ -186,7 +186,7 @@ class Application(tk.Frame):
             def ondelete():
                 self.room.enemies.pop(idx)
                 self.drawroom()
-            EnemyBox(root, onsave, enem, onsave)
+            EnemyBox(root, onsave, enem, ondelete)
             return
         for idx, obj in enumerate(self.room.objects):
             if (obj.x != clickX or obj.y != clickY):

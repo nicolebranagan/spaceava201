@@ -39,6 +39,10 @@ int populate_enemies_vram(int vram_offset, char *enemy_data)
 {
     int i;
     char x, y, type, facing, delx, dely;
+    for (i = 0; i < ENEMY_TYPE_COUNT; i++)
+    {
+        enemy_vram[i] = 0;
+    }
 
     i = 0;
     for (;;)
@@ -61,25 +65,27 @@ int populate_enemies_vram(int vram_offset, char *enemy_data)
 
 int populate_enemy_vram(int vram_offset, char type)
 {
-    if (type == TYPE_BIGMOUTH || type == TYPE_BALL)
+    switch (type)
     {
+    case TYPE_BIGMOUTH:
+    case TYPE_BALL:
         if (!enemy_vram[TYPE_BIGMOUTH])
         {
             cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE);
             enemy_vram[TYPE_BIGMOUTH] = vram_offset;
             // The ball is on the Bigmouth graphics file
             enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
-            vram_offset += BIGMOUTH_SIZE;
+            vram_offset += BIGMOUTH_SIZE / 2;
         }
-    }
-    else if (type == TYPE_EYEWALK)
-    {
+        break;
+    case TYPE_EYEWALK:
         if (!enemy_vram[TYPE_EYEWALK])
         {
             cd_loadvram(IMAGE_OVERLAY, EYEWALK_SECTOR_OFFSET, vram_offset, EYEWALK_SIZE);
             enemy_vram[TYPE_EYEWALK] = vram_offset;
-            vram_offset += EYEWALK_SIZE;
+            vram_offset += EYEWALK_SIZE / 2;
         }
+        break;
     }
 
     return vram_offset;
@@ -93,7 +99,6 @@ init_enemy()
     load_palette(18, eyewalkpal, 1);
 }
 
-// Returns a new VRAM offset
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
 {
     char i, new_index;
@@ -157,7 +162,7 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
             break;
         }
 
-        if (moving && timer >> 4)
+        if (moving && (timer >> 3))
         {
             frame += 2;
         }
@@ -412,9 +417,51 @@ update_eyewalk(char index)
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
         kill_ava();
-        return;
     }
-    enemies[index].delx = 1;
+
+    switch (enemies[index].facing)
+    {
+    case UP:
+        if (!is_solid(enemies[index].x, enemies[index].y - 1))
+        {
+            enemies[index].dely = -1;
+        }
+        else
+        {
+            enemies[index].facing = RIGHT;
+        }
+        break;
+    case DOWN:
+        if (!is_solid(enemies[index].x, enemies[index].y + 1))
+        {
+            enemies[index].dely = 1;
+        }
+        else
+        {
+            enemies[index].facing = LEFT;
+        }
+        break;
+    case LEFT:
+        if (!is_solid(enemies[index].x - 1, enemies[index].y))
+        {
+            enemies[index].delx = -1;
+        }
+        else
+        {
+            enemies[index].facing = UP;
+        }
+        break;
+    case RIGHT:
+        if (!is_solid(enemies[index].x + 1, enemies[index].y))
+        {
+            enemies[index].delx = 1;
+        }
+        else
+        {
+            enemies[index].facing = DOWN;
+        }
+        break;
+    }
     if (
         (enemies[index].x + enemies[index].delx) == ava_x &&
         (enemies[index].y + enemies[index].dely) == ava_y)
