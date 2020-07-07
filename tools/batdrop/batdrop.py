@@ -11,7 +11,7 @@ class Application(tk.Frame):
         self.pack()
 
         self.select = 0
-        self.vramoffset = 0x2800
+        self.vramoffset = 0x1000
 
         tiles2x, tileset, tilesTk = getStarbase()
         self.tiles2x = tiles2x

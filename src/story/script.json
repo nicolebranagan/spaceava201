@@ -251,5 +251,62 @@
       "command": "SHOW_TEXT",
       "text": "*gulp*"
     }
+  ],
+  [
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "TRAINING_HALL"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 1,
+      "x": 9
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: See! I knew I could do it! So now we need to go and save the Earth! That's the one with the rings, right?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: This is Lieutenant Nelehu. We have a minor issue."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Minor?! Nelehu, this is no time for understatement!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: What's going on in there?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Hang tight, Ava! You might have to stay in the quantum world just a little longer."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Oh my editor! They're getting into my computer, I swear if they delete any of my manuscripts"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "*beep*"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: That's not particularly reassuring..."
+    }
   ]
 ]

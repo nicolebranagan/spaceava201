@@ -17,6 +17,7 @@
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
+#incbin(emptybat, "bats/empty-bg.bin")
 
 #define FONT_VRAM 0x1800
 #define FACE_VRAM (FONT_VRAM + BIZCAT_SIZE)
@@ -138,6 +139,17 @@ draw_background(char index)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, chipbasebat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    }
+    case 2:
+    {
+        load_palette(1, starbasepal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, emptybat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         break;
     }
