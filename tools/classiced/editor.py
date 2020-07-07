@@ -22,6 +22,7 @@ class Application(tk.Frame):
         self.tilesTk = tilesTk
 
         self.room = Room(self.tileset)
+        self.rooms = [self.room]
 
         self.createWidgets()
         self.drawroom()
@@ -155,8 +156,11 @@ class Application(tk.Frame):
                            ("All files", "*")),
                 title="Save")
         if filen != () and filen != "":
+            data = b''
+            for room in self.rooms:
+                data = data + room.dump()
             with open(filen, "wb") as fileo:
-                fileo.write(self.room.dump())
+                fileo.write(data)
 
     def open(self):
         filen = filedialog.askopenfilename(
@@ -168,42 +172,79 @@ class Application(tk.Frame):
                 title="Open")
         if filen != () and filen != "":
             with open(filen, "rb") as fileo:
-                self.room = Room.load(list(fileo.read(2048)), self.tileset)
-                self.room.startx = fileo.read(1)[0]
-                self.room.starty = fileo.read(1)[0]
-                while True:
-                    xbyte = fileo.read(1)
-                    if (xbyte[0] == 255):
-                        break
-                    self.room.enemies.append(Enemy(
-                        xbyte[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0]
-                    ))
-                while True:
-                    xbyte = fileo.read(1)
-                    if (xbyte[0] == 255):
-                        break
-                    self.room.objects.append(Object(
-                        xbyte[0],
-                        fileo.read(1)[0],
-                        fileo.read(1)[0]
-                    ))
+                data = fileo.read()
+            self.rooms = []
+            for x in range(0, len(data) // 4096):
+                self.rooms.append(
+                    self.loadroom_from_binary(data[x*4096:(x+1)*4096])
+                )
+            self.room = self.rooms[0]
             self.drawroom()
 
+    def loadroom_from_binary(self, data):
+        tiles = list(data[0:2048])
+        startx = data[2048]
+        starty = data[2049]
+        enemies = []
+        objects = []
+        offset = 2049
+        while True:
+            offset = offset + 1
+            x = data[offset]
+            if (x == 255):
+                break
+            offset = offset + 1
+            y = data[offset]
+            offset = offset + 1
+            _type = data[offset]       
+            offset = offset + 1
+            facing = data[offset]     
+            offset = offset + 1
+            delx = data[offset]
+            offset = offset + 1
+            dely = data[offset]
+            
+            enemies.append(Enemy(x, y, _type, facing, delx, dely))
+        while True:
+            offset = offset + 1
+            x = data[offset]
+            if (x == 255):
+                break
+            offset = offset + 1
+            y = data[offset]
+            offset = offset + 1
+            _type = data[offset]
+            
+            objects.append(Object(x, y, _type))
+        return Room(self.tileset, startx, starty, tiles, enemies, objects)
+
 class Room:
-    def __init__(self, tileset):
+    def __init__(
+        self, 
+        tileset,
+        startx = 0, 
+        starty = 0, 
+        tiles = None, 
+        enemies = None, 
+        objects = None
+    ):
         self.width = 64
         self.height = 32
         self.tileset = tileset
-        self.tiles = [0 for x in range(0,self.width*self.height)]
-        self.objects = []
-        self.startx = 0
-        self.starty = 0
-        self.enemies = []
+        if (tiles is None):
+            self.tiles = [0 for x in range(0,self.width*self.height)]
+        else:
+            self.tiles = tiles
+        if (objects is None):
+            self.objects = []
+        else:
+            self.objects = objects
+        self.startx = startx
+        self.starty = starty
+        if (enemies is None):
+            self.enemies = []
+        else:
+            self.enemies = enemies
 
     def set(self, x, y, v):
         if x >= self.width or y >= self.height or x < 0 or y < 0:
