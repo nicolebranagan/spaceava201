@@ -314,5 +314,107 @@
       "command": "SHOW_TEXT",
       "text": "AVA: That's not particularly reassuring..."
     }
+  ],
+  [
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "TRAINING_HALL"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 0,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I don't think these are just test chambers anymore... what's going on in here?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: Wouldn't you like to know!",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "GOON",
+      "x": 12,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Hahaha! Halt in the name of quantum!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But we're in an entirely different galaxy! How did you make it over here so quickly?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: We used quantum teleportation! Haven't you ever heard of spooky action at a distance?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Now that we've escaped the confines of the black hole, the entire universe will be placed inside a quantum field! It's what you deserve!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But I met Schrodinger's Cat, you all just wanted to stay inside the black hole. Why would you leave now? What's changed?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Schrodinger's cat is gone! They were weak and lost to the likes of you! We've got new leadership now!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: But enough talk! Shut up and calculate!"
+    }
   ]
 ]

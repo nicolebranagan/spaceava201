@@ -25,3 +25,10 @@ NELEHU:
 2. Communing with the ship
 3. Really?!
 4. Annoyed
+
+GOON:
+0. Blank expression
+1. Smirk
+2. Laugh
+3. Shut up and calculate
+4. Sad

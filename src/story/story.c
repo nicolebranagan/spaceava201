@@ -13,6 +13,7 @@
 #incbin(cindy_facepal, "palettes/cindy_face.pal");
 #incbin(nelehu_facepal, "palettes/nelehu_face.pal");
 #incbin(bob_facepal, "palettes/bob_face.pal");
+#incbin(goon_facepal, "palettes/goon_face.pal");
 
 #incbin(starbasepal, "palettes/stardrop.pal");
 
@@ -100,6 +101,13 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, BOB_FACE_SECTOR_OFFSET, vram, BOB_FACE_SIZE);
+            break;
+
+        case 5: // Quantum Goon
+            load_palette(current_palette, goon_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, GOON_FACE_SECTOR_OFFSET, vram, GOON_FACE_SIZE);
             break;
         }
         face_vram[index] = vram;
