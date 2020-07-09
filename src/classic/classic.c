@@ -442,7 +442,7 @@ main()
         }
         if (joyt & JOY_I)
         {
-            update_enemies();
+            cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
         }
 
         if (joyt & JOY_II)

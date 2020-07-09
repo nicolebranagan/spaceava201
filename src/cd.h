@@ -11,4 +11,6 @@
 #define STORY_DATA_OVERLAY 8
 #define BATS_OVERLAY 9
 
+#define TRACK_CHIME_2020 3
+
 #endif

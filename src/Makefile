@@ -1,4 +1,4 @@
-all: spaceava.iso
+all: spaceava201
 
 HUC_ROOT = /mnt/c/Users/nicol/apps/huc
 
@@ -13,7 +13,14 @@ STORY_SRC = story/story.c
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata cuefile images story.ovl storydata
+spaceava201: spaceava.iso
+	rm ../build/iso/*
+	mv ../build/spaceava.iso ../build/iso/spaceava.iso
+	cp spaceava.cue ../build/iso/spaceava.cue
+	cp ../mods/*.wav ../build/iso/
+	cp ../placeholder.wav ../build/iso
+
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata
 	mv */*.s */*.ovl */*.sym ../build
 	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/bats.bin
 
@@ -28,9 +35,6 @@ governor.ovl: $(GOVERNOR_SRC) images
 
 story.ovl: $(STORY_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(STORY_SRC) $(LIBS)
-
-cuefile: spaceava.cue
-	cp spaceava.cue ../build/
 
 adpcm_ovl: adpcm/whistle.vox
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
