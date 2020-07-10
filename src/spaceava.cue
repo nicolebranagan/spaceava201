@@ -1,19 +1,27 @@
-FILE placeholder.wav WAVE
+FILE "Space Ava 201 - Track 1.wav" WAVE
   TRACK 01 AUDIO
     INDEX 01 00:00:00
 
-FILE spaceava.iso BINARY
+FILE "Space Ava 201 - Track 2.iso" BINARY
   TRACK 02 MODE1/2048
     INDEX 01 00:00:00
 
-FILE spaceful.wav WAVE
+FILE "Space Ava 201 - Track 3.wav" WAVE
   TRACK 03 AUDIO
     INDEX 01 00:00:00
 
-FILE chime2020.wav WAVE
+FILE "Space Ava 201 - Track 4.wav" WAVE
   TRACK 04 AUDIO
     INDEX 01 00:00:00
 
-FILE placeholder.wav WAVE
+FILE "Space Ava 201 - Track 5.wav" WAVE
   TRACK 05 AUDIO
+    INDEX 01 00:00:00
+
+FILE "Space Ava 201 - Track 6.wav" WAVE
+  TRACK 06 AUDIO
+    INDEX 01 00:00:00
+
+FILE placeholder.wav WAVE
+  TRACK 07 AUDIO
     INDEX 01 00:00:00

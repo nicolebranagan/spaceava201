@@ -15,9 +15,13 @@ CDFLAGS = -scd -over
 
 spaceava201: spaceava.iso
 	rm ../build/iso/*
-	mv ../build/spaceava.iso ../build/iso/spaceava.iso
-	cp spaceava.cue ../build/iso/spaceava.cue
-	cp ../mods/*.wav ../build/iso/
+	cp ../waves/track1.wav "../build/iso/Space Ava 201 - Track 1.wav"
+	mv ../build/spaceava.iso "../build/iso/Space Ava 201 - Track 2.iso"
+	cp spaceava.cue "../build/iso/Space Ava 201.cue"
+	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - Track 3.wav"
+	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - Track 4.wav"
+	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - Track 5.wav"
+	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - Track 6.wav"
 	cp ../placeholder.wav ../build/iso
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata

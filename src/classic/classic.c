@@ -301,6 +301,7 @@ const char WIN_FRAMES[] = {0, 0, 11, 12, 13, 13, 13, 14, 14, 15};
 win_ava()
 {
     char i;
+    cd_fade(CDFADE_PCM2);
     if (ad_stat())
     {
         ad_stop();
