@@ -10,7 +10,9 @@ import math
 COMMANDS = {
     "SHOW_SPRITE": 1,
     "SHOW_TEXT": 2,
-    "SHOW_BACKGROUND": 3
+    "SHOW_BACKGROUND": 3,
+    "PLAY_MUSIC": 4,
+    "STOP_MUSIC": 5
 }
 
 SPRITES = {
@@ -25,6 +27,12 @@ BACKGROUNDS = {
     "STARBASE": 0,
     "STARBASE_EXTERIOR": 1,
     "TRAINING_HALL": 2
+}
+
+TRACKS = {
+    "Ballad of St. Janet": 0,
+    "Evan S. Sense": 1,
+    "Chime 2020": 2,
 }
 
 SCREEN_WIDTH = 36
@@ -105,6 +113,15 @@ def parse_single_script(script):
                     BACKGROUNDS[command["background"]]]
                 )
             )
+        elif (command["command"] == "PLAY_MUSIC"):
+            output = (
+                output + bytes(
+                    [COMMANDS["PLAY_MUSIC"],
+                    TRACKS[command["track"]]]
+                )
+            )
+        elif (command["command"] == "STOP_MUSIC"):
+            output = output + bytes([COMMANDS["STOP_MUSIC"]])
     return bytes(cast) + bytes([255]) + output + bytes([255])
 
 if (len(sys.argv) < 3):

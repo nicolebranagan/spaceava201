@@ -14,6 +14,10 @@
       "background": "STARBASE"
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
@@ -133,6 +137,10 @@
       "command": "SHOW_SPRITE",
       "slot": 1,
       "face": 1
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
@@ -259,6 +267,10 @@
       "background": "TRAINING_HALL"
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "AVA",
@@ -268,6 +280,9 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: See! I knew I could do it! So now we need to go and save the Earth! That's the one with the rings, right?"
+    },
+    {
+      "command": "STOP_MUSIC"
     },
     {
       "command": "SHOW_TEXT",
@@ -282,6 +297,10 @@
       "command": "SHOW_TEXT",
       "text": "CINDY: Minor?! Nelehu, this is no time for understatement!",
       "chirp": 200
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
@@ -321,6 +340,10 @@
       "background": "TRAINING_HALL"
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "AVA",
@@ -347,6 +370,10 @@
       "sprite": "GOON",
       "x": 12,
       "face": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
     },
     {
       "command": "SHOW_TEXT",

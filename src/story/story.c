@@ -33,6 +33,11 @@ int pointer_to_data;
 char script[2048];
 char has_next_command;
 
+const char TRACK_MAPPING[] = {
+    TRACK_BALLAD,
+    TRACK_EVANSSENSE,
+    TRACK_CHIME_2020};
+
 initialize()
 {
     cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
@@ -410,6 +415,8 @@ draw_block(char more)
 #define CMD_SHOW_SPRITE 1
 #define CMD_SHOW_TEXT 2
 #define CMD_SHOW_BACKGROUND 3
+#define CMD_PLAY_MUSIC 4
+#define CMD_STOP_MUSIC 5
 
 perform_command()
 {
@@ -437,6 +444,17 @@ loop:
     case CMD_SHOW_BACKGROUND:
         draw_background(script[pointer_to_data + 1]);
         pointer_to_data += 2;
+        goto loop;
+        break;
+    case CMD_PLAY_MUSIC:
+        chirp_type = TRACK_MAPPING[script[pointer_to_data + 1]];
+        cd_playtrk(chirp_type, chirp_type + 1, CDPLAY_REPEAT);
+        pointer_to_data += 2;
+        goto loop;
+        break;
+    case CMD_STOP_MUSIC:
+        cd_reset();
+        pointer_to_data += 1;
         goto loop;
         break;
     }
