@@ -408,6 +408,7 @@ main()
     char joyt;
 
     initialize();
+    cd_playtrk(TRACK_SPACEFUL, TRACK_SPACEFUL + 1, CDPLAY_REPEAT);
 
     for (;;)
     {

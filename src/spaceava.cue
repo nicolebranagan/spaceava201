@@ -6,10 +6,14 @@ FILE spaceava.iso BINARY
   TRACK 02 MODE1/2048
     INDEX 01 00:00:00
 
-FILE chime2020.wav WAVE
+FILE spaceful.wav WAVE
   TRACK 03 AUDIO
     INDEX 01 00:00:00
 
-FILE placeholder.wav WAVE
+FILE chime2020.wav WAVE
   TRACK 04 AUDIO
+    INDEX 01 00:00:00
+
+FILE placeholder.wav WAVE
+  TRACK 05 AUDIO
     INDEX 01 00:00:00
