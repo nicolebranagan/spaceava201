@@ -410,7 +410,7 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
-      "face": 1
+      "face": 2
     },
     {
       "command": "SHOW_SPRITE",
@@ -428,6 +428,34 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: And what's with the giant eye balls! Those are weirding me out just a little."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: You can't have quantum without the observers!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
       "face": 0
     },
     {
@@ -437,7 +465,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: But I met Schrodinger's Cat, you all just wanted to stay inside the black hole. Why would you leave now? What's changed?"
+      "text": "AVA: But this all doesn't make sense... I met Schrodinger's Cat, you all just wanted to stay inside the black hole. Why would you leave now? What's changed?"
     },
     {
       "command": "SHOW_SPRITE",
