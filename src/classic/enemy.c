@@ -502,8 +502,10 @@ update_boss1(char index)
 
     if (enemies[index].facing == DIR_FRAME_OVERRIDE && enemies[index].timer >= 5) {
         enemies[index].active = 0;
-        create_object(1, enemies[index].x, enemies[index].y);
+        create_object(1, 26, 13);
+        create_object(0, 28, 13);
         cd_playtrk(TRACK_BALLAD, TRACK_BALLAD + 1, CDPLAY_REPEAT);
+        play_sound(ENEMY_MINIWILHELM);
         return;
     }
 
