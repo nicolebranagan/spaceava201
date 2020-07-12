@@ -53,23 +53,28 @@
 #define GOON_FACE_SECTOR_COUNT 3 
 #define GOON_FACE_SIZE 6144 
 
+// ./images/goonboss.chr
+#define GOONBOSS_SECTOR_OFFSET 26 
+#define GOONBOSS_SECTOR_COUNT 1 
+#define GOONBOSS_SIZE 2048 
+
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 26 
+#define NELEHU_FACE_SECTOR_OFFSET 27 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 29 
+#define STARBASE_SECTOR_OFFSET 30 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 30 
+#define STARDROP_SECTOR_OFFSET 31 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 32 
+#define STARROT_SECTOR_OFFSET 33 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

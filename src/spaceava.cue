@@ -22,6 +22,10 @@ FILE "Space Ava 201 - 06 - Chime 2020.wav" WAVE
   TRACK 06 AUDIO
     INDEX 01 00:00:00
 
-FILE placeholder.wav WAVE
+FILE "Space Ava 201 - 07 - Impossibly Bossy.wav" WAVE
   TRACK 07 AUDIO
+    INDEX 01 00:00:00
+
+FILE placeholder.wav WAVE
+  TRACK 08 AUDIO
     INDEX 01 00:00:00

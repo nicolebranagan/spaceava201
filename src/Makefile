@@ -22,6 +22,7 @@ spaceava201: spaceava.iso
 	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 04 - Evan S. Sense.wav"
 	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 05 - Spaceful.wav"
 	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 06 - Chime 2020.wav"
+	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 07 - Impossibly Bossy.wav"
 	cp ../placeholder.wav ../build/iso
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata

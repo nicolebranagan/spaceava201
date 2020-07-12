@@ -15,5 +15,6 @@
 #define TRACK_EVANSSENSE 4
 #define TRACK_SPACEFUL 5
 #define TRACK_CHIME_2020 6
+#define TRACK_IMPOSSIBLY_BOSSY 7
 
 #endif
