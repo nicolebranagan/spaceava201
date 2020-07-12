@@ -20,6 +20,7 @@
 // Sound effects
 #define ENEMY_NO_SOUND 0
 #define ENEMY_CANNON 1
+#define ENEMY_MINIWILHELM 2
 
 // Other
 #define DIR_FRAME_OVERRIDE 255
@@ -510,10 +511,12 @@ update_boss1(char index)
     for (i = 0; i < enemy_count; i++)
     {
         if (
+            enemies[i].active &&
             enemies[i].type == TYPE_BALL &&
             enemies[i].x == enemies[index].x &&
             enemies[i].y == enemies[index].y)
         {
+            enemies[i].active = 0;
             hurt_boss1(index);
             return;
         }
@@ -570,6 +573,11 @@ update_boss1(char index)
         }
     }
 
+    if (enemies[index].facing == DIR_FRAME_OVERRIDE) {
+        enemies[index].facing = ideal_facing;
+        enemies[index].frame = 0;
+    }
+
     if (enemies[index].facing == ideal_facing)
     {
         switch (enemies[index].facing)
@@ -603,7 +611,6 @@ update_boss1(char index)
     else
     {
         enemies[index].facing = ideal_facing;
-        enemies[index].frame = 0;
     }
 
     if (
@@ -620,13 +627,19 @@ check_boss1_hurt(char index)
 {
     char i;
 
+    if (!enemies[index].active) {
+        return;
+    }
+
     for (i = 0; i < enemy_count; i++)
     {
         if (
+            enemies[i].active &&
             enemies[i].type == TYPE_BALL &&
             (enemies[i].x + enemies[i].delx) == enemies[index].x &&
             (enemies[i].y + enemies[i].dely) == enemies[index].y)
         {
+            enemies[i].active = 0;
             hurt_boss1(index);
             return;
         }
@@ -640,6 +653,7 @@ hurt_boss1(char index)
     enemies[index].facing = DIR_FRAME_OVERRIDE;
     enemies[index].frame = 12;
     enemies[index].timer += 1;
+    play_sound(ENEMY_MINIWILHELM);
 }
 
 update_enemies()
@@ -721,6 +735,9 @@ update_enemies()
     {
     case ENEMY_CANNON:
         ad_play(CANNON_LOC, CANNON_SIZE, 14, 0);
+        break;
+    case ENEMY_MINIWILHELM:
+        ad_play(WILHELM_LOC, MINIWILHELM_SIZE, 14, 0);
         break;
     }
 
