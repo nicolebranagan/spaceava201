@@ -69,9 +69,8 @@ main()
 			vsync();
 
 			// Clear global state
-			current_level = 0;
-			governor_step = 0;
-			victory = 0;
+			current_level = 255;
+			governor_step = 255;
 			cd_execoverlay(GOVERNOR_OVERLAY);
 		}
 	}		

@@ -478,7 +478,6 @@ done()
         spr_hide();
     }
     satb_update();
-    victory = 1;
     cls(0x0180);
     cd_execoverlay(GOVERNOR_OVERLAY);
 }

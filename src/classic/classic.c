@@ -335,7 +335,6 @@ win_ava()
     vsync(); // Deliberately not wait_for_sync
 
     // Return to governor
-    victory = 1;
     cd_execoverlay(GOVERNOR_OVERLAY);
 }
 

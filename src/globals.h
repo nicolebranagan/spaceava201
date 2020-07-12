@@ -1,3 +1,3 @@
 char current_level;
 char governor_step;
-char victory;
+char has_backup_ram;
