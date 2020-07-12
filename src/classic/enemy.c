@@ -6,26 +6,32 @@
 #include "images/images.h"
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 #incbin(eyewalkpal, "palettes/eyewalk.pal");
+#incbin(goonbosspal, "palettes/goonboss.pal");
 
 #define MAX_ENEMY_COUNT 16
 
 // Enemy types
-#define ENEMY_TYPE_COUNT 3
+#define ENEMY_TYPE_COUNT 4
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
 #define TYPE_EYEWALK 2
+#define TYPE_BOSS1 3
 
 // Sound effects
 #define ENEMY_NO_SOUND 0
 #define ENEMY_CANNON 1
 
-const char PALETTE_BY_TYPE[] = {17, 17, 18};
+// Other
+#define DIR_FRAME_OVERRIDE 255
+
+const char PALETTE_BY_TYPE[] = {17, 17, 18, 19};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
 
 char enemy_count;
 char ava_dead;
+char boss1_index;
 
 struct enemy
 {
@@ -86,6 +92,15 @@ int populate_enemy_vram(int vram_offset, char type)
             vram_offset += EYEWALK_SIZE / 2;
         }
         break;
+    case TYPE_BOSS1:
+        if (!enemy_vram[TYPE_BOSS1])
+        {
+            cd_loadvram(IMAGE_OVERLAY, GOONBOSS_SECTOR_OFFSET, vram_offset, GOONBOSS_SIZE);
+            enemy_vram[TYPE_BOSS1] = vram_offset;
+            vram_offset += GOONBOSS_SIZE / 2;
+
+        }
+        break;
     }
 
     return vram_offset;
@@ -95,8 +110,10 @@ init_enemy()
 {
     char i;
     enemy_count = 0;
+    boss1_index = 0;
     load_palette(17, bigmouthpal, 1);
     load_palette(18, eyewalkpal, 1);
+    load_palette(19, goonbosspal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -132,6 +149,11 @@ create_enemy(char type, char x, char y, char facing, char delx, char dely)
     enemies[new_index].active = 1;
     enemies[new_index].facing = facing;
     enemies[new_index].frame = 0;
+
+    if (type == TYPE_BOSS1)
+    {
+        boss1_index = new_index;
+    }
 }
 
 // Returns a new sprite offset
@@ -159,6 +181,8 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
             ctrl_flags = ctrl_flags | FLIP_X;
         case RIGHT:
             frame += 4;
+            break;
+        case DIR_FRAME_OVERRIDE:
             break;
         }
 
@@ -471,6 +495,153 @@ update_eyewalk(char index)
     }
 }
 
+update_boss1(char index)
+{
+    char i, delx, dely, flipx, flipy, ideal_facing;
+
+    if (enemies[index].facing == DIR_FRAME_OVERRIDE && enemies[index].timer >= 5) {
+        enemies[index].active = 0;
+        create_object(1, enemies[index].x, enemies[index].y);
+        cd_playtrk(TRACK_BALLAD, TRACK_BALLAD + 1, CDPLAY_REPEAT);
+        return;
+    }
+
+
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (
+            enemies[i].type == TYPE_BALL &&
+            enemies[i].x == enemies[index].x &&
+            enemies[i].y == enemies[index].y)
+        {
+            hurt_boss1(index);
+            return;
+        }
+    }
+
+    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    {
+        kill_ava();
+    }
+
+    delx = enemies[index].x - ava_x;
+    dely = enemies[index].y - ava_y;
+
+    if (delx > 128)
+    {
+        flipx = 1;
+        delx = 255 - delx + 1;
+    }
+    else
+    {
+        flipx = 0;
+    }
+
+    if (dely > 128)
+    {
+        flipy = 1;
+        dely = 255 - dely + 1;
+    }
+    else
+    {
+        flipy = 0;
+    }
+
+    if (delx > dely)
+    {
+        if (flipx)
+        {
+            ideal_facing = RIGHT;
+        }
+        else
+        {
+            ideal_facing = LEFT;
+        }
+    }
+    else
+    {
+        if (flipy)
+        {
+            ideal_facing = DOWN;
+        }
+        else
+        {
+            ideal_facing = UP;
+        }
+    }
+
+    if (enemies[index].facing == ideal_facing)
+    {
+        switch (enemies[index].facing)
+        {
+        case UP:
+            if (!is_solid(enemies[index].x, enemies[index].y - 1))
+            {
+                enemies[index].dely = -1;
+            }
+            break;
+        case DOWN:
+            if (!is_solid(enemies[index].x, enemies[index].y + 1))
+            {
+                enemies[index].dely = 1;
+            }
+            break;
+        case LEFT:
+            if (!is_solid(enemies[index].x - 1, enemies[index].y))
+            {
+                enemies[index].delx = -1;
+            }
+            break;
+        case RIGHT:
+            if (!is_solid(enemies[index].x + 1, enemies[index].y))
+            {
+                enemies[index].delx = 1;
+            }
+            break;
+        }
+    }
+    else
+    {
+        enemies[index].facing = ideal_facing;
+        enemies[index].frame = 0;
+    }
+
+    if (
+        (enemies[index].x + enemies[index].delx) == ava_x &&
+        (enemies[index].y + enemies[index].dely) == ava_y)
+    {
+        ava_dead = 1;
+        return;
+    }
+    return;
+}
+
+check_boss1_hurt(char index)
+{
+    char i;
+
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (
+            enemies[i].type == TYPE_BALL &&
+            (enemies[i].x + enemies[i].delx) == enemies[index].x &&
+            (enemies[i].y + enemies[i].dely) == enemies[index].y)
+        {
+            hurt_boss1(index);
+            return;
+        }
+    }
+}
+
+hurt_boss1(char index)
+{
+    enemies[index].delx = 0;
+    enemies[index].dely = 0;
+    enemies[index].facing = DIR_FRAME_OVERRIDE;
+    enemies[index].frame = 12;
+    enemies[index].timer += 1;
+}
+
 update_enemies()
 {
     char i, j, any_moved;
@@ -504,11 +675,21 @@ update_enemies()
             update_eyewalk(i);
             break;
         }
+        case TYPE_BOSS1:
+        {
+            update_boss1(i);
+            break;
+        }
         }
         if (!any_moved && enemies[i].delx != 0 || enemies[i].dely != 0)
         {
             any_moved = 1;
         }
+    }
+
+    if (boss1_index)
+    {
+        check_boss1_hurt(boss1_index);
     }
 
     if (any_moved)

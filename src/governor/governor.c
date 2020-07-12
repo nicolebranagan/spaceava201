@@ -18,7 +18,8 @@ const char STEP_ORDER[] = {
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
     CLASSIC_OVERLAY, 1,
-    STORY_OVERLAY, 2};
+    STORY_OVERLAY, 2,
+    CLASSIC_OVERLAY, 2};
 
 initialize()
 {
@@ -116,7 +117,7 @@ format()
     char joyt;
     char data[BACKUP_RAM_SIZE];
 
-    opt = 0;
+    opt = 1;
 
     cls();
     write_text(8, "Backup RAM is not formatted.");
