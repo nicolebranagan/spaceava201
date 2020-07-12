@@ -54,6 +54,11 @@ const char TILE_SOLIDITY[] = {
     0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+const char MUSIC_TO_CD_TRACK[] = {
+    TRACK_SPACEFUL,
+    TRACK_IMPOSSIBLY_BOSSY
+};
+
 char pal_rotate_step;
 
 initialize()
@@ -405,10 +410,11 @@ char is_solid(char x, char y)
 
 main()
 {
-    char joyt;
+    char joyt, track;
 
     initialize();
-    cd_playtrk(TRACK_SPACEFUL, TRACK_SPACEFUL + 1, CDPLAY_REPEAT);
+    track = MUSIC_TO_CD_TRACK[tiles[1]];
+    cd_playtrk(track, track + 1, CDPLAY_REPEAT);
 
     for (;;)
     {

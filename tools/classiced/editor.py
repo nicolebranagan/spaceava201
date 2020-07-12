@@ -5,6 +5,7 @@ from PIL import ImageTk, Image, ImageDraw
 from enemybox import EnemyBox
 from objectbox import ObjectBox
 from tileset import getStarbase
+from musicselect import MusicSelect
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -117,7 +118,7 @@ class Application(tk.Frame):
         newroombutton = tk.Button(roomselect, text="Add room", command=addroom)
         newroombutton.grid(row=1, column=1, columnspan=2)
         
-        roomcontrols = tk.Frame(controls, width=6*32)
+        roomcontrols = tk.Frame(controls, width=10*32)
         roomcontrols.grid(row=2, column=0, columnspan=2)
 
         self.setstartmode = False
@@ -142,6 +143,12 @@ class Application(tk.Frame):
         addobjectbutton = tk.Button(roomcontrols, text="Add Object", command=onclickaddobject)
         addobjectbutton.grid(row=2, column=0, columnspan=2)
 
+        def onchangemusic(newmusic):
+            self.room.music = newmusic
+
+        self.musicselect = MusicSelect(roomcontrols, 0, onchangemusic)
+        self.musicselect.grid(row=3, column=0, columnspan=2)
+
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
@@ -151,6 +158,7 @@ class Application(tk.Frame):
         self.roomimgTk = ImageTk.PhotoImage(self.roomimg)
         self.viewcanvas.itemconfig(self.viewcanvasimage,
                                    image=self.roomimgTk)
+        self.musicselect.setValue(self.room.music)
 
     def tileclick(self, event):
         x = math.floor(self.tilecanvas.canvasx(event.x) / 32)
@@ -266,6 +274,7 @@ class Application(tk.Frame):
 
     def loadroom_from_binary(self, data):
         tiles = list(data[0:2048])
+        music = data[2049]
         startx = data[2050]
         starty = data[2051]
         enemies = []
@@ -299,12 +308,13 @@ class Application(tk.Frame):
             _type = data[offset]
             
             objects.append(Object(x, y, _type))
-        return Room(self.tileset, startx, starty, tiles, enemies, objects)
+        return Room(self.tileset, music, startx, starty, tiles, enemies, objects)
 
 class Room:
     def __init__(
         self, 
         tileset,
+        music = 0,
         startx = 0, 
         starty = 0, 
         tiles = None, 
@@ -322,6 +332,7 @@ class Room:
             self.objects = []
         else:
             self.objects = objects
+        self.music = music
         self.startx = startx
         self.starty = starty
         if (enemies is None):
@@ -361,7 +372,7 @@ class Room:
         enemies = b''
         for enem in self.enemies:
             enemies = enemies + enem.dump()
-        data = bytes(self.tiles) + bytes([0, 0, self.startx, self.starty]) + enemies + bytes([255]) + objects  
+        data = bytes(self.tiles) + bytes([0, self.music, self.startx, self.starty]) + enemies + bytes([255]) + objects  
         # Ensure all data is sector-aligned
         return data + bytes([255 for _ in range(0, 4096 - len(data))])
 

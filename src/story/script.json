@@ -74,12 +74,21 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: I know, Lieutenant Bob, you know who I am. I've just been so excited since getting my promotion."
+      "text": "CINDY: I know, Lieutenant Bob, you know who I am."
     },
     {
       "command": "SHOW_SPRITE",
       "slot": 3,
       "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I've just been so excited since getting my promotion."
     },
     {
       "command": "SHOW_SPRITE",
@@ -162,7 +171,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: And I was about to say, the only one here who's defeated quantum before... is Ava."
+      "text": "CINDY: And I was about to say, the only one in the entire Amalgamation who's defeated quantum before... is Ava."
     },
     {
       "command": "SHOW_SPRITE",
@@ -198,6 +207,11 @@
       "face": 4
     },
     {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "AVA: Of course I remember! You grab the photon and the antiphoton and they merge, and then there's... there's a cat involved, and... well, Lily helped me with the math a bit, but I'm sure it'll come right back!"
     },
@@ -208,7 +222,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: This may be for the best. The amount of days in the universe is also limited."
+      "text": "NELEHU: Don't worry. Perhaps our new overlords will be more respectful of limited resources."
     },
     {
       "command": "SHOW_SPRITE",
@@ -250,6 +264,11 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
       "face": 0
     },
     {
