@@ -108,7 +108,7 @@ load_level_data(char level)
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * level) + 1, tiles, 500);
 
     vram_offset = AVA_VRAM + (AVA_SIZE / 2);
-    populate_enemies_vram(vram_offset, tiles + 1);
+    populate_enemies_vram(vram_offset, tiles + 3);
 }
 
 init_ava_sprite()
@@ -352,12 +352,12 @@ load_room()
     timer = 0;
     ava_facing = DOWN;
 
-    ava_x = tiles[0];
-    ava_y = tiles[1];
+    ava_x = tiles[2];
+    ava_y = tiles[3];
 
     init_object();
     init_enemy();
-    i = 1;
+    i = 3;
     for (;;)
     {
         x = tiles[++i];

@@ -266,11 +266,11 @@ class Application(tk.Frame):
 
     def loadroom_from_binary(self, data):
         tiles = list(data[0:2048])
-        startx = data[2048]
-        starty = data[2049]
+        startx = data[2050]
+        starty = data[2051]
         enemies = []
         objects = []
-        offset = 2049
+        offset = 2051
         while True:
             offset = offset + 1
             x = data[offset]
@@ -361,7 +361,7 @@ class Room:
         enemies = b''
         for enem in self.enemies:
             enemies = enemies + enem.dump()
-        data = bytes(self.tiles) + bytes([self.startx, self.starty]) + enemies + bytes([255]) + objects  
+        data = bytes(self.tiles) + bytes([0, 0, self.startx, self.starty]) + enemies + bytes([255]) + objects  
         # Ensure all data is sector-aligned
         return data + bytes([255 for _ in range(0, 4096 - len(data))])
 
