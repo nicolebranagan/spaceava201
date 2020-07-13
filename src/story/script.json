@@ -502,5 +502,187 @@
       "command": "SHOW_TEXT",
       "text": "MAN: But enough talk! Shut up and calculate!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARBASE"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "x": 5,
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "x": 3,
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "x": 9,
+      "sprite": "GOON",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "x": 14,
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 4,
+      "x": 16,
+      "sprite": "BOB",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Good work Ava! I can't believe quantum superposition is still valid over this distance!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "As captain, I'll be taking the first author slot on this paper, of course."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Of course, this is only a minor setback for Quantum."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 4,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Hahaha! You still haven't calculated anything!",
+      "chirp": 67
+    },
+    { "command": "SHOW_TEXT", "text": "MAN: Principled retreat!" },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 1
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: It would have been nice to have a prisoner..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "text": "NELEHU: It is likely for the best."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: What do we do now?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: The same thing we were going to do before. We're going to get into the Starship Zip-A, and we're going to beat quantum!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Bob, I can count on you to hold down the fort while we're gone, right?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 4,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BOB: ..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 4,
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Then it's set! Onwards... to the Milky Way Galaxy!"
+    }
   ]
 ]

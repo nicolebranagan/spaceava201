@@ -13,7 +13,8 @@ COMMANDS = {
     "SHOW_BACKGROUND": 3,
     "PLAY_MUSIC": 4,
     "STOP_MUSIC": 5,
-    "SHOW_FRAME": 6
+    "SHOW_FRAME": 6,
+    "DELETE_SPRITE": 7
 }
 
 SPRITES = {
@@ -125,6 +126,8 @@ def parse_single_script(script):
             output = output + bytes([COMMANDS["STOP_MUSIC"]])
         elif (command["command"] == "SHOW_FRAME"):
             output = output + bytes([COMMANDS["SHOW_FRAME"], command["frame"]])
+        elif (command["command"] == "DELETE_SPRITE"):
+            output = output + bytes([COMMANDS["DELETE_SPRITE"], command["slot"]])
     return bytes(cast) + bytes([255]) + output + bytes([255])
 
 if (len(sys.argv) < 3):

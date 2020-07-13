@@ -54,7 +54,7 @@ initialize()
     timer = 0;
 }
 
-#define MAX_CAST 4
+#define MAX_CAST 5
 int face_vram[MAX_CAST];
 char palettes[MAX_CAST];
 
@@ -406,6 +406,17 @@ draw_person(char slot, char cast_index, char face, char x_start)
     satb_update();
 }
 
+delete_person(char slot)
+{
+    char i;
+    for (i = 0; i < 6; i++)
+    {
+        spr_set((slot * 6) + i);
+        spr_hide();
+    }
+    satb_update();
+}
+
 draw_block(char more)
 {
     int parsed[1], vaddr;
@@ -420,6 +431,7 @@ draw_block(char more)
 #define CMD_PLAY_MUSIC 4
 #define CMD_STOP_MUSIC 5
 #define CMD_SHOW_FRAME 6
+#define CMD_DELETE_SPRITE 7
 
 perform_command()
 {
@@ -462,6 +474,11 @@ loop:
         break;
     case CMD_SHOW_FRAME:
         draw_frame(script[pointer_to_data + 1]);
+        pointer_to_data += 2;
+        goto loop;
+        break;
+    case CMD_DELETE_SPRITE:
+        delete_person(script[pointer_to_data + 1]);
         pointer_to_data += 2;
         goto loop;
         break;
