@@ -7,7 +7,7 @@
 #include "cd.h"
 #include "./story/chirp.c"
 
-#incbin(fontpal, "palettes/frames.pal");
+#incbin(framepal, "palettes/frames.pal");
 
 #incbin(ava_facepal, "palettes/ava_face.pal");
 #incbin(cindy_facepal, "palettes/cindy_face.pal");
@@ -51,7 +51,6 @@ initialize()
     set_xres(336);
     set_screen_size(SCR_SIZE_64x32);
     cls(FONT_VRAM / 16);
-    load_palette(0, fontpal, 1);
     timer = 0;
 }
 
@@ -171,40 +170,43 @@ draw_background(char index)
 }
 
 #define FRAME_START ((FRAME_VRAM) >> 4)
-draw_frame()
+draw_frame(char frame)
 {
-    char x, y;
+    char x, y, frame_start;
     int addr;
     int data[BACKDROP_WIDTH + 4];
+
+    load_palette(0, framepal + (frame << 5), 1);
+    frame_start = FRAME_START + (frame << 5);
 
     for (x = 0; x < (BACKDROP_WIDTH + 4); x++)
     {
         if (x == 0)
         {
-            data[x] = FRAME_START;
+            data[x] = frame_start;
             continue;
         }
         if (x == 1)
         {
-            data[x] = FRAME_START + 1;
+            data[x] = frame_start + 1;
             continue;
         }
         if (x == BACKDROP_WIDTH + 2)
         {
-            data[x] = FRAME_START + 8;
+            data[x] = frame_start + 8;
             continue;
         }
         if (x == BACKDROP_WIDTH + 3)
         {
-            data[x] = FRAME_START + 9;
+            data[x] = frame_start + 9;
             continue;
         }
         if (x % 2)
         {
-            data[x] = FRAME_START + 4;
+            data[x] = frame_start + 4;
             continue;
         }
-        data[x] = FRAME_START + 5;
+        data[x] = frame_start + 5;
     }
     addr = vram_addr(XTOP - 2, YLEFT - 2);
     load_vram(addr, data, BACKDROP_WIDTH + 4);
@@ -213,43 +215,43 @@ draw_frame()
     {
         if (x == 0)
         {
-            data[x] = FRAME_START + 2;
+            data[x] = frame_start + 2;
             continue;
         }
         if (x == 1)
         {
-            data[x] = FRAME_START + 3;
+            data[x] = frame_start + 3;
             continue;
         }
         if (x == BACKDROP_WIDTH + 2)
         {
-            data[x] = FRAME_START + 10;
+            data[x] = frame_start + 10;
             continue;
         }
         if (x == BACKDROP_WIDTH + 3)
         {
-            data[x] = FRAME_START + 11;
+            data[x] = frame_start + 11;
             continue;
         }
         if (x % 2)
         {
-            data[x] = FRAME_START + 6;
+            data[x] = frame_start + 6;
             continue;
         }
-        data[x] = FRAME_START + 7;
+        data[x] = frame_start + 7;
     }
     addr = vram_addr(XTOP - 2, YLEFT - 1);
     load_vram(addr, data, BACKDROP_WIDTH + 4);
 
     for (y = YLEFT; y < (YLEFT + BACKDROP_HEIGHT); y++)
     {
-        data[0] = FRAME_START + (y % 2 ? 12 : 14);
-        data[1] = FRAME_START + (y % 2 ? 13 : 15);
+        data[0] = frame_start + (y % 2 ? 12 : 14);
+        data[1] = frame_start + (y % 2 ? 13 : 15);
         addr = vram_addr(XTOP - 2, y);
         load_vram(addr, data, 2);
 
-        data[0] = FRAME_START + (y % 2 ? 16 : 18);
-        data[1] = FRAME_START + (y % 2 ? 17 : 19);
+        data[0] = frame_start + (y % 2 ? 16 : 18);
+        data[1] = frame_start + (y % 2 ? 17 : 19);
         addr = vram_addr(XTOP + BACKDROP_WIDTH, y);
         load_vram(addr, data, 2);
     }
@@ -258,30 +260,30 @@ draw_frame()
     {
         if (x == 0)
         {
-            data[x] = FRAME_START + 20;
+            data[x] = frame_start + 20;
             continue;
         }
         if (x == 1)
         {
-            data[x] = FRAME_START + 21;
+            data[x] = frame_start + 21;
             continue;
         }
         if (x == BACKDROP_WIDTH + 2)
         {
-            data[x] = FRAME_START + 28;
+            data[x] = frame_start + 28;
             continue;
         }
         if (x == BACKDROP_WIDTH + 3)
         {
-            data[x] = FRAME_START + 29;
+            data[x] = frame_start + 29;
             continue;
         }
         if (x % 2)
         {
-            data[x] = FRAME_START + 24;
+            data[x] = frame_start + 24;
             continue;
         }
-        data[x] = FRAME_START + 25;
+        data[x] = frame_start + 25;
     }
     addr = vram_addr(XTOP - 2, YLEFT + BACKDROP_HEIGHT);
     load_vram(addr, data, BACKDROP_WIDTH + 4);
@@ -289,30 +291,30 @@ draw_frame()
     {
         if (x == 0)
         {
-            data[x] = FRAME_START + 22;
+            data[x] = frame_start + 22;
             continue;
         }
         if (x == 1)
         {
-            data[x] = FRAME_START + 23;
+            data[x] = frame_start + 23;
             continue;
         }
         if (x == BACKDROP_WIDTH + 2)
         {
-            data[x] = FRAME_START + 30;
+            data[x] = frame_start + 30;
             continue;
         }
         if (x == BACKDROP_WIDTH + 3)
         {
-            data[x] = FRAME_START + 31;
+            data[x] = frame_start + 31;
             continue;
         }
         if (x % 2)
         {
-            data[x] = FRAME_START + 26;
+            data[x] = frame_start + 26;
             continue;
         }
-        data[x] = FRAME_START + 27;
+        data[x] = frame_start + 27;
     }
     addr = vram_addr(XTOP - 2, YLEFT + BACKDROP_HEIGHT + 1);
     load_vram(addr, data, BACKDROP_WIDTH + 4);
@@ -417,6 +419,7 @@ draw_block(char more)
 #define CMD_SHOW_BACKGROUND 3
 #define CMD_PLAY_MUSIC 4
 #define CMD_STOP_MUSIC 5
+#define CMD_SHOW_FRAME 6
 
 perform_command()
 {
@@ -457,6 +460,11 @@ loop:
         pointer_to_data += 1;
         goto loop;
         break;
+    case CMD_SHOW_FRAME:
+        draw_frame(script[pointer_to_data + 1]);
+        pointer_to_data += 2;
+        goto loop;
+        break;
     }
 
     if (script[pointer_to_data] == 255)
@@ -488,7 +496,6 @@ main()
 
     initialize();
 
-    draw_frame();
     perform_command();
     vsync();
     for (;;)

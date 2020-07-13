@@ -1,6 +1,10 @@
 [
   [
     {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
       "command": "SHOW_BACKGROUND",
       "background": "STARBASE_EXTERIOR"
     },
@@ -282,6 +286,10 @@
   ],
   [
     {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
       "command": "SHOW_BACKGROUND",
       "background": "TRAINING_HALL"
     },
@@ -354,6 +362,10 @@
     }
   ],
   [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
     {
       "command": "SHOW_BACKGROUND",
       "background": "TRAINING_HALL"
