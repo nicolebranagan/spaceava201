@@ -9,6 +9,7 @@ LOGO_SRC = logo/logo.c
 CLASSIC_SRC = classic/classic.c
 GOVERNOR_SRC = governor/governor.c
 STORY_SRC = story/story.c
+MIRROR_SRC = mirror/mirror.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
@@ -25,9 +26,9 @@ spaceava201: spaceava.iso
 	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 07 - Impossibly Bossy.wav"
 	cp ../placeholder.wav ../build/iso
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/bats.bin
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -40,6 +41,9 @@ governor.ovl: $(GOVERNOR_SRC) images
 
 story.ovl: $(STORY_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(STORY_SRC) $(LIBS)
+
+mirror.ovl: $(MIRROR_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(MIRROR_SRC) $(LIBS)
 
 adpcm_ovl: adpcm/whistle.vox
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
