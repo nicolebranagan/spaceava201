@@ -7,6 +7,16 @@ from tileset import getTilesets
 DEFAULT_WIDTH = 16
 DEFAULT_HEIGHT = 5
 
+TILESET_NAME = {
+    "Starbase": 0,
+    "Mirror System": 1
+}
+NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
+
+def TilesetBox(window):
+    var = tk.StringVar(window)
+    return (tk.OptionMenu(window, var, *list(TILESET_NAME.keys())), var)
+
 class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
@@ -48,24 +58,32 @@ class Application(tk.Frame):
         loadbutton.grid(row=0, column=0)
         savebutton = tk.Button(controls, text="Save", command=self.save)
         savebutton.grid(row=0, column=1)
+
+        (starbaseentry, starbasevar) = TilesetBox(controls)
+        self.starbasevar = starbasevar
+        starbaseentry.grid(row=1, column=0, columnspan=2)
+        self.starbasevar.set(NAME_TILESET[self.room.tileset])
+        self.starbasevar.trace("w", 
+            lambda *_: self.changetileset(TILESET_NAME[self.starbasevar.get()])
+        )
         
-        tk.Label(controls, text="VRAM offset").grid(row=1, column=0)
+        tk.Label(controls, text="VRAM offset").grid(row=2, column=0)
         self.vramentry = tk.Entry(controls, width=8)
         self.vramentry.insert(0, hex(self.vramoffset))
-        self.vramentry.grid(row=1, column=1)
+        self.vramentry.grid(row=2, column=1)
 
         def updatevram():
             self.vramoffset = int(self.vramentry.get(), 16)
         addenemybutton = tk.Button(controls, text="Update", command=updatevram)
-        addenemybutton.grid(row=2, column=1)
+        addenemybutton.grid(row=3, column=1)
         
         self.xentry = tk.Entry(controls, width=4)
         self.xentry.insert(0, self.room.width)
-        self.xentry.grid(row=3, column=0)
+        self.xentry.grid(row=4, column=0)
 
         self.yentry = tk.Entry(controls, width=4)
         self.yentry.insert(0, self.room.height)
-        self.yentry.grid(row=3, column=1)
+        self.yentry.grid(row=4, column=1)
 
         def resetroom():
             self.room = Room(0, int(self.xentry.get()), int(self.yentry.get()))
@@ -76,7 +94,7 @@ class Application(tk.Frame):
             self.drawroom()
             
         resetbutton = tk.Button(controls, text="Reset", command=resetroom)
-        resetbutton.grid(row=4, column=0, columnspan=2)
+        resetbutton.grid(row=5, column=0, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -164,7 +182,7 @@ class Application(tk.Frame):
                     index = to_binary(tile_base + tile)
                     output.append(int(f'{index[4:]}', 2))
                     output.append(int(f'0001{index[0:4]}', 2))
-                output.append(0)
+                output.append(self.room.tileset)
                 output.append(self.room.width)
                 output.append(self.room.height)
                 offsetbytes = hex(self.vramoffset)[2:]
@@ -213,6 +231,7 @@ class Application(tk.Frame):
             self.xentry.insert(0, width)
             self.yentry.delete(0, tk.END)
             self.yentry.insert(0, height)   
+            self.starbasevar.set(NAME_TILESET[self.room.tileset])
 
             self.changetileset(tileset)
             self.drawroom()
