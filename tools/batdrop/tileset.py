@@ -24,3 +24,16 @@ def getStarbase():
     ))
     tiles2x.paste(starbase2x, (0, 0))
     return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
+
+def getMirrorSys():
+    (starbase2x, starbasetileset) = getTileset("../../images/tiles/mirrorsys.terra")
+
+    tiles2x = Image.new("RGB",(
+        starbase2x.width,
+        starbase2x.height
+    ))
+    tiles2x.paste(starbase2x, (0, 0))
+    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
+
+def getTilesets():
+    return [getStarbase(), getMirrorSys()]

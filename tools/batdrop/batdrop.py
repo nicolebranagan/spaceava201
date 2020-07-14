@@ -2,7 +2,10 @@ import math
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
-from tileset import getStarbase
+from tileset import getTilesets
+
+DEFAULT_WIDTH = 16
+DEFAULT_HEIGHT = 5
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -13,12 +16,12 @@ class Application(tk.Frame):
         self.select = 0
         self.vramoffset = 0x1000
 
-        tiles2x, tileset, tilesTk = getStarbase()
+        tiles2x, tileset, tilesTk = tilesets[0]
         self.tiles2x = tiles2x
         self.tileset = tileset
         self.tilesTk = tilesTk
 
-        self.room = Room(self.tileset)
+        self.room = Room(0, DEFAULT_WIDTH, DEFAULT_HEIGHT)
 
         self.createWidgets()
         self.drawroom()
@@ -55,11 +58,43 @@ class Application(tk.Frame):
             self.vramoffset = int(self.vramentry.get(), 16)
         addenemybutton = tk.Button(controls, text="Update", command=updatevram)
         addenemybutton.grid(row=2, column=1)
+        
+        self.xentry = tk.Entry(controls, width=4)
+        self.xentry.insert(0, self.room.width)
+        self.xentry.grid(row=3, column=0)
+
+        self.yentry = tk.Entry(controls, width=4)
+        self.yentry.insert(0, self.room.height)
+        self.yentry.grid(row=3, column=1)
+
+        def resetroom():
+            self.room = Room(0, int(self.xentry.get()), int(self.yentry.get()))
+            self.viewcanvas.config(
+                width=self.room.width*32, height=self.room.height*32
+            )
+            self.changetileset(0)
+            self.drawroom()
+            
+        resetbutton = tk.Button(controls, text="Reset", command=resetroom)
+        resetbutton.grid(row=4, column=0, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
 
+    def changetileset(self, index):
+        tiles2x, tileset, tilesTk = tilesets[index]
+        self.tiles2x = tiles2x
+        self.tileset = tileset
+        self.tilesTk = tilesTk
+
+        self.room.tileset = index
+        self.tilecanvas.config(
+            width=self.tiles2x.width, height=self.tiles2x.height
+        )
+        self.tilecanvasimg = self.tilecanvas.create_image(
+                0,0,anchor=tk.NW,image=self.tilesTk)
+        self.drawroom()
 
     def drawroom(self):
         self.roomimg = self.room.draw()
@@ -155,6 +190,7 @@ class Application(tk.Frame):
             )
             tiledata = data[:(len(data)-5)]
             tiles = []
+            tileset = signature[0]
             width = signature[1]
             height = signature[2]
             for y in range (0, height):
@@ -165,14 +201,26 @@ class Application(tk.Frame):
                     pointer = int(f'{binary2[4:]}{binary1}', 2)
                     tile_base = vram_offset // 16
                     tiles.append((pointer - tile_base) // 4)
-            self.room = Room.load(tiles, self.tileset, width, height)
+            self.room = Room.load(tiles, tileset, width, height)
             self.vramoffset = vram_offset
+
+            self.viewcanvas.config(
+                width=self.room.width*32, height=self.room.height*32
+            )
+            self.vramentry.delete(0, tk.END)
+            self.vramentry.insert(0, hex(vram_offset))
+            self.xentry.delete(0, tk.END)
+            self.xentry.insert(0, width)
+            self.yentry.delete(0, tk.END)
+            self.yentry.insert(0, height)   
+
+            self.changetileset(tileset)
             self.drawroom()
 
 class Room:
-    def __init__(self, tileset):
-        self.width = 16
-        self.height = 5
+    def __init__(self, tileset, width, height):
+        self.width = width
+        self.height = height
         self.tileset = tileset
         self.tiles = [0 for x in range(0,self.width*self.height)]
 
@@ -191,19 +239,20 @@ class Room:
         i = 0
         for y in range(0, self.height):
             for x in range(0, self.width):
-                image.paste(self.tileset[self.tiles[i]],(x*32, y*32))
+                image.paste(tilesets[self.tileset][1][self.tiles[i]],(x*32, y*32))
                 i = i+1
         return image
 
     @staticmethod
     def load(tiles, tileset, width, height):
-        self = Room(tileset)
+        self = Room(tileset, width, height)
         self.tiles = tiles
         self.width = width
         self.height = height
         return self
 
 root = tk.Tk()
+tilesets = getTilesets()
 app = Application(master=root)
 app.mainloop()
 
