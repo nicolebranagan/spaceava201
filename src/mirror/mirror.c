@@ -43,17 +43,54 @@ initialize()
 
 draw_cursor()
 {
+    int draw_x;
+
+    if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
+    {
+        spr_set(0);
+        spr_y(192);
+        spr_x(208);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_pattern(CURSOR_VRAM + (SPR_SIZE_16x16*2));
+        spr_pal(0);
+        spr_pri(1);
+        spr_show();
+
+        spr_set(1);
+        spr_y(192);
+        spr_x(224);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_pattern(CURSOR_VRAM + (3*SPR_SIZE_16x16));
+        spr_pal(0);
+        spr_pri(1);
+        spr_show();
+        return;
+    }
+
+    if (x < GRID_WIDTH)
+    {
+        draw_x = TOP_X + (x << 4);
+    }
+    else
+    {
+        draw_x = 216; // Palette
+    }
     spr_set(0);
     spr_y(TOP_Y + (y << 4));
-    spr_x(TOP_X + (x << 4));
+    spr_x(draw_x);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pattern((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16));
     spr_pal(0);
+    spr_pri(1);
     spr_show();
+    spr_set(1);
+    spr_hide();
 }
 
 main()
 {
+    char joyt;
+
     initialize();
     for (;;)
     {
@@ -61,5 +98,30 @@ main()
         vsync();
         draw_cursor();
         satb_update();
+
+        joyt = joy(0);
+
+        if (!(joyt & JOY_SLCT))
+        {
+            joyt = joytrg(0);
+        }
+
+        if (joyt & JOY_UP && y > 0)
+        {
+            y--;
+        }
+        if (joyt & JOY_DOWN && y < (GRID_HEIGHT - 1))
+        {
+            y++;
+        }
+
+        if (joyt & JOY_LEFT && x > 0)
+        {
+            x--;
+        }
+        if (joyt & JOY_RIGHT && x < (GRID_WIDTH))
+        {
+            x++;
+        }
     }
 }
