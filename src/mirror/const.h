@@ -10,6 +10,14 @@
 #define PLAYER_SPRITE_1 0
 #define PLAYER_SPRITE_2 1
 
-#define GRID_SPRITE_START 2
+#define MAX_PHOTONS 4
+
+#define PHOTON_SPR_START 2
+#define GRID_SPRITE_START (PHOTON_SPR_START + MAX_PHOTONS)
+
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
 
 #endif

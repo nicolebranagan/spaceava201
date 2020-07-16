@@ -29,6 +29,14 @@ char x, y, timer;
 
 char grid[GRID_WIDTH * GRID_HEIGHT];
 
+struct photon
+{
+    char facing, x, y, type, active;
+};
+
+char photon_count;
+struct photon photons[MAX_PHOTONS];
+
 initialize()
 {
     char i;
@@ -151,7 +159,7 @@ draw_grid()
         }
         case SPACE_ANTIPHOTON:
         {
-            draw_beam(grid_sprite, i, LASER_VRAM + 4*SPR_SIZE_16x16);
+            draw_beam(grid_sprite, i, LASER_VRAM + 4 * SPR_SIZE_16x16);
             break;
         }
         case SPACE_LEFT_RIGHT_MIRROR:
@@ -166,6 +174,165 @@ draw_grid()
         }
 
         grid_sprite++;
+    }
+}
+
+draw_grid_frame()
+{
+    char i, spr_index;
+    int vram_offset;
+    draw_grid();
+
+    spr_index = PHOTON_SPR_START;
+    for (i = 0; i < photon_count; i++)
+    {
+        if (!photons[i].active) {
+            spr_set(spr_index);
+            spr_hide();
+            spr_index++;
+            continue;
+        }
+        vram_offset = (photons[i].type == SPACE_PHOTON) ? (LASER_VRAM + 8 * SPR_SIZE_16x16) : (LASER_VRAM + 12 * SPR_SIZE_16x16);
+        spr_set(spr_index);
+        spr_x(photons[i].x);
+        spr_y(photons[i].y);
+        spr_pal(1);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_pri(1);
+        spr_pattern(vram_offset + (SPR_SIZE_16x16 * ((timer & 63) >> 4)));
+        spr_show();
+        spr_index++;
+    }
+    satb_update();
+}
+
+run_grid()
+{
+    char i, j, count, x, y;
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    vsync();
+
+    photon_count = 0;
+    for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
+    {
+        if (grid[i] == SPACE_PHOTON || grid[i] == SPACE_ANTIPHOTON)
+        {
+            photons[photon_count].type = grid[i];
+            photons[photon_count].facing = grid[i] == SPACE_PHOTON ? RIGHT : LEFT;
+            photons[photon_count].x = TOP_X + ((i % GRID_WIDTH) << 4);
+            photons[photon_count].y = TOP_Y + ((i / GRID_WIDTH) << 4);
+            photons[photon_count].active = 1;
+            photon_count++;
+            grid[i] = SPACE_EMPTY;
+        }
+    }
+
+    count = 8;
+
+    for (;;)
+    {
+        timer++;
+        draw_grid_frame();
+        vsync();
+        for (i = 0; i < photon_count; i++)
+        {
+            switch (photons[i].facing)
+            {
+            case UP:
+                photons[i].y -= 1;
+                break;
+            case DOWN:
+                photons[i].y += 1;
+                break;
+            case LEFT:
+                photons[i].x -= 1;
+                break;
+            case RIGHT:
+                photons[i].x += 1;
+                break;
+            }
+        }
+        count++;
+        if (count == 8)
+        {
+            for (i = 0; i < photon_count; i++)
+            {
+                x = (photons[i].x - TOP_X) >> 4;
+                y = (photons[i].y - TOP_Y) >> 4;
+                switch (grid[x + GRID_WIDTH * y])
+                {
+                case SPACE_RIGHT_LEFT_MIRROR:
+                {
+                    switch (photons[i].facing)
+                    {
+                    case UP:
+                        photons[i].facing = RIGHT;
+                        break;
+                    case DOWN:
+                        photons[i].facing = LEFT;
+                        break;
+                    case LEFT:
+                        photons[i].facing = DOWN;
+                        break;
+                    case RIGHT:
+                        photons[i].facing = UP;
+                        break;
+                    }
+                }
+                case SPACE_LEFT_RIGHT_MIRROR:
+                {
+                    switch (photons[i].facing)
+                    {
+                    case UP:
+                        photons[i].facing = LEFT;
+                        break;
+                    case DOWN:
+                        photons[i].facing = RIGHT;
+                        break;
+                    case LEFT:
+                        photons[i].facing = UP;
+                        break;
+                    case RIGHT:
+                        photons[i].facing = DOWN;
+                        break;
+                    }
+                }
+                case SPACE_EMPTY:
+                {
+                    for (j = (i + 1); j < photon_count; j++)
+                    {
+                        if (!photons[j].active) {
+                            continue;
+                        }
+                        if (
+                            (x == (photons[j].x - TOP_X) >> 4) &&
+                            (y == ((photons[i].y - TOP_Y) >> 4)))
+                        {
+                            photons[j].active = 0;
+                            photons[i].active = 0;
+                        }
+                    }
+                }
+                }
+            }
+        }
+        if (count == 16)
+        {
+            count = 0;
+        }
+    }
+}
+
+action()
+{
+    if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
+    {
+        run_grid();
     }
 }
 
@@ -205,6 +372,11 @@ main()
         if (joyt & JOY_RIGHT && x < (GRID_WIDTH))
         {
             x++;
+        }
+
+        if ((joyt & JOY_RUN) || (joyt & JOY_I))
+        {
+            action();
         }
     }
 }
