@@ -124,7 +124,7 @@ draw_mirror(char sprdex, char i, char flip)
     spr_x(TOP_X + ((i % GRID_WIDTH) << 4));
     spr_y(TOP_Y + ((i / GRID_WIDTH) << 4));
     spr_ctrl(FLIP_MAS | SIZE_MAS, flip ? (SZ_16x16 | FLIP_X) : SZ_16x16);
-    spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 3));
+    spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4));
     spr_pal(1);
     spr_pri(1);
     spr_show();
