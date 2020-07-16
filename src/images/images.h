@@ -68,28 +68,33 @@
 #define GOONBOSS_SECTOR_COUNT 1 
 #define GOONBOSS_SIZE 2048 
 
+// ./images/lasers.chr
+#define LASERS_SECTOR_OFFSET 31 
+#define LASERS_SECTOR_COUNT 1 
+#define LASERS_SIZE 2048 
+
 // ./images/mirrorsys.chr
-#define MIRRORSYS_SECTOR_OFFSET 31 
+#define MIRRORSYS_SECTOR_OFFSET 32 
 #define MIRRORSYS_SECTOR_COUNT 2 
 #define MIRRORSYS_SIZE 4096 
 
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 33 
+#define NELEHU_FACE_SECTOR_OFFSET 34 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 36 
+#define STARBASE_SECTOR_OFFSET 37 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 37 
+#define STARDROP_SECTOR_OFFSET 38 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 39 
+#define STARROT_SECTOR_OFFSET 40 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

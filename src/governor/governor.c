@@ -21,7 +21,8 @@ const char STEP_ORDER[] = {
     CLASSIC_OVERLAY, 1,
     STORY_OVERLAY, 2,
     CLASSIC_OVERLAY, 2,
-    STORY_OVERLAY, 3};
+    STORY_OVERLAY, 3,
+    MIRROR_OVERLAY, 1};
 
 initialize()
 {

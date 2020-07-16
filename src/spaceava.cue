@@ -4,6 +4,7 @@ FILE "Space Ava 201 - 01 - Warning.wav" WAVE
 
 FILE "Space Ava 201 - Track 2.iso" BINARY
   TRACK 02 MODE1/2048
+    PREGAP 00:03:00
     INDEX 01 00:00:00
 
 FILE "Space Ava 201 - 03 - Ballad of St. Janet.wav" WAVE
