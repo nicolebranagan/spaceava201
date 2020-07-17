@@ -7,6 +7,8 @@
 #define SPACE_RIGHT_LEFT_MIRROR 3
 #define SPACE_LEFT_RIGHT_MIRROR 4
 
+#define SPACE_ANNIHILATION 255
+
 #define PLAYER_SPRITE_1 0
 #define PLAYER_SPRITE_2 1
 
@@ -19,5 +21,6 @@
 #define DOWN 1
 #define LEFT 2
 #define RIGHT 3
+#define DIR_NONE 4
 
 #endif
