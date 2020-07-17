@@ -12,6 +12,7 @@
 #define CURSOR_VRAM (SYSTEM_VRAM + (MIRRORSYS_SIZE / 2))
 #define LASER_VRAM (CURSOR_VRAM + (CURSORS_SIZE / 2))
 #define FACE_VRAM (LASER_VRAM + (LASERS_SIZE / 2))
+#define FONT_VRAM (FACE_VRAM + (AVASML_SIZE / 2))
 
 #define TOP_Y 32
 #define TOP_X 32
@@ -41,7 +42,6 @@ struct photon photons[MAX_PHOTONS];
 
 initialize()
 {
-    char i;
     x = 0;
     y = 0;
     timer = 0;
@@ -50,17 +50,7 @@ initialize()
     scroll(0, 0, 0, 0, 223, 0xC0);
     cls();
 
-    for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
-    {
-        grid[i] = SPACE_EMPTY;
-    }
-
-    grid[GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
-    grid[GRID_WIDTH + 6] = SPACE_ANTIPHOTON;
-
-    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
-    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 2] = SPACE_PHOTON;
-
+    cd_loadvram(IMAGE_OVERLAY, SHADE8X8_SECTOR_OFFSET, FONT_VRAM, SHADE8X8_SIZE);
     cd_loadvram(IMAGE_OVERLAY, MIRRORSYS_SECTOR_OFFSET, SYSTEM_VRAM, MIRRORSYS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, CURSORS_SECTOR_OFFSET, CURSOR_VRAM, CURSORS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LASERS_SECTOR_OFFSET, LASER_VRAM, LASERS_SIZE);
@@ -71,6 +61,21 @@ initialize()
     load_palette(16, cursorpal, 1);
     load_palette(17, laserpal, 1);
     load_vram(0, systembat, 24 * 16 * 4);
+}
+
+reset_grid()
+{
+    char i;
+    for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
+    {
+        grid[i] = SPACE_EMPTY;
+    }
+
+    grid[GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
+    grid[GRID_WIDTH + 6] = SPACE_ANTIPHOTON;
+
+    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
+    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 2] = SPACE_PHOTON;
 }
 
 draw_cursor()
@@ -193,21 +198,54 @@ draw_lower_face(char idx)
     int data[8];
     char i, j;
 
-    frame_start = FRAME_START + (idx << 5);
+    frame_start = FRAME_START + (idx << 4);
     for (j = 0; j < 2; j++)
     {
         for (i = 0; i < 8; i++)
         {
             data[i] = frame_start + (j << 3) + FACE_CYCLE[i];
         }
-        addr = vram_addr(2, 34 + (j * 2));
+        addr = vram_addr(3, 34 + (j * 2));
         load_vram(addr, data, 4);
-        addr = vram_addr(2, 34 + (j * 2) + 1);
+        addr = vram_addr(3, 34 + (j * 2) + 1);
         load_vram(addr, data + 4, 4);
     }
 
     scroll(0, 0, 0, 0, 223 - 56, 0xC0);
     scroll(1, 0, 256, 223 - 56, 223, 0xC0);
+}
+
+write_text(char x, char y, char *text)
+{
+    char i;
+    int vaddr, parsedtext[100];
+    i = 0;
+    for (;;)
+    {
+        if (text[i] == 0)
+        {
+            break;
+        }
+        parsedtext[i] = text[i] + (FONT_VRAM / 16) + 0x1000;
+        i++;
+    }
+    vaddr = vram_addr(x, y);
+    load_vram(vaddr, parsedtext, i);
+}
+
+wait_for_input()
+{
+    char joyt;
+    for (;;)
+    {
+        vsync();
+        joyt = joytrg(0);
+
+        if (joyt)
+        {
+            return;
+        }
+    }
 }
 
 draw_grid_frame()
@@ -398,7 +436,7 @@ char run_grid()
 
                 if (photons[i].x < TOP_X ||
                     photons[i].y < TOP_Y ||
-                    photons[i].x > (TOP_X + (GRID_WIDTH * 16)) ||
+                    photons[i].x > (TOP_X + ((GRID_WIDTH - 1) * 16)) ||
                     photons[i].y > (TOP_Y + (GRID_HEIGHT * 16)))
                 {
                     return 0;
@@ -420,18 +458,32 @@ action()
     {
         if (run_grid())
         {
-            cd_execoverlay(GOVERNOR_OVERLAY);
             // win
+            draw_lower_face(0);
+            write_text(8, 35, "Wow! This is turning");
+            write_text(8, 36, "out okay!");
+            wait_for_input();
+            cls();
+            scroll(0, 0, 0, 0, 223, 0xC0);
+            scroll_disable(1);
+            cd_execoverlay(GOVERNOR_OVERLAY);
         }
         else
         {
             // lose
+            draw_lower_face(1);
+            write_text(8, 35, "I was so close!");
+            write_text(8, 36, "I'll try again?");
+            wait_for_input();
             for (i = 0; i < 64; i++)
             {
                 spr_set(i);
                 spr_hide();
             }
             satb_update();
+            scroll_disable(1);
+            scroll(0, 0, 0, 0, 223, 0xC0);
+            reset_grid();
             return;
         }
     }
@@ -442,7 +494,8 @@ main()
     char joyt;
 
     initialize();
-    draw_lower_face(0);
+    reset_grid();
+
     for (;;)
     {
         timer++;
