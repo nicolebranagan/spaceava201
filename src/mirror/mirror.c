@@ -28,7 +28,7 @@
 
 #incbin(systembat, "bats/mirrorsys.bin");
 
-char x, y, timer;
+char x, y, timer, joytimer;
 
 char grid[GRID_WIDTH * GRID_HEIGHT];
 
@@ -45,6 +45,7 @@ initialize()
     x = 0;
     y = 0;
     timer = 0;
+    joytimer = 0;
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
     scroll(0, 0, 0, 0, 223, 0xC0);
@@ -499,16 +500,27 @@ main()
     for (;;)
     {
         timer++;
+        joytimer++;
         vsync();
         draw_grid();
         draw_cursor();
         satb_update();
 
-        joyt = joy(0);
-
-        if (!(joyt & JOY_SLCT))
+        joyt = joytrg(0);
+        
+        if ((joyt & JOY_RUN) || (joyt & JOY_I))
         {
-            joyt = joytrg(0);
+            action();
+        }
+
+        if (joyt)
+        {
+            joytimer = 0;
+        }
+
+        if (joytimer % 16 == 15)
+        {
+            joyt = joy(0);
         }
 
         if (joyt & JOY_UP && y > 0)
@@ -527,11 +539,6 @@ main()
         if (joyt & JOY_RIGHT && x < (GRID_WIDTH))
         {
             x++;
-        }
-
-        if ((joyt & JOY_RUN) || (joyt & JOY_I))
-        {
-            action();
         }
     }
 }
