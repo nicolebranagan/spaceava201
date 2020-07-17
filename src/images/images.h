@@ -80,26 +80,26 @@
 
 // ./images/mirrorsys.chr
 #define MIRRORSYS_SECTOR_OFFSET 34 
-#define MIRRORSYS_SECTOR_COUNT 2 
-#define MIRRORSYS_SIZE 4096 
+#define MIRRORSYS_SECTOR_COUNT 3 
+#define MIRRORSYS_SIZE 6144 
 
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 36 
+#define NELEHU_FACE_SECTOR_OFFSET 37 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 39 
+#define STARBASE_SECTOR_OFFSET 40 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 40 
+#define STARDROP_SECTOR_OFFSET 41 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 42 
+#define STARROT_SECTOR_OFFSET 43 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 

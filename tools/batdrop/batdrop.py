@@ -96,6 +96,9 @@ class Application(tk.Frame):
         resetbutton = tk.Button(controls, text="Reset", command=resetroom)
         resetbutton.grid(row=5, column=0, columnspan=2)
 
+        resizebutton = tk.Button(controls, text="Resize", command=self.resizeroom)
+        resizebutton.grid(row=6, column=0, columnspan=2)
+
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
@@ -145,6 +148,22 @@ class Application(tk.Frame):
         
         self.statusbar.config(
                 text="Coordinates: {}, {}".format(clickX, clickY))
+
+    def resizeroom(self):
+        x = int(self.xentry.get())
+        y = int(self.yentry.get())
+
+        newtiles = [0 for _ in range(0, x * y)]
+        for i in range(0, self.room.width):
+            for j in range(0, self.room.height):
+                newtiles[i + (x * j)] = self.room.get(i, j)
+        self.room = Room(0, x, y)
+        self.viewcanvas.config(
+            width=self.room.width*32, height=self.room.height*32
+        )
+        self.room.tiles = newtiles
+        self.changetileset(0)
+        self.drawroom()
 
     def save(self):
         filen = filedialog.asksaveasfilename(

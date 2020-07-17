@@ -10,7 +10,8 @@
 
 #define SYSTEM_VRAM 0x1000
 #define CURSOR_VRAM (SYSTEM_VRAM + (MIRRORSYS_SIZE / 2))
-#define LASER_VRAM (SYSTEM_VRAM + (CURSOR_VRAM / 2))
+#define LASER_VRAM (CURSOR_VRAM + (CURSORS_SIZE / 2))
+#define FACE_VRAM (LASER_VRAM + (LASERS_SIZE / 2))
 
 #define TOP_Y 32
 #define TOP_X 32
@@ -22,6 +23,7 @@
 #incbin(systempal, "palettes/mirrorsys.pal");
 #incbin(cursorpal, "palettes/cursors.pal");
 #incbin(laserpal, "palettes/lasers.pal");
+#incbin(avasmlpal, "palettes/avasml.pal");
 
 #incbin(systembat, "bats/mirrorsys.bin");
 
@@ -40,13 +42,13 @@ struct photon photons[MAX_PHOTONS];
 initialize()
 {
     char i;
-    cls();
     x = 0;
     y = 0;
     timer = 0;
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
     scroll(0, 0, 0, 0, 223, 0xC0);
+    cls();
 
     for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
     {
@@ -62,10 +64,13 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, MIRRORSYS_SECTOR_OFFSET, SYSTEM_VRAM, MIRRORSYS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, CURSORS_SECTOR_OFFSET, CURSOR_VRAM, CURSORS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LASERS_SECTOR_OFFSET, LASER_VRAM, LASERS_SIZE);
+    cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
+
     load_palette(1, systempal, 1);
+    load_palette(2, avasmlpal, 1);
     load_palette(16, cursorpal, 1);
     load_palette(17, laserpal, 1);
-    load_vram(0, systembat, 16 * 16 * 4);
+    load_vram(0, systembat, 24 * 16 * 4);
 }
 
 draw_cursor()
@@ -175,6 +180,34 @@ draw_grid()
 
         grid_sprite++;
     }
+}
+
+#define FRAME_START ((FACE_VRAM >> 4) + 0x2000)
+const char FACE_CYCLE[] = {
+    0, 1, 4, 5,
+    2, 3, 6, 7};
+
+draw_lower_face(char idx)
+{
+    int addr, frame_start;
+    int data[8];
+    char i, j;
+
+    frame_start = FRAME_START + (idx << 5);
+    for (j = 0; j < 2; j++)
+    {
+        for (i = 0; i < 8; i++)
+        {
+            data[i] = frame_start + (j << 3) + FACE_CYCLE[i];
+        }
+        addr = vram_addr(2, 34 + (j * 2));
+        load_vram(addr, data, 4);
+        addr = vram_addr(2, 34 + (j * 2) + 1);
+        load_vram(addr, data + 4, 4);
+    }
+
+    scroll(0, 0, 0, 0, 223 - 56, 0xC0);
+    scroll(1, 0, 256, 223 - 56, 223, 0xC0);
 }
 
 draw_grid_frame()
@@ -409,6 +442,7 @@ main()
     char joyt;
 
     initialize();
+    draw_lower_face(0);
     for (;;)
     {
         timer++;
