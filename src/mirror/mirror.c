@@ -18,6 +18,7 @@
 #define TOP_X 32
 #define GRID_WIDTH 9
 #define GRID_HEIGHT 10
+#define PALETTE_SIZE 9
 
 #define SPR_SIZE_16x16 0x40
 
@@ -28,8 +29,9 @@
 
 #incbin(systembat, "bats/mirrorsys.bin");
 
-char x, y, timer, joytimer;
+char x, y, timer, joytimer, holding;
 
+char palette[PALETTE_SIZE];
 char grid[GRID_WIDTH * GRID_HEIGHT];
 
 struct photon
@@ -72,16 +74,25 @@ reset_grid()
         grid[i] = SPACE_EMPTY;
     }
 
-    grid[GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
+    for (i = 0; i < PALETTE_SIZE; i++)
+    {
+        palette[i] = SPACE_EMPTY;
+    }
+
+    palette[0] = SPACE_RIGHT_LEFT_MIRROR;
+
+    grid[GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_SOLMIR;
     grid[GRID_WIDTH + 6] = SPACE_ANTIPHOTON;
 
-    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_MIRROR;
     grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 2] = SPACE_PHOTON;
+
+    holding = SPACE_EMPTY;
 }
 
 draw_cursor()
 {
-    int draw_x;
+    char draw_x;
+    char i;
 
     if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
     {
@@ -105,19 +116,32 @@ draw_cursor()
         return;
     }
 
+    spr_set(0);
+
     if (x < GRID_WIDTH)
     {
         draw_x = TOP_X + (x << 4);
+        i = x + (y * GRID_WIDTH);
+        spr_pattern(
+            (grid[i] == SPACE_RIGHT_LEFT_MIRROR || grid[i] == SPACE_LEFT_RIGHT_MIRROR) ? (CURSOR_VRAM + (SPR_SIZE_16x16 << 2))
+                                                                                       : ((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16)));
     }
     else
     {
         draw_x = 216; // Palette
+        spr_pattern(
+            (palette[y] == SPACE_RIGHT_LEFT_MIRROR || grid[i] == SPACE_LEFT_RIGHT_MIRROR) ? (CURSOR_VRAM + (SPR_SIZE_16x16 << 2))
+                                                                                          : ((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16)));
     }
-    spr_set(0);
+
+    if (holding != SPACE_EMPTY)
+    {
+        spr_pattern(CURSOR_VRAM + (5 * SPR_SIZE_16x16));
+    }
+
     spr_y(TOP_Y + (y << 4));
     spr_x(draw_x);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-    spr_pattern((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16));
     spr_pal(0);
     spr_pri(1);
     spr_show();
@@ -137,13 +161,13 @@ draw_beam(char sprdex, char i, int vram_offset)
     spr_show();
 }
 
-draw_mirror(char sprdex, char i, char flip)
+draw_mirror(char sprdex, char i, char solid, char flip)
 {
     spr_set(sprdex);
     spr_x(TOP_X + ((i % GRID_WIDTH) << 4));
     spr_y(TOP_Y + ((i / GRID_WIDTH) << 4));
     spr_ctrl(FLIP_MAS | SIZE_MAS, flip ? (SZ_16x16 | FLIP_X) : SZ_16x16);
-    spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4));
+    spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4) + (solid ? SPR_SIZE_16x16 : 0));
     spr_pal(1);
     spr_pri(1);
     spr_show();
@@ -175,16 +199,51 @@ draw_grid()
         }
         case SPACE_LEFT_RIGHT_MIRROR:
         {
-            draw_mirror(grid_sprite, i, 1);
+            draw_mirror(grid_sprite, i, 0, 1);
             break;
         }
         case SPACE_RIGHT_LEFT_MIRROR:
         {
-            draw_mirror(grid_sprite, i, 0);
+            draw_mirror(grid_sprite, i, 0, 0);
+            break;
+        }
+        case SPACE_LEFT_RIGHT_SOLMIR:
+        {
+            draw_mirror(grid_sprite, i, 1, 1);
+            break;
+        }
+        case SPACE_RIGHT_LEFT_SOLMIR:
+        {
+            draw_mirror(grid_sprite, i, 1, 0);
+            break;
         }
         }
 
         grid_sprite++;
+    }
+
+    for (i = 0; i < PALETTE_SIZE; i++)
+    {
+        if (palette[i] == SPACE_EMPTY)
+        {
+            continue;
+        }
+
+        spr_set(grid_sprite);
+        spr_x(216);
+        spr_y(TOP_Y + (i << 4));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, (palette[i] == SPACE_LEFT_RIGHT_MIRROR) ? (SZ_16x16 | FLIP_X) : SZ_16x16);
+        spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4));
+        spr_pal(1);
+        spr_pri(1);
+        spr_show();
+        grid_sprite++;
+    }
+
+    for (i = grid_sprite; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
     }
 }
 
@@ -364,6 +423,7 @@ char run_grid()
 
                 switch (grid[x + GRID_WIDTH * y])
                 {
+                case SPACE_RIGHT_LEFT_SOLMIR:
                 case SPACE_RIGHT_LEFT_MIRROR:
                 {
                     switch (photons[i].facing)
@@ -383,6 +443,7 @@ char run_grid()
                     }
                     break;
                 }
+                case SPACE_LEFT_RIGHT_SOLMIR:
                 case SPACE_LEFT_RIGHT_MIRROR:
                 {
                     switch (photons[i].facing)
@@ -455,7 +516,7 @@ action()
 {
     char i;
 
-    if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
+    if ((holding == SPACE_EMPTY) && x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
     {
         if (run_grid())
         {
@@ -468,6 +529,7 @@ action()
             scroll(0, 0, 0, 0, 223, 0xC0);
             scroll_disable(1);
             cd_execoverlay(GOVERNOR_OVERLAY);
+            return;
         }
         else
         {
@@ -488,6 +550,44 @@ action()
             return;
         }
     }
+
+    if (x < GRID_WIDTH)
+    {
+        i = grid[x + (y * GRID_WIDTH)];
+    }
+    else
+    {
+        i = palette[y];
+    }
+
+    if ((holding != SPACE_EMPTY) && i == SPACE_EMPTY)
+    {
+        if (x < GRID_WIDTH)
+        {
+            grid[x + (y * GRID_WIDTH)] = holding;
+        }
+        else
+        {
+            palette[y] = holding;
+        }
+        holding = SPACE_EMPTY;
+        return;
+    }
+
+    if ((holding == SPACE_EMPTY) && (i == SPACE_RIGHT_LEFT_MIRROR || i == SPACE_LEFT_RIGHT_MIRROR))
+    {
+
+        holding = i;
+        if (x < GRID_WIDTH)
+        {
+            grid[x + (y * GRID_WIDTH)] = SPACE_EMPTY;
+        }
+        else
+        {
+            palette[y] = SPACE_EMPTY;
+        }
+        return;
+    }
 }
 
 main()
@@ -507,7 +607,7 @@ main()
         satb_update();
 
         joyt = joytrg(0);
-        
+
         if ((joyt & JOY_RUN) || (joyt & JOY_I))
         {
             action();
