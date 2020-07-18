@@ -100,7 +100,7 @@ draw_cursor()
         spr_y(192);
         spr_x(208);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_pattern(CURSOR_VRAM + (SPR_SIZE_16x16 * 2));
+        spr_pattern(CURSOR_VRAM + (SPR_SIZE_16x16 * (holding ? 6 : 2)));
         spr_pal(0);
         spr_pri(1);
         spr_show();
@@ -109,7 +109,7 @@ draw_cursor()
         spr_y(192);
         spr_x(224);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_pattern(CURSOR_VRAM + (3 * SPR_SIZE_16x16));
+        spr_pattern(CURSOR_VRAM + ((holding ? 7 : 3) * SPR_SIZE_16x16));
         spr_pal(0);
         spr_pri(1);
         spr_show();
@@ -517,14 +517,29 @@ action()
 {
     char i;
 
-    if ((holding == SPACE_EMPTY) && x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
+    if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
     {
+        if (holding)
+        {
+            draw_lower_face(1);
+            spr_set(0);
+            spr_hide();
+            spr_set(1);
+            spr_hide();
+            satb_update();
+            write_text(8, 35, "I should put down    ");
+            write_text(8, 36, "the mirror first.    ");
+            wait_for_input();
+            scroll_disable(1);
+            scroll(0, 0, 0, 0, 223, 0xC0);
+            return;
+        }
         if (run_grid())
         {
             // win
             draw_lower_face(0);
-            write_text(8, 35, "Wow! This is turning");
-            write_text(8, 36, "out okay!");
+            write_text(8, 35, "Wow! This is turning ");
+            write_text(8, 36, "out okay!            ");
             wait_for_input();
             cls();
             scroll(0, 0, 0, 0, 223, 0xC0);
@@ -536,8 +551,8 @@ action()
         {
             // lose
             draw_lower_face(1);
-            write_text(8, 35, "I was so close!");
-            write_text(8, 36, "I'll try again?");
+            write_text(8, 35, "I was so close!      ");
+            write_text(8, 36, "I'll try again?      ");
             wait_for_input();
             for (i = 0; i < 64; i++)
             {
