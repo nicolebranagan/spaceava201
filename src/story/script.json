@@ -684,5 +684,240 @@
       "command": "SHOW_TEXT",
       "text": "CINDY: Then it's set! Onwards... to the Milky Way Galaxy!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 1
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "VOID"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Starship Zip-A\nIntergalactic Void",
+      "chirp": 76
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_FEYNMAN"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 7,
+      "x": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "NELEHU",
+      "face": 3,
+      "x": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Ava, are you even paying attention?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "How are you ever going to defeat quantum if you can't understand a simple diagram?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm awake! I h-bar d-psy dt equals the Hamiltonian!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Please try to take this seriously..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But I wasn't wrong..."
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_REDALERT"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face":  0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Red alert detected. All hands hide under the nearest desk. Duck and cover. Red alert detected.",
+      "chirp": 66
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "CINDY",
+      "x": 13,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: What's going on? Why is the quantum theme playing? Lieutenant Nelehu, status report!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: The ship is not pleased. It appears that we have been placed within a quantum field."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But that's impossible! We'd notice, time would be moving all weird and I'd only be able to move a step at a time!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 1,
+      "x": 6
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "See, look, I can jump around just fine!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 4,
+      "x": 9
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Nevertheless, that is what the ship reports."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: But if the quantum field is in space, then we can't just send Ava in. We'll need to dissipate it somehow..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Um, this is probably a silly question, but... we have those mirrors in the hold, could we use those to form anti-photon/photon pairs? And dissipate the field that way?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: That idea is simply more proof that you need to pay attention to..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: That's a great idea! Lieutenant, can you direct the ship's tractor beam? If we can boost the engine power we should be able to break the field just long enough for it to dissipate itself."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: I will be busy with tuning the engine. I would recommend our navigator instead is best-suited to the task."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wait, that's me, isn't it?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Unless, of course, you'd prefer to provide an analytical solution to the Dirac equation?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'll head over to my console..."
+    }
   ]
 ]

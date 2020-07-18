@@ -6,6 +6,8 @@ AVA:
 4. Big smile
 5. Angry look
 6. What's a war?
+7. Sleepy
+8. Not wrong
 
 BOB:
 0. Bob

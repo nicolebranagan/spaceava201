@@ -552,7 +552,7 @@ action()
             // lose
             draw_lower_face(1);
             write_text(8, 35, "I was so close!      ");
-            write_text(8, 36, "I'll try again?      ");
+            write_text(8, 36, "Maybe try again?     ");
             wait_for_input();
             for (i = 0; i < 64; i++)
             {

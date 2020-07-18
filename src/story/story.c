@@ -16,10 +16,14 @@
 #incbin(goon_facepal, "palettes/goon_face.pal");
 
 #incbin(starbasepal, "palettes/stardrop.pal");
+#incbin(starshippal, "palettes/starship.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
 #incbin(emptybat, "bats/empty-bg.bin")
+#incbin(voidbat, "bats/void-bg.bin")
+#incbin(starshipbat, "bats/starship-bg.bin")
+#incbin(redalertbat, "bats/redalert-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x1800
@@ -41,7 +45,7 @@ initialize()
 {
     cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
     build_cast();
-    
+
     disp_off();
     cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
     cd_loadvram(IMAGE_OVERLAY, BIZCAT_SECTOR_OFFSET, FONT_VRAM, BIZCAT_SIZE);
@@ -169,6 +173,33 @@ draw_background(char index)
         }
         break;
     }
+    case 3:
+        load_palette(1, starshippal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, voidbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 4:
+        load_palette(1, starshippal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, starshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 5:
+        load_palette(1, starshippal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, redalertbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
     }
 }
 

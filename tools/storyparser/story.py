@@ -28,7 +28,10 @@ SPRITES = {
 BACKGROUNDS = {
     "STARBASE": 0,
     "STARBASE_EXTERIOR": 1,
-    "TRAINING_HALL": 2
+    "TRAINING_HALL": 2,
+    "VOID": 3,
+    "STARSHIP_FEYNMAN": 4,
+    "STARSHIP_REDALERT": 5
 }
 
 TRACKS = {
@@ -64,6 +67,8 @@ def parse_single_script(script):
     last_face = [0 for _ in range(0, 10)]
     last_x = [0 for _ in range(0, 10)]
 
+    last_slot_for_face = {}
+
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
             if ("sprite" in command and SPRITES[command["sprite"]] not in cast):
@@ -73,8 +78,12 @@ def parse_single_script(script):
             if "slot" in command:
                 slot = command["slot"]
                 last_slot = command["slot"]
-            if "sprite" in command:
+            elif "sprite" in command:
+                slot = last_slot_for_face[command["sprite"]]
+
+            if "sprite" in command and "slot" in command:
                 last_sprite[slot] = command["sprite"]
+                last_slot_for_face[command["sprite"]] = slot
             if "face" in command:
                 last_face[slot] = command["face"]
             if "x" in command:

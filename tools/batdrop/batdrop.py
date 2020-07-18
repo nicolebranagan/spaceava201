@@ -9,7 +9,8 @@ DEFAULT_HEIGHT = 5
 
 TILESET_NAME = {
     "Starbase": 0,
-    "Mirror System": 1
+    "Mirror System": 1,
+    "Starship": 2
 }
 NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
 
