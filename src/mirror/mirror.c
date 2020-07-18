@@ -113,6 +113,8 @@ draw_cursor()
         spr_pal(0);
         spr_pri(1);
         spr_show();
+        spr_set(2);
+        spr_hide();
         return;
     }
 
@@ -134,11 +136,6 @@ draw_cursor()
                                                                                           : ((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16)));
     }
 
-    if (holding != SPACE_EMPTY)
-    {
-        spr_pattern(CURSOR_VRAM + (5 * SPR_SIZE_16x16));
-    }
-
     spr_y(TOP_Y + (y << 4));
     spr_x(draw_x);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
@@ -147,6 +144,18 @@ draw_cursor()
     spr_show();
     spr_set(1);
     spr_hide();
+
+    if (holding != SPACE_EMPTY)
+    {
+        spr_set(0);
+        spr_pattern(CURSOR_VRAM + (5 * SPR_SIZE_16x16));
+        draw_mirror(2, draw_x, TOP_Y + (y << 4), 0, holding == SPACE_LEFT_RIGHT_MIRROR);
+    }
+    else
+    {
+        spr_set(2);
+        spr_hide();
+    }
 }
 
 draw_beam(char sprdex, char i, int vram_offset)
@@ -161,11 +170,11 @@ draw_beam(char sprdex, char i, int vram_offset)
     spr_show();
 }
 
-draw_mirror(char sprdex, char i, char solid, char flip)
+draw_mirror(char sprdex, char x, char y, char solid, char flip)
 {
     spr_set(sprdex);
-    spr_x(TOP_X + ((i % GRID_WIDTH) << 4));
-    spr_y(TOP_Y + ((i / GRID_WIDTH) << 4));
+    spr_x(x);
+    spr_y(y);
     spr_ctrl(FLIP_MAS | SIZE_MAS, flip ? (SZ_16x16 | FLIP_X) : SZ_16x16);
     spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4) + (solid ? SPR_SIZE_16x16 : 0));
     spr_pal(1);
@@ -199,22 +208,22 @@ draw_grid()
         }
         case SPACE_LEFT_RIGHT_MIRROR:
         {
-            draw_mirror(grid_sprite, i, 0, 1);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 1);
             break;
         }
         case SPACE_RIGHT_LEFT_MIRROR:
         {
-            draw_mirror(grid_sprite, i, 0, 0);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 0);
             break;
         }
         case SPACE_LEFT_RIGHT_SOLMIR:
         {
-            draw_mirror(grid_sprite, i, 1, 1);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 1);
             break;
         }
         case SPACE_RIGHT_LEFT_SOLMIR:
         {
-            draw_mirror(grid_sprite, i, 1, 0);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 0);
             break;
         }
         }
@@ -228,15 +237,7 @@ draw_grid()
         {
             continue;
         }
-
-        spr_set(grid_sprite);
-        spr_x(216);
-        spr_y(TOP_Y + (i << 4));
-        spr_ctrl(FLIP_MAS | SIZE_MAS, (palette[i] == SPACE_LEFT_RIGHT_MIRROR) ? (SZ_16x16 | FLIP_X) : SZ_16x16);
-        spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4));
-        spr_pal(1);
-        spr_pri(1);
-        spr_show();
+        draw_mirror(grid_sprite, 216, TOP_Y + (i << 4), 0, palette[i] == SPACE_LEFT_RIGHT_MIRROR);
         grid_sprite++;
     }
 
