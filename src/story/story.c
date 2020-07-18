@@ -70,7 +70,7 @@ build_cast()
     char current_face;
     char current_palette;
     char index;
-    int vram;
+    int vram, size;
     index = 0;
     pointer_to_data = 0;
     vram = FACE_VRAM;
@@ -91,6 +91,7 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, AVA_FACE_SECTOR_OFFSET, vram, AVA_FACE_SIZE);
+            size = AVA_FACE_SIZE;
             break;
 
         case 2: // Cindy
@@ -98,6 +99,7 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
+            size = CINDY_FACE_SIZE;
             break;
 
         case 3: // Nelehu
@@ -105,6 +107,7 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, NELEHU_FACE_SECTOR_OFFSET, vram, NELEHU_FACE_SIZE);
+            size = NELEHU_FACE_SIZE;
             break;
 
         case 4: // Bob
@@ -112,6 +115,7 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, BOB_FACE_SECTOR_OFFSET, vram, BOB_FACE_SIZE);
+            size = BOB_FACE_SIZE;
             break;
 
         case 5: // Quantum Goon
@@ -119,10 +123,11 @@ build_cast()
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, GOON_FACE_SECTOR_OFFSET, vram, GOON_FACE_SIZE);
+            size = GOON_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
-        vram = vram + (AVA_FACE_SIZE / 2);
+        vram = vram + (size / 2);
         index++;
         pointer_to_data++;
     }
