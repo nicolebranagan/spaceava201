@@ -27,6 +27,10 @@ FILE "Space Ava 201 - 07 - Impossibly Bossy.wav" WAVE
   TRACK 07 AUDIO
     INDEX 01 00:00:00
 
-FILE placeholder.wav WAVE
+FILE "Space Ava 201 - 08 - Nothing is Hope.wav" WAVE
   TRACK 08 AUDIO
+    INDEX 01 00:00:00
+
+FILE placeholder.wav WAVE
+  TRACK 09 AUDIO
     INDEX 01 00:00:00

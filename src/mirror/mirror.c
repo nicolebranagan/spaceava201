@@ -633,6 +633,7 @@ main()
 
     initialize();
     reset_grid();
+    cd_playtrk(TRACK_NOTHING_IS_HOPE, TRACK_NOTHING_IS_HOPE + 1, CDPLAY_REPEAT);
 
     for (;;)
     {
