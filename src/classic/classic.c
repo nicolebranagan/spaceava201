@@ -56,8 +56,7 @@ const char TILE_SOLIDITY[] = {
 
 const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
-    TRACK_IMPOSSIBLY_BOSSY
-};
+    TRACK_IMPOSSIBLY_BOSSY};
 
 char pal_rotate_step;
 
@@ -65,6 +64,7 @@ initialize()
 {
     pal_rotate_step = 0;
 
+    ad_reset();
     ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, EUREKA_LOC);
     ad_trans(ADPCM_OVERLAY, DIE_SECTOR_OFFSET, DIE_SECTOR_COUNT, DIE_LOC);
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
@@ -78,7 +78,6 @@ initialize()
     set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
     cls();
-    ad_reset();
 
     load_palette(16, avapal, 1);
     load_level_data(current_level);

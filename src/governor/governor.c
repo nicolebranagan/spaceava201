@@ -15,7 +15,6 @@
 
 const char STEP_ORDER[] = {
     MIRROR_OVERLAY, 0,
-    STORY_OVERLAY, 3,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,

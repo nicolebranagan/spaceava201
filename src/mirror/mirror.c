@@ -4,6 +4,7 @@
 
 #include <huc.h>
 
+#include "./adpcm/adpcm.h"
 #include "./mirror/const.h"
 #include "./images/images.h"
 #include "cd.h"
@@ -52,6 +53,12 @@ initialize()
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
     scroll(0, 0, 0, 0, 223, 0xC0);
+
+    ad_reset();
+    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, ADPCM_PHOTON);
+    ad_trans(ADPCM_OVERLAY, PICKUP_SECTOR_OFFSET, PICKUP_SECTOR_COUNT, ADPCM_PICKUP);
+    ad_trans(ADPCM_OVERLAY, WRONG_SECTOR_OFFSET, WRONG_SECTOR_COUNT, ADPCM_WRONG);
+    ad_trans(ADPCM_OVERLAY, CLINK_SECTOR_OFFSET, CLINK_SECTOR_COUNT, ADPCM_CLINK);
 
     cd_loadvram(IMAGE_OVERLAY, SHADE8X8_SECTOR_OFFSET, FONT_VRAM, SHADE8X8_SIZE);
     cd_loadvram(IMAGE_OVERLAY, MIRRORSYS_SECTOR_OFFSET, SYSTEM_VRAM, MIRRORSYS_SIZE);
@@ -422,6 +429,7 @@ char run_grid()
                 case SPACE_RIGHT_LEFT_SOLMIR:
                 case SPACE_RIGHT_LEFT_MIRROR:
                 {
+                    ad_play(ADPCM_CLINK, CLINK_SIZE, 14, 0);
                     switch (photons[i].facing)
                     {
                     case UP:
@@ -442,6 +450,7 @@ char run_grid()
                 case SPACE_LEFT_RIGHT_SOLMIR:
                 case SPACE_LEFT_RIGHT_MIRROR:
                 {
+                    ad_play(ADPCM_CLINK, CLINK_SIZE, 14, 0);
                     switch (photons[i].facing)
                     {
                     case UP:
@@ -483,6 +492,11 @@ char run_grid()
                             (x == ((photons[j].x - TOP_X) >> 4)) &&
                             (y == ((photons[j].y - TOP_Y) >> 4)))
                         {
+                            if (ad_stat())
+                            {
+                                ad_stop();
+                            }
+                            ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
                             photons[j].active = 0;
                             photons[i].type = SPACE_ANNIHILATION;
                             photons[i].x = (x << 4) + TOP_X;
@@ -525,6 +539,7 @@ action()
     {
         if (holding)
         {
+            ad_play(ADPCM_WRONG, WRONG_SIZE, 14, 0);
             draw_lower_face(1);
             spr_set(0);
             spr_hide();
@@ -596,7 +611,7 @@ action()
 
     if ((holding == SPACE_EMPTY) && (i == SPACE_RIGHT_LEFT_MIRROR || i == SPACE_LEFT_RIGHT_MIRROR))
     {
-
+        ad_play(ADPCM_PICKUP, PICKUP_SIZE, 14, 0);
         holding = i;
         if (x < GRID_WIDTH)
         {
@@ -608,6 +623,8 @@ action()
         }
         return;
     }
+
+    ad_play(ADPCM_WRONG, WRONG_SIZE, 14, 0);
 }
 
 main()
