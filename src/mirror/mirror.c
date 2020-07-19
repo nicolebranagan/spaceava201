@@ -41,6 +41,7 @@ struct photon
 
 char photon_count;
 struct photon photons[MAX_PHOTONS];
+char rawdata[(GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE];
 
 initialize()
 {
@@ -51,13 +52,14 @@ initialize()
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
     scroll(0, 0, 0, 0, 223, 0xC0);
-    cls();
 
     cd_loadvram(IMAGE_OVERLAY, SHADE8X8_SECTOR_OFFSET, FONT_VRAM, SHADE8X8_SIZE);
     cd_loadvram(IMAGE_OVERLAY, MIRRORSYS_SECTOR_OFFSET, SYSTEM_VRAM, MIRRORSYS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, CURSORS_SECTOR_OFFSET, CURSOR_VRAM, CURSORS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LASERS_SECTOR_OFFSET, LASER_VRAM, LASERS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
+    cd_loaddata(MIRROR_DATA_OVERLAY, current_level, rawdata, (GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE);
+    cls();
 
     load_palette(1, systempal, 1);
     load_palette(2, avasmlpal, 1);
@@ -71,20 +73,13 @@ reset_grid()
     char i;
     for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
     {
-        grid[i] = SPACE_EMPTY;
+        grid[i] = rawdata[i];
     }
 
     for (i = 0; i < PALETTE_SIZE; i++)
     {
-        palette[i] = SPACE_EMPTY;
+        palette[i] = rawdata[(GRID_WIDTH * GRID_HEIGHT) + i];
     }
-
-    palette[0] = SPACE_RIGHT_LEFT_MIRROR;
-
-    grid[GRID_WIDTH + 4] = SPACE_RIGHT_LEFT_SOLMIR;
-    grid[GRID_WIDTH + 6] = SPACE_ANTIPHOTON;
-
-    grid[GRID_WIDTH + GRID_WIDTH + GRID_WIDTH + 2] = SPACE_PHOTON;
 
     holding = SPACE_EMPTY;
 }
@@ -178,7 +173,7 @@ draw_mirror(char sprdex, char x, char y, char solid, char flip)
     spr_ctrl(FLIP_MAS | SIZE_MAS, flip ? (SZ_16x16 | FLIP_X) : SZ_16x16);
     spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4) + (solid ? SPR_SIZE_16x16 : 0));
     spr_pal(1);
-    spr_pri(1);
+    spr_pri(0);
     spr_show();
 }
 
@@ -465,6 +460,18 @@ char run_grid()
                     break;
                 }
                 case SPACE_EMPTY:
+                    break;
+                }
+            }
+        }
+        if (count == 8 || count == 16)
+        {
+            allInactive = 1;
+            for (i = 0; i < photon_count; i++)
+            {
+                x = (photons[i].x - TOP_X) >> 4;
+                y = (photons[i].y - TOP_Y) >> 4;
+                if (grid[x + GRID_WIDTH * y] == SPACE_EMPTY)
                 {
                     for (j = (i + 1); j < photon_count; j++)
                     {
@@ -484,12 +491,9 @@ char run_grid()
                             break;
                         }
                     }
-                    break;
-                }
                 }
             }
 
-            allInactive = 1;
             for (i = 0; i < photon_count; i++)
             {
                 if (photons[i].active)

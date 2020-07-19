@@ -28,7 +28,7 @@ spaceava201: spaceava.iso
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -53,6 +53,9 @@ classicdata: classicdata/classicdata.bin
 
 storydata: story/script.json
 	python3 ../tools/storyparser/story.py story/script.json ../build/storydata.bin
+
+mirrordata: mirrordata/mirrordata.bin
+	cp mirrordata/mirrordata.bin ../build/mirrordata.bin
 
 images: sprites tiles 8x8fonts 8x16fonts faces
 	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr

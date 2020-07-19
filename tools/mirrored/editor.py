@@ -93,15 +93,7 @@ class Application(tk.Frame):
                 title="Save")
         if filen != () and filen != "":
             with open(filen, "wb") as fileo:
-                tiles = [0 for _ in range(0, DEFAULT_WIDTH * DEFAULT_HEIGHT)]
-                palette = [0 for _ in range(0, DEFAULT_HEIGHT - 1)]
-                for y in range(0, DEFAULT_HEIGHT):
-                    for x in range(0, DEFAULT_WIDTH):
-                        tiles[(y * DEFAULT_WIDTH) + x] = self.room.get(x, y)
-                for i in range(0, DEFAULT_HEIGHT - 1):
-                    palette[i]  = self.room.get(DEFAULT_WIDTH, i)
-                output = tiles + palette
-                fileo.write(bytes(output))
+                fileo.write(self.room.dump())
 
     def open(self):
         filen = filedialog.askopenfilename(
@@ -153,6 +145,19 @@ class Room:
                 image.paste(tileset[1][self.tiles[i]],(x*32, y*32))
                 i = i+1
         return image
+
+    def dump(self):
+        tiles = [0 for _ in range(0, DEFAULT_WIDTH * DEFAULT_HEIGHT)]
+        palette = [0 for _ in range(0, DEFAULT_HEIGHT - 1)]
+        for y in range(0, DEFAULT_HEIGHT):
+            for x in range(0, DEFAULT_WIDTH):
+                tiles[(y * DEFAULT_WIDTH) + x] = self.get(x, y)
+        for i in range(0, DEFAULT_HEIGHT - 1):
+            palette[i]  = self.get(DEFAULT_WIDTH, i)
+        output = tiles + palette
+        data = bytes(output)
+        # Ensure all data is sector-aligned
+        return data + bytes([255 for _ in range(0, 2048 - len(data))])
 
     @staticmethod
     def load(tiles, width, height):
