@@ -18,7 +18,7 @@
 #define TOP_X 32
 #define GRID_WIDTH 9
 #define GRID_HEIGHT 10
-#define PALETTE_SIZE 9
+#define PALETTE_SIZE (GRID_HEIGHT - 1)
 
 #define SPR_SIZE_16x16 0x40
 
