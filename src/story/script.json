@@ -888,6 +888,10 @@
       "text": "CINDY: That's a great idea! Lieutenant, can you direct the ship's tractor beam? If we can boost the engine power we should be able to break the field just long enough for it to dissipate itself."
     },
     {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: ..."
+    },
+    {
       "command": "SHOW_SPRITE",
       "sprite": "NELEHU",
       "face": 0
