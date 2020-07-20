@@ -168,7 +168,7 @@ draw_beam(char sprdex, char i, int vram_offset)
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pattern(vram_offset + (SPR_SIZE_16x16 * ((timer & 63) >> 4)));
     spr_pal(1);
-    spr_pri(1);
+    spr_pri(0);
     spr_show();
 }
 
@@ -339,7 +339,7 @@ draw_grid_frame()
             spr_y(photons[i].y);
             spr_pal(1);
             spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-            spr_pri(1);
+            spr_pri(0);
             spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 * photons[i].frame));
             spr_show();
             spr_index++;
@@ -351,7 +351,7 @@ draw_grid_frame()
         spr_y(photons[i].y);
         spr_pal(1);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_pri(1);
+        spr_pri(0);
         spr_pattern(vram_offset + (SPR_SIZE_16x16 * ((timer & 63) >> 4)));
         spr_show();
         spr_index++;
@@ -473,13 +473,13 @@ char run_grid()
                 }
             }
         }
-        if (count == 8 || count == 16)
+        if (1)
         {
             allInactive = 1;
             for (i = 0; i < photon_count; i++)
             {
-                x = (photons[i].x - TOP_X) >> 4;
-                y = (photons[i].y - TOP_Y) >> 4;
+                x = (photons[i].x - TOP_X) >> 3;
+                y = (photons[i].y - TOP_Y) >> 3;
                 if (grid[x + GRID_WIDTH * y] == SPACE_EMPTY)
                 {
                     for (j = (i + 1); j < photon_count; j++)
@@ -489,8 +489,8 @@ char run_grid()
                             continue;
                         }
                         if (
-                            (x == ((photons[j].x - TOP_X) >> 4)) &&
-                            (y == ((photons[j].y - TOP_Y) >> 4)))
+                            (x == ((photons[j].x - TOP_X) >> 3)) &&
+                            (y == ((photons[j].y - TOP_Y) >> 3)))
                         {
                             if (ad_stat())
                             {
@@ -499,8 +499,8 @@ char run_grid()
                             ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
                             photons[j].active = 0;
                             photons[i].type = SPACE_ANNIHILATION;
-                            photons[i].x = (x << 4) + TOP_X;
-                            photons[i].y = (y << 4) + TOP_Y;
+                            photons[i].x = (x << 3) + TOP_X;
+                            photons[i].y = (y << 3) + TOP_Y;
                             photons[i].facing = DIR_NONE;
                             break;
                         }
