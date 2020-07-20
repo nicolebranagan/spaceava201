@@ -20,6 +20,7 @@ class Application(tk.Frame):
         self.tilesTk = tilesTk
 
         self.room = Room(DEFAULT_WIDTH+1, DEFAULT_HEIGHT)
+        self.rooms = [self.room]
 
         self.createWidgets()
         self.drawroom()
@@ -46,6 +47,73 @@ class Application(tk.Frame):
         loadbutton.grid(row=0, column=0)
         savebutton = tk.Button(controls, text="Save", command=self.save)
         savebutton.grid(row=0, column=1)
+
+        roomselect = tk.Frame(controls, width=6*32)
+        roomselect.grid(row=1, column=0, columnspan=2)
+
+        self.roomcount = tk.Label(roomselect, text="1/1")
+        self.roomcount.grid(row=0, column=0)
+
+        def move_room(dist):
+            idx = self.rooms.index(self.room)
+            newidx = idx + dist
+            self.room = self.rooms[newidx]
+            self.roomcount.config(
+                text="{0}/{1}".format(newidx + 1, len(self.rooms)))
+            if (newidx == 0 or len(self.rooms) == 1):
+                self.previousroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.previousroom.config(
+                    state=tk.NORMAL
+                )
+            if (newidx == len(self.rooms) + 1):
+                self.nextroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.nextroom.config(
+                    state=tk.NORMAL
+                )
+            self.drawroom()
+
+        self.previousroom =  tk.Button(
+            roomselect, 
+            text="<<", 
+            state=tk.DISABLED,
+            command=lambda: move_room(-1)
+        )
+        self.previousroom.grid(row=0, column=1)
+        self.nextroom =  tk.Button(
+            roomselect, 
+            text=">>", 
+            state=tk.DISABLED,
+            command=lambda: move_room(1)
+        )
+        self.nextroom.grid(row=0, column=2)
+
+        def addroom():
+            newidx = len(self.rooms)
+            self.rooms.append(Room(DEFAULT_WIDTH+1, DEFAULT_HEIGHT))
+            self.room = self.rooms[newidx]
+            if (newidx == 0 or len(self.rooms) == 1):
+                self.previousroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.previousroom.config(
+                    state=tk.NORMAL
+                )
+            self.nextroom.config(
+                state=tk.DISABLED
+            )
+            self.roomcount.config(
+                text="{0}/{1}".format(newidx + 1, len(self.rooms)))
+            self.drawroom()
+
+        newroombutton = tk.Button(roomselect, text="Add room", command=addroom)
+        newroombutton.grid(row=1, column=1, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -92,8 +160,11 @@ class Application(tk.Frame):
                            ("All files", "*")),
                 title="Save")
         if filen != () and filen != "":
+            data = b''
+            for room in self.rooms:
+                data = data + room.dump()
             with open(filen, "wb") as fileo:
-                fileo.write(self.room.dump())
+                fileo.write(data)
 
     def open(self):
         filen = filedialog.askopenfilename(
@@ -106,20 +177,42 @@ class Application(tk.Frame):
         if filen != () and filen != "":
             with open(filen, "rb") as fileo:
                 data = fileo.read()
-            grid = data[0:(DEFAULT_WIDTH * DEFAULT_HEIGHT)]
-            palette = data[
-                (DEFAULT_WIDTH * DEFAULT_HEIGHT):
-                ((DEFAULT_WIDTH * DEFAULT_HEIGHT)+DEFAULT_HEIGHT)
-            ]
-            tiles = [0 for _ in range(0, (DEFAULT_WIDTH + 1) * (DEFAULT_HEIGHT))]
-            for y in range(0, DEFAULT_HEIGHT):
-                for x in range(0, DEFAULT_WIDTH + 1):
-                    if x == DEFAULT_WIDTH and y < (DEFAULT_HEIGHT - 1):
-                        tiles[x + (y * (DEFAULT_WIDTH + 1))] = palette[y]
-                    elif x < DEFAULT_WIDTH:
-                        tiles[x + (y * (DEFAULT_WIDTH + 1))] = grid[x + (y * DEFAULT_WIDTH)]
-            self.room = Room.load(tiles, DEFAULT_WIDTH+1, DEFAULT_HEIGHT)
+            self.rooms = []
+            for x in range(0, len(data) // 2048):
+                self.rooms.append(
+                    self.loadroom_from_binary(data[x*2048:(x+1)*2048])
+                )
+            self.room = self.rooms[0]
+            self.roomcount.config(
+                text="1/{0}".format(len(self.rooms)))
+            self.previousroom.config(
+                state=tk.DISABLED
+            )
+            if (len(self.rooms) == 1):
+                self.nextroom.config(
+                    state=tk.DISABLED
+                )
+            else:
+                self.nextroom.config(
+                    state=tk.NORMAL
+                )
             self.drawroom()
+
+    def loadroom_from_binary(self, data):
+        grid = data[0:(DEFAULT_WIDTH * DEFAULT_HEIGHT)]
+        palette = data[
+            (DEFAULT_WIDTH * DEFAULT_HEIGHT):
+            ((DEFAULT_WIDTH * DEFAULT_HEIGHT)+DEFAULT_HEIGHT)
+        ]
+        tiles = [0 for _ in range(0, (DEFAULT_WIDTH + 1) * (DEFAULT_HEIGHT))]
+        for y in range(0, DEFAULT_HEIGHT):
+            for x in range(0, DEFAULT_WIDTH + 1):
+                if x == DEFAULT_WIDTH and y < (DEFAULT_HEIGHT - 1):
+                    tiles[x + (y * (DEFAULT_WIDTH + 1))] = palette[y]
+                elif x < DEFAULT_WIDTH:
+                    tiles[x + (y * (DEFAULT_WIDTH + 1))] = grid[x + (y * DEFAULT_WIDTH)]
+
+        return Room.load(tiles, DEFAULT_WIDTH+1, DEFAULT_HEIGHT)
 
 class Room:
     def __init__(self, width, height):
