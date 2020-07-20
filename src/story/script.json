@@ -923,5 +923,181 @@
       "command": "SHOW_TEXT",
       "text": "AVA: I'll head over to my console..."
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 1
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_FEYNMAN"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "slot": 0,
+      "x": 10,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Oh yeah! I'm doing great! No puny quantum field can stop Captain Ava!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "slot": 1,
+      "x": 4,
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Hahaha!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I mean Ensign Ava I was just having a little fun come on don't tell Cindy I want her job please she might not be as nice as Harmony was"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 7
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Don't you see? I've joined quantum and decided to betray all of you! Be silent and compute!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Oh no! What are we going to do now!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Hahahaha!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 7
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "slot": 2,
+      "face": 2, 
+      "x": 14
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Oh hey Ava, I wanted to let you know that someone's affixed some mirrors to the fabric of spacetime, so this might be harder to dissipate--"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Editors forbid! Nelehu's joined quantum! We're all doomed! Throw them in the brig! Red alart!"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_REDALERT"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Red alert detected. All hands hide under the nearest desk. Duck and cover. Red alert detected.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 6
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: No, no, I was just trying to spook Ava, there's no alert, I haven't betrayed anyone..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 5
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Lieutenant Nelehu."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: I'll go button up my jacket..."
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Pick up your jaw from the floor, Ensign. You'll never get my job acting like that!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Ah, yes, of course!"
+    }
   ]
 ]

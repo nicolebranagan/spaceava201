@@ -27,6 +27,9 @@ NELEHU:
 2. Communing with the ship
 3. Really?!
 4. Annoyed
+5. Quantum Nelehu
+6. Spooked quantum nelehu
+7. Indifferent quantum nelehu
 
 GOON:
 0. Blank expression
