@@ -27,7 +27,7 @@ spaceava201: spaceava.iso
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 08 - Nothing is Hope.wav"
 	cp ../placeholder.wav ../build/iso
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata
 	mv */*.s */*.ovl */*.sym ../build
 	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin
 

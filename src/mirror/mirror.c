@@ -134,8 +134,8 @@ draw_cursor()
     {
         draw_x = 216; // Palette
         spr_pattern(
-            (palette[y] == SPACE_RIGHT_LEFT_MIRROR || grid[i] == SPACE_LEFT_RIGHT_MIRROR) ? (CURSOR_VRAM + (SPR_SIZE_16x16 << 2))
-                                                                                          : ((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16)));
+            (palette[y] == SPACE_RIGHT_LEFT_MIRROR || palette[y] == SPACE_LEFT_RIGHT_MIRROR) ? (CURSOR_VRAM + (SPR_SIZE_16x16 << 2))
+                                                                                             : ((timer >> 4 & 1) ? CURSOR_VRAM : (CURSOR_VRAM + SPR_SIZE_16x16)));
     }
 
     spr_y(TOP_Y + (y << 4));
@@ -473,60 +473,57 @@ char run_grid()
                 }
             }
         }
-        if (1)
+
+        allInactive = 1;
+        for (i = 0; i < photon_count; i++)
         {
-            allInactive = 1;
-            for (i = 0; i < photon_count; i++)
+            x = (photons[i].x - TOP_X) >> 3;
+            y = (photons[i].y - TOP_Y) >> 3;
+            for (j = (i + 1); j < photon_count; j++)
             {
-                x = (photons[i].x - TOP_X) >> 3;
-                y = (photons[i].y - TOP_Y) >> 3;
-                if (grid[x + GRID_WIDTH * y] == SPACE_EMPTY)
+                if (!photons[j].active)
                 {
-                    for (j = (i + 1); j < photon_count; j++)
+                    continue;
+                }
+                if (
+                    (x == ((photons[j].x - TOP_X) >> 3)) &&
+                    (y == ((photons[j].y - TOP_Y) >> 3)) &&
+                    (photons[i].type != photons[j].type))
+                {
+                    if (ad_stat())
                     {
-                        if (!photons[j].active)
-                        {
-                            continue;
-                        }
-                        if (
-                            (x == ((photons[j].x - TOP_X) >> 3)) &&
-                            (y == ((photons[j].y - TOP_Y) >> 3)))
-                        {
-                            if (ad_stat())
-                            {
-                                ad_stop();
-                            }
-                            ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
-                            photons[j].active = 0;
-                            photons[i].type = SPACE_ANNIHILATION;
-                            photons[i].x = (x << 3) + TOP_X;
-                            photons[i].y = (y << 3) + TOP_Y;
-                            photons[i].facing = DIR_NONE;
-                            break;
-                        }
+                        ad_stop();
                     }
+                    ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
+                    photons[j].active = 0;
+                    photons[i].type = SPACE_ANNIHILATION;
+                    photons[i].x = (x << 3) + TOP_X;
+                    photons[i].y = (y << 3) + TOP_Y;
+                    photons[i].facing = DIR_NONE;
+                    break;
                 }
+            }
+        }
+
+        for (i = 0; i < photon_count; i++)
+        {
+            if (photons[i].active)
+            {
+                allInactive = 0;
             }
 
-            for (i = 0; i < photon_count; i++)
+            if (photons[i].active && photons[i].type != SPACE_ANNIHILATION &&
+                (photons[i].x < (TOP_X - 8) ||
+                 photons[i].y < (TOP_Y - 8) ||
+                 photons[i].x > ((TOP_X + 8) + ((GRID_WIDTH - 1) * 16)) ||
+                 photons[i].y > ((TOP_Y + 8) + (GRID_HEIGHT * 16))))
             {
-                if (photons[i].active)
-                {
-                    allInactive = 0;
-                }
-
-                if (photons[i].x < TOP_X ||
-                    photons[i].y < TOP_Y ||
-                    photons[i].x > (TOP_X + ((GRID_WIDTH - 1) * 16)) ||
-                    photons[i].y > (TOP_Y + (GRID_HEIGHT * 16)))
-                {
-                    return 0;
-                }
+                return 0;
             }
-            if (allInactive)
-            {
-                return 1;
-            }
+        }
+        if (allInactive)
+        {
+            return 1;
         }
     }
 }
