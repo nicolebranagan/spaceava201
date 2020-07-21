@@ -774,13 +774,13 @@
       "face": 2
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "COMPUTER: Red alert detected. All hands hide under the nearest desk. Duck and cover. Red alert detected.",
       "chirp": 66
-    },
-    {
-      "command": "PLAY_MUSIC",
-      "track": "Chime 2020"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1017,7 +1017,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Oh hey Ava, I wanted to let you know that someone's affixed some mirrors to the fabric of spacetime, so this might be harder to dissipate--"
+      "text": "CINDY: Oh hey Ava, I wanted to let you know that someone's affixed some mirrors to the fabric of spacetime, so this might be harder to"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1098,6 +1098,36 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Ah, yes, of course!"
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_FEYNMAN"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "slot": 0,
+      "x": 10,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Welcome to the Milky Way Galaxy. Over one hundred billion served.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: We made it! The quantum field is officially dissipated!"
     }
   ]
 ]

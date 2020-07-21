@@ -14,9 +14,6 @@
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
 
 const char STEP_ORDER[] = {
-    MIRROR_OVERLAY, 2,
-    MIRROR_OVERLAY, 3,
-    MIRROR_OVERLAY, 4,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -30,7 +27,8 @@ const char STEP_ORDER[] = {
     STORY_OVERLAY, 5,
     MIRROR_OVERLAY, 2,
     MIRROR_OVERLAY, 3,
-    MIRROR_OVERLAY, 4};
+    MIRROR_OVERLAY, 4,
+    STORY_OVERLAY, 6};
 
 initialize()
 {
