@@ -25,7 +25,7 @@ spaceava201: spaceava.iso
 	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 06 - Chime 2020.wav"
 	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 07 - Impossibly Bossy.wav"
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 08 - Nothing is Hope.wav"
-	cp ../placeholder.wav ../build/iso
+	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 09 - Lacked Even a Daisy.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata
 	mv */*.s */*.ovl */*.sym ../build

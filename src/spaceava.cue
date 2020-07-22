@@ -31,6 +31,11 @@ FILE "Space Ava 201 - 08 - Nothing is Hope.wav" WAVE
   TRACK 08 AUDIO
     INDEX 01 00:00:00
 
-FILE placeholder.wav WAVE
+FILE "Space Ava 201 - 09 - Lacked Even a Daisy.wav" WAVE
   TRACK 09 AUDIO
+    INDEX 01 00:00:00
+
+FILE "Space Ava 201 - Track 2.iso" BINARY
+  TRACK 10 MODE1/2048
+    PREGAP 00:03:00
     INDEX 01 00:00:00

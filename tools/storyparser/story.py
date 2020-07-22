@@ -31,13 +31,16 @@ BACKGROUNDS = {
     "TRAINING_HALL": 2,
     "VOID": 3,
     "STARSHIP_FEYNMAN": 4,
-    "STARSHIP_REDALERT": 5
+    "STARSHIP_REDALERT": 5,
+    "STARSHIP_BETELGEUSE": 6,
+    "STARSHIP_BETELGEUSE_ALERT": 7
 }
 
 TRACKS = {
     "Ballad of St. Janet": 0,
     "Evan S. Sense": 1,
     "Chime 2020": 2,
+    "Lacked Even a Daisy": 3
 }
 
 SCREEN_WIDTH = 36

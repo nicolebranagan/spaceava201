@@ -766,7 +766,7 @@
     {
       "command": "SHOW_SPRITE",
       "sprite": "NELEHU",
-      "face":  0
+      "face": 0
     },
     {
       "command": "SHOW_SPRITE",
@@ -1012,7 +1012,7 @@
       "command": "SHOW_SPRITE",
       "sprite": "CINDY",
       "slot": 2,
-      "face": 2, 
+      "face": 2,
       "x": 14
     },
     {
@@ -1103,7 +1103,7 @@
   [
     {
       "command": "SHOW_FRAME",
-      "frame": 2
+      "frame": 1
     },
     {
       "command": "SHOW_BACKGROUND",
@@ -1117,7 +1117,7 @@
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "slot": 0,
-      "x": 10,
+      "x": 8,
       "face": 4
     },
     {
@@ -1126,8 +1126,185 @@
       "chirp": 66
     },
     {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "AVA: We made it! The quantum field is officially dissipated!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "slot": 1,
+      "x": 13,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "slot": 2,
+      "x": 4,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Great work, Ava! Now we're on our way to Earth!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "slot": 2,
+      "x": 4,
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: About that. I was speaking with the ship, and"
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_BETELGEUSE"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Quantum detected ahead.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Again?!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: They're in the Betelgeuse system. We should be able to avoid that."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: After Betelgeuse went supernova, we put a lot of effort to put that star back together. It was probably one of the great achievements of our civilization."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Lieutenant Bob would've said it better than me, however, I must point out that-"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I know you all know that part! But what you probably don't know is that we don't know why we did it. There's no civilization that we know of. The star's just been left alone since then."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "But someone might be out there in the system. We can't just leave them alone to deal with Quantum! Ensign! Open a communication channel."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Ah, yes, I didn't mean to say we'd abandon anyone... of course!"
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "*beep*",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_BETELGEUSE_ALERT"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Lacked Even a Daisy"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: This is Betelgeuse. We have no need of your assistance. Everything is under control. Make no attempts to get closer. We will stop you.",
+      "chirp": 210
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Looks like everything's under control!"
     }
   ]
 ]

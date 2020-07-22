@@ -24,6 +24,8 @@
 #incbin(voidbat, "bats/void-bg.bin")
 #incbin(starshipbat, "bats/starship-bg.bin")
 #incbin(redalertbat, "bats/redalert-bg.bin")
+#incbin(betelshipbat, "bats/betelship.bin")
+#incbin(betalertbat, "bats/betalert-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x1800
@@ -39,7 +41,8 @@ char has_next_command;
 const char TRACK_MAPPING[] = {
     TRACK_BALLAD,
     TRACK_EVANSSENSE,
-    TRACK_CHIME_2020};
+    TRACK_CHIME_2020,
+    TRACK_LACKED_EVEN_DAISY};
 
 initialize()
 {
@@ -203,6 +206,23 @@ draw_background(char index)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, redalertbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 6:
+        load_palette(1, starshippal, 1);
+        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, betelshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 7:
+        load_palette(1, starshippal, 1);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, betalertbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         break;
     }
