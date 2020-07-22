@@ -1275,6 +1275,10 @@
       "chirp": 66
     },
     {
+      "command": "LOAD_SFX",
+      "sfx": "Kaboom"
+    },
+    {
       "command": "SHOW_BACKGROUND",
       "background": "STARSHIP_BETELGEUSE_ALERT"
     },
@@ -1305,6 +1309,94 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Looks like everything's under control!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: That was also fine. This is under control. We're quite serious.",
+      "chirp": 210
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: And also not bluffing. Say that part!",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "*beep*",
+      "chirp": 66
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_BETELGEUSE"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm not sure about this..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: What can we really do? If they don't want our help..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: I fail to understand why an organization called Quantum would want to occupy a star. Stars are governed by gravity, which is not compatible with quantum physics."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Unless they're trying to figure out a grand unified theorem..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: But I wanted to be the one to do that! Ava, hope you brought sunscreen, we're sending you in!"
     }
   ]
 ]

@@ -14,7 +14,9 @@ COMMANDS = {
     "PLAY_MUSIC": 4,
     "STOP_MUSIC": 5,
     "SHOW_FRAME": 6,
-    "DELETE_SPRITE": 7
+    "DELETE_SPRITE": 7,
+    "LOAD_SFX": 8,
+    "PLAY_LOADED_SFX": 9
 }
 
 SPRITES = {
@@ -41,6 +43,10 @@ TRACKS = {
     "Evan S. Sense": 1,
     "Chime 2020": 2,
     "Lacked Even a Daisy": 3
+}
+
+SFXES = {
+    "Kaboom": 0
 }
 
 SCREEN_WIDTH = 36
@@ -140,6 +146,16 @@ def parse_single_script(script):
             output = output + bytes([COMMANDS["SHOW_FRAME"], command["frame"]])
         elif (command["command"] == "DELETE_SPRITE"):
             output = output + bytes([COMMANDS["DELETE_SPRITE"], command["slot"]])
+        elif (command["command"] == "LOAD_SFX"):
+            output = (
+                output + bytes(
+                    [COMMANDS["LOAD_SFX"],
+                    SFXES[command["sfx"]]]
+                )
+            )
+        elif (command["command"] == "PLAY_LOADED_SFX"):
+            output = output + bytes([COMMANDS["PLAY_LOADED_SFX"]])
+
     return bytes(cast) + bytes([255]) + output + bytes([255])
 
 if (len(sys.argv) < 3):

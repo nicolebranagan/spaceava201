@@ -3,6 +3,7 @@
 */
 
 #include <huc.h>
+#include "./adpcm/adpcm.h"
 #include "./images/images.h"
 #include "cd.h"
 #include "./story/chirp.c"
@@ -48,6 +49,7 @@ initialize()
 {
     cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
     build_cast();
+    ad_reset();
 
     disp_off();
     cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
@@ -476,6 +478,18 @@ delete_person(char slot)
     satb_update();
 }
 
+int sfx_size;
+load_sfx(char sfx)
+{
+    switch (sfx)
+    {
+    case 0:
+        ad_trans(ADPCM_OVERLAY, KABOOM_SECTOR_OFFSET, KABOOM_SECTOR_COUNT, 0);
+        sfx_size = KABOOM_SIZE;
+        break;
+    }
+}
+
 draw_block(char more)
 {
     int parsed[1], vaddr;
@@ -491,6 +505,8 @@ draw_block(char more)
 #define CMD_STOP_MUSIC 5
 #define CMD_SHOW_FRAME 6
 #define CMD_DELETE_SPRITE 7
+#define CMD_LOAD_SFX 8
+#define CMD_PLAY_LOADED_SFX 9
 
 perform_command()
 {
@@ -539,6 +555,17 @@ loop:
     case CMD_DELETE_SPRITE:
         delete_person(script[pointer_to_data + 1]);
         pointer_to_data += 2;
+        goto loop;
+        break;
+    case CMD_LOAD_SFX:
+        load_sfx(script[pointer_to_data + 1]);
+        pointer_to_data += 2;
+        goto loop;
+        break;
+    case CMD_PLAY_LOADED_SFX:
+        ad_stop();
+        ad_play(0, sfx_size, 15, 0);
+        pointer_to_data += 1;
         goto loop;
         break;
     }

@@ -23,28 +23,33 @@
 #define EUREKA_SECTOR_COUNT 7 
 #define EUREKA_SIZE 13206 
 
+// ./adpcm/kaboom.vox
+#define KABOOM_SECTOR_OFFSET 19 
+#define KABOOM_SECTOR_COUNT 15 
+#define KABOOM_SIZE 29781 
+
 // ./adpcm/miniwilhelm.vox
-#define MINIWILHELM_SECTOR_OFFSET 19 
+#define MINIWILHELM_SECTOR_OFFSET 34 
 #define MINIWILHELM_SECTOR_COUNT 3 
 #define MINIWILHELM_SIZE 4508 
 
 // ./adpcm/photon.vox
-#define PHOTON_SECTOR_OFFSET 22 
+#define PHOTON_SECTOR_OFFSET 37 
 #define PHOTON_SECTOR_COUNT 2 
 #define PHOTON_SIZE 3905 
 
 // ./adpcm/pickup.vox
-#define PICKUP_SECTOR_OFFSET 24 
+#define PICKUP_SECTOR_OFFSET 39 
 #define PICKUP_SECTOR_COUNT 2 
 #define PICKUP_SIZE 2400 
 
 // ./adpcm/whistle.vox
-#define WHISTLE_SECTOR_OFFSET 26 
+#define WHISTLE_SECTOR_OFFSET 41 
 #define WHISTLE_SECTOR_COUNT 5 
 #define WHISTLE_SIZE 9073 
 
 // ./adpcm/wrong.vox
-#define WRONG_SECTOR_OFFSET 31 
+#define WRONG_SECTOR_OFFSET 46 
 #define WRONG_SECTOR_COUNT 2 
 #define WRONG_SIZE 3200 
 
