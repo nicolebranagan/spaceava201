@@ -26,3 +26,19 @@ def getStarbase():
     tiles2x.paste(starbase2x, (0, 0))
     tiles2x.paste(starrot2x, (starbase2x.width, 0))
     return (tiles2x, starbasetileset + starrottileset, ImageTk.PhotoImage(tiles2x))
+
+def getBetelgeuse():
+    (betel2x, beteltileset) = getTileset("../../images/tiles/betelland.terra")
+    (betelrot2x, betelrottileset) = getTileset("../../images/tiles/betelrot.terra")
+
+    tiles2x = Image.new("RGB",(
+        betel2x.width + betelrot2x.width, 
+        betel2x.height, 
+    ))
+    tiles2x.paste(betel2x, (0, 0))
+    tiles2x.paste(betelrot2x, (betel2x.width, 0))
+    return (tiles2x, beteltileset + betelrottileset, ImageTk.PhotoImage(tiles2x))
+
+
+def getTilesets():
+    return [getStarbase(), getBetelgeuse()]

@@ -4,8 +4,9 @@ from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
 from enemybox import EnemyBox
 from objectbox import ObjectBox
-from tileset import getStarbase
+from tileset import getTilesets
 from musicselect import MusicSelect
+from tileselect import TileSelect
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -17,12 +18,11 @@ class Application(tk.Frame):
         self.savedx = 0
         self.savedy = 0
 
-        tiles2x, tileset, tilesTk = getStarbase()
+        tiles2x, tileset, tilesTk = tilesets[0]
         self.tiles2x = tiles2x
-        self.tileset = tileset
         self.tilesTk = tilesTk
 
-        self.room = Room(self.tileset)
+        self.room = Room()
         self.rooms = [self.room]
 
         self.createWidgets()
@@ -98,7 +98,7 @@ class Application(tk.Frame):
 
         def addroom():
             newidx = len(self.rooms)
-            self.rooms.append(Room(self.tileset))
+            self.rooms.append(Room())
             self.room = self.rooms[newidx]
             if (newidx == 0 or len(self.rooms) == 1):
                 self.previousroom.config(
@@ -149,9 +149,26 @@ class Application(tk.Frame):
         self.musicselect = MusicSelect(roomcontrols, 0, onchangemusic)
         self.musicselect.grid(row=3, column=0, columnspan=2)
 
+        self.tileselect = TileSelect(roomcontrols, 0, self.changetileset)
+        self.tileselect.grid(row=4, column=0, columnspan=2)
+
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
+
+    def changetileset(self, index, redraw=True):
+        tiles2x, tileset, tilesTk = tilesets[index]
+        self.tiles2x = tiles2x
+        self.tilesTk = tilesTk
+
+        self.room.graphics = index
+        self.tilecanvas.config(
+            width=self.tiles2x.width, height=self.tiles2x.height
+        )
+        self.tilecanvasimg = self.tilecanvas.create_image(
+                0,0,anchor=tk.NW,image=self.tilesTk)
+        if redraw:
+            self.drawroom()
 
     def drawroom(self):
         self.roomimg = self.room.draw()
@@ -159,6 +176,7 @@ class Application(tk.Frame):
         self.viewcanvas.itemconfig(self.viewcanvasimage,
                                    image=self.roomimgTk)
         self.musicselect.setValue(self.room.music)
+        self.changetileset(self.room.graphics, False)
 
     def tileclick(self, event):
         x = math.floor(self.tilecanvas.canvasx(event.x) / 32)
@@ -274,6 +292,7 @@ class Application(tk.Frame):
 
     def loadroom_from_binary(self, data):
         tiles = list(data[0:2048])
+        graphics = data[2048]
         music = data[2049]
         startx = data[2050]
         starty = data[2051]
@@ -308,12 +327,13 @@ class Application(tk.Frame):
             _type = data[offset]
             
             objects.append(Object(x, y, _type))
-        return Room(self.tileset, music, startx, starty, tiles, enemies, objects)
+        
+        return Room(graphics, music, startx, starty, tiles, enemies, objects)
 
 class Room:
     def __init__(
         self, 
-        tileset,
+        graphics = 0,
         music = 0,
         startx = 0, 
         starty = 0, 
@@ -323,7 +343,6 @@ class Room:
     ):
         self.width = 64
         self.height = 32
-        self.tileset = tileset
         if (tiles is None):
             self.tiles = [0 for x in range(0,self.width*self.height)]
         else:
@@ -332,6 +351,7 @@ class Room:
             self.objects = []
         else:
             self.objects = objects
+        self.graphics = graphics
         self.music = music
         self.startx = startx
         self.starty = starty
@@ -355,7 +375,7 @@ class Room:
         i = 0
         for y in range(0, self.height):
             for x in range(0, self.width):
-                image.paste(self.tileset[self.tiles[i]],(x*16, y*16))
+                image.paste(tilesets[self.graphics][1][self.tiles[i]],(x*16, y*16))
                 i = i+1
         draw = ImageDraw.Draw(image)
         draw.text((self.startx*16 + 4, self.starty*16 + 4), "S", (255, 0, 0))
@@ -372,15 +392,9 @@ class Room:
         enemies = b''
         for enem in self.enemies:
             enemies = enemies + enem.dump()
-        data = bytes(self.tiles) + bytes([0, self.music, self.startx, self.starty]) + enemies + bytes([255]) + objects  
+        data = bytes(self.tiles) + bytes([self.graphics, self.music, self.startx, self.starty]) + enemies + bytes([255]) + objects  
         # Ensure all data is sector-aligned
         return data + bytes([255 for _ in range(0, 4096 - len(data))])
-
-    @staticmethod
-    def load(tiles, tileset):
-        self = Room(tileset)
-        self.tiles = tiles
-        return self
 
 class Object:
     def __init__(self, x, y, type):
@@ -404,6 +418,7 @@ class Enemy:
         return bytes([self.x, self.y, self.type, self.facing, self.delx, self.dely])
 
 root = tk.Tk()
+tilesets = getTilesets()
 app = Application(master=root)
 app.mainloop()
 
