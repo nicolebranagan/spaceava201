@@ -10,8 +10,11 @@
 #include "classic/object.c"
 
 #incbin(avapal, "palettes/ava.pal");
-#incbin(tilepal1, "palettes/starbase.pal");
-#incbin(tilepal2, "palettes/starrot.pal");
+#incbin(starbasepal1, "palettes/starbase.pal");
+#incbin(starbasepal2, "palettes/starrot.pal");
+
+#incbin(betelpal1, "palettes/betelland.pal");
+#incbin(betelpal2, "palettes/betelrot.pal");
 
 const char palette_ref[] = {
     0x10,
@@ -50,9 +53,13 @@ const char palette_ref[] = {
 char tiles[500]; // Placeholder for memory
 
 // TODO: Make this a bitfield if you need to
-const char TILE_SOLIDITY[] = {
+const char TILE_SOLIDITY_STARBASE[] = {
     0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+const char TILE_SOLIDITY_BETELGEUSE[] = {
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
@@ -90,30 +97,59 @@ load_level_data(char level)
     int vram_offset;
     char tiledata[STARBASE_SIZE + STARROT_SIZE];
 
-    cd_loaddata(
-        IMAGE_OVERLAY,
-        STARBASE_SECTOR_OFFSET,
-        tiledata,
-        STARBASE_SIZE);
-    cd_loaddata(
-        IMAGE_OVERLAY,
-        STARROT_SECTOR_OFFSET,
-        tiledata + STARROT_SIZE,
-        STARROT_SIZE);
-
-    set_tile_data(tiledata, 32, palette_ref, 32);
-    load_palette(1, tilepal1, 1);
-    load_palette(2, tilepal2, 1);
-    load_tile(0x2000);
-
-    // Level data is the first sector of the level
-    cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level, tiledata, 2048);
-    set_map_data(tiledata, 64, 32);
-
+    // Offsets, objects, are the second sector of a level
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * level) + 1, tiles, 500);
 
     vram_offset = AVA_VRAM + (AVA_SIZE / 2);
     populate_enemies_vram(vram_offset, tiles + 3);
+
+    load_map_graphics(tiles[0]);
+
+    // Level data is the first sector of the level
+    cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level, tiledata, 2048);
+    set_map_data(tiledata, 64, 32);
+}
+
+load_map_graphics(char gfx_type)
+{
+    int vram_offset;
+    char tiledata[0];
+
+    set_tile_data(tiledata, 32, palette_ref, 32);
+    load_tile(0x2000);
+    switch (gfx_type)
+    {
+    case 0:
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            STARBASE_SECTOR_OFFSET,
+            0x2000,
+            STARBASE_SIZE);
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            STARROT_SECTOR_OFFSET,
+            0x2000 + (STARBASE_SIZE / 2),
+            STARROT_SIZE);
+
+        load_palette(1, starbasepal1, 1);
+        load_palette(2, starbasepal2, 1);
+        break;
+    case 1:
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            BETELLAND_SECTOR_OFFSET,
+            0x2000,
+            BETELLAND_SIZE);
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            BETELROT_SECTOR_OFFSET,
+            0x2000 + (BETELLAND_SIZE / 2),
+            BETELROT_SIZE);
+
+        load_palette(1, betelpal1, 1);
+        load_palette(2, betelpal2, 1);
+        break;
+    }
 }
 
 init_ava_sprite()
@@ -135,7 +171,15 @@ wait_for_sync(char cycles)
     for (i = 0; i < cycles; i++)
     {
         draw_objects();
-        load_palette(2, tilepal2 + (pal_rotate_step << 5), 1);
+        switch (tiles[0])
+        {
+        case 0:
+            load_palette(2, starbasepal2 + (pal_rotate_step << 5), 1);
+            break;
+        case 1:
+            load_palette(2, betelpal2 + (pal_rotate_step << 5), 1);
+            break;
+        }
         vsync();
         timer++;
         if (!(timer % 16))
@@ -397,10 +441,20 @@ load_room()
 
 char is_solid(char x, char y)
 {
-    char tile, tilesolid, i;
+    char tile, i, solidity;
     tile = map_get_tile(x, y);
 
-    if (TILE_SOLIDITY[tile] == 0)
+    switch (tiles[0])
+    {
+    case 0:
+        solidity = TILE_SOLIDITY_STARBASE[tile];
+        break;
+    case 1:
+        solidity = TILE_SOLIDITY_BETELGEUSE[tile];
+        break;
+    }
+
+    if (solidity == 0)
     {
         return 1;
     }
