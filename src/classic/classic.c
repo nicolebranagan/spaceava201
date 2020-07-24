@@ -439,7 +439,7 @@ load_room()
     disp_on();
 }
 
-char is_solid(char x, char y)
+char is_solid(char x, char y, char is_ava)
 {
     char tile, i, solidity;
     tile = map_get_tile(x, y);
@@ -463,7 +463,11 @@ char is_solid(char x, char y)
     {
         if (objects[i].type == OBJ_BOX && x == objects[i].xpos && y == objects[i].ypos)
         {
-            return 1;
+            if (!is_ava)
+            {
+                return 1;
+            }
+            return move_box(i);
         }
     }
 
@@ -485,25 +489,25 @@ main()
         satb_update();
 
         joyt = joytrg(0);
-        if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1))
+        if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1, 1))
         {
             ava_facing = UP;
             move_ava(1, 0, 1);
             update_enemies();
         }
-        if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1))
+        if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1, 1))
         {
             ava_facing = DOWN;
             move_ava(0, 0, 1);
             update_enemies();
         }
-        if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y))
+        if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y, 1))
         {
             ava_facing = LEFT;
             move_ava(1, 1, 0);
             update_enemies();
         }
-        if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y))
+        if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y, 1))
         {
             ava_facing = RIGHT;
             move_ava(0, 1, 0);

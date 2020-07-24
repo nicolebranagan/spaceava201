@@ -387,7 +387,7 @@ update_ball(char index)
     switch (enemies[index].facing)
     {
     case UP:
-        if (!is_solid(enemies[index].x, enemies[index].y - 1))
+        if (!is_solid(enemies[index].x, enemies[index].y - 1, 0))
         {
             enemies[index].dely = -1;
         }
@@ -397,7 +397,7 @@ update_ball(char index)
         }
         break;
     case DOWN:
-        if (!is_solid(enemies[index].x, enemies[index].y + 1))
+        if (!is_solid(enemies[index].x, enemies[index].y + 1, 0))
         {
             enemies[index].dely = 1;
         }
@@ -407,7 +407,7 @@ update_ball(char index)
         }
         break;
     case LEFT:
-        if (!is_solid(enemies[index].x - 1, enemies[index].y))
+        if (!is_solid(enemies[index].x - 1, enemies[index].y, 0))
         {
             enemies[index].delx = -1;
         }
@@ -417,7 +417,7 @@ update_ball(char index)
         }
         break;
     case RIGHT:
-        if (!is_solid(enemies[index].x + 1, enemies[index].y))
+        if (!is_solid(enemies[index].x + 1, enemies[index].y, 0))
         {
             enemies[index].delx = 1;
         }
@@ -446,7 +446,7 @@ update_eyewalk(char index)
     switch (enemies[index].facing)
     {
     case UP:
-        if (!is_solid(enemies[index].x, enemies[index].y - 1))
+        if (!is_solid(enemies[index].x, enemies[index].y - 1, 0))
         {
             enemies[index].dely = -1;
         }
@@ -456,7 +456,7 @@ update_eyewalk(char index)
         }
         break;
     case DOWN:
-        if (!is_solid(enemies[index].x, enemies[index].y + 1))
+        if (!is_solid(enemies[index].x, enemies[index].y + 1, 0))
         {
             enemies[index].dely = 1;
         }
@@ -466,7 +466,7 @@ update_eyewalk(char index)
         }
         break;
     case LEFT:
-        if (!is_solid(enemies[index].x - 1, enemies[index].y))
+        if (!is_solid(enemies[index].x - 1, enemies[index].y, 0))
         {
             enemies[index].delx = -1;
         }
@@ -476,7 +476,7 @@ update_eyewalk(char index)
         }
         break;
     case RIGHT:
-        if (!is_solid(enemies[index].x + 1, enemies[index].y))
+        if (!is_solid(enemies[index].x + 1, enemies[index].y, 0))
         {
             enemies[index].delx = 1;
         }
@@ -585,25 +585,25 @@ update_boss1(char index)
         switch (enemies[index].facing)
         {
         case UP:
-            if (!is_solid(enemies[index].x, enemies[index].y - 1))
+            if (!is_solid(enemies[index].x, enemies[index].y - 1,  0))
             {
                 enemies[index].dely = -1;
             }
             break;
         case DOWN:
-            if (!is_solid(enemies[index].x, enemies[index].y + 1))
+            if (!is_solid(enemies[index].x, enemies[index].y + 1, 0))
             {
                 enemies[index].dely = 1;
             }
             break;
         case LEFT:
-            if (!is_solid(enemies[index].x - 1, enemies[index].y))
+            if (!is_solid(enemies[index].x - 1, enemies[index].y, 0))
             {
                 enemies[index].delx = -1;
             }
             break;
         case RIGHT:
-            if (!is_solid(enemies[index].x + 1, enemies[index].y))
+            if (!is_solid(enemies[index].x + 1, enemies[index].y, 0))
             {
                 enemies[index].delx = 1;
             }

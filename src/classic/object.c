@@ -18,6 +18,7 @@ char photon_count;
 struct object
 {
     char type, active, xpos, ypos;
+    signed char xdel, ydel;
     int xdraw, ydraw;
 };
 
@@ -27,6 +28,7 @@ init_object()
 {
     object_count = 0;
     obtained_object_count = 0;
+    photon_count = 0;
 }
 
 create_object(char type, char x, char y)
@@ -67,6 +69,34 @@ draw_object()
         return;
     }
 
+    if (objects[i].xdel != 0)
+    {
+        if (objects[i].xdel > 0)
+        {
+            objects[i].xdraw++;
+            objects[i].xdel--;
+        }
+        else
+        {
+            objects[i].xdraw--;
+            objects[i].xdel++;
+        }
+    }
+
+    if (objects[i].ydel != 0)
+    {
+        if (objects[i].ydel > 0)
+        {
+            objects[i].ydraw++;
+            objects[i].ydel--;
+        }
+        else
+        {
+            objects[i].ydraw--;
+            objects[i].ydel++;
+        }
+    }
+
     dx = (objects[i].xdraw) - sx;
     dy = (objects[i].ydraw) - sy;
 
@@ -78,7 +108,8 @@ draw_object()
 
     row = objects[i].type + 2;
     frame = (((int)row) << 4);
-    if (objects[i].type < OBJ_BOX) {
+    if (objects[i].type < OBJ_BOX)
+    {
         frame += timer & 15;
     }
 
@@ -127,4 +158,30 @@ char update_objects()
     }
 
     return obtained_object_count == photon_count;
+}
+
+char move_box(char index)
+{
+    char dx, dy, new_x, new_y;
+    dx = objects[index].xpos - ava_x;
+    dy = objects[index].ypos - ava_y;
+    new_x = objects[index].xpos + dx;
+    new_y = objects[index].ypos + dy;
+
+    if (is_solid(new_x, new_y, 0)) {
+        return 1;
+    }
+
+    for (i = 0; i < enemy_count; i++) {
+        if (enemies[i].active && enemies[i].x == new_y && enemies[i].y == new_y) {
+            return 1;
+        }
+    }
+
+    objects[index].xpos = new_x;
+    objects[index].ypos = new_y;
+    objects[index].xdel = dx * 16;
+    objects[index].ydel = dy * 16;
+
+    return 0;
 }
