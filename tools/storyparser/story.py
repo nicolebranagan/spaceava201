@@ -38,6 +38,23 @@ BACKGROUNDS = {
     "STARSHIP_BETELGEUSE_ALERT": 7
 }
 
+BACKGROUND_GROUPING = {
+    "STARBASE": 0,
+    "VOID/STARSHIP": 1,
+    "SUNSCAPE": 2
+}
+
+BACKGROUNDS_TO_BACKGROUND_GROUPING = {
+    "STARBASE": BACKGROUND_GROUPING["STARBASE"],
+    "STARBASE_EXTERIOR": BACKGROUND_GROUPING["STARBASE"],
+    "TRAINING_HALL": BACKGROUND_GROUPING["STARBASE"],
+    "VOID": BACKGROUND_GROUPING["VOID/STARSHIP"],
+    "STARSHIP_FEYNMAN": BACKGROUND_GROUPING["VOID/STARSHIP"],
+    "STARSHIP_REDALERT": BACKGROUND_GROUPING["VOID/STARSHIP"],
+    "STARSHIP_BETELGEUSE": BACKGROUND_GROUPING["VOID/STARSHIP"],
+    "STARSHIP_BETELGEUSE_ALERT": BACKGROUND_GROUPING["VOID/STARSHIP"]
+}
+
 TRACKS = {
     "Ballad of St. Janet": 0,
     "Evan S. Sense": 1,
@@ -70,6 +87,8 @@ def parse_text(text):
 def parse_single_script(script):
     output = b''
     cast = []
+
+    current_bg_grouping = -1
 
     last_slot = 0
     last_sprite = [0 for _ in range(0, 10)]
@@ -127,12 +146,16 @@ def parse_single_script(script):
                 bytes([0])
             )
         elif (command["command"] == "SHOW_BACKGROUND"):
+            newbg = command["background"]
+            newgroup = BACKGROUNDS_TO_BACKGROUND_GROUPING[newbg]
             output = (
                 output + bytes(
                     [COMMANDS["SHOW_BACKGROUND"],
-                    BACKGROUNDS[command["background"]]]
+                    BACKGROUNDS[newbg],
+                    0 if newgroup == current_bg_grouping else 1]
                 )
             )
+            current_bg_grouping = newgroup
         elif (command["command"] == "PLAY_MUSIC"):
             output = (
                 output + bytes(

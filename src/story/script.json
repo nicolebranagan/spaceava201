@@ -1110,6 +1110,10 @@
       "background": "STARSHIP_FEYNMAN"
     },
     {
+      "command": "LOAD_SFX",
+      "sfx": "Kaboom"
+    },
+    {
       "command": "PLAY_MUSIC",
       "track": "Ballad of St. Janet"
     },
@@ -1273,10 +1277,6 @@
       "command": "SHOW_TEXT",
       "text": "*beep*",
       "chirp": 66
-    },
-    {
-      "command": "LOAD_SFX",
-      "sfx": "Kaboom"
     },
     {
       "command": "SHOW_BACKGROUND",

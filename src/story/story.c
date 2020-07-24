@@ -143,7 +143,7 @@ build_cast()
 #define XTOP 5
 #define YLEFT 3
 
-draw_background(char index)
+draw_background(char index, char load_new_gfx)
 {
     char y, background;
     int addr;
@@ -153,7 +153,8 @@ draw_background(char index)
     case 0:
     {
         load_palette(1, starbasepal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -164,7 +165,8 @@ draw_background(char index)
     case 1:
     {
         load_palette(1, starbasepal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -175,7 +177,8 @@ draw_background(char index)
     case 2:
     {
         load_palette(1, starbasepal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -185,7 +188,8 @@ draw_background(char index)
     }
     case 3:
         load_palette(1, starshippal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -194,7 +198,8 @@ draw_background(char index)
         break;
     case 4:
         load_palette(1, starshippal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -203,7 +208,8 @@ draw_background(char index)
         break;
     case 5:
         load_palette(1, starshippal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -212,7 +218,8 @@ draw_background(char index)
         break;
     case 6:
         load_palette(1, starshippal, 1);
-        cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -221,6 +228,8 @@ draw_background(char index)
         break;
     case 7:
         load_palette(1, starshippal, 1);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -532,8 +541,8 @@ loop:
         pointer_to_data += (text_len + 2);
         break;
     case CMD_SHOW_BACKGROUND:
-        draw_background(script[pointer_to_data + 1]);
-        pointer_to_data += 2;
+        draw_background(script[pointer_to_data + 1], script[pointer_to_data + 2]);
+        pointer_to_data += 3;
         goto loop;
         break;
     case CMD_PLAY_MUSIC:
