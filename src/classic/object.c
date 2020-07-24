@@ -9,9 +9,11 @@
 
 char object_count;
 char obtained_object_count;
+char photon_count;
 
 #define OBJ_PHOTON 0
 #define OBJ_ANTIPHOTON 1
+#define OBJ_BOX 2
 
 struct object
 {
@@ -32,6 +34,10 @@ create_object(char type, char x, char y)
     char new_index;
     new_index = object_count;
     object_count++;
+    if (type < OBJ_BOX)
+    {
+        photon_count++;
+    }
 
     objects[new_index].type = type;
     objects[new_index].xdraw = x * 16;
@@ -70,8 +76,11 @@ draw_object()
         return;
     }
 
-    row = objects[i].type == OBJ_PHOTON ? 2 : 3;
-    frame = (((int)row) << 4) + (timer & 15);
+    row = objects[i].type + 2;
+    frame = (((int)row) << 4);
+    if (objects[i].type < OBJ_BOX) {
+        frame += timer & 15;
+    }
 
     spr_x(dx);
     spr_y(dy);
@@ -102,7 +111,7 @@ char update_objects()
 
     for (i = 0; i < object_count; i++)
     {
-        if (objects[i].active && ava_x == objects[i].xpos && ava_y == objects[i].ypos)
+        if (objects[i].type < OBJ_BOX && objects[i].active && ava_x == objects[i].xpos && ava_y == objects[i].ypos)
         {
             objects[i].active = 0;
             obtained_object_count++;
@@ -117,5 +126,5 @@ char update_objects()
         }
     }
 
-    return obtained_object_count == object_count;
+    return obtained_object_count == photon_count;
 }

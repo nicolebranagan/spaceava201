@@ -459,6 +459,14 @@ char is_solid(char x, char y)
         return 1;
     }
 
+    for (i = 0; i < object_count; i++)
+    {
+        if (objects[i].type == OBJ_BOX && x == objects[i].xpos && y == objects[i].ypos)
+        {
+            return 1;
+        }
+    }
+
     return 0;
 }
 

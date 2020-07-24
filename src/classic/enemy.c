@@ -99,7 +99,6 @@ int populate_enemy_vram(int vram_offset, char type)
             cd_loadvram(IMAGE_OVERLAY, GOONBOSS_SECTOR_OFFSET, vram_offset, GOONBOSS_SIZE);
             enemy_vram[TYPE_BOSS1] = vram_offset;
             vram_offset += GOONBOSS_SIZE / 2;
-
         }
         break;
     }
@@ -187,7 +186,7 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
             break;
         }
 
-        if (moving && (timer >> 3))
+        if (moving && timer >> 3)
         {
             frame += 2;
         }
@@ -317,7 +316,7 @@ draw_enemies(char time_offset)
             i,
             ex + edx,
             ey + edy,
-            edx > 0 || edy > 0);
+            edx != 0 || edy != 0);
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
@@ -500,7 +499,8 @@ update_boss1(char index)
 {
     char i, delx, dely, flipx, flipy, ideal_facing;
 
-    if (enemies[index].facing == DIR_FRAME_OVERRIDE && enemies[index].timer >= 5) {
+    if (enemies[index].facing == DIR_FRAME_OVERRIDE && enemies[index].timer >= 5)
+    {
         enemies[index].active = 0;
         create_object(1, 26, 13);
         create_object(0, 28, 13);
@@ -508,7 +508,6 @@ update_boss1(char index)
         play_sound(ENEMY_MINIWILHELM);
         return;
     }
-
 
     for (i = 0; i < enemy_count; i++)
     {
@@ -575,7 +574,8 @@ update_boss1(char index)
         }
     }
 
-    if (enemies[index].facing == DIR_FRAME_OVERRIDE) {
+    if (enemies[index].facing == DIR_FRAME_OVERRIDE)
+    {
         enemies[index].facing = ideal_facing;
         enemies[index].frame = 0;
     }
@@ -629,7 +629,8 @@ check_boss1_hurt(char index)
 {
     char i;
 
-    if (!enemies[index].active) {
+    if (!enemies[index].active)
+    {
         return;
     }
 
