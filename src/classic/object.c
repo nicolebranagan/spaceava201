@@ -120,13 +120,6 @@ draw_object()
 
 char draw_objects()
 {
-    char offset;
-
-    if (!object_count)
-    {
-        return;
-    }
-
     for (i = 0; i < object_count; i++)
     {
         draw_object();
@@ -153,7 +146,6 @@ char update_objects()
             ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
             spr_set(OBJECT_SPRITE_START + i);
             spr_hide();
-            satb_update();
         }
     }
 
@@ -173,7 +165,7 @@ char move_box(char index)
     }
 
     for (i = 0; i < enemy_count; i++) {
-        if (enemies[i].active && enemies[i].x == new_y && enemies[i].y == new_y) {
+        if (enemies[i].active && enemies[i].x == new_x && enemies[i].y == new_y) {
             return 1;
         }
     }

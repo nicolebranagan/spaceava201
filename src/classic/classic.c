@@ -81,7 +81,6 @@ initialize()
 
     disp_off();
     reset_satb();
-    satb_update();
     set_xres(256);
     set_screen_size(SCR_SIZE_64x32);
     cls();
@@ -146,6 +145,7 @@ load_map_graphics(char gfx_type)
             0x2000 + (BETELLAND_SIZE / 2),
             BETELROT_SIZE);
 
+        load_palette(16, avapal + (1 << 5), 1);
         load_palette(1, betelpal1, 1);
         load_palette(2, betelpal2, 1);
         break;
@@ -180,8 +180,9 @@ wait_for_sync(char cycles)
             load_palette(2, betelpal2 + (pal_rotate_step << 5), 1);
             break;
         }
-        vsync();
+        satb_update();
         timer++;
+        vsync();
         if (!(timer % 16))
             pal_rotate_step = (pal_rotate_step + 1) % 4;
     }
@@ -294,11 +295,9 @@ move_ava(char negative, char delx, char dely)
         }
 
         draw_ava(1, x, y);
-        satb_update();
         wait_for_sync(1);
 
         draw_ava(1, x, y);
-        satb_update();
         wait_for_sync(1);
     }
 
@@ -314,7 +313,6 @@ move_ava(char negative, char delx, char dely)
     }
 
     draw_ava(0, ava_x * 16, ava_y * 16);
-    satb_update();
 }
 
 const char DEATH_FRAMES[] = {0, 0, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 10, 10};
@@ -335,7 +333,6 @@ kill_ava()
         spr_set(1);
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        satb_update();
         wait_for_sync(4);
     }
     spr_set(0);
@@ -365,14 +362,12 @@ win_ava()
         spr_set(1);
         spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        satb_update();
         wait_for_sync(4);
     }
     spr_set(0);
     spr_hide();
     spr_set(1);
     spr_hide();
-    satb_update();
     wait_for_sync(8);
 
     for (i = 0; i < 64; i++)
@@ -486,7 +481,6 @@ main()
     {
         wait_for_sync(1);
         draw_enemies(0);
-        satb_update();
 
         joyt = joytrg(0);
         if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1, 1))
