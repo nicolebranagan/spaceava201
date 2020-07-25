@@ -1398,5 +1398,39 @@
       "command": "SHOW_TEXT",
       "text": "CINDY: But I wanted to be the one to do that! Ava, hope you brought sunscreen, we're sending you in!"
     }
+  ],
+  [
+    { 
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "SUNSCAPE_1"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3,
+      "x": 5,
+      "slot": 0
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wow it's hot out here... But not too bad otherwise!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I wonder why Quantum always likes to leave those boxes lying around."
+    }
   ]
 ]

@@ -14,6 +14,7 @@
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
 
 const char STEP_ORDER[] = {
+    STORY_OVERLAY, 7,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,

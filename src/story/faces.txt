@@ -37,3 +37,14 @@ GOON:
 2. Laugh
 3. Shut up and calculate
 4. Sad
+
+BUNNY:
+0. Blank expression
+1. Angry
+2. Happy
+3. >:P
+
+BAGBUNNY:
+0. Blank expression
+1. Angry
+2. >_>
