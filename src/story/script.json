@@ -1431,6 +1431,33 @@
     {
       "command": "SHOW_TEXT",
       "text": "I wonder why Quantum always likes to leave those boxes lying around."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Lacked Even a Daisy"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "BUNNY",
+      "x": 11,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "BAGBUNNY",
+      "x": 15,
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: Didn't we tell you we could handle this ourselves?"
     }
   ]
 ]

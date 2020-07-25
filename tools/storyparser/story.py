@@ -24,7 +24,9 @@ SPRITES = {
     "CINDY": 2,
     "NELEHU": 3,
     "BOB": 4,
-    "GOON": 5
+    "GOON": 5,
+    "BUNNY": 6,
+    "BAGBUNNY": 7
 }
 
 BACKGROUNDS = {

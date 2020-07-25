@@ -15,6 +15,8 @@
 #incbin(nelehu_facepal, "palettes/nelehu_face.pal");
 #incbin(bob_facepal, "palettes/bob_face.pal");
 #incbin(goon_facepal, "palettes/goon_face.pal");
+#incbin(bunny_facepal, "palettes/bunny_face.pal");
+#incbin(bagbunny_facepal, "palettes/bagbun_face.pal");
 
 #incbin(starbasepal, "palettes/stardrop.pal");
 #incbin(starshippal, "palettes/starship.pal");
@@ -131,6 +133,22 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, GOON_FACE_SECTOR_OFFSET, vram, GOON_FACE_SIZE);
             size = GOON_FACE_SIZE;
+            break;
+
+        case 6: // Bagbunny
+            load_palette(current_palette, bunny_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, BUNNY_FACE_SECTOR_OFFSET, vram, BUNNY_FACE_SIZE);
+            size = BUNNY_FACE_SIZE;
+            break;
+
+        case 7: // Bag bunny
+            load_palette(current_palette, bagbunny_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, BAGBUN_FACE_SECTOR_OFFSET, vram, BAGBUN_FACE_SIZE);
+            size = BAGBUN_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
