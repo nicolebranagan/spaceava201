@@ -43,13 +43,18 @@
 #define PICKUP_SECTOR_COUNT 2 
 #define PICKUP_SIZE 2400 
 
+// ./adpcm/shove.vox
+#define SHOVE_SECTOR_OFFSET 41 
+#define SHOVE_SECTOR_COUNT 3 
+#define SHOVE_SIZE 4267 
+
 // ./adpcm/whistle.vox
-#define WHISTLE_SECTOR_OFFSET 41 
+#define WHISTLE_SECTOR_OFFSET 44 
 #define WHISTLE_SECTOR_COUNT 5 
 #define WHISTLE_SIZE 9073 
 
 // ./adpcm/wrong.vox
-#define WRONG_SECTOR_OFFSET 46 
+#define WRONG_SECTOR_OFFSET 49 
 #define WRONG_SECTOR_COUNT 2 
 #define WRONG_SIZE 3200 
 

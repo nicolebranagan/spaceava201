@@ -52,6 +52,7 @@ create_object(char type, char x, char y)
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(16);
     spr_pri(1);
+    spr_pattern(AVA_VRAM + ((((int)(type + 2)) << 4) * SPR_SIZE_16x16));
     spr_show();
 }
 
@@ -59,8 +60,6 @@ char i;
 int dx, dy;
 draw_object()
 {
-    char row, frame;
-
     spr_set(OBJECT_SPRITE_START + i);
 
     if (!objects[i].active)
@@ -106,16 +105,13 @@ draw_object()
         return;
     }
 
-    row = objects[i].type + 2;
-    frame = (((int)row) << 4);
     if (objects[i].type < OBJ_BOX)
     {
-        frame += timer & 15;
+        spr_pattern(AVA_VRAM + (((((int)(objects[i].type + 2)) << 4) + (timer & 15)) * SPR_SIZE_16x16));
     }
 
     spr_x(dx);
     spr_y(dy);
-    spr_pattern(AVA_VRAM + (frame * SPR_SIZE_16x16));
 }
 
 char draw_objects()
@@ -160,16 +156,20 @@ char move_box(char index)
     new_x = objects[index].xpos + dx;
     new_y = objects[index].ypos + dy;
 
-    if (is_solid(new_x, new_y, 0)) {
+    if (is_solid(new_x, new_y, 0))
+    {
         return 1;
     }
 
-    for (i = 0; i < enemy_count; i++) {
-        if (enemies[i].active && enemies[i].x == new_x && enemies[i].y == new_y) {
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (enemies[i].active && enemies[i].x == new_x && enemies[i].y == new_y)
+        {
             return 1;
         }
     }
 
+    ad_play(SHOVE_LOC, SHOVE_SIZE, 13, 0);
     objects[index].xpos = new_x;
     objects[index].ypos = new_y;
     objects[index].xdel = dx * 16;
