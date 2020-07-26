@@ -14,7 +14,6 @@
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
 
 const char STEP_ORDER[] = {
-    STORY_OVERLAY, 7,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -30,7 +29,8 @@ const char STEP_ORDER[] = {
     MIRROR_OVERLAY, 3,
     MIRROR_OVERLAY, 4,
     STORY_OVERLAY, 6,
-    CLASSIC_OVERLAY, 3};
+    CLASSIC_OVERLAY, 3,
+    STORY_OVERLAY, 7};
 
 initialize()
 {
@@ -178,7 +178,8 @@ load_saved_game()
     opt = 0;
 
     bm_read(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
-    if (data[0] == 0) {
+    if (data[0] == 0)
+    {
         has_backup_ram = 1;
         return;
     }

@@ -1416,6 +1416,10 @@
       "slot": 0
     },
     {
+      "command": "LOAD_SFX",
+      "sfx": "Kaboom"
+    },
+    {
       "command": "PLAY_MUSIC",
       "track": "Ballad of St. Janet"
     },
@@ -1445,7 +1449,7 @@
       "command": "SHOW_SPRITE",
       "slot": 1,
       "sprite": "BUNNY",
-      "x": 11,
+      "x": 13,
       "face": 1
     },
     {
@@ -1457,7 +1461,89 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "???: Didn't we tell you we could handle this ourselves?"
+      "text": "BLUE ???: Didn't we tell you we could handle this ourselves?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But there were like, explosions and stuff! Clearly you needed help! I'm just here to deal with quantum!"
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "See! Explosions!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: We're the bun-"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: What my friend here means is that it doesn't matter who we are! This star blew up once, we're not letting it blow up again! That made a hell of a mess!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm not trying to blow up the star! I'm not even sure why I'm here! I was trying to save Earth! You know, the red planet!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: Well, don't expect our help! In fact, we might just try to get in your way! Bunny--"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: Look, what my probably-not-hareish friend here means is, we're out! But you'll see us again!"
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: That probably could've gone better... I thought it was bad enough having to deal with Quantum."
     }
   ]
 ]
