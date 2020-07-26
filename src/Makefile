@@ -10,6 +10,7 @@ CLASSIC_SRC = classic/classic.c
 GOVERNOR_SRC = governor/governor.c
 STORY_SRC = story/story.c
 MIRROR_SRC = mirror/mirror.c
+TITLE_SRC = title/title.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
@@ -27,9 +28,9 @@ spaceava201: spaceava.iso
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 08 - Nothing is Hope.wav"
 	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 09 - Lacked Even a Daisy.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -45,6 +46,9 @@ story.ovl: $(STORY_SRC) images
 
 mirror.ovl: $(MIRROR_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(MIRROR_SRC) $(LIBS)
+
+title.ovl: $(TITLE_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(TITLE_SRC) $(LIBS)
 
 adpcm_ovl: adpcm/whistle.vox
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox

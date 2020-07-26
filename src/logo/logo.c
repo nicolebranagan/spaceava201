@@ -68,10 +68,7 @@ main()
 			satb_update();
 			vsync();
 
-			// Clear global state
-			current_level = 255;
-			governor_step = 255;
-			cd_execoverlay(GOVERNOR_OVERLAY);
+			cd_execoverlay(TITLE_OVERLAY);
 		}
 	}		
 }

@@ -55,5 +55,15 @@ def getSun():
     tiles2x.paste(starbase2x, (0, 0))
     return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
 
+def getTitles():
+    (starbase2x, starbasetileset) = getTileset("../../images/tiles/titles.terra")
+
+    tiles2x = Image.new("RGB",(
+        starbase2x.width,
+        starbase2x.height
+    ))
+    tiles2x.paste(starbase2x, (0, 0))
+    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
+
 def getTilesets():
-    return [getStarbase(), getMirrorSys(), getStarship(), getSun()]
+    return [getStarbase(), getMirrorSys(), getStarship(), getSun(), getTitles()]

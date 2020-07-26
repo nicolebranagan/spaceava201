@@ -11,7 +11,8 @@ TILESET_NAME = {
     "Starbase": 0,
     "Mirror System": 1,
     "Starship": 2,
-    "Sunscape": 3
+    "Sunscape": 3,
+    "Title Screen": 4
 }
 NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
 
@@ -158,13 +159,13 @@ class Application(tk.Frame):
         newtiles = [0 for _ in range(0, x * y)]
         for i in range(0, self.room.width):
             for j in range(0, self.room.height):
-                newtiles[i + (x * j)] = self.room.get(i, j)
+                if (i + (x * (j + 1))) < (x*y):
+                    newtiles[i + (x * (j + 1))] = self.room.get(i, j)
         self.room = Room(0, x, y)
         self.viewcanvas.config(
             width=self.room.width*32, height=self.room.height*32
         )
         self.room.tiles = newtiles
-        self.changetileset(0)
         self.drawroom()
 
     def save(self):

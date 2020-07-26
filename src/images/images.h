@@ -98,44 +98,54 @@
 #define LASERS_SECTOR_COUNT 2 
 #define LASERS_SIZE 4096 
 
+// ./images/logo.chr
+#define LOGO_SECTOR_OFFSET 47 
+#define LOGO_SECTOR_COUNT 2 
+#define LOGO_SIZE 4096 
+
 // ./images/mirrorsys.chr
-#define MIRRORSYS_SECTOR_OFFSET 47 
+#define MIRRORSYS_SECTOR_OFFSET 49 
 #define MIRRORSYS_SECTOR_COUNT 3 
 #define MIRRORSYS_SIZE 6144 
 
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 50 
+#define NELEHU_FACE_SECTOR_OFFSET 52 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/shade8x8.chr
-#define SHADE8X8_SECTOR_OFFSET 53 
+#define SHADE8X8_SECTOR_OFFSET 55 
 #define SHADE8X8_SECTOR_COUNT 2 
 #define SHADE8X8_SIZE 4096 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 55 
+#define STARBASE_SECTOR_OFFSET 57 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 56 
+#define STARDROP_SECTOR_OFFSET 58 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 58 
+#define STARROT_SECTOR_OFFSET 60 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 
 // ./images/starship.chr
-#define STARSHIP_SECTOR_OFFSET 59 
+#define STARSHIP_SECTOR_OFFSET 61 
 #define STARSHIP_SECTOR_COUNT 2 
 #define STARSHIP_SIZE 4096 
 
 // ./images/sunscape.chr
-#define SUNSCAPE_SECTOR_OFFSET 61 
+#define SUNSCAPE_SECTOR_OFFSET 63 
 #define SUNSCAPE_SECTOR_COUNT 1 
 #define SUNSCAPE_SIZE 2048 
+
+// ./images/titles.chr
+#define TITLES_SECTOR_OFFSET 64 
+#define TITLES_SECTOR_COUNT 5 
+#define TITLES_SIZE 10240 
 
 #endif
