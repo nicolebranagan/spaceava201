@@ -20,13 +20,14 @@ spaceava201: spaceava.iso
 	cp ../waves/track1.wav "../build/iso/Space Ava 201 - 01 - Warning.wav"
 	mv ../build/spaceava.iso "../build/iso/Space Ava 201 - Track 2.iso"
 	cp spaceava.cue "../build/iso/Space Ava 201.cue"
-	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 03 - Ballad of St. Janet.wav"
-	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 04 - Evan S. Sense.wav"
-	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 05 - Spaceful.wav"
-	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 06 - Chime 2020.wav"
-	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 07 - Impossibly Bossy.wav"
-	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 08 - Nothing is Hope.wav"
-	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 09 - Lacked Even a Daisy.wav"
+	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 03 - Even More Spaceless.wav"
+	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 04 - Ballad of St. Janet.wav"
+	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 05 - Evan S. Sense.wav"
+	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 06 - Spaceful.wav"
+	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 07 - Chime 2020.wav"
+	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 08 - Impossibly Bossy.wav"
+	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 09 - Nothing is Hope.wav"
+	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 10 - Lacked Even a Daisy.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl
 	mv */*.s */*.ovl */*.sym ../build

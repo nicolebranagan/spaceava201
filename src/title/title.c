@@ -70,6 +70,7 @@ main()
     initialize();
     draw_logo();
     satb_update();
+    cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_REPEAT);
 
     for (;;)
     {
