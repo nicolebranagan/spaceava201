@@ -15,18 +15,26 @@
 #define TITLE_VRAM 0x1000
 #define LOGO_VRAM (TITLE_VRAM + (TITLES_SIZE / 2))
 #define BUTTONS_VRAM (LOGO_VRAM + (LOGO_SIZE / 2))
+
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
+#define CONTINUE 255
+#define NEW_GAME 254
+#define LEVEL_SELECT 253
 
 char timer;
 char done;
 char selectedButton;
 char hasNoSavedData;
+char unlockedLevelSelect;
+char codePoint;
 
 initialize()
 {
     char i;
     done = 0;
     timer = 0;
+    unlockedLevelSelect = 0;
+    codePoint = 0;
 
     if (!bm_check() || !bm_exist(BACKUP_RAM_NAME))
     {
@@ -89,7 +97,7 @@ draw_logo()
 
 draw_button(char sprdex, char button_identity, char x, char y)
 {
-    char i;
+    char i, size;
     for (i = 0; i < 4; i++)
     {
         spr_set(i + sprdex);
@@ -103,9 +111,63 @@ draw_button(char sprdex, char button_identity, char x, char y)
     }
 }
 
+#define BUTTON_LS_OFF 20
+#define BUTTON_LS_ON 26
+
+draw_level_select_button(char sprdex, char button_identity, char x, char y)
+{
+    char i, size;
+    for (i = 0; i < 6; i++)
+    {
+        spr_set(i + sprdex);
+        spr_x(x + (i << 4));
+        spr_y(y);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_show();
+        spr_pal((button_identity == BUTTON_LS_ON) ? 2 : 1);
+        spr_pri(1);
+        spr_pattern(BUTTONS_VRAM + ((i + button_identity) * 0x40));
+    }
+}
+
+const char LEVEL_SELECT_CODE[] = {
+    JOY_UP,
+    JOY_DOWN,
+    JOY_LEFT,
+    JOY_RIGHT};
+
+unlock_level_select(char joyt)
+{
+    if (unlockedLevelSelect)
+    {
+        return;
+    }
+
+    if (joyt & LEVEL_SELECT_CODE[codePoint])
+    {
+        codePoint++;
+    }
+    else if (joyt)
+    {
+        codePoint = 0;
+    }
+
+    if (codePoint == 4)
+    {
+        unlockedLevelSelect = 1;
+        selectedButton = 2;
+    }
+}
+
 #define BUTTON_Y 128
 #define BUTTON_1_X 16
 #define BUTTON_2_X 176
+
+const char SELECTED_BUTTON_TO_ACTION[] = {
+    NEW_GAME,
+    CONTINUE,
+    LEVEL_SELECT
+};
 
 main()
 {
@@ -138,20 +200,40 @@ main()
             load_palette(18, buttonspal + (((timer >> 4) % 4) << 5), 1);
 
             draw_button(8, selectedButton == 0 ? BUTTON_NEW_ON : BUTTON_NEW_OFF, BUTTON_1_X, BUTTON_Y);
-            draw_button(16, hasNoSavedData ? BUTTON_CON_DIS : (selectedButton == 0 ? BUTTON_CON_OFF : BUTTON_CON_ON), BUTTON_2_X, BUTTON_Y);
+            draw_button(16, hasNoSavedData ? BUTTON_CON_DIS : (selectedButton == 1 ? BUTTON_CON_ON : BUTTON_CON_OFF), BUTTON_2_X, BUTTON_Y);
+
+            if (unlockedLevelSelect)
+            {
+                draw_level_select_button(20, (selectedButton == 2 ? BUTTON_LS_ON : BUTTON_LS_OFF), 80, BUTTON_Y - 32);
+            }
         }
-        
+
         satb_update();
         vsync();
 
         joyt = joytrg(0);
 
+        unlock_level_select(joyt);
+
         if (joyt & JOY_STRT || joyt & JOY_I)
         {
             cls();
             vsync();
-            governor_step = selectedButton == 0 ? 254 : 255;
+            governor_step = SELECTED_BUTTON_TO_ACTION[selectedButton];
             cd_execoverlay(GOVERNOR_OVERLAY);
+        }
+
+        if (unlockedLevelSelect)
+        {
+
+            if (joyt & JOY_UP)
+            {
+                selectedButton = 2;
+            }
+            if (selectedButton == 2 && joyt & JOY_DOWN)
+            {
+                selectedButton = 0;
+            }
         }
 
         if (!hasNoSavedData && (joyt & JOY_SLCT || joyt & JOY_LEFT || joyt & JOY_RIGHT))

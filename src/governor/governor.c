@@ -15,6 +15,7 @@
 
 #define CONTINUE 255
 #define NEW_GAME 254
+#define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
     STORY_OVERLAY, 0,
@@ -56,6 +57,74 @@ initialize()
 
     cls();
     reset_satb();
+}
+
+#define ASCII_ZERO 48
+level_select()
+{
+    char joyt;
+    char *leveltxt;
+    char level_num;
+    governor_step = 0;
+    cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
+
+    for (;;)
+    {
+        write_text(7, "Space Ava201");
+        write_text(9, "Level Select");
+
+        switch (STEP_ORDER[governor_step << 1])
+        {
+        case STORY_OVERLAY:
+            write_text(13, "Story Section");
+            break;
+        case CLASSIC_OVERLAY:
+            write_text(13, "Standard Gameplay");
+            break;
+        case MIRROR_OVERLAY:
+            write_text(13, "Mirror Puzzle");
+            break;
+        default:
+            write_text(13, "Unknown Level Type");
+            break;
+        }
+
+        leveltxt = "Singularityxx";
+        level_num = STEP_ORDER[(governor_step << 1) + 1];
+        if (level_num > 10)
+        {
+            leveltxt[11] = ASCII_ZERO + (level_num / 10);
+            leveltxt[12] = ASCII_ZERO + (level_num % 10);
+        }
+        else
+        {
+            leveltxt[11] = ASCII_ZERO + (level_num % 10);
+            leveltxt[12] = 0;
+        }
+        write_text(14, "<                       >");
+        write_text(15, leveltxt);
+
+        vsync();
+
+        joyt = joytrg(0);
+
+        if (joyt & JOY_LEFT)
+        {
+            governor_step--;
+            cls();
+        }
+
+        if (joyt & JOY_RIGHT)
+        {
+            governor_step++;
+            cls();
+        }
+
+        if (joyt & JOY_STRT)
+        {
+            continue_cycle();
+        }
+    }
 }
 
 start_new_game(char show_saved_game_warning)
@@ -262,7 +331,12 @@ main()
 
     initialize();
     vsync();
-    if (governor_step == NEW_GAME || governor_step == CONTINUE)
+    if (governor_step == LEVEL_SELECT)
+    {
+        cls();
+        level_select();
+    }
+    else if (governor_step == NEW_GAME || governor_step == CONTINUE)
     {
         start_new_game(governor_step == NEW_GAME);
         cls();
