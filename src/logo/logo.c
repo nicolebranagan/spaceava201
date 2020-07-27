@@ -7,7 +7,7 @@
 #include "cd.h"
 
 #incspr(chr, "logo/images/train.png");
-#incpal(trainpal,"logo/images/train.png");
+#incpal(trainpal, "logo/images/train.png");
 
 #incchr(logo_gfx, "logo/images/logo.png");
 #incpal(logo_pal, "logo/images/logo.png");
@@ -19,7 +19,7 @@ main()
 	char logox = 0;
 	char timer = 0;
 	int i;
-	
+
 	disp_off();
 	spr_set();
 	spr_hide();
@@ -27,21 +27,21 @@ main()
 
 	ad_reset();
 	init_satb();
-	load_vram(0x5000,chr,0x200);
+	load_vram(0x5000, chr, 0x200);
 	spr_set(0);
 	spr_x(logox);
 	spr_y(80);
 	spr_pattern(0x5000);
-	spr_ctrl(FLIP_MAS|SIZE_MAS,SZ_16x16);
+	spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
 	spr_pal(0);
 	spr_pri(1);
 
 	load_background(logo_gfx, logo_pal, logo_bat, 32, 28);
 	ad_trans(ADPCM_OVERLAY, WHISTLE_SECTOR_OFFSET, WHISTLE_SECTOR_COUNT, 0);
 	disp_on();
-	load_palette(16,trainpal,1);
-				
-	for(;;)
+	load_palette(16, trainpal, 1);
+
+	for (;;)
 	{
 		vsync();
 		satb_update();
@@ -50,19 +50,33 @@ main()
 		joyt = joytrg(0);
 
 		timer++;
-		if (timer == 10) {
+		if (timer == 10)
+		{
 			spr_pattern(0x5000);
-		} else if (timer == 20) {
+		}
+		else if (timer == 20)
+		{
 			spr_pattern(0x5040);
 			timer = 0;
 		}
-		
 
-		if (logox == 70 || logox == 150) {
+		if (logox == 70 || logox == 150)
+		{
 			ad_play(0, 0x2370, 15, 0);
 		}
 
-		if (logox == 255 || (joyt & JOY_STRT) ) {
+		if (logox == 255)
+		{
+			spr_hide();
+			cls();
+			satb_update();
+			vsync();
+
+			cd_execoverlay(INTRO_OVERLAY);
+		}
+
+		if (joyt & JOY_STRT)
+		{
 			spr_hide();
 			cls();
 			satb_update();
@@ -70,5 +84,5 @@ main()
 
 			cd_execoverlay(TITLE_OVERLAY);
 		}
-	}		
+	}
 }

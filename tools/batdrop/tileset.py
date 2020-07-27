@@ -2,6 +2,17 @@ from pixelgrid import *
 from PIL import ImageTk, Image, ImageDraw
 import json
 
+TILESET_NAME = {
+    "Starbase": 0,
+    "Mirror System": 1,
+    "Starship": 2,
+    "Sunscape": 3,
+    "Title Screen": 4,
+    "Amalgamation HQ": 5
+}
+
+NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
+
 def getTileset(url):
     pixelgrid = PixelGrid([(0,0,0)])
     with open(url, "r") as fileo:
@@ -13,57 +24,14 @@ def getTileset(url):
     tileset = [tiles2x.crop((x*32,0,(x+1)*32,32)) for x in
                 range(0, int(tiles.width // 16))]
 
-    return (tiles2x, tileset)
-
-def getStarbase():
-    (starbase2x, starbasetileset) = getTileset("../../images/tiles/stardrop.terra")
-
-    tiles2x = Image.new("RGB",(
-        starbase2x.width,
-        starbase2x.height
-    ))
-    tiles2x.paste(starbase2x, (0, 0))
-    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
-
-def getMirrorSys():
-    (starbase2x, starbasetileset) = getTileset("../../images/tiles/mirrorsys.terra")
-
-    tiles2x = Image.new("RGB",(
-        starbase2x.width,
-        starbase2x.height
-    ))
-    tiles2x.paste(starbase2x, (0, 0))
-    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
-
-def getStarship():
-    (starbase2x, starbasetileset) = getTileset("../../images/tiles/starship.terra")
-
-    tiles2x = Image.new("RGB",(
-        starbase2x.width,
-        starbase2x.height
-    ))
-    tiles2x.paste(starbase2x, (0, 0))
-    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
-
-def getSun():
-    (starbase2x, starbasetileset) = getTileset("../../images/tiles/sunscape.terra")
-
-    tiles2x = Image.new("RGB",(
-        starbase2x.width,
-        starbase2x.height
-    ))
-    tiles2x.paste(starbase2x, (0, 0))
-    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
-
-def getTitles():
-    (starbase2x, starbasetileset) = getTileset("../../images/tiles/titles.terra")
-
-    tiles2x = Image.new("RGB",(
-        starbase2x.width,
-        starbase2x.height
-    ))
-    tiles2x.paste(starbase2x, (0, 0))
-    return (tiles2x, starbasetileset, ImageTk.PhotoImage(tiles2x))
+    return (tiles2x, tileset, ImageTk.PhotoImage(tiles2x))
 
 def getTilesets():
-    return [getStarbase(), getMirrorSys(), getStarship(), getSun(), getTitles()]
+    return [
+        getTileset("../../images/tiles/stardrop.terra"), 
+        getTileset("../../images/tiles/mirrorsys.terra"), 
+        getTileset("../../images/tiles/starship.terra"), 
+        getTileset("../../images/tiles/sunscape.terra"), 
+        getTileset("../../images/tiles/titles.terra"),
+        getTileset("../../images/tiles/amalghq.terra"),
+    ]

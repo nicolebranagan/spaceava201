@@ -2,19 +2,10 @@ import math
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
-from tileset import getTilesets
+from tileset import getTilesets, TILESET_NAME, NAME_TILESET
 
 DEFAULT_WIDTH = 16
 DEFAULT_HEIGHT = 5
-
-TILESET_NAME = {
-    "Starbase": 0,
-    "Mirror System": 1,
-    "Starship": 2,
-    "Sunscape": 3,
-    "Title Screen": 4
-}
-NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
 
 def TilesetBox(window):
     var = tk.StringVar(window)
