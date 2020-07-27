@@ -66,6 +66,7 @@ level_select()
     char *leveltxt;
     char level_num;
     governor_step = 0;
+    has_backup_ram = 0;
     cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
 
     for (;;)
@@ -120,8 +121,11 @@ level_select()
             cls();
         }
 
-        if (joyt & JOY_STRT)
+        if (joyt & JOY_STRT || joyt & JOY_I)
         {
+            cls();
+            write_text(11, "Loading...");
+            vsync();
             continue_cycle();
         }
     }

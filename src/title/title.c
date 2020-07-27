@@ -6,6 +6,7 @@
 
 #include "./images/images.h"
 #include "cd.h"
+#include "./adpcm/adpcm.h"
 
 #incbin(titlepal, "palettes/titles.pal");
 #incbin(logopal, "palettes/logo.pal");
@@ -62,6 +63,7 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, TITLES_SECTOR_OFFSET, TITLE_VRAM, TITLES_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
     cd_loadvram(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
+    ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, 0);
     load_vram(0, titlebat, 0x700);
     load_palette(1, titlepal, 1);
     load_palette(16, logopal, 1);
@@ -156,6 +158,7 @@ unlock_level_select(char joyt)
     {
         unlockedLevelSelect = 1;
         selectedButton = 2;
+        ad_play(0, MINIWILHELM_SIZE, 14, 0);
     }
 }
 
