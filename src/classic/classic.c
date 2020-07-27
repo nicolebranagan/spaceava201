@@ -63,7 +63,8 @@ const char TILE_SOLIDITY_BETELGEUSE[] = {
 
 const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
-    TRACK_IMPOSSIBLY_BOSSY};
+    TRACK_IMPOSSIBLY_BOSSY,
+    TRACK_YOUR_SOUL_LAVA};
 
 char pal_rotate_step;
 

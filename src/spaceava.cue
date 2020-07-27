@@ -39,7 +39,11 @@ FILE "Space Ava 201 - 10 - Lacked Even a Daisy.wav" WAVE
   TRACK 10 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 11 - Your Soul is Lava.wav" WAVE
+  TRACK 11 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 11 MODE1/2048
+  TRACK 12 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

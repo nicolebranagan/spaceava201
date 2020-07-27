@@ -28,6 +28,7 @@ spaceava201: spaceava.iso
 	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 08 - Impossibly Bossy.wav"
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 09 - Nothing is Hope.wav"
 	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 10 - Lacked Even a Daisy.wav"
+	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 11 - Your Soul is Lava.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl
 	mv */*.s */*.ovl */*.sym ../build
