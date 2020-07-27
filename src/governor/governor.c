@@ -13,8 +13,10 @@
 #define BACKUP_RAM_SIZE 1
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
 
+#define CONTINUE 255
+#define NEW_GAME 254
+
 const char STEP_ORDER[] = {
-    CLASSIC_OVERLAY, 3,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -56,7 +58,7 @@ initialize()
     reset_satb();
 }
 
-start_new_game()
+start_new_game(char show_saved_game_warning)
 {
     char backupmem_exists;
     int free_mem;
@@ -74,7 +76,7 @@ start_new_game()
 
     if (bm_exist(BACKUP_RAM_NAME))
     {
-        load_saved_game();
+        load_saved_game(show_saved_game_warning);
         return;
     }
 
@@ -170,7 +172,7 @@ format()
     }
 }
 
-load_saved_game()
+load_saved_game(char show_saved_game_warning)
 {
     char opt;
     char joyt;
@@ -179,8 +181,9 @@ load_saved_game()
     opt = 0;
 
     bm_read(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
-    if (data[0] == 0)
+    if (data[0] == 0 || !show_saved_game_warning)
     {
+        governor_step = data[0];
         has_backup_ram = 1;
         return;
     }
@@ -259,9 +262,9 @@ main()
 
     initialize();
     vsync();
-    if (governor_step == 255)
+    if (governor_step == NEW_GAME || governor_step == CONTINUE)
     {
-        start_new_game();
+        start_new_game(governor_step == NEW_GAME);
         cls();
         write_text(11, "Loading...");
     }
