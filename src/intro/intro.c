@@ -13,6 +13,7 @@
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(admiralpal, "palettes/admira_face.pal");
 #incbin(bigtextpal, "palettes/shutcalc.pal");
+#incbin(diracpal, "palettes/dirac.pal");
 
 #incbin(amalhqbin, "bats/amalhq-bg.bin");
 #incbin(innerbat, "bats/introinner.bin");
@@ -32,6 +33,7 @@
 #define AMALGHQ_VRAM 0x1000
 #define FONT_VRAM (AMALGHQ_VRAM + (INTROTXT_SIZE / 2))
 #define ADMIRAL_VRAM (FONT_VRAM + (TITLEFNT_SIZE / 2))
+#define DIRAC_VRAM (ADMIRAL_VRAM + (ADMIRA_FACE_SIZE / 2))
 
 char phase;
 int timer;
@@ -43,11 +45,12 @@ int timer;
 #define PHASE_SHOCK1 4
 #define PHASE_SHOCK2 5
 #define PHASE_BIGTEXT1 6
-#define PHASE_BIGTEXT2 7
-#define PHASE_SPACEMAP 8
-#define PHASE_BIGTEXT3 9
-#define PHASE_BIGTEXT4 10
-#define PHASE_BIGTEXT5 11
+#define PHASE_DIRAC 7
+#define PHASE_BIGTEXT2 8
+#define PHASE_SPACEMAP 9
+#define PHASE_BIGTEXT3 10
+#define PHASE_BIGTEXT4 11
+#define PHASE_BIGTEXT5 12
 
 initialize()
 {
@@ -67,9 +70,11 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, TITLEFNT_SECTOR_OFFSET, FONT_VRAM, TITLEFNT_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, AMALGHQ_VRAM, AMALGHQ_SIZE);
     cd_loadvram(IMAGE_OVERLAY, ADMIRA_FACE_SECTOR_OFFSET, ADMIRAL_VRAM, ADMIRA_FACE_SIZE);
+    cd_loadvram(IMAGE_OVERLAY, DIRAC_SECTOR_OFFSET, DIRAC_VRAM, DIRAC_SIZE);
     load_palette(0, fontpal, 1);
     load_palette(1, amalghqpal, 1);
     load_palette(16, admiralpal, 1);
+    load_palette(17, diracpal, 1);
 
     prepare_phase(PHASE_INIT);
 }
@@ -177,6 +182,32 @@ int write_text(char x, char y, char *text, char chirp_type)
     return len;
 }
 
+set_up_dirac()
+{
+    char i;
+    for (i = 0; i < 5; i++)
+    {
+        spr_set(i);
+        spr_x(336+(i << 5));
+        spr_y(90);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_32x32);
+        spr_show();
+        spr_pal(1);
+        spr_pri(1);
+        spr_pattern(DIRAC_VRAM + (i << 8));
+    }
+}
+
+update_dirac()
+{
+    char i;
+    for (i = 0; i < 5; i++)
+    {
+        spr_set(i);
+        spr_x(spr_get_x() - 2);
+    }
+}
+
 #define DEFAULT_CHIRP 76
 
 prepare_phase(char newphase)
@@ -209,7 +240,7 @@ prepare_phase(char newphase)
         write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: I'm honestly shocked", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 2, "and flattered! Thank you so much for", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 4, "the promotion, I promise I will", DEFAULT_CHIRP - 8);
-        timer = 96;
+        timer = 80;
         break;
     case PHASE_SHOCK1:
         cls();
@@ -242,8 +273,20 @@ prepare_phase(char newphase)
         }
         timer = 400;
         break;
+    case PHASE_DIRAC:
+        cls();
+        set_up_dirac();
+        satb_update();
+        timer = 300;
+        break;
     case PHASE_BIGTEXT2:
         cls();
+        for (y = 0; y < 64; y++)
+        {
+            spr_set(y);
+            spr_hide();
+        }
+        satb_update();
         for (y = 0; y < (12 * 2); y++)
         {
             addr = vram_addr(1, 1 + y);
@@ -329,6 +372,11 @@ main()
         if (timer == 0)
         {
             prepare_phase(phase + 1);
+        }
+        else if (phase == PHASE_DIRAC)
+        {
+            update_dirac();
+            satb_update();
         }
     }
 }
