@@ -140,41 +140,41 @@
 
 // ./images/shutcalc.chr
 #define SHUTCALC_SECTOR_OFFSET 77 
-#define SHUTCALC_SECTOR_COUNT 9 
-#define SHUTCALC_SIZE 18432 
+#define SHUTCALC_SECTOR_COUNT 11 
+#define SHUTCALC_SIZE 22528 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 86 
+#define STARBASE_SECTOR_OFFSET 88 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 87 
+#define STARDROP_SECTOR_OFFSET 89 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 89 
+#define STARROT_SECTOR_OFFSET 91 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 
 // ./images/starship.chr
-#define STARSHIP_SECTOR_OFFSET 90 
+#define STARSHIP_SECTOR_OFFSET 92 
 #define STARSHIP_SECTOR_COUNT 2 
 #define STARSHIP_SIZE 4096 
 
 // ./images/sunscape.chr
-#define SUNSCAPE_SECTOR_OFFSET 92 
+#define SUNSCAPE_SECTOR_OFFSET 94 
 #define SUNSCAPE_SECTOR_COUNT 1 
 #define SUNSCAPE_SIZE 2048 
 
 // ./images/titlefnt.chr
-#define TITLEFNT_SECTOR_OFFSET 93 
+#define TITLEFNT_SECTOR_OFFSET 95 
 #define TITLEFNT_SECTOR_COUNT 3 
 #define TITLEFNT_SIZE 6144 
 
 // ./images/titles.chr
-#define TITLES_SECTOR_OFFSET 96 
+#define TITLES_SECTOR_OFFSET 98 
 #define TITLES_SECTOR_COUNT 5 
 #define TITLES_SIZE 10240 
 

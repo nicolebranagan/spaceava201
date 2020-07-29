@@ -12,13 +12,14 @@
 #incbin(fontpal, "palettes/titlefnt.pal");
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(admiralpal, "palettes/admira_face.pal");
-#incbin(bigtextpal, "palettes/introtxt.pal");
+#incbin(bigtextpal, "palettes/shutcalc.pal");
 
 #incbin(amalhqbin, "bats/amalhq-bg.bin");
 #incbin(innerbat, "bats/introinner.bin");
 
 #incbin(introtxt, "images/introtxt.chr");
 #incbin(shutcalc, "images/shutcalc.chr");
+#incbin(spacemap, "bats/spacemap.bin");
 
 #incbin(bigtext1, "bats/bigtext1.bin");
 #incbin(bigtext2, "bats/bigtext2.bin");
@@ -43,9 +44,10 @@ int timer;
 #define PHASE_SHOCK2 5
 #define PHASE_BIGTEXT1 6
 #define PHASE_BIGTEXT2 7
-#define PHASE_BIGTEXT3 8
-#define PHASE_BIGTEXT4 9
-#define PHASE_BIGTEXT5 10
+#define PHASE_SPACEMAP 8
+#define PHASE_BIGTEXT3 9
+#define PHASE_BIGTEXT4 10
+#define PHASE_BIGTEXT5 11
 
 initialize()
 {
@@ -235,10 +237,10 @@ prepare_phase(char newphase)
 
         for (y = 0; y < (12 * 2); y++)
         {
-            addr = vram_addr(1, 1 + y);
+            addr = vram_addr(10, 1 + y);
             load_vram(addr, bigtext1 + ((32 << 1) * y), 32);
         }
-        timer = 512;
+        timer = 400;
         break;
     case PHASE_BIGTEXT2:
         cls();
@@ -247,12 +249,20 @@ prepare_phase(char newphase)
             addr = vram_addr(1, 1 + y);
             load_vram(addr, bigtext2 + ((32 << 1) * y), 32);
         }
-        timer = 512;
+        timer = 400;
+        break;
+    case PHASE_SPACEMAP:
+        cls();
+        load_vram(AMALGHQ_VRAM, shutcalc, SHUTCALC_SIZE / 2);
+        for (y = 0; y < (8 * 2); y++)
+        {
+            addr = vram_addr(6, 4 + y);
+            load_vram(addr, spacemap + ((32 << 1) * y), 32);
+        }
+        timer = 200;
         break;
     case PHASE_BIGTEXT3:
         cls();
-        load_vram(AMALGHQ_VRAM, shutcalc, SHUTCALC_SIZE / 2);
-
         for (y = 0; y < (4 * 2); y++)
         {
             addr = vram_addr(8, 8 + y);
