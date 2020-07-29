@@ -1,6 +1,7 @@
 from pixelgrid import *
 from PIL import ImageTk, Image, ImageDraw
 import json
+import math
 
 TILESET_NAME = {
     "Starbase": 0,
@@ -8,10 +9,25 @@ TILESET_NAME = {
     "Starship": 2,
     "Sunscape": 3,
     "Title Screen": 4,
-    "Amalgamation HQ": 5
+    "Amalgamation HQ": 5,
+    "Intro text": 6,
+    "Shut up and Calculate": 7
 }
 
 NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
+
+MAX_TILESET_WIDTH = 24
+
+def getTilePalette(tileset):
+    height = math.ceil(len(tileset) // 16) * 32
+    width = MAX_TILESET_WIDTH * 32
+
+    palette = Image.new("RGB", (width, height))
+    for idx, tile in enumerate(tileset):
+        x = idx % MAX_TILESET_WIDTH
+        y = idx // MAX_TILESET_WIDTH
+        palette.paste(tile, (x*32, y*32))
+    return ImageTk.PhotoImage(palette)
 
 def getTileset(url):
     pixelgrid = PixelGrid([(0,0,0)])
@@ -24,7 +40,7 @@ def getTileset(url):
     tileset = [tiles2x.crop((x*32,0,(x+1)*32,32)) for x in
                 range(0, int(tiles.width // 16))]
 
-    return (tiles2x, tileset, ImageTk.PhotoImage(tiles2x))
+    return (tiles2x, tileset, getTilePalette(tileset))
 
 def getTilesets():
     return [
@@ -34,4 +50,6 @@ def getTilesets():
         getTileset("../../images/tiles/sunscape.terra"), 
         getTileset("../../images/tiles/titles.terra"),
         getTileset("../../images/tiles/amalghq.terra"),
+        getTileset("../../images/tiles/introtxt.terra"),
+        getTileset("../../images/tiles/shutcalc.terra"),
     ]

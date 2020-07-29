@@ -12,23 +12,40 @@
 #incbin(fontpal, "palettes/titlefnt.pal");
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(admiralpal, "palettes/admira_face.pal");
+#incbin(bigtextpal, "palettes/introtxt.pal");
 
 #incbin(amalhqbin, "bats/amalhq-bg.bin");
 #incbin(innerbat, "bats/introinner.bin");
 
+#incbin(introtxt, "images/introtxt.chr");
+#incbin(shutcalc, "images/shutcalc.chr");
+
+#incbin(bigtext1, "bats/bigtext1.bin");
+#incbin(bigtext2, "bats/bigtext2.bin");
+#incbin(bigtext3, "bats/bigtext3.bin");
+#incbin(bigtext4, "bats/bigtext4.bin");
+#incbin(bigtext5, "bats/bigtext5.bin");
+
 #define SPR_SIZE_16x16 0x40
 
 #define AMALGHQ_VRAM 0x1000
-#define FONT_VRAM (AMALGHQ_VRAM + (AMALGHQ_SIZE / 2))
+#define FONT_VRAM (AMALGHQ_VRAM + (INTROTXT_SIZE / 2))
 #define ADMIRAL_VRAM (FONT_VRAM + (TITLEFNT_SIZE / 2))
 
 char phase;
-char timer;
+int timer;
 
 #define PHASE_INIT 0
 #define PHASE_POINT9 1
 #define PHASE_AMALHQ 2
 #define PHASE_MEDAL 3
+#define PHASE_SHOCK1 4
+#define PHASE_SHOCK2 5
+#define PHASE_BIGTEXT1 6
+#define PHASE_BIGTEXT2 7
+#define PHASE_BIGTEXT3 8
+#define PHASE_BIGTEXT4 9
+#define PHASE_BIGTEXT5 10
 
 initialize()
 {
@@ -162,6 +179,9 @@ int write_text(char x, char y, char *text, char chirp_type)
 
 prepare_phase(char newphase)
 {
+    int addr;
+    char y;
+
     switch (newphase)
     {
     case PHASE_INIT:
@@ -184,10 +204,79 @@ prepare_phase(char newphase)
         cls();
         draw_background(1);
         draw_person(0, 8);
-        write_text(TEXT_X, TEXT_Y,     "ADMIRAL HARMONY: I'm honestly shocked", DEFAULT_CHIRP - 8);
+        write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: I'm honestly shocked", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 2, "and flattered! Thank you so much for", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 4, "the promotion, I promise I will", DEFAULT_CHIRP - 8);
+        timer = 96;
+        break;
+    case PHASE_SHOCK1:
+        cls();
+        draw_background(1);
+        draw_person(1, 8);
+        write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", DEFAULT_CHIRP - 8);
+        cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
+        timer = 50;
+        break;
+    case PHASE_SHOCK2:
+        load_palette(16, admiralpal + (1 << 5), 1);
+        load_palette(1, amalghqpal + (1 << 5), 1);
         timer = 255;
+        break;
+    case PHASE_BIGTEXT1:
+        load_palette(1, bigtextpal, 1);
+        cls();
+        load_vram(AMALGHQ_VRAM, introtxt, INTROTXT_SIZE / 2);
+        for (y = 0; y < 64; y++)
+        {
+            spr_set(y);
+            spr_hide();
+        }
+        satb_update();
+
+        for (y = 0; y < (12 * 2); y++)
+        {
+            addr = vram_addr(1, 1 + y);
+            load_vram(addr, bigtext1 + ((32 << 1) * y), 32);
+        }
+        timer = 512;
+        break;
+    case PHASE_BIGTEXT2:
+        cls();
+        for (y = 0; y < (12 * 2); y++)
+        {
+            addr = vram_addr(1, 1 + y);
+            load_vram(addr, bigtext2 + ((32 << 1) * y), 32);
+        }
+        timer = 512;
+        break;
+    case PHASE_BIGTEXT3:
+        cls();
+        load_vram(AMALGHQ_VRAM, shutcalc, SHUTCALC_SIZE / 2);
+
+        for (y = 0; y < (4 * 2); y++)
+        {
+            addr = vram_addr(8, 8 + y);
+            load_vram(addr, bigtext3 + ((32 << 1) * y), 32);
+        }
+        timer = 64;
+        break;
+    case PHASE_BIGTEXT4:
+        cls();
+        for (y = 0; y < (5 * 2); y++)
+        {
+            addr = vram_addr(8, 7 + y);
+            load_vram(addr, bigtext4 + ((32 << 1) * y), 32);
+        }
+        timer = 64;
+        break;
+    case PHASE_BIGTEXT5:
+        cls();
+        for (y = 0; y < (2 * 2); y++)
+        {
+            addr = vram_addr(6, 11 + y);
+            load_vram(addr, bigtext5 + ((32 << 1) * y), 32);
+        }
+        timer = 128;
         break;
     default:
         done();

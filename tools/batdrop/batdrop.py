@@ -2,7 +2,7 @@ import math
 import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageTk, Image, ImageDraw
-from tileset import getTilesets, TILESET_NAME, NAME_TILESET
+from tileset import getTilesets, TILESET_NAME, NAME_TILESET, MAX_TILESET_WIDTH
 
 DEFAULT_WIDTH = 16
 DEFAULT_HEIGHT = 5
@@ -31,8 +31,8 @@ class Application(tk.Frame):
         self.drawroom()
 
     def createWidgets(self):
-        self.tilecanvas = tk.Canvas(self, width=self.tiles2x.width,
-                                    height=self.tiles2x.height)
+        self.tilecanvas = tk.Canvas(self, width=self.tilesTk.width(),
+                                    height=self.tilesTk.height())
         self.tilecanvasimg = self.tilecanvas.create_image(
                 0,0,anchor=tk.NW,image=self.tilesTk)
         self.tilecanvas.grid(row=0, column=0, columnspan = 3)
@@ -105,7 +105,7 @@ class Application(tk.Frame):
 
         self.room.tileset = index
         self.tilecanvas.config(
-            width=self.tiles2x.width, height=self.tiles2x.height
+            width=self.tilesTk.width(), height=self.tilesTk.height()
         )
         self.tilecanvasimg = self.tilecanvas.create_image(
                 0,0,anchor=tk.NW,image=self.tilesTk)
@@ -119,9 +119,9 @@ class Application(tk.Frame):
 
     def tileclick(self, event):
         x = math.floor(self.tilecanvas.canvasx(event.x) / 32)
-        #y = math.floor(self.tilecanvas.canvasy(event.y) / 32)
+        y = math.floor(self.tilecanvas.canvasy(event.y) / 32)
 
-        self.select = x
+        self.select = x + (y * MAX_TILESET_WIDTH)
 
     def viewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)
