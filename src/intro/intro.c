@@ -12,7 +12,8 @@
 #incbin(fontpal, "palettes/titlefnt.pal");
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(admiralpal, "palettes/admira_face.pal");
-#incbin(bigtextpal, "palettes/shutcalc.pal");
+#incbin(introtxtpal, "palettes/introtxt.pal");
+#incbin(shutcalcpal, "palettes/shutcalc.pal");
 #incbin(diracpal, "palettes/dirac.pal");
 
 #incbin(amalhqbin, "bats/amalhq-bg.bin");
@@ -21,6 +22,7 @@
 #incbin(introtxt, "images/introtxt.chr");
 #incbin(shutcalc, "images/shutcalc.chr");
 #incbin(spacemap, "bats/spacemap.bin");
+#incbin(diracbg, "bats/diracbg.bin");
 
 #incbin(bigtext1, "bats/bigtext1.bin");
 #incbin(bigtext2, "bats/bigtext2.bin");
@@ -188,7 +190,7 @@ set_up_dirac()
     for (i = 0; i < 5; i++)
     {
         spr_set(i);
-        spr_x(336+(i << 5));
+        spr_x(336 + (i << 5));
         spr_y(90);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_32x32);
         spr_show();
@@ -204,7 +206,7 @@ update_dirac()
     for (i = 0; i < 5; i++)
     {
         spr_set(i);
-        spr_x(spr_get_x() - 2);
+        spr_x(spr_get_x() - 3);
     }
 }
 
@@ -219,11 +221,11 @@ prepare_phase(char newphase)
     {
     case PHASE_INIT:
         timer = 50;
-        write_text(13, 9, "Space Year 99", DEFAULT_CHIRP);
+        write_text(14, 9, "Space Year 99", DEFAULT_CHIRP);
         break;
     case PHASE_POINT9:
         timer = 150;
-        write_text(26, 9, ".9", DEFAULT_CHIRP + 7);
+        write_text(27, 9, ".9", DEFAULT_CHIRP + 7);
         break;
     case PHASE_AMALHQ:
         cls();
@@ -231,7 +233,7 @@ prepare_phase(char newphase)
         write_text(9, TEXT_Y, "New Braintree, MA, Earth", DEFAULT_CHIRP);
         write_text(12, TEXT_Y + 2, "Headquarters of the", DEFAULT_CHIRP);
         write_text(10, TEXT_Y + 4, "Amalgamation of Worlds", DEFAULT_CHIRP);
-        timer = 254;
+        timer = 100;
         break;
     case PHASE_MEDAL:
         cls();
@@ -256,7 +258,7 @@ prepare_phase(char newphase)
         timer = 255;
         break;
     case PHASE_BIGTEXT1:
-        load_palette(1, bigtextpal, 1);
+        load_palette(1, introtxtpal, 1);
         cls();
         load_vram(AMALGHQ_VRAM, introtxt, INTROTXT_SIZE / 2);
         for (y = 0; y < 64; y++)
@@ -277,7 +279,12 @@ prepare_phase(char newphase)
         cls();
         set_up_dirac();
         satb_update();
-        timer = 300;
+        for (y = 0; y < (4 * 2); y++)
+        {
+            addr = vram_addr(16, 8 + y);
+            load_vram(addr, diracbg + ((8 << 1) * y), 8);
+        }
+        timer = 200;
         break;
     case PHASE_BIGTEXT2:
         cls();
@@ -295,6 +302,7 @@ prepare_phase(char newphase)
         timer = 400;
         break;
     case PHASE_SPACEMAP:
+        load_palette(1, shutcalcpal, 1);
         cls();
         load_vram(AMALGHQ_VRAM, shutcalc, SHUTCALC_SIZE / 2);
         for (y = 0; y < (8 * 2); y++)
