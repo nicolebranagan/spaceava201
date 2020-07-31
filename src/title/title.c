@@ -28,12 +28,14 @@ char selectedButton;
 char hasNoSavedData;
 char unlockedLevelSelect;
 char codePoint;
+int longTimer;
 
 initialize()
 {
     char i;
     done = 0;
     timer = 0;
+    longTimer = 0;
     unlockedLevelSelect = 0;
     codePoint = 0;
 
@@ -184,6 +186,7 @@ main()
     for (;;)
     {
         timer++;
+        longTimer++;
         if (!done)
         {
             for (i = 0; i < 8; i++)
@@ -217,6 +220,9 @@ main()
         joyt = joytrg(0);
 
         unlock_level_select(joyt);
+        if (joyt) {
+            longTimer = 0;
+        }
 
         if (joyt & JOY_STRT || joyt & JOY_I)
         {
@@ -242,6 +248,10 @@ main()
         if (!hasNoSavedData && (joyt & JOY_SLCT || joyt & JOY_LEFT || joyt & JOY_RIGHT))
         {
             selectedButton = (selectedButton + 1) & 1;
+        }
+
+        if (longTimer == 1500) {
+            cd_execoverlay(LOGO_OVERLAY);
         }
     }
 }

@@ -21,8 +21,13 @@ main()
 	int i;
 
 	disp_off();
-	spr_set();
-	spr_hide();
+
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
 	set_screen_size(SCR_SIZE_32x32);
 
 	ad_reset();

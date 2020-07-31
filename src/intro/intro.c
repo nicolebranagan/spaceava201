@@ -37,6 +37,9 @@
 #define ADMIRAL_VRAM (FONT_VRAM + (TITLEFNT_SIZE / 2))
 #define DIRAC_VRAM (ADMIRAL_VRAM + (ADMIRA_FACE_SIZE / 2))
 
+#define PCM_KABOOM 0
+#define PCM_FIONA (PCM_KABOOM + KABOOM_SIZE)
+
 char phase;
 int timer;
 
@@ -73,6 +76,8 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, AMALGHQ_VRAM, AMALGHQ_SIZE);
     cd_loadvram(IMAGE_OVERLAY, ADMIRA_FACE_SECTOR_OFFSET, ADMIRAL_VRAM, ADMIRA_FACE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, DIRAC_SECTOR_OFFSET, DIRAC_VRAM, DIRAC_SIZE);
+    ad_trans(ADPCM_OVERLAY, KABOOM_SECTOR_OFFSET, KABOOM_SECTOR_COUNT, PCM_KABOOM);
+    ad_trans(ADPCM_OVERLAY, FIONA_SECTOR_OFFSET, FIONA_SECTOR_COUNT, PCM_FIONA);
 
     load_palette(0, fontpal, 1);
     load_palette(1, amalghqpal, 1);
@@ -247,6 +252,7 @@ prepare_phase(char newphase)
         break;
     case PHASE_SHOCK1:
         cls();
+        ad_play(PCM_KABOOM, KABOOM_SIZE, 15, 0);
         draw_background(1);
         draw_person(1, 8);
         write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", 204);
@@ -259,6 +265,7 @@ prepare_phase(char newphase)
         timer = 255;
         break;
     case PHASE_BIGTEXT1:
+        ad_play(PCM_KABOOM, KABOOM_SIZE, 15, 0);
         load_palette(1, introtxtpal, 1);
         cls();
         load_vram(AMALGHQ_VRAM, introtxt, INTROTXT_SIZE / 2);
@@ -289,6 +296,7 @@ prepare_phase(char newphase)
         break;
     case PHASE_BIGTEXT2:
         cls();
+        ad_play(PCM_KABOOM, KABOOM_SIZE, 15, 0);
         for (y = 0; y < 64; y++)
         {
             spr_set(y);
@@ -316,12 +324,13 @@ prepare_phase(char newphase)
     case PHASE_BIGTEXT3:
         cls();
         cd_reset();
+        ad_play(PCM_FIONA, FIONA_SIZE, 15, 0);
         for (y = 0; y < (4 * 2); y++)
         {
             addr = vram_addr(8, 8 + y);
             load_vram(addr, bigtext3 + ((32 << 1) * y), 32);
         }
-        timer = 64;
+        timer = 32;
         break;
     case PHASE_BIGTEXT4:
         cls();
@@ -330,7 +339,7 @@ prepare_phase(char newphase)
             addr = vram_addr(8, 7 + y);
             load_vram(addr, bigtext4 + ((32 << 1) * y), 32);
         }
-        timer = 64;
+        timer = 32;
         break;
     case PHASE_BIGTEXT5:
         cls();
@@ -339,7 +348,7 @@ prepare_phase(char newphase)
             addr = vram_addr(6, 11 + y);
             load_vram(addr, bigtext5 + ((32 << 1) * y), 32);
         }
-        timer = 128;
+        timer = 64;
         break;
     default:
         done();
