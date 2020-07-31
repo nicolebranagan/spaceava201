@@ -195,30 +195,9 @@ draw_ava(char moving, int x, int y)
     char frame, frame_offset;
     char ctrl_flags = SZ_16x16;
     int dx, dy; // display x, display y
-    int osx, osy;
-    osx = sx;
-    osy = sy;
-
-    sx = x - 128;
-    if (sx < 0)
-    {
-        sx = 0;
-    }
-    sy = y - 128;
-    if (sy < 0)
-    {
-        sy = 0;
-    }
 
     dx = x - sx;
     dy = y - sy;
-
-    scroll(0, sx, sy, 0, 223, 0xC0);
-    load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
-    if (moving)
-    {
-        scroll_enemies(osx - sx, osy - sy);
-    }
 
     switch (ava_facing)
     {
@@ -278,7 +257,7 @@ draw_ava(char moving, int x, int y)
 move_ava(char negative, char delx, char dely)
 {
     char i;
-    int x, y;
+    int x, y, osx, osy;
 
     x = ava_x * 16;
     y = ava_y * 16;
@@ -295,8 +274,25 @@ move_ava(char negative, char delx, char dely)
             x = x + 2 * delx;
             y = y + 2 * dely;
         }
+        osx = sx;
+        osy = sy;
 
+        sx = x - 128;
+        if (sx < 0)
+        {
+            sx = 0;
+        }
+        sy = y - 128;
+        if (sy < 0)
+        {
+            sy = 0;
+        }
+
+        scroll(0, sx, sy, 0, 223, 0xC0);
+        load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
         draw_ava(1, x, y);
+        scroll_enemies(osx - sx, osy - sy);
+
         wait_for_sync(1);
 
         draw_ava(1, x, y);
@@ -432,6 +428,20 @@ load_room()
     }
 
     init_ava_sprite();
+    sx = (ava_x * 16) - 128;
+    sy = (ava_y * 16) - 128;
+
+    if (sx < 0)
+    {
+        sx = 0;
+    }
+    if (sy < 0)
+    {
+        sy = 0;
+    }
+    scroll(0, sx, sy, 0, 223, 0xC0);
+    load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
+
     draw_ava(0, ava_x * 16, ava_y * 16);
     disp_on();
 }

@@ -58,67 +58,63 @@ create_object(char type, char x, char y)
 
 char i;
 int dx, dy;
-draw_object()
-{
-    spr_set(OBJECT_SPRITE_START + i);
 
-    if (!objects[i].active)
-    {
-        spr_hide();
-        return;
-    }
-
-    if (objects[i].xdel != 0)
-    {
-        if (objects[i].xdel > 0)
-        {
-            objects[i].xdraw++;
-            objects[i].xdel--;
-        }
-        else
-        {
-            objects[i].xdraw--;
-            objects[i].xdel++;
-        }
-    }
-
-    if (objects[i].ydel != 0)
-    {
-        if (objects[i].ydel > 0)
-        {
-            objects[i].ydraw++;
-            objects[i].ydel--;
-        }
-        else
-        {
-            objects[i].ydraw--;
-            objects[i].ydel++;
-        }
-    }
-
-    dx = (objects[i].xdraw) - sx;
-    dy = (objects[i].ydraw) - sy;
-
-    if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
-    {
-        spr_hide();
-        return;
-    }
-
-    if (objects[i].type < OBJ_BOX)
-    {
-        spr_pattern(AVA_VRAM + (((((int)(objects[i].type + 2)) << 4) + (timer & 15)) * SPR_SIZE_16x16));
-    }
-
-    spr_x(dx);
-    spr_y(dy);
-}
-
-char draw_objects()
+draw_objects()
 {
     for (i = 0; i < object_count; i++)
     {
-        draw_object();
+        spr_set(OBJECT_SPRITE_START + i);
+
+        if (!objects[i].active)
+        {
+            spr_hide();
+            continue;
+        }
+
+        if (objects[i].xdel != 0)
+        {
+            if (objects[i].xdel > 0)
+            {
+                objects[i].xdraw++;
+                objects[i].xdel--;
+            }
+            else
+            {
+                objects[i].xdraw--;
+                objects[i].xdel++;
+            }
+        }
+
+        if (objects[i].ydel != 0)
+        {
+            if (objects[i].ydel > 0)
+            {
+                objects[i].ydraw++;
+                objects[i].ydel--;
+            }
+            else
+            {
+                objects[i].ydraw--;
+                objects[i].ydel++;
+            }
+        }
+
+        dx = (objects[i].xdraw) - sx;
+        dy = (objects[i].ydraw) - sy;
+
+        if (dx < 0 || dx > 256 || dy < 0 || dy > 256)
+        {
+            spr_hide();
+            continue;
+        }
+
+        if (objects[i].type < OBJ_BOX)
+        {
+            spr_pattern(AVA_VRAM + (((((int)(objects[i].type + 2)) << 4) + (timer & 15)) * SPR_SIZE_16x16));
+        }
+
+        spr_x(dx);
+        spr_y(dy);
     }
 }
 
