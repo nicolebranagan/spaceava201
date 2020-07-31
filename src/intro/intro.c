@@ -249,7 +249,7 @@ prepare_phase(char newphase)
         draw_background(1);
         draw_person(1, 8);
         write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", DEFAULT_CHIRP - 8);
-        cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
+        //cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
         timer = 50;
         break;
     case PHASE_SHOCK2:
