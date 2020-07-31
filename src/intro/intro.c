@@ -73,6 +73,7 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, AMALGHQ_VRAM, AMALGHQ_SIZE);
     cd_loadvram(IMAGE_OVERLAY, ADMIRA_FACE_SECTOR_OFFSET, ADMIRAL_VRAM, ADMIRA_FACE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, DIRAC_SECTOR_OFFSET, DIRAC_VRAM, DIRAC_SIZE);
+
     load_palette(0, fontpal, 1);
     load_palette(1, amalghqpal, 1);
     load_palette(16, admiralpal, 1);
@@ -206,7 +207,7 @@ update_dirac()
     for (i = 0; i < 5; i++)
     {
         spr_set(i);
-        spr_x(spr_get_x() - 3);
+        spr_x(spr_get_x() - 4);
     }
 }
 
@@ -242,15 +243,15 @@ prepare_phase(char newphase)
         write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: I'm honestly shocked", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 2, "and flattered! Thank you so much for", DEFAULT_CHIRP - 8);
         write_text(TEXT_X, TEXT_Y + 4, "the promotion, I promise I will", DEFAULT_CHIRP - 8);
-        timer = 80;
+        timer = 20;
         break;
     case PHASE_SHOCK1:
         cls();
         draw_background(1);
         draw_person(1, 8);
-        write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", DEFAULT_CHIRP - 8);
-        //cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
-        timer = 50;
+        write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", 204);
+        cd_playtrk(TRACK_FANTASY_WORLD_TITLE, TRACK_FANTASY_WORLD_TITLE + 1, CDPLAY_REPEAT);
+        timer = 40;
         break;
     case PHASE_SHOCK2:
         load_palette(16, admiralpal + (1 << 5), 1);
@@ -273,7 +274,7 @@ prepare_phase(char newphase)
             addr = vram_addr(10, 1 + y);
             load_vram(addr, bigtext1 + ((32 << 1) * y), 32);
         }
-        timer = 400;
+        timer = 200;
         break;
     case PHASE_DIRAC:
         cls();
@@ -284,7 +285,7 @@ prepare_phase(char newphase)
             addr = vram_addr(16, 8 + y);
             load_vram(addr, diracbg + ((8 << 1) * y), 8);
         }
-        timer = 200;
+        timer = 150;
         break;
     case PHASE_BIGTEXT2:
         cls();
@@ -299,7 +300,7 @@ prepare_phase(char newphase)
             addr = vram_addr(1, 1 + y);
             load_vram(addr, bigtext2 + ((32 << 1) * y), 32);
         }
-        timer = 400;
+        timer = 200;
         break;
     case PHASE_SPACEMAP:
         load_palette(1, shutcalcpal, 1);
@@ -314,6 +315,7 @@ prepare_phase(char newphase)
         break;
     case PHASE_BIGTEXT3:
         cls();
+        cd_reset();
         for (y = 0; y < (4 * 2); y++)
         {
             addr = vram_addr(8, 8 + y);

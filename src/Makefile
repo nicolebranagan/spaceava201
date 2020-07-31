@@ -21,17 +21,18 @@ spaceava201: spaceava.iso
 	cp ../waves/track1.wav "../build/iso/Space Ava 201 - 01 - Warning.wav"
 	mv ../build/spaceava.iso "../build/iso/Space Ava 201 - Track 2.iso"
 	cp spaceava.cue "../build/iso/Space Ava 201.cue"
-	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 03 - Even More Spaceless.wav"
-	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 04 - Ballad of St. Janet.wav"
-	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 05 - Evan S. Sense.wav"
-	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 06 - Spaceful.wav"
-	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 07 - Chime 2020.wav"
-	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 08 - Impossibly Bossy.wav"
-	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 09 - Nothing is Hope.wav"
-	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 10 - Lacked Even a Daisy.wav"
-	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 11 - Your Soul is Lava.wav"
+	cp ../waves/title.wav "../build/iso/Space Ava 201 - 03 - Fantasy World Title.wav"
+	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 04 - Even More Spaceless.wav"
+	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 05 - Ballad of St. Janet.wav"
+	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 06 - Evan S. Sense.wav"
+	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 07 - Spaceful.wav"
+	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 08 - Chime 2020.wav"
+	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 09 - Impossibly Bossy.wav"
+	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 10 - Nothing is Hope.wav"
+	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 11 - Lacked Even a Daisy.wav"
+	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 12 - Your Soul is Lava.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm_ovl classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl
 	mv */*.s */*.ovl */*.sym ../build
 	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl
 
@@ -56,7 +57,7 @@ title.ovl: $(TITLE_SRC) images
 intro.ovl: $(INTRO_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(INTRO_SRC) $(LIBS)
 
-adpcm_ovl: adpcm/whistle.vox
+adpcm: adpcm/*
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
 
 classicdata: classicdata/classicdata.bin
