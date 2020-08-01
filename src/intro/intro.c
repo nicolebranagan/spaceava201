@@ -257,12 +257,12 @@ prepare_phase(char newphase)
         draw_person(1, 8);
         write_text(TEXT_X, TEXT_Y, "ADMIRAL HARMONY: !!", 204);
         cd_playtrk(TRACK_FANTASY_WORLD_TITLE, TRACK_FANTASY_WORLD_TITLE + 1, CDPLAY_REPEAT);
-        timer = 40;
+        timer = 20;
         break;
     case PHASE_SHOCK2:
         load_palette(16, admiralpal + (1 << 5), 1);
         load_palette(1, amalghqpal + (1 << 5), 1);
-        timer = 255;
+        timer = 150;
         break;
     case PHASE_BIGTEXT1:
         ad_play(PCM_KABOOM, KABOOM_SIZE, 15, 0);
