@@ -35,7 +35,8 @@ const char STEP_ORDER[] = {
     STORY_OVERLAY, 6,
     CLASSIC_OVERLAY, 3,
     STORY_OVERLAY, 7,
-    CLASSIC_OVERLAY, 4};
+    CLASSIC_OVERLAY, 4,
+    STORY_OVERLAY, 8};
 
 initialize()
 {

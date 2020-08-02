@@ -43,8 +43,19 @@ BUNNY:
 1. Angry
 2. Happy
 3. >:P
+4. Sad captured
+5. Angry captured
+6. worried captured
 
 BAGBUNNY:
 0. Blank expression
 1. Angry
 2. >_>
+
+MOSSBAU:
+0. Blank expression
+1. Evil smile
+2. Drinking tea
+3. Laugh
+4. Loss
+5. Annoyed-sad

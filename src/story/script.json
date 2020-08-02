@@ -1400,7 +1400,7 @@
     }
   ],
   [
-    { 
+    {
       "command": "SHOW_FRAME",
       "frame": 2
     },
@@ -1544,6 +1544,256 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: That probably could've gone better... I thought it was bad enough having to deal with Quantum."
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "SUNSCAPE_1"
+    },
+    {
+      "command": "LOAD_SFX",
+      "sfx": "Evil laugh"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2,
+      "x": 4,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 1,
+      "x": 7,
+      "slot": 1
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Lacked Even a Daisy"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: Admit it! Where is she? You really thought you could get away with this, didn't you? Well time's up!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I have no idea what you're talking about! I told you, I'm here to fight quantum, not whoever you are! We're standing on a red giant, anyone could get lost!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: Likely story! Now let me tell you something!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: Oh no..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "slot": 2,
+      "x": 13,
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "slot": 3,
+      "x": 15,
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Looking for someone?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: Pink! Don't trust the black-haired girl! This is probably all her fault somehow!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wait, what did I do? I'm here to defeat quantum!"
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Defeat us? That's simply laughable. Do you have any idea who I am?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Uh... can't say that I do."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Really? Not even a little? That's disappointing... I guess when you live in a black hole news doesn't get out."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 4
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: You can call me Mossbauer! Master of Iron-57! And tell me, ignorant ones, where is Iron forged?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: In the heart of stars when they go supernova. Everyone knows that."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Yeah, what she said!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: So that's your plan, is it? Cause the star to go supernova?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MOSSBAUER: That's right. Very astute. But that knowledge won't help you. I've been slowly saturating the environment with Iron-57. It lives in your blood."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "In the wild, iron 57 is only point zero two percent of iron. But in your bodies now, it is nearly 25%. Which means I control a quarter of your movements."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 6
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Still think you can beat me?"
     }
   ]
 ]

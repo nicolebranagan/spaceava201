@@ -17,6 +17,7 @@
 #incbin(goon_facepal, "palettes/goon_face.pal");
 #incbin(bunny_facepal, "palettes/bunny_face.pal");
 #incbin(bagbunny_facepal, "palettes/bagbun_face.pal");
+#incbin(mossbau_facepal, "palettes/mossba_face.pal");
 
 #incbin(starbasepal, "palettes/stardrop.pal");
 #incbin(starshippal, "palettes/starship.pal");
@@ -149,6 +150,14 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, BAGBUN_FACE_SECTOR_OFFSET, vram, BAGBUN_FACE_SIZE);
             size = BAGBUN_FACE_SIZE;
+            break;
+
+        case 8: // Mossbauer
+            load_palette(current_palette, mossbau_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, MOSSBA_FACE_SECTOR_OFFSET, vram, MOSSBA_FACE_SIZE);
+            size = MOSSBA_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
@@ -525,6 +534,10 @@ load_sfx(char sfx)
     case 0:
         ad_trans(ADPCM_OVERLAY, KABOOM_SECTOR_OFFSET, KABOOM_SECTOR_COUNT, 0);
         sfx_size = KABOOM_SIZE;
+        break;
+    case 1:
+        ad_trans(ADPCM_OVERLAY, LOL_SECTOR_OFFSET, LOL_SECTOR_COUNT, 0);
+        sfx_size = LOL_SIZE;
         break;
     }
 }

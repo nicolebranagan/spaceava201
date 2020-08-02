@@ -26,7 +26,8 @@ SPRITES = {
     "BOB": 4,
     "GOON": 5,
     "BUNNY": 6,
-    "BAGBUNNY": 7
+    "BAGBUNNY": 7,
+    "MOSSBAU": 8
 }
 
 BACKGROUNDS = {
@@ -67,7 +68,8 @@ TRACKS = {
 }
 
 SFXES = {
-    "Kaboom": 0
+    "Kaboom": 0,
+    "Evil laugh": 1
 }
 
 SCREEN_WIDTH = 36
