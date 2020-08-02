@@ -351,13 +351,16 @@ main()
     }
     else
     {
-        write_text(11, "Loading...");
+        
         governor_step++;
 
         if (has_backup_ram)
         {
+            write_text(11, "Saving...");
             data[0] = governor_step;
             bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+        } else {
+            write_text(11, "Loading...");
         }
     }
     continue_cycle();

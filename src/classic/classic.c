@@ -534,14 +534,21 @@ main()
             move_ava(0, 1, 0);
             update_enemies();
         }
-        if (joyt & JOY_I)
+        if (joyt & JOY_SLCT)
         {
-            cd_playtrk(TRACK_CHIME_2020, TRACK_CHIME_2020 + 1, CDPLAY_REPEAT);
+            kill_ava();
         }
-
-        if (joyt & JOY_II)
+        if (joyt & JOY_RUN)
         {
-            win_ava();
+            cd_pause();
+            for(;;) {
+                vsync(); // Deliberately not wait_for_sync
+                joyt = joytrg(0);
+                if (joyt & JOY_RUN) {
+                    cd_unpause();
+                    break;
+                }
+            }
         }
 
         if (update_objects())

@@ -532,7 +532,10 @@ update_boss1(char index)
 
     if (enemies[index].facing == DIR_FRAME_OVERRIDE && enemies[index].timer >= 5)
     {
-        enemies[index].active = 0;
+        for (i = 0; i < enemy_count; i++)
+        {
+            enemies[i].active = 0;
+        }
         create_object(1, 26, 13);
         create_object(0, 28, 13);
         cd_playtrk(TRACK_BALLAD, TRACK_BALLAD + 1, CDPLAY_REPEAT);
@@ -656,6 +659,12 @@ update_boss1(char index)
     return;
 }
 
+update_boss2(char index)
+{
+    enemies[index].timer++;
+    enemies[index].frame = (((enemies[index].timer) >> 2 & 1) << 1);
+}
+
 check_boss1_hurt(char index)
 {
     char i;
@@ -726,6 +735,11 @@ update_enemies()
         case TYPE_BOSS1:
         {
             update_boss1(i);
+            break;
+        }
+        case TYPE_BOSS2:
+        {
+            update_boss2(i);
             break;
         }
         }
