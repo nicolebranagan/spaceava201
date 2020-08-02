@@ -20,6 +20,9 @@
 
 #define AVA_VRAM 0x5000
 
+#define TOP_HALF_START 0
+#define BOTTOM_HALF_START 32
+
 int sx, sy; // scroll x, scroll y
 char ava_x;
 char ava_y;

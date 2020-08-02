@@ -156,12 +156,12 @@ load_map_graphics(char gfx_type)
 
 init_ava_sprite()
 {
-    spr_set(0);
+    spr_set(TOP_HALF_START);
     spr_pal(0);
     spr_pri(1);
     spr_show();
 
-    spr_set(1);
+    spr_set(BOTTOM_HALF_START);
     spr_pal(0);
     spr_pri(1);
     spr_show();
@@ -239,13 +239,13 @@ draw_ava(char moving, int x, int y)
         }
     }
 
-    spr_set(0);
+    spr_set(TOP_HALF_START);
     spr_x(dx);
     spr_y(dy - 16);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16));
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
 
-    spr_set(1);
+    spr_set(BOTTOM_HALF_START);
     spr_x(dx);
     spr_y(dy);
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16) + SPR_SIZE_16x16);
@@ -325,17 +325,17 @@ kill_ava()
     ad_play(DIE_LOC, DIE_SIZE, 14, 0);
     for (i = 0; i < 16; i++)
     {
-        spr_set(0);
+        spr_set(TOP_HALF_START);
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16));
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_set(1);
+        spr_set(BOTTOM_HALF_START);
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         wait_for_sync(4);
     }
-    spr_set(0);
+    spr_set(TOP_HALF_START);
     spr_hide();
-    spr_set(1);
+    spr_set(BOTTOM_HALF_START);
     spr_hide();
 
     load_room();
@@ -354,17 +354,17 @@ win_ava()
 
     for (i = 0; i < 10; i++)
     {
-        spr_set(0);
+        spr_set(TOP_HALF_START);
         spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16));
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_set(1);
+        spr_set(BOTTOM_HALF_START);
         spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         wait_for_sync(4);
     }
-    spr_set(0);
+    spr_set(TOP_HALF_START);
     spr_hide();
-    spr_set(1);
+    spr_set(BOTTOM_HALF_START);
     spr_hide();
     wait_for_sync(8);
 

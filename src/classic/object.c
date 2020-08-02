@@ -5,7 +5,7 @@
 #include "classic/classic.h"
 
 #define MAX_OBJECT_COUNT 4
-#define OBJECT_SPRITE_START 2 + (MAX_ENEMY_COUNT * 2)
+#define OBJECT_SPRITE_START (MAX_ENEMY_COUNT)
 
 char object_count;
 char obtained_object_count;
@@ -48,7 +48,7 @@ create_object(char type, char x, char y)
     objects[new_index].ypos = y;
     objects[new_index].active = 1;
 
-    spr_set(OBJECT_SPRITE_START + new_index);
+    spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + new_index);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(16);
     spr_pri(1);
@@ -63,7 +63,7 @@ draw_objects()
 {
     for (i = 0; i < object_count; i++)
     {
-        spr_set(OBJECT_SPRITE_START + i);
+        spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
 
         if (!objects[i].active)
         {
@@ -136,7 +136,7 @@ char update_objects()
                 ad_stop();
             }
             ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
-            spr_set(OBJECT_SPRITE_START + i);
+            spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
             spr_hide();
         }
     }

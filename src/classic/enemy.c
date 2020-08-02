@@ -192,7 +192,7 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
         }
     }
 
-    spr_set(sprite_offset);
+    spr_set(TOP_HALF_START + sprite_offset);
     spr_x(dx);
     spr_y(dy - 16);
     spr_pattern(enemy_vram[enemies[enemyIndex].type] + (frame * SPR_SIZE_16x16));
@@ -208,7 +208,7 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
         spr_hide();
     }
 
-    spr_set(sprite_offset + 1);
+    spr_set(BOTTOM_HALF_START + sprite_offset);
     spr_x(dx);
     spr_y(dy);
     spr_pattern(enemy_vram[enemies[enemyIndex].type] + SPR_SIZE_16x16 + (frame * SPR_SIZE_16x16));
@@ -224,7 +224,7 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
         spr_hide();
     }
 
-    return sprite_offset + 2;
+    return sprite_offset + 1;
 }
 
 #define SPRITE_START 2;
@@ -237,19 +237,20 @@ scroll_enemies(signed char dx, signed char dy)
     {
         if (!enemies[i].active)
         {
-            spr_set(offset);
+            spr_set(TOP_HALF_START + offset);
             spr_hide();
-            spr_set(offset + 1);
+            spr_set(BOTTOM_HALF_START + offset);
             spr_hide();
-            offset = offset + 2;
+            offset = offset + 1;
             continue;
         }
-        spr_set(offset++);
+        spr_set(TOP_HALF_START + offset);
         spr_x(spr_get_x() + dx);
         spr_y(spr_get_y() + dy);
-        spr_set(offset++);
+        spr_set(BOTTOM_HALF_START + offset);
         spr_x(spr_get_x() + dx);
         spr_y(spr_get_y() + dy);
+        offset = offset + 1;
     }
 }
 
@@ -268,11 +269,11 @@ quick_draw_enemies()
     {
         if (!enemies[i].active)
         {
-            spr_set(offset);
+            spr_set(TOP_HALF_START + offset);
             spr_hide();
-            spr_set(offset + 1);
+            spr_set(BOTTOM_HALF_START + offset);
             spr_hide();
-            offset = offset + 2;
+            offset = offset + 1;
             continue;
         }
         dx = (enemies[i].x * 16) - sx;
@@ -282,15 +283,15 @@ quick_draw_enemies()
             offset = offset + 2;
             continue;
         }
-        spr_set(offset);
+        spr_set(TOP_HALF_START + offset);
         spr_x(dx);
         spr_y(dy - 16);
 
-        spr_set(offset + 1);
+        spr_set(BOTTOM_HALF_START + offset);
         spr_x(dx);
         spr_y(dy);
 
-        offset = offset + 2;
+        offset = offset + 1;
     }
 }
 
@@ -320,11 +321,11 @@ draw_enemies(char time_offset)
     }
     for (i = enemy_count; i < MAX_ENEMY_COUNT; i++)
     {
-        spr_set(offset);
+        spr_set(TOP_HALF_START + offset);
         spr_hide();
-        spr_set(offset + 1);
+        spr_set(BOTTOM_HALF_START + offset);
         spr_hide();
-        offset = offset + 2;
+        offset = offset + 1;
     }
     return;
 }
