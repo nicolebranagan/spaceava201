@@ -172,6 +172,10 @@ wait_for_sync(char cycles)
     char i;
     for (i = 0; i < cycles; i++)
     {
+        if (in_boss2_mode)
+        {
+            draw_boss2();
+        }
         draw_objects();
         switch (tiles[0])
         {
@@ -299,6 +303,9 @@ move_ava(char negative, char delx, char dely)
         wait_for_sync(1);
     }
 
+    last_ava_x = ava_x;
+    last_ava_y = ava_y;
+
     if (negative)
     {
         ava_x = ava_x - delx;
@@ -397,6 +404,9 @@ load_room()
     ava_x = tiles[2];
     ava_y = tiles[3];
 
+    last_ava_x = tiles[2];
+    last_ava_y = tiles[3] + 1;
+
     init_object();
     init_enemy();
     i = 3;
@@ -450,6 +460,11 @@ char is_solid(char x, char y, char is_ava)
 {
     char tile, i, solidity;
     tile = map_get_tile(x, y);
+
+    if (is_ava && in_boss2_mode && x == last_ava_x && y == last_ava_y)
+    {
+        return 1;
+    }
 
     switch (tiles[0])
     {

@@ -7,15 +7,17 @@
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 #incbin(eyewalkpal, "palettes/eyewalk.pal");
 #incbin(goonbosspal, "palettes/goonboss.pal");
+#incbin(mossbosspal, "palettes/mossboss.pal");
 
 #define MAX_ENEMY_COUNT 16
 
 // Enemy types
-#define ENEMY_TYPE_COUNT 4
+#define ENEMY_TYPE_COUNT 5
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
 #define TYPE_EYEWALK 2
 #define TYPE_BOSS1 3
+#define TYPE_BOSS2 4
 
 // Sound effects
 #define ENEMY_NO_SOUND 0
@@ -25,7 +27,7 @@
 // Other
 #define DIR_FRAME_OVERRIDE 255
 
-const char PALETTE_BY_TYPE[] = {17, 17, 18, 19};
+const char PALETTE_BY_TYPE[] = {17, 17, 18, 19, 20};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -101,6 +103,14 @@ int populate_enemy_vram(int vram_offset, char type)
             vram_offset += GOONBOSS_SIZE / 2;
         }
         break;
+    case TYPE_BOSS2:
+        if (!enemy_vram[TYPE_BOSS2])
+        {
+            cd_loadvram(IMAGE_OVERLAY, MOSSBOSS_SECTOR_OFFSET, vram_offset, MOSSBOSS_SIZE);
+            enemy_vram[TYPE_BOSS2] = vram_offset;
+            vram_offset += MOSSBOSS_SIZE / 2;
+        }
+        break;
     }
 
     return vram_offset;
@@ -111,9 +121,11 @@ init_enemy()
     char i;
     enemy_count = 0;
     boss1_index = 0;
+    in_boss2_mode = 0;
     load_palette(17, bigmouthpal, 1);
     load_palette(18, eyewalkpal, 1);
     load_palette(19, goonbosspal, 1);
+    load_palette(20, mossbosspal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -153,6 +165,17 @@ create_enemy(char type, char x, char y, char facing, char delx, char dely)
     if (type == TYPE_BOSS1)
     {
         boss1_index = new_index;
+    }
+
+    if (type == TYPE_BOSS2)
+    {
+        in_boss2_mode = 1;
+        spr_set(BOSS_2_EXTRA);
+        spr_pri(1);
+        spr_pal(20);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_pattern(enemy_vram[TYPE_BOSS2] + (SPR_SIZE_16x16 << 3));
+        spr_show();
     }
 }
 
@@ -228,6 +251,13 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
 }
 
 #define SPRITE_START 2;
+
+draw_boss2()
+{
+    spr_set(BOSS_2_EXTRA);
+    spr_x((last_ava_x << 4) - sx);
+    spr_y((last_ava_y << 4) - sy);
+}
 
 scroll_enemies(signed char dx, signed char dy)
 {
@@ -586,7 +616,7 @@ update_boss1(char index)
         switch (enemies[index].facing)
         {
         case UP:
-            if (!is_solid(enemies[index].x, enemies[index].y - 1,  0))
+            if (!is_solid(enemies[index].x, enemies[index].y - 1, 0))
             {
                 enemies[index].dely = -1;
             }

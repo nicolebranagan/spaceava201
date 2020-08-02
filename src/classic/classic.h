@@ -22,12 +22,18 @@
 
 #define TOP_HALF_START 0
 #define BOTTOM_HALF_START 32
+#define BOSS_2_EXTRA 63
 
 int sx, sy; // scroll x, scroll y
 char ava_x;
 char ava_y;
 char ava_facing;
+
+char last_ava_x;
+char last_ava_y;
+
 char timer;
+char in_boss2_mode;
 
 void wait_for_sync(char cycles);
 
