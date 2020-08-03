@@ -34,7 +34,7 @@
 #incbin(sunscapebat, "bats/sunscape-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
-#define FRAME_VRAM 0x1800
+#define FRAME_VRAM 0x2000
 #define FONT_VRAM (FRAME_VRAM + (FRAMES_SIZE / 2))
 #define FACE_VRAM (FONT_VRAM + (BIZCAT_SIZE / 2))
 #define SPR_SIZE_16x16 0x40
