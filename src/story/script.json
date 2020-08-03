@@ -1795,5 +1795,162 @@
       "command": "SHOW_TEXT",
       "text": "Still think you can beat me?"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "SUNSCAPE_1"
+    },
+    {
+      "command": "LOAD_SFX",
+      "sfx": "Kaboom"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4,
+      "x": 4,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 4,
+      "x": 7,
+      "slot": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "slot": 2,
+      "x": 13,
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "slot": 3,
+      "x": 15,
+      "face": 7
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track":"Chime 2020"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MOSSBAUER: Impossible! To think I was defeated by a bunch of degenerate bosons..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "MOSSBAU",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Perhaps it would have been wiser to stick with potassium. Alas! Just one sip remains."
+    },
+    {
+      "command": "PLAY_LOADED_SFX"
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Lacked Even a Daisy"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Now do you believe me? I was just here to stop them, and now that I'm done, it's back on the ship and off to Venus!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: I guess we owe you an apology. While we were wasting time trying to stop you, the star was almost blown up by the people you had warned us about and were trying to stop!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I hope you learned an important lesson today!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: I wouldn't go that far..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Well, I guess any apology is good enough. I'm off! Remember to rate the Spaceship Zip-A five stars!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BAGBUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: But this isn't a quinary system; there's only one star here..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: I just have one thing to say about all this..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BUNNY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: Isn't anyone going to untie me?!"
+    }
   ]
 ]
