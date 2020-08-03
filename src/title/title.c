@@ -134,9 +134,22 @@ draw_level_select_button(char sprdex, char button_identity, char x, char y)
     }
 }
 
+// migi shita ue migi migi shita ue migi ue ue shita shita hidari migi hidari migi
 const char LEVEL_SELECT_CODE[] = {
+    JOY_RIGHT,
+    JOY_DOWN,
+    JOY_UP,
+    JOY_RIGHT,
+    JOY_RIGHT,
+    JOY_DOWN,
+    JOY_UP,
+    JOY_RIGHT,
+    JOY_UP,
     JOY_UP,
     JOY_DOWN,
+    JOY_DOWN,
+    JOY_LEFT,
+    JOY_RIGHT,
     JOY_LEFT,
     JOY_RIGHT};
 
@@ -156,7 +169,7 @@ unlock_level_select(char joyt)
         codePoint = 0;
     }
 
-    if (codePoint == 4)
+    if (codePoint == 16)
     {
         unlockedLevelSelect = 1;
         selectedButton = 2;
@@ -171,8 +184,7 @@ unlock_level_select(char joyt)
 const char SELECTED_BUTTON_TO_ACTION[] = {
     NEW_GAME,
     CONTINUE,
-    LEVEL_SELECT
-};
+    LEVEL_SELECT};
 
 main()
 {
@@ -220,7 +232,8 @@ main()
         joyt = joytrg(0);
 
         unlock_level_select(joyt);
-        if (joyt) {
+        if (joyt)
+        {
             longTimer = 0;
         }
 
@@ -250,7 +263,8 @@ main()
             selectedButton = (selectedButton + 1) & 1;
         }
 
-        if (longTimer == 1500) {
+        if (longTimer == 1500)
+        {
             cd_execoverlay(LOGO_OVERLAY);
         }
     }

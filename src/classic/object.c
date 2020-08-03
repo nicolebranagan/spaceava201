@@ -141,7 +141,7 @@ char update_objects()
         }
     }
 
-    return obtained_object_count == photon_count;
+    return photon_count && (obtained_object_count == photon_count);
 }
 
 char move_box(char index)

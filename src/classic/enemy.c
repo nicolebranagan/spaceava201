@@ -661,8 +661,36 @@ update_boss1(char index)
 
 update_boss2(char index)
 {
+    char i;
+
     enemies[index].timer++;
     enemies[index].frame = (((enemies[index].timer) >> 2 & 1) << 1);
+
+    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    {
+        kill_ava();
+        return;
+    }
+
+    for (i = 0; i < enemy_count; i++)
+    {
+        if (
+            enemies[i].active &&
+            enemies[i].type == TYPE_BALL &&
+            (enemies[i].x + enemies[i].delx) == enemies[index].x &&
+            (enemies[i].y + enemies[i].dely) == enemies[index].y)
+        {
+            for (i = 0; i < enemy_count; i++)
+            {
+                enemies[i].active = 0;
+            }
+            create_object(1, 31, 17);
+            create_object(0, 33, 17);
+            cd_playtrk(TRACK_BALLAD, TRACK_BALLAD + 1, CDPLAY_REPEAT);
+            play_sound(ENEMY_MINIWILHELM);
+            return;
+        }
+    }
 }
 
 check_boss1_hurt(char index)
