@@ -12,6 +12,7 @@ STORY_SRC = story/story.c
 MIRROR_SRC = mirror/mirror.c
 TITLE_SRC = title/title.c
 INTRO_SRC = intro/intro.c
+NEPTUNE_SRC = neptune/neptune.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
@@ -32,9 +33,9 @@ spaceava201: spaceava.iso
 	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 11 - Lacked Even a Daisy.wav"
 	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 12 - Your Soul is Lava.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -56,6 +57,9 @@ title.ovl: $(TITLE_SRC) images
 
 intro.ovl: $(INTRO_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(INTRO_SRC) $(LIBS)
+
+neptune.ovl: $(NEPTUNE_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(NEPTUNE_SRC) $(LIBS)
 
 adpcm: adpcm/*
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
