@@ -10,6 +10,9 @@
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
 
+char ava_x, ava_y, ava_state, step, facing_left;
+char allowed_up, allowed_down, allowed_left, allowed_right;
+
 initialize()
 {
     ad_reset();
@@ -65,6 +68,103 @@ init_ava()
     spr_pal(0);
     spr_pri(1);
     spr_show();
+
+    spr_set(POINTER_SPR_UP);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+    spr_pattern(POINTER_VRAM);
+    spr_pal(0);
+    spr_pri(1);
+    spr_hide();
+
+    spr_set(POINTER_SPR_DOWN);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+    spr_pattern(POINTER_VRAM);
+    spr_pal(0);
+    spr_pri(1);
+    spr_hide();
+
+    spr_set(POINTER_SPR_LEFT);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+    spr_pattern(POINTER_VRAM);
+    spr_pal(0);
+    spr_pri(1);
+    spr_hide();
+
+    spr_set(POINTER_SPR_RIGHT);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+    spr_pattern(POINTER_VRAM);
+    spr_pal(0);
+    spr_pri(1);
+    spr_hide();
+}
+
+hide_pointers()
+{
+    spr_set(POINTER_SPR_UP);
+    spr_hide();
+    spr_set(POINTER_SPR_DOWN);
+    spr_hide();
+    spr_set(POINTER_SPR_LEFT);
+    spr_hide();
+    spr_set(POINTER_SPR_RIGHT);
+    spr_hide();
+
+    satb_update();
+}
+
+draw_pointers()
+{
+    int ava_posx, ava_posy;
+    ava_posx = ava_x << 4;
+    ava_posy = ava_y << 4;
+
+    spr_set(POINTER_SPR_UP);
+    if (allowed_up)
+    {
+        spr_x(ava_posx);
+        spr_y(ava_posy - 16);
+        spr_show();
+    }
+    else
+    {
+        spr_hide();
+    }
+
+    spr_set(POINTER_SPR_DOWN);
+    if (allowed_down)
+    {
+        spr_x(ava_posx);
+        spr_y(ava_posy + 16);
+        spr_show();
+    }
+    else
+    {
+        spr_hide();
+    }
+
+    spr_set(POINTER_SPR_LEFT);
+    if (allowed_left)
+    {
+        spr_x(ava_posx - 16);
+        spr_y(ava_posy);
+        spr_show();
+    }
+    else
+    {
+        spr_hide();
+    }
+
+    spr_set(POINTER_SPR_RIGHT);
+    if (allowed_right)
+    {
+        spr_x(ava_posx + 16);
+        spr_y(ava_posy);
+        spr_show();
+    }
+    else
+    {
+        spr_hide();
+    }
 }
 
 draw_ava(int x, char y)
@@ -75,14 +175,135 @@ draw_ava(int x, char y)
     spr_show();
 }
 
+is_solid(char x, char y)
+{
+    return y == 5;
+}
+
+ava_update(signed char delx, signed char dely)
+{
+    char new_x, new_y, old_state;
+    int drawx, drawy;
+
+    new_x = ava_x + delx;
+    new_y = ava_y + dely;
+
+    old_state = ava_state;
+    if ((ava_state == AVA_STATE_FALLING && delx))
+    {
+        ava_state = AVA_STATE_FALL_NO;
+    }
+
+    spr_set(AVA_SPRITE);
+    spr_ctrl(
+        FLIP_MAS | SIZE_MAS,
+        facing_left ? (SZ_16x16 | FLIP_X) : SZ_16x16);
+    if (is_solid(new_x, new_y + 1))
+    {
+        ava_state = AVA_STATE_STANDING;
+        spr_pattern(AVA_STANDING);
+    }
+    else
+    {
+        if (ava_state != AVA_STATE_FALL_NO)
+        {
+            ava_state = AVA_STATE_FALLING;
+        }
+        spr_pattern(AVA_JUMP);
+    }
+
+    switch (ava_state)
+    {
+    case AVA_STATE_STANDING:
+    {
+        allowed_up = !is_solid(new_x, new_y - 1);
+        allowed_down = 0;
+        allowed_left = !is_solid(new_x - 1, new_y);
+        allowed_right = !is_solid(new_x + 1, new_y);
+        break;
+    }
+    case AVA_STATE_FALLING:
+    {
+        allowed_up = 0;
+        allowed_down = 1;
+        allowed_left = !is_solid(new_x - 1, new_y);
+        allowed_right = !is_solid(new_x + 1, new_y);
+        break;
+    }
+    case AVA_STATE_FALL_NO:
+    {
+        allowed_up = 0;
+        allowed_down = 1;
+        allowed_left = 0;
+        allowed_right = 0;
+    }
+    default:
+        break;
+    }
+
+    drawx = ava_x << 4;
+    drawy = ava_y << 4;
+    for (step = 0; step < 16; step++)
+    {
+        if (old_state == AVA_STATE_STANDING && delx)
+        {
+            spr_pattern(AVA_WALK_FRAMES[step]);
+        }
+        spr_x(drawx);
+        spr_y(drawy);
+        drawx += delx;
+        drawy += dely;
+        satb_update();
+        vsync();
+    }
+
+    ava_x = new_x;
+    ava_y = new_y;
+    draw_ava(ava_x << 4, ava_y << 4);
+    draw_pointers();
+    satb_update();
+}
+
 main()
 {
+    char joyt;
+
     initialize();
 
-    draw_ava(32, 32);
+    allowed_up = 0;
+    allowed_down = 0;
+    allowed_right = 0;
+    allowed_left = 0;
+    facing_left = 0;
+    ava_state = AVA_STATE_FALLING;
+    ava_x = 2;
+    ava_y = 2;
+    ava_update(0, 0);
+
     for (;;)
     {
         vsync();
+
+        joyt = joytrg(0);
+        if (((joyt & JOY_UP) || (joyt & JOY_I)) && allowed_up)
+        {
+            ava_update(0, -1);
+        }
+        else if ((joyt & JOY_DOWN) && allowed_down)
+        {
+            ava_update(0, 1);
+        }
+        else if ((joyt & JOY_LEFT) && allowed_left)
+        {
+            facing_left = 1;
+            ava_update(-1, 0);
+        }
+        else if ((joyt & JOY_RIGHT) && allowed_right)
+        {
+            facing_left = 0;
+            ava_update(1, 0);
+        }
+
         satb_update();
     }
 }
