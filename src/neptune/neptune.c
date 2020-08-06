@@ -237,6 +237,7 @@ ava_update(signed char delx, signed char dely)
     spr_ctrl(
         FLIP_MAS | SIZE_MAS,
         facing_left ? (SZ_16x16 | FLIP_X) : SZ_16x16);
+    spr_pattern(AVA_STANDING);
 
     if (is_ladder(new_x, new_y))
     {
@@ -245,7 +246,6 @@ ava_update(signed char delx, signed char dely)
     else if (is_solid(new_x, new_y + 1) || is_ladder(new_x, new_y + 1))
     {
         ava_state = AVA_STATE_STANDING;
-        spr_pattern(AVA_STANDING);
     }
     else
     {
@@ -254,6 +254,11 @@ ava_update(signed char delx, signed char dely)
             ava_state = AVA_STATE_FALLING;
         }
         spr_pattern(AVA_JUMP);
+    }
+
+    if (dely && ((ava_state == AVA_STATE_ON_LADDER) || (old_state == AVA_STATE_ON_LADDER)))
+    {
+        spr_pattern(AVA_LADDER);
     }
 
     switch (ava_state)
@@ -319,7 +324,13 @@ ava_update(signed char delx, signed char dely)
         scroll(0, sx, sy, 0, 223, 0xC0);
         draw_ava(drawx, drawy);
 
-        if (old_state == AVA_STATE_STANDING && delx)
+        if (dely && ((ava_state == AVA_STATE_ON_LADDER) || (old_state == AVA_STATE_ON_LADDER)))
+        {
+            spr_ctrl(
+                FLIP_MAS | SIZE_MAS,
+                (step > 4 && step < 12) ? (SZ_16x16 | FLIP_X) : SZ_16x16);
+        }
+        else if ((old_state == AVA_STATE_STANDING || old_state == AVA_STATE_ON_LADDER) && delx)
         {
             spr_pattern(AVA_WALK_FRAMES[step]);
         }
@@ -329,6 +340,19 @@ ava_update(signed char delx, signed char dely)
 
     ava_x = new_x;
     ava_y = new_y;
+    switch (ava_state)
+    {
+    case AVA_STATE_ON_LADDER:
+        spr_pattern(AVA_LADDER);
+        break;
+    case AVA_STATE_STANDING:
+        spr_pattern(AVA_STANDING);
+        break;
+    case AVA_STATE_FALLING:
+    case AVA_STATE_FALL_NO:
+        spr_pattern(AVA_JUMP);
+        break;
+    }
     draw_ava(ava_x << 4, ava_y << 4);
     draw_pointers();
     satb_update();

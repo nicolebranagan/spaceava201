@@ -29,6 +29,7 @@
 #define AVA_WALK_1 (AVA_VRAM + SPR_SIZE_16x16)
 #define AVA_WALK_2 (AVA_VRAM + (2 * SPR_SIZE_16x16))
 #define AVA_JUMP (AVA_VRAM + (3 * SPR_SIZE_16x16))
+#define AVA_LADDER (AVA_VRAM + (4 * SPR_SIZE_16x16))
 
 const int AVA_WALK_FRAMES[] = {
     AVA_STANDING,
