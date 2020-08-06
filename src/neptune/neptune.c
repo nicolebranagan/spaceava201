@@ -50,10 +50,16 @@ char debug_point;
 
 initialize()
 {
-    ad_reset();
     debug_point = 0;
     pal_cycle = 0;
     timer = 0;
+
+    ad_reset();
+    ad_trans(ADPCM_OVERLAY, JUMP_SECTOR_OFFSET, JUMP_SECTOR_COUNT, PCM_JUMP);
+    ad_trans(ADPCM_OVERLAY, DIE_SECTOR_OFFSET, DIE_SECTOR_COUNT, PCM_DIE);
+    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PCM_PHOTON);
+    ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, PCM_EUREKA);
+
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
@@ -297,6 +303,10 @@ ava_update(signed char delx, signed char dely)
             ava_state = AVA_STATE_FALLING;
         }
         spr_pattern(AVA_JUMP);
+        if (dely < 0)
+        {
+            ad_play(PCM_JUMP, JUMP_SIZE, 14, 0);
+        }
     }
 
     if (dely && ((ava_state == AVA_STATE_ON_LADDER) || (old_state == AVA_STATE_ON_LADDER)))

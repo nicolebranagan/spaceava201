@@ -2,10 +2,16 @@
 #define NEPTUNE_H 1
 
 #include "images/images.h"
+#include "adpcm/adpcm.h"
 
 #define NEPTUNE_VRAM 0x2000
 #define AVA_VRAM (NEPTUNE_VRAM + (NEPTUNE_SIZE / 2))
 #define SIDEOBJ_VRAM (AVA_VRAM +  (AVA_SIZE / 2))
+
+#define PCM_JUMP 0
+#define PCM_DIE (PCM_JUMP + JUMP_SIZE) 
+#define PCM_PHOTON (PCM_DIE + DIE_SIZE)
+#define PCM_EUREKA (PCM_PHOTON + PHOTON_SIZE)
 
 #define SIDEOBJ_PAL (17)
 
