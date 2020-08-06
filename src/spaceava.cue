@@ -47,7 +47,11 @@ FILE "Space Ava 201 - 12 - Your Soul is Lava.wav" WAVE
   TRACK 12 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 13 - Parasol Gently Down.wav" WAVE
+  TRACK 13 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 13 MODE1/2048
+  TRACK 14 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

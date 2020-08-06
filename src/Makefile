@@ -32,6 +32,7 @@ spaceava201: spaceava.iso
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 10 - Nothing is Hope.wav"
 	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 11 - Lacked Even a Daisy.wav"
 	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 12 - Your Soul is Lava.wav"
+	cp ../mods/parasolgentlydown.wav "../build/iso/Space Ava 201 - 13 - Parasol Gently Down.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl
 	mv */*.s */*.ovl */*.sym ../build

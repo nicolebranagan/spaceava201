@@ -414,6 +414,7 @@ main()
     char joyt;
 
     initialize();
+    cd_playtrk(TRACK_PARASOL_GENTLY, TRACK_PARASOL_GENTLY + 1, CDPLAY_REPEAT);
 
     allowed_up = 0;
     allowed_down = 0;
