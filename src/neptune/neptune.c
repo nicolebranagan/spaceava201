@@ -6,9 +6,11 @@
 
 #include "cd.h"
 #include "neptune/neptune.h"
+#include "neptune/objects.c"
 
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
+#incbin(sideobjpal, "palettes/objside.pal");
 
 char ava_x, ava_y, ava_state, step, facing_left;
 char allowed_up, allowed_down, allowed_left, allowed_right;
@@ -27,7 +29,6 @@ const char TILE_SOLIDITY[] = {
     TILE_LADDER};
 
 char pal_cycle;
-char timer;
 
 const char PAL_CYCLE[] = {
     0,
@@ -45,7 +46,6 @@ const char PAL_CYCLE[] = {
     2,
     1};
 
-int sx, sy;
 char debug_point;
 
 initialize()
@@ -57,6 +57,7 @@ initialize()
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
+    cd_loadvram(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
 
     disp_off();
     reset_satb();
@@ -66,6 +67,7 @@ initialize()
 
     load_palette(0, neptunepal, 1);
     load_palette(16, avapal, 1);
+    load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     init_ava();
     draw_map();
     disp_on();
@@ -114,7 +116,8 @@ void wait_for_sync(char cycles)
                 pal_cycle = 0;
             }
         }
-
+        draw_objects();
+        satb_update();
         vsync();
     }
 }
@@ -169,8 +172,6 @@ hide_pointers()
     spr_hide();
     spr_set(POINTER_SPR_RIGHT);
     spr_hide();
-
-    satb_update();
 }
 
 draw_pointers()
@@ -376,7 +377,6 @@ ava_update(signed char delx, signed char dely)
         {
             spr_pattern(AVA_WALK_FRAMES[step]);
         }
-        satb_update();
         wait_for_sync(1);
     }
 
@@ -397,7 +397,6 @@ ava_update(signed char delx, signed char dely)
     }
     draw_ava(ava_x << 4, ava_y << 4);
     draw_pointers();
-    satb_update();
 }
 
 main()
@@ -416,6 +415,9 @@ main()
     ava_y = 2;
     sx = (ava_x * 16) - 128;
     sy = (ava_y * 16) - 128;
+    init_objects();
+    create_object(0, 5, 5);
+    create_object(1, 8, 5);
     if (sx < 0)
     {
         sx = 0;
@@ -451,7 +453,5 @@ main()
             facing_left = 0;
             ava_update(1, 0);
         }
-
-        satb_update();
     }
 }

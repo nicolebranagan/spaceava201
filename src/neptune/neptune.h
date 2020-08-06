@@ -3,8 +3,12 @@
 
 #include "images/images.h"
 
-#define NEPTUNE_VRAM 0x4000
+#define NEPTUNE_VRAM 0x2000
 #define AVA_VRAM (NEPTUNE_VRAM + (NEPTUNE_SIZE / 2))
+#define SIDEOBJ_VRAM (AVA_VRAM +  (AVA_SIZE / 2))
+
+#define SIDEOBJ_PAL (17)
+
 #define SPR_SIZE_16x16 0x40
 
 #define LEVEL_WIDTH_16x16 64
@@ -48,10 +52,18 @@ const int AVA_WALK_FRAMES[] = {
     AVA_WALK_2,
     AVA_STANDING,
     AVA_STANDING};
-    
+
 void wait_for_sync(char cycles);
 
 #define POINTERU_VRAM (AVA_VRAM + (8 * SPR_SIZE_16x16))
 #define POINTERL_VRAM (AVA_VRAM + (9 * SPR_SIZE_16x16))
+
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
+
+char timer;
+int sx, sy;
 
 #endif
