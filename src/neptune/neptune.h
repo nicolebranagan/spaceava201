@@ -48,6 +48,8 @@ const int AVA_WALK_FRAMES[] = {
     AVA_WALK_2,
     AVA_STANDING,
     AVA_STANDING};
+    
+void wait_for_sync(char cycles);
 
 #define POINTERU_VRAM (AVA_VRAM + (8 * SPR_SIZE_16x16))
 #define POINTERL_VRAM (AVA_VRAM + (9 * SPR_SIZE_16x16))

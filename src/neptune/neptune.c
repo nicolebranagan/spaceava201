@@ -26,6 +26,25 @@ const char TILE_SOLIDITY[] = {
     TILE_LADDER,
     TILE_LADDER};
 
+char pal_cycle;
+char timer;
+
+const char PAL_CYCLE[] = {
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    6,
+    5,
+    4,
+    3,
+    2,
+    1};
+
 int sx, sy;
 char debug_point;
 
@@ -33,6 +52,8 @@ initialize()
 {
     ad_reset();
     debug_point = 0;
+    pal_cycle = 0;
+    timer = 0;
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
@@ -74,6 +95,27 @@ draw_map()
         load_vram(addr, row1bytes, MAP_BYTE_WIDTH);
         addr = vram_addr(0, (y << 1) + 1);
         load_vram(addr, row2bytes, MAP_BYTE_WIDTH);
+    }
+}
+
+void wait_for_sync(char cycles)
+{
+    char i, pal;
+    for (i = 0; i < cycles; i++)
+    {
+        pal = PAL_CYCLE[pal_cycle];
+        load_palette(0, neptunepal + (pal << 5), 1);
+        timer++;
+        if (!(timer % 16))
+        {
+            pal_cycle++;
+            if (pal_cycle > 13)
+            {
+                pal_cycle = 0;
+            }
+        }
+
+        vsync();
     }
 }
 
@@ -335,7 +377,7 @@ ava_update(signed char delx, signed char dely)
             spr_pattern(AVA_WALK_FRAMES[step]);
         }
         satb_update();
-        vsync();
+        wait_for_sync(1);
     }
 
     ava_x = new_x;
@@ -388,7 +430,7 @@ main()
 
     for (;;)
     {
-        vsync();
+        wait_for_sync(1);
 
         joyt = joytrg(0);
         if (((joyt & JOY_UP) || (joyt & JOY_I)) && allowed_up)
