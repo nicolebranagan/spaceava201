@@ -13,18 +13,34 @@
 char ava_x, ava_y, ava_state, step, facing_left;
 char allowed_up, allowed_down, allowed_left, allowed_right;
 
+char tiles[2048];
+
+const char TILE_SOLIDITY[] = {
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_SOLID,
+    TILE_LADDER,
+    TILE_LADDER};
+
 int sx, sy;
+char debug_point;
 
 initialize()
 {
     ad_reset();
+    debug_point = 0;
+    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
 
     disp_off();
     reset_satb();
     set_xres(256);
-    set_screen_size(SCR_SIZE_64x32);
+    set_screen_size(SCR_SIZE_128x64);
     cls();
 
     load_palette(0, neptunepal, 1);
@@ -39,18 +55,20 @@ initialize()
 draw_map()
 {
     char x, y;
-    int addr;
+    int addr, i;
     int row1bytes[MAP_BYTE_WIDTH];
     int row2bytes[MAP_BYTE_WIDTH];
 
+    i = 0;
     for (y = 0; y < LEVEL_HEIGHT_16x16; y++)
     {
         for (x = 0; x < LEVEL_WIDTH_16x16; x++)
         {
-            row1bytes[x << 1] = TILE_START + 0;
-            row1bytes[(x << 1) + 1] = TILE_START + 1;
-            row2bytes[x << 1] = TILE_START + 2;
-            row2bytes[(x << 1) + 1] = TILE_START + 3;
+            row1bytes[x << 1] = TILE_START + (tiles[i] << 2) + 0;
+            row1bytes[(x << 1) + 1] = TILE_START + (tiles[i] << 2) + 1;
+            row2bytes[x << 1] = TILE_START + (tiles[i] << 2) + 2;
+            row2bytes[(x << 1) + 1] = TILE_START + (tiles[i] << 2) + 3;
+            i++;
         }
         addr = vram_addr(0, y << 1);
         load_vram(addr, row1bytes, MAP_BYTE_WIDTH);
@@ -176,9 +194,28 @@ draw_ava(int x, char y)
     spr_show();
 }
 
-is_solid(char x, char y)
+char getTileSolidity(char x, char y)
 {
-    return y == 5;
+    int offset;
+    // Trick into doing 16-bit math
+    offset = y * LEVEL_WIDTH_16x16;
+    offset += x;
+    return TILE_SOLIDITY[*(tiles + offset)];
+}
+
+char is_empty(char x, char y)
+{
+    return getTileSolidity(x, y) == TILE_EMPTY;
+}
+
+char is_solid(char x, char y)
+{
+    return getTileSolidity(x, y) == TILE_SOLID;
+}
+
+char is_ladder(char x, char y)
+{
+    return getTileSolidity(x, y) == TILE_LADDER;
 }
 
 ava_update(signed char delx, signed char dely)
@@ -200,7 +237,12 @@ ava_update(signed char delx, signed char dely)
     spr_ctrl(
         FLIP_MAS | SIZE_MAS,
         facing_left ? (SZ_16x16 | FLIP_X) : SZ_16x16);
-    if (is_solid(new_x, new_y + 1))
+
+    if (is_ladder(new_x, new_y))
+    {
+        ava_state = AVA_STATE_ON_LADDER;
+    }
+    else if (is_solid(new_x, new_y + 1) || is_ladder(new_x, new_y + 1))
     {
         ava_state = AVA_STATE_STANDING;
         spr_pattern(AVA_STANDING);
@@ -218,10 +260,18 @@ ava_update(signed char delx, signed char dely)
     {
     case AVA_STATE_STANDING:
     {
-        allowed_up = !is_solid(new_x, new_y - 1);
-        allowed_down = 0;
+        allowed_up = is_empty(new_x, new_y - 1) || is_ladder(new_x, new_y - 1);
+        allowed_down = is_ladder(new_x, new_y + 1);
         allowed_left = !is_solid(new_x - 1, new_y);
         allowed_right = !is_solid(new_x + 1, new_y);
+        break;
+    }
+    case AVA_STATE_ON_LADDER:
+    {
+        allowed_up = is_empty(new_x, new_y - 1) || is_ladder(new_x, new_y - 1);
+        allowed_down = is_ladder(new_x, new_y + 1);
+        allowed_left = is_empty(new_x - 1, new_y);
+        allowed_right = is_empty(new_x + 1, new_y);
         break;
     }
     case AVA_STATE_FALLING:

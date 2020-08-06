@@ -3,7 +3,7 @@
 
 #include "images/images.h"
 
-#define NEPTUNE_VRAM 0x1000
+#define NEPTUNE_VRAM 0x4000
 #define AVA_VRAM (NEPTUNE_VRAM + (NEPTUNE_SIZE / 2))
 #define SPR_SIZE_16x16 0x40
 
@@ -14,6 +14,10 @@
 #define AVA_STATE_FALLING 1
 #define AVA_STATE_FALL_NO 2
 #define AVA_STATE_ON_LADDER 3
+
+#define TILE_EMPTY 0
+#define TILE_SOLID 1
+#define TILE_LADDER 2
 
 #define AVA_SPRITE 0
 #define POINTER_SPR_UP 63

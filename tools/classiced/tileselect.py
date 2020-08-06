@@ -2,7 +2,8 @@ import tkinter as tk
 
 TILESETS = {
     "Spaceful": 0,
-    "Betelgeuse": 1
+    "Betelgeuse": 1,
+    "Neptune": 2
 }
 
 INV_TILESETS = {v: k for k, v in TILESETS.items()}
