@@ -13,6 +13,8 @@
 char ava_x, ava_y, ava_state, step, facing_left;
 char allowed_up, allowed_down, allowed_left, allowed_right;
 
+int sx, sy;
+
 initialize()
 {
     ad_reset();
@@ -29,7 +31,6 @@ initialize()
     load_palette(16, avapal, 1);
     init_ava();
     draw_map();
-    scroll(0, 0, 0, 0, 223, 0xC0);
     disp_on();
 }
 
@@ -71,28 +72,28 @@ init_ava()
 
     spr_set(POINTER_SPR_UP);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-    spr_pattern(POINTER_VRAM);
+    spr_pattern(POINTERU_VRAM);
     spr_pal(0);
     spr_pri(1);
     spr_hide();
 
     spr_set(POINTER_SPR_DOWN);
-    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-    spr_pattern(POINTER_VRAM);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16 | FLIP_Y);
+    spr_pattern(POINTERU_VRAM);
     spr_pal(0);
     spr_pri(1);
     spr_hide();
 
     spr_set(POINTER_SPR_LEFT);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-    spr_pattern(POINTER_VRAM);
+    spr_pattern(POINTERL_VRAM);
     spr_pal(0);
     spr_pri(1);
     spr_hide();
 
     spr_set(POINTER_SPR_RIGHT);
-    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-    spr_pattern(POINTER_VRAM);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16 | FLIP_X);
+    spr_pattern(POINTERL_VRAM);
     spr_pal(0);
     spr_pri(1);
     spr_hide();
@@ -115,8 +116,8 @@ hide_pointers()
 draw_pointers()
 {
     int ava_posx, ava_posy;
-    ava_posx = ava_x << 4;
-    ava_posy = ava_y << 4;
+    ava_posx = (ava_x << 4) - sx;
+    ava_posy = (ava_y << 4) - sy;
 
     spr_set(POINTER_SPR_UP);
     if (allowed_up)
@@ -170,8 +171,8 @@ draw_pointers()
 draw_ava(int x, char y)
 {
     spr_set(0);
-    spr_x(x);
-    spr_y(y);
+    spr_x(x - sx);
+    spr_y(y - sy);
     spr_show();
 }
 
@@ -194,6 +195,7 @@ ava_update(signed char delx, signed char dely)
         ava_state = AVA_STATE_FALL_NO;
     }
 
+    hide_pointers();
     spr_set(AVA_SPRITE);
     spr_ctrl(
         FLIP_MAS | SIZE_MAS,
@@ -245,14 +247,32 @@ ava_update(signed char delx, signed char dely)
     drawy = ava_y << 4;
     for (step = 0; step < 16; step++)
     {
+
+        drawx += delx;
+        drawy += dely;
+        if (drawx > 128)
+        {
+            sx = drawx - 128;
+        }
+        else
+        {
+            sx = 0;
+        }
+        if (drawy > 128)
+        {
+            sy = drawy - 128;
+        }
+        else
+        {
+            sy = 0;
+        }
+        scroll(0, sx, sy, 0, 223, 0xC0);
+        draw_ava(drawx, drawy);
+
         if (old_state == AVA_STATE_STANDING && delx)
         {
             spr_pattern(AVA_WALK_FRAMES[step]);
         }
-        spr_x(drawx);
-        spr_y(drawy);
-        drawx += delx;
-        drawy += dely;
         satb_update();
         vsync();
     }
@@ -278,6 +298,18 @@ main()
     ava_state = AVA_STATE_FALLING;
     ava_x = 2;
     ava_y = 2;
+    sx = (ava_x * 16) - 128;
+    sy = (ava_y * 16) - 128;
+    if (sx < 0)
+    {
+        sx = 0;
+    }
+    if (sy < 0)
+    {
+        sy = 0;
+    }
+    scroll(0, sx, sy, 0, 223, 0xC0);
+
     ava_update(0, 0);
 
     for (;;)
