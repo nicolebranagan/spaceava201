@@ -18,8 +18,6 @@
 #define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
-    NEPTUNE_OVERLAY, 7,
-    STORY_OVERLAY, 3,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -91,6 +89,9 @@ level_select()
             break;
         case MIRROR_OVERLAY:
             write_text(13, "Mirror Puzzle");
+            break;
+        case NEPTUNE_OVERLAY:
+            write_text(13, "Neptune Gameplay");
             break;
         default:
             write_text(13, "Unknown Level Type");
@@ -355,7 +356,7 @@ main()
     }
     else
     {
-        
+
         governor_step++;
 
         if (has_backup_ram)
@@ -363,7 +364,9 @@ main()
             write_text(11, "Saving...");
             data[0] = governor_step;
             bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
-        } else {
+        }
+        else
+        {
             write_text(11, "Loading...");
         }
     }
