@@ -11,6 +11,7 @@
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
 #incbin(sideobjpal, "palettes/objside.pal");
+#incbin(sidenmypal, "palettes/sidenmy.pal");
 
 char tiles[2048];
 
@@ -61,6 +62,7 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
+    cd_loadvram(IMAGE_OVERLAY, SIDENMY_SECTOR_OFFSET, SIDENMY_VRAM, SIDENMY_SIZE);
 
     disp_off();
     reset_satb();
@@ -71,6 +73,7 @@ initialize()
     load_palette(0, neptunepal, 1);
     load_palette(16, avapal, 1);
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
+    load_palette(SIDENMY_PAL, sidenmypal, 1);
     init_ava();
     draw_map();
     disp_on();
@@ -232,7 +235,7 @@ draw_pointers()
     }
 }
 
-draw_ava(int x, char y)
+draw_ava(int x, int y)
 {
     spr_set(0);
     spr_x(x - sx);
@@ -403,12 +406,14 @@ ava_update(signed char delx, signed char dely)
         break;
     }
     draw_ava(ava_x << 4, ava_y << 4);
-    draw_pointers();
-    wait_for_sync(1);
-    if (update_objects())
+
+    if ((delx || dely) && update_objects())
     {
         win_ava();
     }
+
+    draw_pointers();
+    wait_for_sync(1);
 }
 
 const char WIN_FRAMES[] = {0, 5, 6, 7, 8, 9, 10, 11, 12, 13};
@@ -465,8 +470,9 @@ main()
     sx = (ava_x * 16) - 128;
     sy = (ava_y * 16) - 128;
     init_objects();
-    create_object(0, 5, 5);
-    create_object(1, 8, 6);
+    create_object(0, 5, 5, 0);
+    create_object(1, 8, 6, 0);
+    create_object(2, 10, 6, LEFT);
     if (sx < 0)
     {
         sx = 0;
