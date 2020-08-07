@@ -136,6 +136,11 @@ draw_objects()
 update_blobbo(char index)
 {
     char target_x;
+    if (ava_x == objects[i].xpos && ava_y == objects[i].ypos)
+    {
+        kill_ava();
+    }
+
     if (objects[i].facing_left)
     {
         target_x = objects[i].xpos - 1;
@@ -202,6 +207,22 @@ char update_objects()
         {
             wait_for_sync(16);
             break;
+        }
+    }
+
+    for (i = 0; i < object_count; i++)
+    {
+        if (!objects[i].active)
+        {
+            continue;
+        }
+        if (objects[i].type < OBJ_BLOBBO)
+        {
+            continue;
+        }
+        if (ava_x == objects[i].xpos && ava_y == objects[i].ypos)
+        {
+            kill_ava();
         }
     }
 

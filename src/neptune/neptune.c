@@ -44,11 +44,10 @@ const char PAL_CYCLE[] = {
     2,
     1};
 
-char debug_point;
+char joyt;
 
 initialize()
 {
-    debug_point = 0;
     pal_cycle = 0;
     timer = 0;
 
@@ -77,6 +76,35 @@ initialize()
     init_ava();
     draw_map();
     disp_on();
+}
+
+load_room()
+{
+    allowed_up = 0;
+    allowed_down = 0;
+    allowed_right = 0;
+    allowed_left = 0;
+    facing_left = 0;
+    ava_state = AVA_STATE_FALLING;
+    ava_x = 2;
+    ava_y = 2;
+    sx = (ava_x * 16) - 128;
+    sy = (ava_y * 16) - 128;
+    init_objects();
+    create_object(0, 5, 5, 0);
+    create_object(1, 8, 6, 0);
+    create_object(2, 10, 6, LEFT);
+    if (sx < 0)
+    {
+        sx = 0;
+    }
+    if (sy < 0)
+    {
+        sy = 0;
+    }
+    scroll(0, sx, sy, 0, 223, 0xC0);
+
+    ava_update(0, 0);
 }
 
 #define MAP_BYTE_WIDTH (LEVEL_WIDTH_16x16 * 2)
@@ -452,44 +480,40 @@ win_ava()
     cd_execoverlay(GOVERNOR_OVERLAY);
 }
 
+const char DEATH_FRAMES[] = {0, 0, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22};
+kill_ava()
+{
+    char i;
+
+    if (ad_stat())
+    {
+        ad_stop();
+    }
+    ad_play(PCM_DIE, DIE_SIZE, 14, 0);
+    for (i = 0; i < 16; i++)
+    {
+        spr_set(AVA_SPRITE);
+        spr_pattern(AVA_VRAM + (DEATH_FRAMES[i] * SPR_SIZE_16x16));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        wait_for_sync(4);
+    }
+    spr_set(AVA_SPRITE);
+    spr_hide();
+
+    load_room();
+}
+
 main()
 {
-    char joyt;
-
     initialize();
     cd_playtrk(TRACK_PARASOL_GENTLY, TRACK_PARASOL_GENTLY + 1, CDPLAY_REPEAT);
-
-    allowed_up = 0;
-    allowed_down = 0;
-    allowed_right = 0;
-    allowed_left = 0;
-    facing_left = 0;
-    ava_state = AVA_STATE_FALLING;
-    ava_x = 2;
-    ava_y = 2;
-    sx = (ava_x * 16) - 128;
-    sy = (ava_y * 16) - 128;
-    init_objects();
-    create_object(0, 5, 5, 0);
-    create_object(1, 8, 6, 0);
-    create_object(2, 10, 6, LEFT);
-    if (sx < 0)
-    {
-        sx = 0;
-    }
-    if (sy < 0)
-    {
-        sy = 0;
-    }
-    scroll(0, sx, sy, 0, 223, 0xC0);
-
-    ava_update(0, 0);
+    load_room();
 
     for (;;)
     {
         wait_for_sync(1);
 
-        joyt = joytrg(0);
+        joyt = joy(0);
         if (((joyt & JOY_UP) || (joyt & JOY_I)) && allowed_up)
         {
             ava_update(0, -1);
