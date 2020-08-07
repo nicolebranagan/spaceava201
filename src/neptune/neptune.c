@@ -14,6 +14,7 @@
 #incbin(sidenmypal, "palettes/sidenmy.pal");
 
 char tiles[2048];
+char objdata[500];
 
 const char TILE_SOLIDITY[] = {
     TILE_EMPTY,
@@ -58,6 +59,8 @@ initialize()
     ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, PCM_EUREKA);
 
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
+    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level + 1), objdata, 500);
+
     cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
@@ -86,14 +89,12 @@ load_room()
     allowed_left = 0;
     facing_left = 0;
     ava_state = AVA_STATE_FALLING;
-    ava_x = 2;
-    ava_y = 2;
+
+    ava_x = objdata[2];
+    ava_y = objdata[3];
+
     sx = (ava_x * 16) - 128;
     sy = (ava_y * 16) - 128;
-    init_objects();
-    create_object(0, 5, 5, 0);
-    create_object(1, 8, 6, 0);
-    create_object(2, 10, 6, LEFT);
     if (sx < 0)
     {
         sx = 0;
@@ -103,6 +104,38 @@ load_room()
         sy = 0;
     }
     scroll(0, sx, sy, 0, 223, 0xC0);
+
+    init_objects();
+    {
+        char i, x, y, type, facing, delx, dely;
+        i = 3;
+        for (;;)
+        {
+            x = objdata[++i];
+            if (x == 255)
+            {
+                break;
+            }
+            y = objdata[++i];
+            type = objdata[++i];
+            facing = objdata[++i];
+            delx = objdata[++i];
+            dely = objdata[++i];
+            create_object(type + OBJ_BLOBBO, x, y, facing);
+        }
+
+        for (;;)
+        {
+            x = objdata[++i];
+            if (x == 255)
+            {
+                break;
+            }
+            y = objdata[++i];
+            type = objdata[++i];
+            create_object(type, x, y, 0);
+        }
+    }
 
     ava_update(0, 0);
 }
