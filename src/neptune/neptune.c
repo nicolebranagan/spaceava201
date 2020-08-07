@@ -12,9 +12,6 @@
 #incbin(neptunepal, "palettes/neptune.pal");
 #incbin(sideobjpal, "palettes/objside.pal");
 
-char ava_x, ava_y, ava_state, step, facing_left;
-char allowed_up, allowed_down, allowed_left, allowed_right;
-
 char tiles[2048];
 
 const char TILE_SOLIDITY[] = {
@@ -407,6 +404,47 @@ ava_update(signed char delx, signed char dely)
     }
     draw_ava(ava_x << 4, ava_y << 4);
     draw_pointers();
+    wait_for_sync(1);
+    if (update_objects())
+    {
+        win_ava();
+    }
+}
+
+const char WIN_FRAMES[] = {0, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+win_ava()
+{
+    char i;
+    cd_reset();
+    hide_pointers();
+    if (ad_stat())
+    {
+        ad_stop();
+    }
+    ad_play(PCM_EUREKA, EUREKA_SIZE, 15, 0);
+
+    for (i = 0; i < 10; i++)
+    {
+        spr_set(AVA_SPRITE);
+        spr_pattern(AVA_VRAM + (WIN_FRAMES[i] * SPR_SIZE_16x16));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        wait_for_sync(4);
+    }
+
+    spr_set(AVA_SPRITE);
+    spr_hide();
+    wait_for_sync(8);
+
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    vsync(); // Deliberately not wait_for_sync
+
+    // Return to governor
+    cd_execoverlay(GOVERNOR_OVERLAY);
 }
 
 main()
@@ -428,7 +466,7 @@ main()
     sy = (ava_y * 16) - 128;
     init_objects();
     create_object(0, 5, 5);
-    create_object(1, 8, 5);
+    create_object(1, 8, 6);
     if (sx < 0)
     {
         sx = 0;

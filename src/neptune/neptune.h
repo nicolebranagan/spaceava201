@@ -6,10 +6,10 @@
 
 #define NEPTUNE_VRAM 0x2000
 #define AVA_VRAM (NEPTUNE_VRAM + (NEPTUNE_SIZE / 2))
-#define SIDEOBJ_VRAM (AVA_VRAM +  (AVA_SIZE / 2))
+#define SIDEOBJ_VRAM (AVA_VRAM + (AVA_SIZE / 2))
 
 #define PCM_JUMP 0
-#define PCM_DIE (PCM_JUMP + JUMP_SIZE) 
+#define PCM_DIE (PCM_JUMP + JUMP_SIZE)
 #define PCM_PHOTON (PCM_DIE + DIE_SIZE)
 #define PCM_EUREKA (PCM_PHOTON + PHOTON_SIZE)
 
@@ -61,8 +61,8 @@ const int AVA_WALK_FRAMES[] = {
 
 void wait_for_sync(char cycles);
 
-#define POINTERU_VRAM (AVA_VRAM + (8 * SPR_SIZE_16x16))
-#define POINTERL_VRAM (AVA_VRAM + (9 * SPR_SIZE_16x16))
+#define POINTERU_VRAM (AVA_VRAM + (14 * SPR_SIZE_16x16))
+#define POINTERL_VRAM (AVA_VRAM + (15 * SPR_SIZE_16x16))
 
 #define UP 0
 #define DOWN 1
@@ -71,5 +71,8 @@ void wait_for_sync(char cycles);
 
 char timer;
 int sx, sy;
+
+char ava_x, ava_y, ava_state, step, facing_left;
+char allowed_up, allowed_down, allowed_left, allowed_right;
 
 #endif

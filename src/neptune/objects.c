@@ -88,3 +88,41 @@ draw_objects()
         spr_y(dy);
     }
 }
+
+char update_objects()
+{
+    if (!object_count)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < object_count; i++)
+    {
+        if (!objects[i].active)
+        {
+            continue;
+        }
+        switch (objects[i].type)
+        {
+        case OBJ_ANTIPHOTON:
+        case OBJ_PHOTON:
+        {
+            if (ava_x == objects[i].xpos && ava_y == objects[i].ypos)
+            {
+                objects[i].active = 0;
+                obtained_object_count++;
+                if (ad_stat())
+                {
+                    ad_stop();
+                }
+                ad_play(PCM_PHOTON, PHOTON_SIZE, 14, 0);
+                spr_set(OBJECT_SPRITE_START + i);
+                spr_hide();
+            }
+            break;
+        }
+        }
+    }
+
+    return photon_count && (obtained_object_count == photon_count);
+}
