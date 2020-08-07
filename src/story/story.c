@@ -22,6 +22,7 @@
 #incbin(starbasepal, "palettes/stardrop.pal");
 #incbin(starshippal, "palettes/starship.pal");
 #incbin(sunscapepal, "palettes/sunscape.pal");
+#incbin(nepdroppal, "palettes/nepdrop.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -32,6 +33,7 @@
 #incbin(betelshipbat, "bats/betelship.bin")
 #incbin(betalertbat, "bats/betalert-bg.bin")
 #incbin(sunscapebat, "bats/sunscape-bg.bin")
+#incbin(nepoutbat, "bats/nepout-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -273,6 +275,16 @@ draw_background(char index, char load_new_gfx)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, sunscapebat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 9:
+        load_palette(1, nepdroppal, 1);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, nepoutbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         break;
     }

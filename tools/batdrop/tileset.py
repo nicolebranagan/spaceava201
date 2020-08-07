@@ -11,7 +11,8 @@ TILESET_NAME = {
     "Title Screen": 4,
     "Amalgamation HQ": 5,
     "Intro text": 6,
-    "Shut up and Calculate": 7
+    "Shut up and Calculate": 7,
+    "Neptile": 8
 }
 
 NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
@@ -52,4 +53,5 @@ def getTilesets():
         getTileset("../../images/tiles/amalghq.terra"),
         getTileset("../../images/tiles/introtxt.terra"),
         getTileset("../../images/tiles/shutcalc.terra"),
+        getTileset("../../images/tiles/nepdrop.terra"),
     ]

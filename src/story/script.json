@@ -1952,5 +1952,46 @@
       "command": "SHOW_TEXT",
       "text": "BLUE ???: Isn't anyone going to untie me?!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "NEPTUNE_OUTSIDE"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Neptune\nSolar System",
+      "chirp": 76
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_FEYNMAN"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 7,
+      "x": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "NELEHU",
+      "face": 3,
+      "x": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Ava, are you even paying attention?"
+    }
   ]
 ]
