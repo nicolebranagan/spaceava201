@@ -34,6 +34,7 @@
 #incbin(betalertbat, "bats/betalert-bg.bin")
 #incbin(sunscapebat, "bats/sunscape-bg.bin")
 #incbin(nepoutbat, "bats/nepout-bg.bin")
+#incbin(nepshipbat, "bats/nepship-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -285,6 +286,16 @@ draw_background(char index, char load_new_gfx)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, nepoutbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        break;
+    case 10:
+        load_palette(1, starshippal, 1);
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, nepshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         break;
     }
@@ -571,6 +582,7 @@ draw_block(char more)
 #define CMD_DELETE_SPRITE 7
 #define CMD_LOAD_SFX 8
 #define CMD_PLAY_LOADED_SFX 9
+#define CMD_LOAD_NEXT_SEGMENT 10
 
 perform_command()
 {
@@ -630,6 +642,12 @@ loop:
         ad_stop();
         ad_play(0, sfx_size, 15, 0);
         pointer_to_data += 1;
+        goto loop;
+        break;
+    case CMD_LOAD_NEXT_SEGMENT:
+        current_level++;
+        cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
+        pointer_to_data = 0;
         goto loop;
         break;
     }

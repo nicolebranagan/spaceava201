@@ -20,6 +20,8 @@ CINDY:
 3. Shock and horror
 4. Wink
 5. Rolleyes
+6. Quantum costume
+7. >_>
 
 NELEHU:
 0. Blank expression

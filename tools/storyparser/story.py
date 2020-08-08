@@ -16,7 +16,8 @@ COMMANDS = {
     "SHOW_FRAME": 6,
     "DELETE_SPRITE": 7,
     "LOAD_SFX": 8,
-    "PLAY_LOADED_SFX": 9
+    "PLAY_LOADED_SFX": 9,
+    "LOAD_NEXT_SEGMENT": 10
 }
 
 SPRITES = {
@@ -40,7 +41,8 @@ BACKGROUNDS = {
     "STARSHIP_BETELGEUSE": 6,
     "STARSHIP_BETELGEUSE_ALERT": 7,
     "SUNSCAPE_1": 8,
-    "NEPTUNE_OUTSIDE": 9
+    "NEPTUNE_OUTSIDE": 9,
+    "STARSHIP_NEPTUNE": 10
 }
 
 BACKGROUND_GROUPING = {
@@ -60,7 +62,8 @@ BACKGROUNDS_TO_BACKGROUND_GROUPING = {
     "STARSHIP_BETELGEUSE": BACKGROUND_GROUPING["VOID/STARSHIP"],
     "STARSHIP_BETELGEUSE_ALERT": BACKGROUND_GROUPING["VOID/STARSHIP"],
     "SUNSCAPE_1": BACKGROUND_GROUPING["SUNSCAPE"],
-    "NEPTUNE_OUTSIDE": BACKGROUND_GROUPING["NEPTUNE"]
+    "NEPTUNE_OUTSIDE": BACKGROUND_GROUPING["NEPTUNE"],
+    "STARSHIP_NEPTUNE": BACKGROUND_GROUPING["VOID/STARSHIP"]
 }
 
 TRACKS = {
@@ -94,7 +97,6 @@ def parse_text(text):
     return ['\n'.join(lines[(x*4):((x+1)*4)]) for x in range(0, math.ceil(len(lines) / 4))]
 
 def parse_single_script(script):
-    output = b''
     cast = []
 
     current_bg_grouping = -1
@@ -105,6 +107,8 @@ def parse_single_script(script):
     last_x = [0 for _ in range(0, 10)]
 
     last_slot_for_face = {}
+
+    commands = []
 
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
@@ -126,8 +130,7 @@ def parse_single_script(script):
             if "x" in command:
                 last_x[slot] = command["x"]
 
-            output = (
-                output + bytes(
+            commands.append(bytes(
                     [COMMANDS["SHOW_SPRITE"],
                     slot,
                     cast.index(SPRITES[last_sprite[slot]]),
@@ -139,8 +142,7 @@ def parse_single_script(script):
             parsedsets = parse_text(command["text"])
             chirp = int(command["chirp"]) if "chirp" in command else 0
             for newtext in parsedsets:
-                output = (
-                    output + 
+                commands.append(
                     bytes([COMMANDS["SHOW_TEXT"], chirp]) + 
                     newtext.encode('ascii') + 
                     bytes([0])
@@ -148,8 +150,7 @@ def parse_single_script(script):
         elif (command["command"] == "SHOW_CENTERED_TEXT"):
             newtext = parse_and_center_text(command["text"])
             chirp = int(command["chirp"]) if "chirp" in command else 0
-            output = (
-                output + 
+            commands.append(
                 bytes([COMMANDS["SHOW_TEXT"], chirp]) + 
                 newtext.encode('ascii') + 
                 bytes([0])
@@ -157,8 +158,8 @@ def parse_single_script(script):
         elif (command["command"] == "SHOW_BACKGROUND"):
             newbg = command["background"]
             newgroup = BACKGROUNDS_TO_BACKGROUND_GROUPING[newbg]
-            output = (
-                output + bytes(
+            commands.append(
+                bytes(
                     [COMMANDS["SHOW_BACKGROUND"],
                     BACKGROUNDS[newbg],
                     0 if newgroup == current_bg_grouping else 1]
@@ -166,29 +167,54 @@ def parse_single_script(script):
             )
             current_bg_grouping = newgroup
         elif (command["command"] == "PLAY_MUSIC"):
-            output = (
-                output + bytes(
+            commands.append(
+                bytes(
                     [COMMANDS["PLAY_MUSIC"],
                     TRACKS[command["track"]]]
                 )
             )
         elif (command["command"] == "STOP_MUSIC"):
-            output = output + bytes([COMMANDS["STOP_MUSIC"]])
+            commands.append(bytes([COMMANDS["STOP_MUSIC"]]))
         elif (command["command"] == "SHOW_FRAME"):
-            output = output + bytes([COMMANDS["SHOW_FRAME"], command["frame"]])
+            commands.append(bytes([COMMANDS["SHOW_FRAME"], command["frame"]]))
         elif (command["command"] == "DELETE_SPRITE"):
-            output = output + bytes([COMMANDS["DELETE_SPRITE"], command["slot"]])
+            commands.append(bytes([COMMANDS["DELETE_SPRITE"], command["slot"]]))
         elif (command["command"] == "LOAD_SFX"):
-            output = (
-                output + bytes(
+            commands.append(
+                bytes(
                     [COMMANDS["LOAD_SFX"],
                     SFXES[command["sfx"]]]
                 )
             )
         elif (command["command"] == "PLAY_LOADED_SFX"):
-            output = output + bytes([COMMANDS["PLAY_LOADED_SFX"]])
+            commands.append(bytes([COMMANDS["PLAY_LOADED_SFX"]]))
+    
+    last_song = -1
+    blocks = []
+    current_block = bytes(cast) + bytes([255])
+    for cmd in commands:
+        if (len(current_block + cmd) > (2048 - 3)): 
+            print("Expanding block")
+            current_block = current_block + (
+                bytes([COMMANDS["LOAD_NEXT_SEGMENT"]])
+            )
+            blocks.append(current_block)
+            if last_song > -1:
+                current_block = bytes([
+                    COMMANDS["PLAY_MUSIC"],
+                    last_song
+                ]) + cmd
+            else:
+                current_block = cmd
+        else:
+            if (cmd[0] == COMMANDS["PLAY_MUSIC"]):
+                last_song = cmd[1]
+            elif (cmd[0] == COMMANDS["STOP_MUSIC"]):
+                last_song = -1
+            current_block = current_block + cmd
+    blocks.append(current_block + bytes([255]))
 
-    return bytes(cast) + bytes([255]) + output + bytes([255])
+    return blocks
 
 if (len(sys.argv) < 3):
     print("usage: story.py <input> <output>")
@@ -201,8 +227,10 @@ with open(inputfile, "r") as fileo:
     input = json.load(fileo)
 
 output = b''
+parsed_scripts = []
 for script in input:
-    parsed_script = parse_single_script(script)
+    parsed_scripts = parsed_scripts + parse_single_script(script)
+for parsed_script in parsed_scripts:
     size = len(parsed_script)
     sectorcount = math.ceil(size / 2048)
     if (sectorcount > 1):

@@ -1964,12 +1964,12 @@
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Neptune\nSolar System",
+      "text": "Neptune Orbit\nSolar System",
       "chirp": 76
     },
     {
       "command": "SHOW_BACKGROUND",
-      "background": "STARSHIP_FEYNMAN"
+      "background": "STARSHIP_NEPTUNE"
     },
     {
       "command": "PLAY_MUSIC",
@@ -1979,19 +1979,300 @@
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "AVA",
-      "face": 7,
-      "x": 4
+      "face": 4,
+      "x": 9
     },
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
-      "sprite": "NELEHU",
-      "face": 3,
-      "x": 8
+      "sprite": "CINDY",
+      "face": 0,
+      "x": 15
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: Ava, are you even paying attention?"
+      "text": "AVA: We made it! Now in orbit around the blue planet, and I detect a quantum field below."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Ensign Ava... I'm not sure this is the right planet. The distress signal was from Earth, remember?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I thought Earth was the blue planet?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face":0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Don't tell me this star system has more than one blue planet..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Well, we're in a ship capable of traveling between galaxies, going from one planet to another should be a breeze!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Yes, of course! Computer, set a course to the... third? is that right? The third planet!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Nope.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Uh, computer, what? Just move the ship!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Can't do it.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Computer! Stop messing around! The entire Amalgamation is at stake!"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: Unable to comply.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: What's going on! I've never had the computer act like this before!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Maybe Quantum's infiltrated this ship too... I should've backed up my manuscripts."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "slot": 2,
+      "face": 0,
+      "x": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Sorry I'm late, I was off screen. What's going on?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Nelehu! The ship's refusing to move us from one planet to another!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Computer. Explain yourself."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: We are currently out of fuel.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Why didn't you just say that, computer!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "COMPUTER: You didn't ask.",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Oh right... the ship needs fuel... I was definitely going to check that before calling a red alert..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: I wanted to warn you of this earlier when we were messing about on Betelgeuse."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I suppose therefore this is also my responsibility."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: It doesn't matter whose fault it is. We need to get some fuel."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: There is an Amalgamation settlement in orbit around Neptune. We should be able to get fuel from them."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: About that... I detected a quantum field below. I think the Neptune station also has been taken over by quantum."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: Then we'll simply have to eliminate quantum from the surface, as we did elsewhere."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: And by 'we' you mean 'me'!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "NELEHU",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: What's wrong, Ava? You were more willing to do this before..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Well, about that... In orbit over the planet, gravity will be much lower... I've never had to jump in quantum space. I don't know if it'll work."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command" : "SHOW_TEXT",
+      "text": "CINDY: Is that all, Ava? You'll do great! Just try to picture some giant golden arrows in possible directions, maybe that'll help."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I guess that might help..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: I must admit that you are not only our only hope, Ava, but you are therefore our best hope."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Well! I'm feeling a little better now. I guess I won't know what it's like until I head down... Wish me luck!"
     }
   ]
 ]
