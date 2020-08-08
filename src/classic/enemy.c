@@ -27,7 +27,7 @@
 // Other
 #define DIR_FRAME_OVERRIDE 255
 
-const char PALETTE_BY_TYPE[] = {17, 17, 18, 19, 20};
+const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -122,10 +122,10 @@ init_enemy()
     enemy_count = 0;
     boss1_index = 0;
     in_boss2_mode = 0;
-    load_palette(17, bigmouthpal, 1);
-    load_palette(18, eyewalkpal, 1);
-    load_palette(19, goonbosspal, 1);
-    load_palette(20, mossbosspal, 1);
+    load_palette(17, bigmouthpal, 2);
+    load_palette(19, eyewalkpal, 1);
+    load_palette(20, goonbosspal, 1);
+    load_palette(21, mossbosspal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -172,7 +172,7 @@ create_enemy(char type, char x, char y, char facing, char delx, char dely)
         in_boss2_mode = 1;
         spr_set(BOSS_2_EXTRA);
         spr_pri(1);
-        spr_pal(20);
+        spr_pal(21);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         spr_pattern(enemy_vram[TYPE_BOSS2] + (SPR_SIZE_16x16 << 3));
         spr_show();

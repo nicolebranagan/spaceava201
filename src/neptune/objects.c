@@ -56,6 +56,8 @@ create_object(char type, char x, char y, char facing)
     objects[new_index].ydraw = y * 16;
     objects[new_index].xpos = x;
     objects[new_index].ypos = y;
+    objects[new_index].xdel = 0;
+    objects[new_index].ydel = 0;
     objects[new_index].active = 1;
     objects[new_index].facing_left = facing == LEFT;
 
