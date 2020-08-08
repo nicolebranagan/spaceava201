@@ -336,6 +336,11 @@ ava_update(signed char delx, signed char dely)
     new_x = ava_x + delx;
     new_y = ava_y + dely;
 
+    if (new_y > 24) {
+        kill_ava();
+        return;
+    }
+
     old_state = ava_state;
     if ((ava_state == AVA_STATE_FALLING && delx))
     {
