@@ -116,7 +116,11 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Earth?! My food replicator's been out all day and no one has done anything to fix it! I don't even remember which planet Earth is! I just want a banana!"
+      "text": "AVA: Earth?! My food replicator's been out all day and no one has done anything to fix it! I don't even remember which planet Earth is!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I just want a banana!"
     },
     {
       "command": "SHOW_SPRITE",
