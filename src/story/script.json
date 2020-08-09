@@ -2289,9 +2289,149 @@
       "background": "NEPTUNE_SURFACE"
     },
     {
-      "command": "SHOW_CENTERED_TEXT",
-      "text": "Neptune Orbit\nSolar System",
-      "chirp": 76
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 1,
+      "x": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I've never visited Neptune before. Doesn't seem to be a very happening place."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "ANTONIA",
+      "face": 4,
+      "x": 13
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "WOMAN: Get out of here, Quantum scum! On this planet we maintain determinism and local realism!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Ahhh! Who are you?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "WOMAN: Name's Antonia, Grand Duchess and Imperial Cupbearer of Neptune Province..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "...And I just noticed your Amalgamation pin. Sorry about that."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I guess the whole galaxy has it hard dealing with the Quantum attack... I'm Ensign Ava Marie St. Janet Crispin VII, from the Spaceship Zip-A."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "We've dealt with Quantum before, so maybe we can do it again!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: Good luck..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I saw you making photon-antiphoton pairs earlier. It's a good idea, but they've figured it out. Apparently some of those blobs now have grabbed the photons for themselves."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Oh no! That's the only way I've figured out how to beat them!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: Don't worry! All you have to do is jump on them! Since they're holding a photon they'll probably be distracted and throw it, not hurting you!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "At least, that's how I hope it'll work... I haven't actually tried it."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Well, thanks for the advice!"
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Now if only I could get used to jumping in quantum fields..."
     }
   ]
 ]

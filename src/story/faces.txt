@@ -64,3 +64,10 @@ MOSSBAU:
 3. Laugh
 4. Loss
 5. Annoyed-sad
+
+ANTONIA:
+0. Blank expression
+1. :(
+2. :D
+3. >_> 
+4. D:<

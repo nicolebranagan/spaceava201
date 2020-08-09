@@ -28,7 +28,8 @@ SPRITES = {
     "GOON": 5,
     "BUNNY": 6,
     "BAGBUNNY": 7,
-    "MOSSBAU": 8
+    "MOSSBAU": 8,
+    "ANTONIA": 9
 }
 
 BACKGROUNDS = {
