@@ -12,6 +12,7 @@
 #incbin(neptunepal, "palettes/neptune.pal");
 #incbin(sideobjpal, "palettes/objside.pal");
 #incbin(sidenmypal, "palettes/sidenmy.pal");
+#incbin(nullpal, "palettes/null.pal");
 
 char tiles[2048];
 char objdata[500];
@@ -73,12 +74,13 @@ initialize()
     set_screen_size(SCR_SIZE_128x64);
     cls();
 
-    load_palette(0, neptunepal, 1);
+    load_palette(0, nullpal, 1);
     load_palette(16, avapal, 1);
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     load_palette(SIDENMY_PAL, sidenmypal, 1);
-    init_ava();
     draw_map();
+    load_palette(0, neptunepal, 1);
+    init_ava();
     disp_on();
 }
 
@@ -513,6 +515,7 @@ win_ava()
         spr_hide();
     }
     satb_update();
+    load_palette(0, nullpal, 1);
     vsync(); // Deliberately not wait_for_sync
 
     // Return to governor
