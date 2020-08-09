@@ -180,6 +180,50 @@ update_blobbo(char index)
     }
 }
 
+update_walker(char index)
+{
+    char target_x;
+    char target_y;
+    if (ava_x == objects[i].xpos && ava_y == objects[i].ypos)
+    {
+        kill_ava();
+    }
+
+    if (objects[i].facing_left)
+    {
+        target_x = objects[i].xpos - 1;
+        target_y = objects[i].ypos - 1;
+    }
+    else
+    {
+        target_x = objects[i].xpos + 1;
+        target_y = objects[i].ypos + 1;
+    }
+
+    objects[i].frame = 0;
+    if (is_ladder(objects[i].xpos, target_y))
+    {
+        objects[i].ydel = objects[i].facing_left ? -16 : 16;
+        objects[i].ypos = target_y;
+        objects[i].frame = 1;
+    }
+    else if (is_ladder(objects[i].xpos, objects[i].ypos) && is_empty(objects[i].xpos, target_y))
+    {
+        objects[i].ydel = objects[i].facing_left ? -16 : 16;
+        objects[i].ypos = target_y;
+        objects[i].frame = 1;
+    }
+    else if (!is_empty(target_x, objects[i].ypos + 1) && !is_solid(target_x, objects[i].ypos))
+    {
+        objects[i].xdel = objects[i].facing_left ? -16 : 16;
+        objects[i].xpos = target_x;
+    }
+    else
+    {
+        objects[i].facing_left = !objects[i].facing_left;
+    }
+}
+
 char update_objects()
 {
     if (!object_count)
@@ -215,6 +259,11 @@ char update_objects()
         case OBJ_BLOBBO:
         {
             update_blobbo(i);
+            break;
+        }
+        case OBJ_WALKER:
+        {
+            update_walker(i);
             break;
         }
         }
