@@ -37,6 +37,7 @@
 #incbin(sunscapebat, "bats/sunscape-bg.bin")
 #incbin(nepoutbat, "bats/nepout-bg.bin")
 #incbin(nepshipbat, "bats/nepship-bg.bin")
+#incbin(nepponbat, "bats/neppon-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -301,6 +302,16 @@ draw_background(char index, char load_new_gfx)
             load_vram(addr, nepshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, starshippal, 1);
+        break;
+    case 11:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, nepponbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, nepdroppal, 1);
         break;
     }
 }

@@ -2278,5 +2278,20 @@
       "command": "SHOW_TEXT",
       "text": "AVA: Well! I'm feeling a little better now. I guess I won't know what it's like until I head down... Wish me luck!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 3
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "NEPTUNE_SURFACE"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Neptune Orbit\nSolar System",
+      "chirp": 76
+    }
   ]
 ]
