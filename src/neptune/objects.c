@@ -13,7 +13,7 @@ char photon_count;
 
 struct object
 {
-    char type, active, xpos, ypos, facing_left;
+    char type, active, xpos, ypos, facing_left, frame;
     signed char xdel, ydel;
     int xdraw, ydraw;
 };
@@ -23,15 +23,27 @@ struct object objects[MAX_OBJECT_COUNT];
 #define OBJ_PHOTON 0
 #define OBJ_ANTIPHOTON 1
 #define OBJ_BLOBBO 2
+#define OBJ_WALKER 3
+#define OBJ_ACORN 4
+#define OBJ_BIGMOUTH 5
+#define OBJ_BALL 6
 
 const int BASE_VRAM[] = {
     SIDEOBJ_VRAM,
     (SIDEOBJ_VRAM + (8 * SPR_SIZE_16x16)),
-    SIDENMY_VRAM};
+    SIDENMY_VRAM,
+    (SIDENMY_VRAM + (2 * SPR_SIZE_16x16)),
+    (SIDENMY_VRAM + (6 * SPR_SIZE_16x16)),
+    (SIDENMY_VRAM + (8 * SPR_SIZE_16x16)),
+    (SIDENMY_VRAM + (10 * SPR_SIZE_16x16))};
 
 const char BASE_PAL[] = {
     SIDEOBJ_PAL,
     SIDEOBJ_PAL,
+    SIDENMY_PAL,
+    SIDENMY_PAL,
+    SIDENMY_PAL,
+    SIDENMY_PAL,
     SIDENMY_PAL};
 
 init_objects()
@@ -58,6 +70,7 @@ create_object(char type, char x, char y, char facing)
     objects[new_index].ypos = y;
     objects[new_index].xdel = 0;
     objects[new_index].ydel = 0;
+    objects[new_index].frame = 0;
     objects[new_index].active = 1;
     objects[new_index].facing_left = facing == LEFT;
 
@@ -121,13 +134,17 @@ draw_objects()
         }
         spr_ctrl(FLIP_MAS | SIZE_MAS, objects[i].facing_left ? SZ_16x16 | FLIP_X : SZ_16x16);
 
-        if (objects[i].type <= OBJ_ANTIPHOTON)
+        if (objects[i].type >= OBJ_BIGMOUTH)
+        {
+            spr_pattern((BASE_VRAM[objects[i].type]) + (objects[i].frame * SPR_SIZE_16x16));
+        }
+        else if (objects[i].type <= OBJ_ANTIPHOTON)
         {
             spr_pattern((BASE_VRAM[objects[i].type]) + (((timer >> 1) & 7) * SPR_SIZE_16x16));
         }
         else
         {
-            spr_pattern((BASE_VRAM[objects[i].type]) + (((timer >> 4) & 1) * SPR_SIZE_16x16));
+            spr_pattern((BASE_VRAM[objects[i].type]) + (((objects[i].frame << 1) + ((timer >> 4) & 1)) * SPR_SIZE_16x16));
         }
 
         spr_x(dx);

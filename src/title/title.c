@@ -134,7 +134,7 @@ draw_level_select_button(char sprdex, char button_identity, char x, char y)
     }
 }
 
-// migi shita ue migi migi shita ue migi ue ue shita shita hidari migi hidari migi
+// migi shita ue migi migi shita migi migi ue ue shita shita hidari migi hidari migi
 const char LEVEL_SELECT_CODE[] = {
     JOY_RIGHT,
     JOY_DOWN,
@@ -142,7 +142,7 @@ const char LEVEL_SELECT_CODE[] = {
     JOY_RIGHT,
     JOY_RIGHT,
     JOY_DOWN,
-    JOY_UP,
+    JOY_RIGHT,
     JOY_RIGHT,
     JOY_UP,
     JOY_UP,
