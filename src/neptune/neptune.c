@@ -476,7 +476,7 @@ ava_update(signed char delx, signed char dely)
     }
     draw_ava(ava_x << 4, ava_y << 4);
 
-    if ((delx || dely) && update_objects())
+    if ((delx || dely) && update_objects(delx, dely))
     {
         win_ava();
     }

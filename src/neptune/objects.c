@@ -10,6 +10,7 @@
 char object_count;
 char obtained_object_count;
 char photon_count;
+char flipper;
 
 struct object
 {
@@ -51,14 +52,15 @@ init_objects()
     object_count = 0;
     obtained_object_count = 0;
     photon_count = 0;
+    flipper = 0;
 }
 
-create_object(char type, char x, char y, char facing)
+create_object(char type, char x, char y, signed char facing)
 {
     char new_index;
     new_index = object_count;
     object_count++;
-    if (type <= OBJ_ANTIPHOTON)
+    if ((type <= OBJ_ANTIPHOTON || type == OBJ_ACORN) && facing != -1)
     {
         photon_count++;
     }
@@ -152,12 +154,23 @@ draw_objects()
     }
 }
 
-update_blobbo(char index)
+update_blobbo(char index, char dely)
 {
     char target_x;
     if (ava_x == objects[i].xpos && ava_y == objects[i].ypos)
     {
-        kill_ava();
+        if (dely)
+        {
+            objects[i].active = 0;
+            ad_play(PCM_CANNON, CANNON_SIZE, 14, 0);
+            create_object(flipper ? OBJ_PHOTON : OBJ_ANTIPHOTON, objects[i].xpos, objects[i].ypos - 1, -1);
+            flipper = flipper ? 0 : 1;
+            return;
+        }
+        else
+        {
+            kill_ava();
+        }
     }
 
     if (objects[i].facing_left)
@@ -224,7 +237,7 @@ update_walker(char index)
     }
 }
 
-char update_objects()
+char update_objects(char delx, char dely)
 {
     if (!object_count)
     {
@@ -258,12 +271,17 @@ char update_objects()
         }
         case OBJ_BLOBBO:
         {
-            update_blobbo(i);
+            update_blobbo(i, 0);
             break;
         }
         case OBJ_WALKER:
         {
             update_walker(i);
+            break;
+        }
+        case OBJ_ACORN:
+        {
+            update_blobbo(i, dely);
             break;
         }
         }
