@@ -339,7 +339,8 @@ ava_update(signed char delx, signed char dely)
     new_x = ava_x + delx;
     new_y = ava_y + dely;
 
-    if (new_y > 24) {
+    if (new_y > 24)
+    {
         kill_ava();
         return;
     }
@@ -532,6 +533,7 @@ kill_ava()
         ad_stop();
     }
     ad_play(PCM_DIE, DIE_SIZE, 14, 0);
+
     for (i = 0; i < 16; i++)
     {
         spr_set(AVA_SPRITE);
@@ -540,6 +542,11 @@ kill_ava()
         wait_for_sync(4);
     }
     spr_set(AVA_SPRITE);
+    for (i = 0; i < MAX_OBJECT_COUNT; i++)
+    {
+        spr_set(OBJECT_SPRITE_START + i);
+        spr_hide();
+    }
     spr_hide();
 
     load_room();

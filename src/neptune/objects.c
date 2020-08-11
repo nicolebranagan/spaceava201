@@ -2,7 +2,7 @@
   objects, which includes enemies
 */
 
-#define MAX_OBJECT_COUNT 16
+#define MAX_OBJECT_COUNT 24
 #define OBJECT_SPRITE_START 1
 
 #include "neptune/neptune.h"
@@ -14,7 +14,7 @@ char flipper;
 
 struct object
 {
-    char type, active, xpos, ypos, facing_left, frame;
+    char type, active, xpos, ypos, facing_left, frame, timer;
     signed char xdel, ydel;
     int xdraw, ydraw;
 };
@@ -57,9 +57,27 @@ init_objects()
 
 create_object(char type, char x, char y, signed char facing)
 {
-    char new_index;
-    new_index = object_count;
-    object_count++;
+    char i, new_index;
+    new_index = MAX_OBJECT_COUNT + 1;
+    for (i = 0; i < object_count; i++)
+    {
+        if (!objects[i].active)
+        {
+            new_index = i;
+            break;
+        }
+    }
+
+    if (new_index == MAX_OBJECT_COUNT + 1)
+    {
+        if (object_count == MAX_OBJECT_COUNT)
+        {
+            return;
+        }
+        new_index = object_count;
+        object_count++;
+    }
+
     if ((type <= OBJ_ANTIPHOTON || type == OBJ_ACORN) && facing != -1)
     {
         photon_count++;
@@ -74,6 +92,7 @@ create_object(char type, char x, char y, signed char facing)
     objects[new_index].ydel = 0;
     objects[new_index].frame = 0;
     objects[new_index].active = 1;
+    objects[new_index].timer = 0;
     objects[new_index].facing_left = facing == LEFT;
 
     spr_set(OBJECT_SPRITE_START + new_index);
@@ -237,6 +256,70 @@ update_walker(char index)
     }
 }
 
+update_bigmouth(char index)
+{
+    objects[index].timer++;
+    if (objects[index].timer == 3)
+    {
+        objects[index].frame = 1;
+    }
+    else
+    {
+        objects[index].frame = 0;
+    }
+
+    if (objects[index].timer == 4)
+    {
+        if (objects[index].facing_left)
+        {
+            create_object(OBJ_BALL, objects[index].xpos, objects[index].ypos, LEFT);
+        }
+        else
+        {
+            create_object(OBJ_BALL, objects[index].xpos, objects[index].ypos, RIGHT);
+        }
+
+        ad_play(PCM_CANNON, CANNON_SIZE, 14, 0);
+        objects[index].timer = 0;
+    }
+}
+
+update_ball(char index)
+{
+    char target_x;
+    if (objects[index].xpos == ava_x && objects[index].ypos == ava_y)
+    {
+        kill_ava();
+        return;
+    }
+    if (objects[index].facing_left)
+    {
+        target_x = objects[index].xpos - 1;
+        if (objects[index].xpos == 0)
+        {
+            objects[index].active = 0;
+        }
+    }
+    else
+    {
+        target_x = objects[index].xpos + 1;
+        if (objects[index].xpos == 64)
+        {
+            objects[index].active = 0;
+        }
+    }
+
+    if (is_empty(target_x, objects[index].ypos))
+    {
+        objects[index].xdel = objects[index].facing_left ? -16 : 16;
+        objects[index].xpos = target_x;
+    }
+    else
+    {
+        objects[index].active = 0;
+    }
+}
+
 char update_objects(char delx, char dely)
 {
     if (!object_count)
@@ -282,6 +365,16 @@ char update_objects(char delx, char dely)
         case OBJ_ACORN:
         {
             update_blobbo(i, dely);
+            break;
+        }
+        case OBJ_BIGMOUTH:
+        {
+            update_bigmouth(i);
+            break;
+        }
+        case OBJ_BALL:
+        {
+            update_ball(i);
             break;
         }
         }
