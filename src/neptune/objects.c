@@ -309,7 +309,7 @@ update_ball(char index)
         }
     }
 
-    if (is_empty(target_x, objects[index].ypos))
+    if (!is_solid(target_x, objects[index].ypos))
     {
         objects[index].xdel = objects[index].facing_left ? -16 : 16;
         objects[index].xpos = target_x;
@@ -380,14 +380,7 @@ char update_objects(char delx, char dely)
         }
     }
 
-    for (i = 0; i < object_count; i++)
-    {
-        if (objects[i].xdel || objects[i].ydel)
-        {
-            wait_for_sync(16);
-            break;
-        }
-    }
+    wait_for_sync(16);
 
     for (i = 0; i < object_count; i++)
     {

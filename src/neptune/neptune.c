@@ -26,7 +26,19 @@ const char TILE_SOLIDITY[] = {
     TILE_EMPTY,
     TILE_SOLID,
     TILE_LADDER,
-    TILE_LADDER};
+    TILE_LADDER,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY,
+    TILE_EMPTY};
 
 char pal_cycle;
 
