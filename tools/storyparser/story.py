@@ -73,7 +73,8 @@ TRACKS = {
     "Ballad of St. Janet": 0,
     "Evan S. Sense": 1,
     "Chime 2020": 2,
-    "Lacked Even a Daisy": 3
+    "Lacked Even a Daisy": 3,
+    "Seventeen Crowns": 4
 }
 
 SFXES = {

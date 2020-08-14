@@ -51,7 +51,11 @@ FILE "Space Ava 201 - 13 - Parasol Gently Down.wav" WAVE
   TRACK 13 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 14 - Seventeen Crowns.wav" WAVE
+  TRACK 14 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 14 MODE1/2048
+  TRACK 15 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

@@ -61,10 +61,10 @@ initialize()
 
     disp_off();
     cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
-    load_palette(0, fontpal, 1);
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
     scroll(0, 0, 0, 0, 223, 0xC0);
+    load_palette(0, fontpal, 1);
     disp_on();
 
     cls();

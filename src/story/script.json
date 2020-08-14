@@ -2312,7 +2312,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Evan S. Sense"
+      "track": "Seventeen Crowns"
     },
     {
       "command": "SHOW_TEXT",
@@ -2356,7 +2356,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "We've dealt with Quantum before, so maybe we can do it again!"
+      "text": "We've dealt with quantum before, so maybe we can do it again!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -2391,7 +2391,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "ANTONIA: Don't worry! All you have to do is jump on them! Since they're holding a photon they'll probably be distracted and throw it, not hurting you!"
+      "text": "ANTONIA: Don't worry! All you have to do is jump on them! Since they're holding a photon they'll probably be distracted, absorb the photon and then emit it, destroying them but not hurting you!"
     },
     {
       "command": "SHOW_SPRITE",
