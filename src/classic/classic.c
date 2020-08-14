@@ -258,7 +258,7 @@ draw_ava(char moving, int x, int y)
     return;
 }
 
-move_ava(char negative, char delx, char dely)
+move_ava(signed char delx, signed char dely)
 {
     char i;
     int x, y, osx, osy;
@@ -266,18 +266,13 @@ move_ava(char negative, char delx, char dely)
     x = ava_x * 16;
     y = ava_y * 16;
 
+    load_map((sx >> 4) + delx, (sy >> 4) + dely, (sx >> 4) + delx, (sy >> 4) + dely, 17, 15);
+
     for (i = 0; i < 8; i++)
     {
-        if (negative)
-        {
-            x = x - 2 * delx;
-            y = y - 2 * dely;
-        }
-        else
-        {
-            x = x + 2 * delx;
-            y = y + 2 * dely;
-        }
+        x = x + delx + delx;
+        y = y + dely + dely;
+
         osx = sx;
         osy = sy;
 
@@ -293,7 +288,6 @@ move_ava(char negative, char delx, char dely)
         }
 
         scroll(0, sx, sy, 0, 223, 0xC0);
-        load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
         draw_ava(1, x, y);
         scroll_enemies(osx - sx, osy - sy);
 
@@ -306,16 +300,8 @@ move_ava(char negative, char delx, char dely)
     last_ava_x = ava_x;
     last_ava_y = ava_y;
 
-    if (negative)
-    {
-        ava_x = ava_x - delx;
-        ava_y = ava_y - dely;
-    }
-    else
-    {
-        ava_x = ava_x + delx;
-        ava_y = ava_y + dely;
-    }
+    ava_x = ava_x + delx;
+    ava_y = ava_y + dely;
 
     draw_ava(0, ava_x * 16, ava_y * 16);
 }
@@ -513,25 +499,25 @@ main()
         if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1, 1))
         {
             ava_facing = UP;
-            move_ava(1, 0, 1);
+            move_ava(0, -1);
             update_enemies();
         }
         if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1, 1))
         {
             ava_facing = DOWN;
-            move_ava(0, 0, 1);
+            move_ava(0, 1);
             update_enemies();
         }
         if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y, 1))
         {
             ava_facing = LEFT;
-            move_ava(1, 1, 0);
+            move_ava(-1, 0);
             update_enemies();
         }
         if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y, 1))
         {
             ava_facing = RIGHT;
-            move_ava(0, 1, 0);
+            move_ava(1, 0);
             update_enemies();
         }
         if (joyt & JOY_SLCT)
@@ -541,10 +527,12 @@ main()
         if (joyt & JOY_RUN)
         {
             cd_pause();
-            for(;;) {
+            for (;;)
+            {
                 vsync(); // Deliberately not wait_for_sync
                 joyt = joytrg(0);
-                if (joyt & JOY_RUN) {
+                if (joyt & JOY_RUN)
+                {
                     cd_unpause();
                     break;
                 }

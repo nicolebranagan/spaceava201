@@ -529,6 +529,7 @@ win_ava()
     }
     satb_update();
     load_palette(0, nullpal, 1);
+    load_palette(1, nullpal, 1);
     vsync(); // Deliberately not wait_for_sync
 
     // Return to governor
