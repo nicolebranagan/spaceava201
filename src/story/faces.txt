@@ -71,3 +71,11 @@ ANTONIA:
 2. :D
 3. >_> 
 4. D:<
+5. Eyebrow raised
+6. ;)
+
+QCINDY:
+0: Blank expression
+1: ;)
+2: <_<
+3: wide-open mouth

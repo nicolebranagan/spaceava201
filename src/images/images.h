@@ -173,53 +173,58 @@
 #define OBJSIDE_SECTOR_COUNT 5 
 #define OBJSIDE_SIZE 10240 
 
+// ./images/qcindy_face.chr
+#define QCINDY_FACE_SECTOR_OFFSET 94 
+#define QCINDY_FACE_SECTOR_COUNT 3 
+#define QCINDY_FACE_SIZE 6144 
+
 // ./images/shade8x8.chr
-#define SHADE8X8_SECTOR_OFFSET 94 
+#define SHADE8X8_SECTOR_OFFSET 97 
 #define SHADE8X8_SECTOR_COUNT 2 
 #define SHADE8X8_SIZE 4096 
 
 // ./images/shutcalc.chr
-#define SHUTCALC_SECTOR_OFFSET 96 
+#define SHUTCALC_SECTOR_OFFSET 99 
 #define SHUTCALC_SECTOR_COUNT 11 
 #define SHUTCALC_SIZE 22528 
 
 // ./images/sidenmy.chr
-#define SIDENMY_SECTOR_OFFSET 107 
+#define SIDENMY_SECTOR_OFFSET 110 
 #define SIDENMY_SECTOR_COUNT 1 
 #define SIDENMY_SIZE 2048 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 108 
+#define STARBASE_SECTOR_OFFSET 111 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 109 
+#define STARDROP_SECTOR_OFFSET 112 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 111 
+#define STARROT_SECTOR_OFFSET 114 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 
 // ./images/starship.chr
-#define STARSHIP_SECTOR_OFFSET 112 
+#define STARSHIP_SECTOR_OFFSET 115 
 #define STARSHIP_SECTOR_COUNT 3 
 #define STARSHIP_SIZE 6144 
 
 // ./images/sunscape.chr
-#define SUNSCAPE_SECTOR_OFFSET 115 
+#define SUNSCAPE_SECTOR_OFFSET 118 
 #define SUNSCAPE_SECTOR_COUNT 1 
 #define SUNSCAPE_SIZE 2048 
 
 // ./images/titlefnt.chr
-#define TITLEFNT_SECTOR_OFFSET 116 
+#define TITLEFNT_SECTOR_OFFSET 119 
 #define TITLEFNT_SECTOR_COUNT 3 
 #define TITLEFNT_SIZE 6144 
 
 // ./images/titles.chr
-#define TITLES_SECTOR_OFFSET 119 
+#define TITLES_SECTOR_OFFSET 122 
 #define TITLES_SECTOR_COUNT 5 
 #define TITLES_SIZE 10240 
 

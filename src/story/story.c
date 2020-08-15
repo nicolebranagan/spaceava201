@@ -19,6 +19,7 @@
 #incbin(bagbunny_facepal, "palettes/bagbun_face.pal");
 #incbin(mossbau_facepal, "palettes/mossba_face.pal");
 #incbin(antoni_facepal, "palettes/antoni_face.pal");
+#incbin(qcindy_facepal, "palettes/qcindy_face.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -167,12 +168,21 @@ build_cast()
             cd_loadvram(IMAGE_OVERLAY, MOSSBA_FACE_SECTOR_OFFSET, vram, MOSSBA_FACE_SIZE);
             size = MOSSBA_FACE_SIZE;
             break;
-        case 9: // Mossbauer
+
+        case 9: // Antonia
             load_palette(current_palette, antoni_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, ANTONI_FACE_SECTOR_OFFSET, vram, ANTONI_FACE_SIZE);
             size = ANTONI_FACE_SIZE;
+            break;
+
+        case 10: // Quantum Cindy
+            load_palette(current_palette, qcindy_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, QCINDY_FACE_SECTOR_OFFSET, vram, QCINDY_FACE_SIZE);
+            size = QCINDY_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;

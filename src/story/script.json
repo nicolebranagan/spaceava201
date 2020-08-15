@@ -1843,7 +1843,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track":"Chime 2020"
+      "track": "Chime 2020"
     },
     {
       "command": "SHOW_TEXT",
@@ -2013,7 +2013,7 @@
     {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
-      "face":0
+      "face": 0
     },
     {
       "command": "SHOW_TEXT",
@@ -2253,7 +2253,7 @@
       "face": 2
     },
     {
-      "command" : "SHOW_TEXT",
+      "command": "SHOW_TEXT",
       "text": "CINDY: Is that all, Ava? You'll do great! Just try to picture some giant golden arrows in possible directions, maybe that'll help."
     },
     {
@@ -2432,6 +2432,316 @@
     {
       "command": "SHOW_TEXT",
       "text": "Now if only I could get used to jumping in quantum fields..."
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 3
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "NEPTUNE_SURFACE"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 4,
+      "x": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Looks like a lot of the base is now free from quantum!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Now I just need to find that Antonia person and see if she can lend us any fuel..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "ANTONIA",
+      "face": 5,
+      "x": 12
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Seventeen Crowns"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: You called?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Antonia! Were you there the whole time?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: Maybe..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "But you want to steal my fuel and abandon me here on this desolate gas giant, do you?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: What?! Of course not! I thought you lived here! Like Lily lived in the black hole!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: I know, I know, just playing around. I can get you some fuel. Go show those quantum quarks what a Hamiltonian operator's really all about!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I have no idea what that means, but thanks!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: Don't worry, I don't know either!"
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_FEYNMAN"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Starship Zip-A\nEarth Orbit",
+      "chirp": 76
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Above the occupied\ncapital of the\nAmalgamation of Worlds",
+      "chirp": 76
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_REDALERT"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track":"Evan S. Sense"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "x": 14,
+      "sprite": "QCINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "x": 4,
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Ava, patch us through to the planet below."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Of course... but why do you need to dress like that?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: It's all part of my plan. Maybe we can get down to the surface without a fight."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Understood."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "RADIO: This is Quantum Earth, Officer Thompson speaking. Amalgamation ship in orbit, identify yourself.",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I'm uh, Palisade. We've captured this Amalgamation ship and have the notorious Ava Maria St. Janet Crispin VII on board as a prisoner."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Hey!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Shh!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "RADIO: The famous Captain Ava, eh? Our leader will be glad to hear that! But wait, Palisade, I don't recognize your name...",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: What? How could you have not heard of me! I'm the greatest space-captain scientist in history! Why I"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Cindy..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I mean, uh, I'm new. Not important. Just need to take Ava to the leader right away. By the way, who is our leader? I was curious"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "RADIO: State the code phrase!",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: It's, uh, shut up and calculate?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "RADIO: Nice try! Had you known me, you'd know it's always plum-pudding! Deploying quantum field!",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "*beep*",
+      "chirp": 66
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "QCINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: I hope we have some mirrors left..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wait a second... that call was entirely over voice..."
     }
   ]
 ]

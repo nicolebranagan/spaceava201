@@ -29,7 +29,8 @@ SPRITES = {
     "BUNNY": 6,
     "BAGBUNNY": 7,
     "MOSSBAU": 8,
-    "ANTONIA": 9
+    "ANTONIA": 9,
+    "QCINDY": 10
 }
 
 BACKGROUNDS = {
