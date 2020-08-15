@@ -528,59 +528,66 @@ char run_grid()
     }
 }
 
+start_grid()
+{
+    char i;
+    if (holding)
+    {
+        ad_play(ADPCM_WRONG, WRONG_SIZE, 14, 0);
+        draw_lower_face(1);
+        spr_set(0);
+        spr_hide();
+        spr_set(1);
+        spr_hide();
+        satb_update();
+        write_text(8, 35, "I should put down    ");
+        write_text(8, 36, "the mirror first.    ");
+        wait_for_input();
+        scroll_disable(1);
+        scroll(0, 0, 0, 0, 223, 0xC0);
+        return;
+    }
+    if (run_grid())
+    {
+        // win
+        draw_lower_face(0);
+        write_text(8, 35, "Wow! This is turning ");
+        write_text(8, 36, "out okay!            ");
+        wait_for_input();
+        cls();
+        scroll(0, 0, 0, 0, 223, 0xC0);
+        scroll_disable(1);
+        cd_execoverlay(GOVERNOR_OVERLAY);
+        return;
+    }
+    else
+    {
+        // lose
+        draw_lower_face(1);
+        write_text(8, 35, "I was so close!      ");
+        write_text(8, 36, "Maybe try again?     ");
+        wait_for_input();
+        for (i = 0; i < 64; i++)
+        {
+            spr_set(i);
+            spr_hide();
+        }
+        satb_update();
+        scroll_disable(1);
+        scroll(0, 0, 0, 0, 223, 0xC0);
+        reset_grid();
+        return;
+    }
+}
+
 action()
 {
     char i;
 
     if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
     {
-        if (holding)
-        {
-            ad_play(ADPCM_WRONG, WRONG_SIZE, 14, 0);
-            draw_lower_face(1);
-            spr_set(0);
-            spr_hide();
-            spr_set(1);
-            spr_hide();
-            satb_update();
-            write_text(8, 35, "I should put down    ");
-            write_text(8, 36, "the mirror first.    ");
-            wait_for_input();
-            scroll_disable(1);
-            scroll(0, 0, 0, 0, 223, 0xC0);
-            return;
-        }
-        if (run_grid())
-        {
-            // win
-            draw_lower_face(0);
-            write_text(8, 35, "Wow! This is turning ");
-            write_text(8, 36, "out okay!            ");
-            wait_for_input();
-            cls();
-            scroll(0, 0, 0, 0, 223, 0xC0);
-            scroll_disable(1);
-            cd_execoverlay(GOVERNOR_OVERLAY);
-            return;
-        }
-        else
-        {
-            // lose
-            draw_lower_face(1);
-            write_text(8, 35, "I was so close!      ");
-            write_text(8, 36, "Maybe try again?     ");
-            wait_for_input();
-            for (i = 0; i < 64; i++)
-            {
-                spr_set(i);
-                spr_hide();
-            }
-            satb_update();
-            scroll_disable(1);
-            scroll(0, 0, 0, 0, 223, 0xC0);
-            reset_grid();
-            return;
-        }
+        start_grid();
+        return;
     }
 
     if (x < GRID_WIDTH)
@@ -643,9 +650,14 @@ main()
 
         joyt = joytrg(0);
 
-        if ((joyt & JOY_RUN) || (joyt & JOY_I))
+        if ((joyt & JOY_I))
         {
             action();
+        }
+
+        if (joyt & JOY_RUN)
+        {
+            start_grid();
         }
 
         if (joyt)
