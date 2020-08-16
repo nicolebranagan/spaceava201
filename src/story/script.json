@@ -2751,7 +2751,7 @@
     },
     {
       "command": "SHOW_BACKGROUND",
-      "background": "STARSHIP_COMMUNICATION"
+      "background": "STARSHIP_REDALERT"
     },
     {
       "command": "PLAY_MUSIC",
@@ -2765,14 +2765,190 @@
       "x": 4
     },
     {
-      "command": "SHOW_SPRITE_BG",
+      "command": "SHOW_SPRITE",
       "slot": 1,
-      "sprite": "GOON",
+      "sprite": "NELEHU",
+      "face": 0,
+      "x": 8
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "CINDY",
+      "face": 3,
+      "x": 12
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: They just keep coming! How dense is this field?!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: We complete one, we complete two, three, four... before we know it, we've completed negative one twelfth, and the field has simply become stronger."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: We can't give up hope... there has to be some way to get through this."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: And what am I supposed to do? If this isn't working I'm not going to keep doing it! I'm the one moving those mirrors around!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
       "face": 2
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Will someone change the channel?"
+      "text": "CINDY: Look here, Ensign! I am your commanding officer, and"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_EARTH"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Wait, what just happened?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm not detecting the quantum field anymore... we have a straight shot to Earth!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "NELEHU: These fields do not simply decohere on their own."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Wait, there's an incoming signal..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Lacked Even a Daisy"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_COMMUNICATION"
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "slot": 3,
+      "sprite": "BUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: Hey Ava! Seemed like you were in a bind!",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Hey, it's you! From Betelgeuse! Glad you managed to get untied!"
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "sprite": "BUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "BLUE ???: With no help from you...",
+      "chirp": 200
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "slot": 3,
+      "sprite": "BAGBUNNY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: Look, what my friend here means is, we felt bad about what happened on Betelgeuse, and figured we'd make it up to you."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "sprite": "BAGBUNNY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "PINK ???: But we can't keep this going forever. Are you ready to beam down to the planet?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Ava, are you ready to go down to Earth? I don't know if we'll be able to bring you back up..."
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "sprite": "BAGBUNNY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: As ready as I'll ever be..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Understood. Thanks, Betelgeuse bunnies, we'll take it from here! Ava, prepare for transfer to Earth!"
     }
   ]
 ]
