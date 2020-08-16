@@ -2553,7 +2553,7 @@
     },
     {
       "command": "SHOW_BACKGROUND",
-      "background": "STARSHIP_FEYNMAN"
+      "background": "STARSHIP_EARTH"
     },
     {
       "command": "SHOW_CENTERED_TEXT",
@@ -2564,10 +2564,6 @@
       "command": "SHOW_CENTERED_TEXT",
       "text": "Above the occupied\ncapital of the\nAmalgamation of Worlds",
       "chirp": 76
-    },
-    {
-      "command": "SHOW_BACKGROUND",
-      "background": "STARSHIP_REDALERT"
     },
     {
       "command": "PLAY_MUSIC",
@@ -2620,7 +2616,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "RADIO: This is Quantum Earth, Officer Thompson speaking. Amalgamation ship in orbit, identify yourself.",
+      "text": "RADIO: This is Quantum Earth, J.J. Thompson speaking. Amalgamation ship in orbit, identify yourself.",
       "chirp": 200
     },
     {
@@ -2695,6 +2691,10 @@
     {
       "command": "PLAY_MUSIC",
       "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_REDALERT"
     },
     {
       "command": "SHOW_TEXT",

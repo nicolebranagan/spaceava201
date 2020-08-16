@@ -41,6 +41,7 @@
 #incbin(nepshipbat, "bats/nepship-bg.bin")
 #incbin(nepponbat, "bats/neppon-bg.bin")
 #incbin(starcombat, "bats/starcom-bg.bin")
+#incbin(earthshipbat, "bats/earthship-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -340,6 +341,16 @@ draw_background(char index, char load_new_gfx)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, starcombat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, starshippal, 1);
+        break;
+    case 13:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, earthshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, starshippal, 1);
         break;
