@@ -2571,7 +2571,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track":"Evan S. Sense"
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_SPRITE",
@@ -2742,6 +2742,37 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Wait a second... that call was entirely over voice..."
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "STARSHIP_COMMUNICATION"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 2,
+      "x": 4
+    },
+    {
+      "command": "SHOW_SPRITE_BG",
+      "slot": 1,
+      "sprite": "GOON",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Will someone change the channel?"
     }
   ]
 ]

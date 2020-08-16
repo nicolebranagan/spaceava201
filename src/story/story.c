@@ -40,6 +40,7 @@
 #incbin(nepoutbat, "bats/nepout-bg.bin")
 #incbin(nepshipbat, "bats/nepship-bg.bin")
 #incbin(nepponbat, "bats/neppon-bg.bin")
+#incbin(starcombat, "bats/starcom-bg.bin")
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -332,6 +333,16 @@ draw_background(char index, char load_new_gfx)
         }
         load_palette(1, nepdroppal, 1);
         break;
+    case 12:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, starcombat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, starshippal, 1);
+        break;
     }
 }
 
@@ -572,6 +583,29 @@ draw_person(char slot, char cast_index, char face, char x_start)
     satb_update();
 }
 
+#define HEIGHT_BG 17
+draw_person_in_bg(char slot, char cast_index, char face)
+{
+    char i, j, x, y;
+    i = slot * 6;
+    j = 0;
+    for (y = 0; y < 3; y++)
+        for (x = 0; x < 2; x++)
+        {
+            spr_set(i);
+            spr_y(HEIGHT_BG + (y << 4));
+            spr_x((((int)(9 + x)) << 4) + 8);
+            spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+            spr_pattern(face_vram[cast_index] + (face * 6 * SPR_SIZE_16x16) + (j * SPR_SIZE_16x16));
+            spr_pal(palettes[cast_index]);
+            spr_pri(0);
+            spr_show();
+            i++;
+            j++;
+        }
+    satb_update();
+}
+
 delete_person(char slot)
 {
     char i;
@@ -617,6 +651,7 @@ draw_block(char more)
 #define CMD_LOAD_SFX 8
 #define CMD_PLAY_LOADED_SFX 9
 #define CMD_LOAD_NEXT_SEGMENT 10
+#define CMD_SHOW_SPRITE_BG 11
 
 perform_command()
 {
@@ -682,6 +717,14 @@ loop:
         current_level++;
         cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
         pointer_to_data = 0;
+        goto loop;
+        break;
+    case CMD_SHOW_SPRITE_BG:
+        draw_person_in_bg(
+            script[pointer_to_data + 1],
+            script[pointer_to_data + 2],
+            script[pointer_to_data + 3]);
+        pointer_to_data += 4;
         goto loop;
         break;
     }

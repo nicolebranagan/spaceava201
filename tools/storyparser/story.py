@@ -17,7 +17,8 @@ COMMANDS = {
     "DELETE_SPRITE": 7,
     "LOAD_SFX": 8,
     "PLAY_LOADED_SFX": 9,
-    "LOAD_NEXT_SEGMENT": 10
+    "LOAD_NEXT_SEGMENT": 10,
+    "SHOW_SPRITE_BG": 11
 }
 
 SPRITES = {
@@ -45,7 +46,8 @@ BACKGROUNDS = {
     "SUNSCAPE_1": 8,
     "NEPTUNE_OUTSIDE": 9,
     "STARSHIP_NEPTUNE": 10,
-    "NEPTUNE_SURFACE": 11
+    "NEPTUNE_SURFACE": 11,
+    "STARSHIP_COMMUNICATION": 12
 }
 
 BACKGROUND_GROUPING = {
@@ -67,7 +69,8 @@ BACKGROUNDS_TO_BACKGROUND_GROUPING = {
     "SUNSCAPE_1": BACKGROUND_GROUPING["SUNSCAPE"],
     "NEPTUNE_OUTSIDE": BACKGROUND_GROUPING["NEPTUNE"],
     "STARSHIP_NEPTUNE": BACKGROUND_GROUPING["VOID/STARSHIP"],
-    "NEPTUNE_SURFACE": BACKGROUND_GROUPING["NEPTUNE"]
+    "NEPTUNE_SURFACE": BACKGROUND_GROUPING["NEPTUNE"],
+    "STARSHIP_COMMUNICATION": BACKGROUND_GROUPING["VOID/STARSHIP"]
 }
 
 TRACKS = {
@@ -193,6 +196,30 @@ def parse_single_script(script):
             )
         elif (command["command"] == "PLAY_LOADED_SFX"):
             commands.append(bytes([COMMANDS["PLAY_LOADED_SFX"]]))
+        elif (command["command"] == "SHOW_SPRITE_BG"):
+            if ("sprite" in command and SPRITES[command["sprite"]] not in cast):
+                cast.append(SPRITES[command["sprite"]])
+            
+            slot = last_slot
+            if "slot" in command:
+                slot = command["slot"]
+                last_slot = command["slot"]
+            elif "sprite" in command:
+                slot = last_slot_for_face[command["sprite"]]
+
+            if "sprite" in command and "slot" in command:
+                last_sprite[slot] = command["sprite"]
+                last_slot_for_face[command["sprite"]] = slot
+            if "face" in command:
+                last_face[slot] = command["face"]
+
+            commands.append(bytes(
+                    [COMMANDS["SHOW_SPRITE_BG"],
+                    slot,
+                    cast.index(SPRITES[last_sprite[slot]]),
+                    last_face[slot]
+                    ])
+            )
     
     last_song = -1
     blocks = []
