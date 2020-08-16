@@ -64,7 +64,8 @@ initialize()
 {
     pal_cycle = 0;
     timer = 0;
-
+    load_palette(0, nullpal, 1);
+    load_palette(1, nullpal, 1);
     ad_reset();
     ad_trans(ADPCM_OVERLAY, JUMP_SECTOR_OFFSET, JUMP_SECTOR_COUNT, PCM_JUMP);
     ad_trans(ADPCM_OVERLAY, DIE_SECTOR_OFFSET, DIE_SECTOR_COUNT, PCM_DIE);
@@ -86,7 +87,6 @@ initialize()
     set_screen_size(SCR_SIZE_128x64);
     cls();
 
-    load_palette(0, nullpal, 1);
     load_palette(16, avapal, 1);
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     load_palette(SIDENMY_PAL, sidenmypal, 1);
