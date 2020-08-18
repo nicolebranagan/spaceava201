@@ -55,7 +55,11 @@ FILE "Space Ava 201 - 14 - Seventeen Crowns.wav" WAVE
   TRACK 14 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 15 - This Penance.wav" WAVE
+  TRACK 15 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 15 MODE1/2048
+  TRACK 16 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

@@ -16,6 +16,9 @@
 #incbin(betelpal1, "palettes/betelland.pal");
 #incbin(betelpal2, "palettes/betelrot.pal");
 
+#incbin(officepal1, "palettes/office.pal");
+#incbin(officepal2, "palettes/outffice.pal");
+
 const char palette_ref[] = {
     0x10,
     0x10,
@@ -61,10 +64,15 @@ const char TILE_SOLIDITY_BETELGEUSE[] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+const char TILE_SOLIDITY_OFFICE[] = {
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
     TRACK_IMPOSSIBLY_BOSSY,
-    TRACK_YOUR_SOUL_LAVA};
+    TRACK_YOUR_SOUL_LAVA,
+    TRACK_THIS_PENANCE};
 
 char pal_rotate_step;
 
@@ -150,6 +158,21 @@ load_map_graphics(char gfx_type)
         load_palette(16, avapal + (1 << 5), 1);
         load_palette(1, betelpal1, 1);
         load_palette(2, betelpal2, 1);
+        break;
+    case 3: // case 2 is neptune, not supported
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            OFFICE_SECTOR_OFFSET,
+            0x2000,
+            OFFICE_SIZE);
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            OUTFFICE_SECTOR_OFFSET,
+            0x2000 + (OFFICE_SIZE / 2),
+            OUTFFICE_SIZE);
+
+        load_palette(1, officepal1, 1);
+        load_palette(2, officepal2, 1);
         break;
     }
 }
@@ -459,6 +482,9 @@ char is_solid(char x, char y, char is_ava)
         break;
     case 1:
         solidity = TILE_SOLIDITY_BETELGEUSE[tile];
+        break;
+    case 3:
+        solidity = TILE_SOLIDITY_OFFICE[tile];
         break;
     }
 

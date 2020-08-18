@@ -49,6 +49,17 @@ def getNeptune():
     tiles2x.paste(nep2x, (0, 0))
     return (tiles2x, neptileset, ImageTk.PhotoImage(tiles2x))
 
+def getOffice():
+    (betel2x, beteltileset) = getTileset("../../images/tiles/office.terra")
+    (betelrot2x, betelrottileset) = getTileset("../../images/tiles/outffice.terra")
+
+    tiles2x = Image.new("RGB",(
+        betel2x.width + betelrot2x.width, 
+        betel2x.height, 
+    ))
+    tiles2x.paste(betel2x, (0, 0))
+    tiles2x.paste(betelrot2x, (betel2x.width, 0))
+    return (tiles2x, beteltileset + betelrottileset, ImageTk.PhotoImage(tiles2x))
 
 def getTilesets():
-    return [getStarbase(), getBetelgeuse(), getNeptune()]
+    return [getStarbase(), getBetelgeuse(), getNeptune(), getOffice() ]

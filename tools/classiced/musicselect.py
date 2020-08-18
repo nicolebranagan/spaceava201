@@ -3,7 +3,8 @@ import tkinter as tk
 TRACKS = {
     "Spaceful": 0,
     "Impossibly Bossy": 1,
-    "Your Soul is Lava": 2
+    "Your Soul is Lava": 2,
+    "This Penance": 3
 }
 
 INV_TRACKS = {v: k for k, v in TRACKS.items()}

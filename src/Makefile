@@ -34,6 +34,7 @@ spaceava201: spaceava.iso
 	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 12 - Your Soul is Lava.wav"
 	cp ../mods/parasolgentlydown.wav "../build/iso/Space Ava 201 - 13 - Parasol Gently Down.wav"
 	cp ../mods/seventeencrowns.wav "../build/iso/Space Ava 201 - 14 - Seventeen Crowns.wav"
+	cp ../mods/thispenance.wav "../build/iso/Space Ava 201 - 15 - This Penance.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl
 	mv */*.s */*.ovl */*.sym ../build
