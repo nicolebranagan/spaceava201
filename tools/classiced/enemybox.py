@@ -17,7 +17,8 @@ ENEMY_NAME = {
     "Ball": 1,
     "Eyewalk": 2,
     "Boss 1": 3,
-    "Boss 2": 4
+    "Boss 2": 4,
+    "Goonguy": 5
 }
 NAME_ENEMY = {v: k for k, v in ENEMY_NAME.items()}
 

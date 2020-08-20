@@ -8,16 +8,18 @@
 #incbin(eyewalkpal, "palettes/eyewalk.pal");
 #incbin(goonbosspal, "palettes/goonboss.pal");
 #incbin(mossbosspal, "palettes/mossboss.pal");
+#incbin(goonguypal, "palettes/goonguy.pal");
 
 #define MAX_ENEMY_COUNT 16
 
 // Enemy types
-#define ENEMY_TYPE_COUNT 5
+#define ENEMY_TYPE_COUNT 6
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
 #define TYPE_EYEWALK 2
 #define TYPE_BOSS1 3
 #define TYPE_BOSS2 4
+#define TYPE_GOONGUY 5
 
 // Sound effects
 #define ENEMY_NO_SOUND 0
@@ -27,7 +29,7 @@
 // Other
 #define DIR_FRAME_OVERRIDE 255
 
-const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21};
+const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21, 22};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -111,6 +113,14 @@ int populate_enemy_vram(int vram_offset, char type)
             vram_offset += MOSSBOSS_SIZE / 2;
         }
         break;
+    case TYPE_GOONGUY:
+        if (!enemy_vram[TYPE_GOONGUY])
+        {
+            cd_loadvram(IMAGE_OVERLAY, GOONGUY_SECTOR_OFFSET, vram_offset, GOONGUY_SIZE);
+            enemy_vram[TYPE_GOONGUY] = vram_offset;
+            vram_offset += GOONGUY_SIZE / 2;
+        }
+        break;
     }
 
     return vram_offset;
@@ -126,6 +136,7 @@ init_enemy()
     load_palette(19, eyewalkpal, 1);
     load_palette(20, goonbosspal, 1);
     load_palette(21, mossbosspal, 1);
+    load_palette(22, goonguypal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -467,13 +478,14 @@ update_ball(char index)
     }
 }
 
-update_eyewalk(char index)
+update_eyewalk(char index, char pause_on_turn)
 {
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
         kill_ava();
     }
 
+eyewalk_loop:
     switch (enemies[index].facing)
     {
     case UP:
@@ -484,6 +496,10 @@ update_eyewalk(char index)
         else
         {
             enemies[index].facing = RIGHT;
+            if (!pause_on_turn)
+            {
+                goto eyewalk_loop;
+            }
         }
         break;
     case DOWN:
@@ -494,6 +510,10 @@ update_eyewalk(char index)
         else
         {
             enemies[index].facing = LEFT;
+            if (!pause_on_turn)
+            {
+                goto eyewalk_loop;
+            }
         }
         break;
     case LEFT:
@@ -504,6 +524,10 @@ update_eyewalk(char index)
         else
         {
             enemies[index].facing = UP;
+            if (!pause_on_turn)
+            {
+                goto eyewalk_loop;
+            }
         }
         break;
     case RIGHT:
@@ -514,6 +538,10 @@ update_eyewalk(char index)
         else
         {
             enemies[index].facing = DOWN;
+            if (!pause_on_turn)
+            {
+                goto eyewalk_loop;
+            }
         }
         break;
     }
@@ -757,7 +785,7 @@ update_enemies()
         }
         case TYPE_EYEWALK:
         {
-            update_eyewalk(i);
+            update_eyewalk(i, 1);
             break;
         }
         case TYPE_BOSS1:
@@ -768,6 +796,11 @@ update_enemies()
         case TYPE_BOSS2:
         {
             update_boss2(i);
+            break;
+        }
+        case TYPE_GOONGUY:
+        {
+            update_eyewalk(i, 0);
             break;
         }
         }
