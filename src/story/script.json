@@ -2950,5 +2950,148 @@
       "command": "SHOW_TEXT",
       "text": "CINDY: Understood. Thanks, Betelgeuse bunnies, we'll take it from here! Ava, prepare for transfer to Earth!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 1
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "OFFICES"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 0,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I've never been to the Amalgamation offices before... definitely didn't expect them to be this bland."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "But hopefully it won't be that hard to dislodge quantum... maybe it's alright that I have no plan!"
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Oh damn, more of them are coming, need to find a place to hide, think Ava, think"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 9
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "GOON",
+      "x": 13,
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: I've got that paperwork you asked for, Supreme Calculator..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Straining to Chime"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "BADLILY",
+      "x": 16,
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: This had better not be another waste of my time."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOON",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Of course not, Supreme Calculator! I assure you, all my integrals have been double-checked this time!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: For your sake, you'd better hope so. Let's discuss this in my office."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOON",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MAN: Yes sir! Ma'am! Shut up and calculate!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOON",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I'll, uh, pick up that paper too."
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track":"Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Are they gone?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "And was that... Lily?!"
+    }
   ]
 ]

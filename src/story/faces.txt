@@ -8,6 +8,7 @@ AVA:
 6. What's a war?
 7. Sleepy
 8. Not wrong
+9. Hiding
 
 BOB:
 0. Bob
@@ -39,6 +40,8 @@ GOON:
 2. Laugh
 3. Shut up and calculate
 4. Sad
+5. Has paper
+6. Shock, has paper
 
 BUNNY:
 0. Blank expression
@@ -79,3 +82,9 @@ QCINDY:
 1: ;)
 2: <_<
 3: wide-open mouth
+
+BADLILY:
+0. Blank expression
+1. Angry
+2. Rolleyes
+3. Smile

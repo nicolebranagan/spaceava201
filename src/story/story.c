@@ -21,7 +21,6 @@
 #incbin(antoni_facepal, "palettes/antoni_face.pal");
 #incbin(qcindy_facepal, "palettes/qcindy_face.pal");
 #incbin(badlily_facepal, "palettes/bdlily_face.pal");
-#incbin(amalghqpal, "palettes/amalghq.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -29,7 +28,7 @@
 #incbin(starshippal, "palettes/starship.pal");
 #incbin(sunscapepal, "palettes/sunscape.pal");
 #incbin(nepdroppal, "palettes/nepdrop.pal");
-#incbin(innerbat, "bats/introinner.bin");
+#incbin(amalghqpal, "palettes/amalghq.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -45,6 +44,7 @@
 #incbin(nepponbat, "bats/neppon-bg.bin")
 #incbin(starcombat, "bats/starcom-bg.bin")
 #incbin(earthshipbat, "bats/earthship-bg.bin")
+#incbin(innerbat, "bats/introinner.bin");
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -374,7 +374,7 @@ draw_background(char index, char load_new_gfx)
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, innerbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
-        load_palette(1, starshippal, 1);
+        load_palette(1, amalghqpal, 1);
         break;
     }
 }
