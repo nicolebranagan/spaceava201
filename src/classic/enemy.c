@@ -11,7 +11,7 @@
 #incbin(goonguypal, "palettes/goonguy.pal");
 #incbin(madmouthpal, "palettes/madmouth.pal");
 
-#define MAX_ENEMY_COUNT 16
+#define MAX_ENEMY_COUNT 17
 
 // Enemy types
 #define ENEMY_TYPE_COUNT 7

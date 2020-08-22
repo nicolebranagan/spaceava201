@@ -208,6 +208,9 @@ wait_for_sync(char cycles)
         case 1:
             load_palette(2, betelpal2 + (pal_rotate_step << 5), 1);
             break;
+        case 3:
+            load_palette(2, officepal2 + (pal_rotate_step << 5), 1);
+            break;
         }
         satb_update();
         timer++;
@@ -479,7 +482,8 @@ char is_solid(char x, char y, char is_ava)
     {
         for (i = 0; i < enemy_count; i++)
         {
-            if (boss1_index > 0 && i == boss1_index) {
+            if (boss1_index > 0 && i == boss1_index)
+            {
                 continue;
             }
             if (enemies[i].active && enemies[i].x == x && enemies[i].y == y)
