@@ -9,17 +9,19 @@
 #incbin(goonbosspal, "palettes/goonboss.pal");
 #incbin(mossbosspal, "palettes/mossboss.pal");
 #incbin(goonguypal, "palettes/goonguy.pal");
+#incbin(madmouthpal, "palettes/madmouth.pal");
 
 #define MAX_ENEMY_COUNT 16
 
 // Enemy types
-#define ENEMY_TYPE_COUNT 6
+#define ENEMY_TYPE_COUNT 7
 #define TYPE_BIGMOUTH 0
 #define TYPE_BALL 1
 #define TYPE_EYEWALK 2
 #define TYPE_BOSS1 3
 #define TYPE_BOSS2 4
 #define TYPE_GOONGUY 5
+#define TYPE_MADMOUTH 6
 
 // Sound effects
 #define ENEMY_NO_SOUND 0
@@ -29,7 +31,7 @@
 // Other
 #define DIR_FRAME_OVERRIDE 255
 
-const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21, 22};
+const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21, 22, 23};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -78,6 +80,14 @@ int populate_enemy_vram(int vram_offset, char type)
 {
     switch (type)
     {
+    case TYPE_MADMOUTH:
+        if (!enemy_vram[TYPE_MADMOUTH])
+        {
+            cd_loadvram(IMAGE_OVERLAY, MADMOUTH_SECTOR_OFFSET, vram_offset, MADMOUTH_SIZE);
+            enemy_vram[TYPE_MADMOUTH] = vram_offset;
+            vram_offset += MADMOUTH_SIZE / 2;
+        }
+        // Fallthrough is deliberate here
     case TYPE_BIGMOUTH:
     case TYPE_BALL:
         if (!enemy_vram[TYPE_BIGMOUTH])
@@ -137,6 +147,7 @@ init_enemy()
     load_palette(20, goonbosspal, 1);
     load_palette(21, mossbosspal, 1);
     load_palette(22, goonguypal, 1);
+    load_palette(23, madmouthpal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -381,10 +392,11 @@ play_sound(char new_sound)
     }
 }
 
-update_bigmouth(char index)
+// fire_point = 3
+update_bigmouth(char index, char fire_point)
 {
     enemies[index].timer++;
-    if (enemies[index].timer == 2)
+    if (enemies[index].timer == (fire_point - 1))
     {
         enemies[index].frame = 2;
     }
@@ -393,7 +405,7 @@ update_bigmouth(char index)
         enemies[index].frame = 0;
     }
 
-    if (enemies[index].timer == 3)
+    if (enemies[index].timer == fire_point)
     {
         switch (enemies[index].facing)
         {
@@ -413,7 +425,7 @@ update_bigmouth(char index)
         play_sound(ENEMY_CANNON);
     }
 
-    if (enemies[index].timer > 3)
+    if (enemies[index].timer > fire_point)
     {
         enemies[index].timer = 0;
     }
@@ -775,7 +787,7 @@ update_enemies()
         {
         case TYPE_BIGMOUTH:
         {
-            update_bigmouth(i);
+            update_bigmouth(i, 3);
             break;
         }
         case TYPE_BALL:
@@ -801,6 +813,11 @@ update_enemies()
         case TYPE_GOONGUY:
         {
             update_eyewalk(i, 0);
+            break;
+        }
+        case TYPE_MADMOUTH:
+        {
+            update_bigmouth(i, 2);
             break;
         }
         }
