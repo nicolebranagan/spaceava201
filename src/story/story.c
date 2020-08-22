@@ -20,6 +20,8 @@
 #incbin(mossbau_facepal, "palettes/mossba_face.pal");
 #incbin(antoni_facepal, "palettes/antoni_face.pal");
 #incbin(qcindy_facepal, "palettes/qcindy_face.pal");
+#incbin(badlily_facepal, "palettes/bdlily_face.pal");
+#incbin(amalghqpal, "palettes/amalghq.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -27,6 +29,7 @@
 #incbin(starshippal, "palettes/starship.pal");
 #incbin(sunscapepal, "palettes/sunscape.pal");
 #incbin(nepdroppal, "palettes/nepdrop.pal");
+#incbin(innerbat, "bats/introinner.bin");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -59,7 +62,8 @@ const char TRACK_MAPPING[] = {
     TRACK_EVANSSENSE,
     TRACK_CHIME_2020,
     TRACK_LACKED_EVEN_DAISY,
-    TRACK_SEVENTEEN_CROWNS};
+    TRACK_SEVENTEEN_CROWNS,
+    TRACK_STRAINING_CHIME};
 
 initialize()
 {
@@ -185,6 +189,14 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, QCINDY_FACE_SECTOR_OFFSET, vram, QCINDY_FACE_SIZE);
             size = QCINDY_FACE_SIZE;
+            break;
+
+        case 11: // Evil Lily
+            load_palette(current_palette, badlily_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, BDLILY_FACE_SECTOR_OFFSET, vram, BDLILY_FACE_SIZE);
+            size = BDLILY_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
@@ -351,6 +363,16 @@ draw_background(char index, char load_new_gfx)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, earthshipbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, starshippal, 1);
+        break;
+    case 14:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, innerbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, starshippal, 1);
         break;

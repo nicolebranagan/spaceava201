@@ -43,15 +43,15 @@
 #define AVASML_SECTOR_COUNT 1 
 #define AVASML_SIZE 2048 
 
-// ./images/badlily_face.chr
-#define BADLILY_FACE_SECTOR_OFFSET 26 
-#define BADLILY_FACE_SECTOR_COUNT 3 
-#define BADLILY_FACE_SIZE 6144 
-
 // ./images/bagbun_face.chr
-#define BAGBUN_FACE_SECTOR_OFFSET 29 
+#define BAGBUN_FACE_SECTOR_OFFSET 26 
 #define BAGBUN_FACE_SECTOR_COUNT 3 
 #define BAGBUN_FACE_SIZE 6144 
+
+// ./images/bdlily_face.chr
+#define BDLILY_FACE_SECTOR_OFFSET 29 
+#define BDLILY_FACE_SECTOR_COUNT 3 
+#define BDLILY_FACE_SIZE 6144 
 
 // ./images/betelland.chr
 #define BETELLAND_SECTOR_OFFSET 32 
@@ -113,10 +113,10 @@
 #define FRAMES_SECTOR_COUNT 2 
 #define FRAMES_SIZE 4096 
 
-// ./images/goodlily_face.chr
-#define GOODLILY_FACE_SECTOR_OFFSET 55 
-#define GOODLILY_FACE_SECTOR_COUNT 3 
-#define GOODLILY_FACE_SIZE 6144 
+// ./images/gdlily_face.chr
+#define GDLILY_FACE_SECTOR_OFFSET 55 
+#define GDLILY_FACE_SECTOR_COUNT 3 
+#define GDLILY_FACE_SIZE 6144 
 
 // ./images/goon_face.chr
 #define GOON_FACE_SECTOR_OFFSET 58 
