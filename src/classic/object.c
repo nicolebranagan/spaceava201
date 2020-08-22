@@ -157,14 +157,6 @@ char move_box(char index)
         return 1;
     }
 
-    for (i = 0; i < enemy_count; i++)
-    {
-        if (enemies[i].active && enemies[i].x == new_x && enemies[i].y == new_y)
-        {
-            return 1;
-        }
-    }
-
     ad_play(SHOVE_LOC, SHOVE_SIZE, 13, 0);
     objects[index].xpos = new_x;
     objects[index].ypos = new_y;

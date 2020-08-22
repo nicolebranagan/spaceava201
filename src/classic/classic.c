@@ -475,6 +475,20 @@ char is_solid(char x, char y, char is_ava)
         return 1;
     }
 
+    if (!is_ava)
+    {
+        for (i = 0; i < enemy_count; i++)
+        {
+            if (boss1_index > 0 && i == boss1_index) {
+                continue;
+            }
+            if (enemies[i].active && enemies[i].x == x && enemies[i].y == y)
+            {
+                return 1;
+            }
+        }
+    }
+
     switch (tiles[0])
     {
     case 0:

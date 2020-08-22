@@ -492,12 +492,19 @@ update_ball(char index)
 
 update_eyewalk(char index, char pause_on_turn)
 {
+    char loop_iter;
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
         kill_ava();
     }
 
+    loop_iter = 0;
 eyewalk_loop:
+
+    if (loop_iter > 3) {
+        return;
+    }
+
     switch (enemies[index].facing)
     {
     case UP:
@@ -510,6 +517,7 @@ eyewalk_loop:
             enemies[index].facing = RIGHT;
             if (!pause_on_turn)
             {
+                loop_iter++;
                 goto eyewalk_loop;
             }
         }
@@ -524,6 +532,7 @@ eyewalk_loop:
             enemies[index].facing = LEFT;
             if (!pause_on_turn)
             {
+                loop_iter++;
                 goto eyewalk_loop;
             }
         }
@@ -538,6 +547,7 @@ eyewalk_loop:
             enemies[index].facing = UP;
             if (!pause_on_turn)
             {
+                loop_iter++;
                 goto eyewalk_loop;
             }
         }
@@ -552,6 +562,7 @@ eyewalk_loop:
             enemies[index].facing = DOWN;
             if (!pause_on_turn)
             {
+                loop_iter++;
                 goto eyewalk_loop;
             }
         }
