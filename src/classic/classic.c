@@ -74,7 +74,7 @@ const char MUSIC_TO_CD_TRACK[] = {
     TRACK_YOUR_SOUL_LAVA,
     TRACK_THIS_PENANCE};
 
-char pal_rotate_step;
+char pal_rotate_step, ava_died;
 
 initialize()
 {
@@ -358,6 +358,7 @@ kill_ava()
     spr_hide();
 
     load_room();
+    ava_died = 1;
 }
 
 const char WIN_FRAMES[] = {0, 0, 11, 12, 13, 13, 13, 14, 14, 15};
@@ -545,31 +546,36 @@ main()
     {
         wait_for_sync(1);
         draw_enemies(0);
+        ava_died = 0;
 
         joyt = joytrg(0);
         if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1, 1))
         {
             ava_facing = UP;
             move_ava(0, -1);
-            update_enemies();
+            if (!ava_died)
+                update_enemies();
         }
         if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1, 1))
         {
             ava_facing = DOWN;
             move_ava(0, 1);
-            update_enemies();
+            if (!ava_died)
+                update_enemies();
         }
         if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y, 1))
         {
             ava_facing = LEFT;
             move_ava(-1, 0);
-            update_enemies();
+            if (!ava_died)
+                update_enemies();
         }
         if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y, 1))
         {
             ava_facing = RIGHT;
             move_ava(1, 0);
-            update_enemies();
+            if (!ava_died)
+                update_enemies();
         }
         if (joyt & JOY_SLCT)
         {

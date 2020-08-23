@@ -435,7 +435,7 @@ update_ball(char index)
 {
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
-        kill_ava();
+        ava_dead = 1;
         return;
     }
     switch (enemies[index].facing)
@@ -495,7 +495,8 @@ update_eyewalk(char index, char pause_on_turn)
     char loop_iter;
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
-        kill_ava();
+        ava_dead = 1;
+        return;
     }
 
     loop_iter = 0;
@@ -610,7 +611,8 @@ update_boss1(char index)
 
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
-        kill_ava();
+        ava_dead = 1;
+        return;
     }
 
     delx = enemies[index].x - ava_x;
@@ -719,7 +721,7 @@ update_boss2(char index)
 
     if (enemies[index].x == ava_x && enemies[index].y == ava_y)
     {
-        kill_ava();
+        ava_dead = 1;
         return;
     }
 
