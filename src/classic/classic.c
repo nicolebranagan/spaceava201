@@ -470,7 +470,7 @@ load_room()
 
 char is_solid(char x, char y, char is_ava)
 {
-    char tile, i, solidity;
+    char tile, solidity;
     tile = map_get_tile(x, y);
 
     if (is_ava && in_boss2_mode && x == last_ava_x && y == last_ava_y)
@@ -487,6 +487,13 @@ char is_solid(char x, char y, char is_ava)
                 continue;
             }
             if (enemies[i].active && enemies[i].x == x && enemies[i].y == y)
+            {
+                return 1;
+            }
+        }
+        for (i = 0; i < object_count; i++)
+        {
+            if (objects[i].active && objects[i].xpos == x && objects[i].ypos == y)
             {
                 return 1;
             }

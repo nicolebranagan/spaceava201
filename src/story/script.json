@@ -3010,7 +3010,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "MAN: I've got that paperwork you asked for, Supreme Calculator..."
+      "text": "MAN: I've got that paperwork you asked for, Canonical Quantizor..."
     },
     {
       "command": "PLAY_MUSIC",
@@ -3034,7 +3034,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "MAN: Of course not, Supreme Calculator! I assure you, all my integrals have been double-checked this time!"
+      "text": "MAN: Of course not, Canonical Quantizor! I assure you, all my integrals have been double-checked this time!"
     },
     {
       "command": "SHOW_SPRITE",

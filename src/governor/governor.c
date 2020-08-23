@@ -18,7 +18,6 @@
 #define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
-    STORY_OVERLAY, 16,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -56,7 +55,8 @@ const char STEP_ORDER[] = {
     STORY_OVERLAY, 15,
     CLASSIC_OVERLAY, 12,
     CLASSIC_OVERLAY, 13,
-    STORY_OVERLAY, 16};
+    STORY_OVERLAY, 16,
+    CLASSIC_OVERLAY, 14};
 
 initialize()
 {
