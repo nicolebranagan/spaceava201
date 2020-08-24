@@ -9,6 +9,7 @@ AVA:
 7. Sleepy
 8. Not wrong
 9. Hiding
+10. Sad
 
 BOB:
 0. Bob
@@ -88,3 +89,4 @@ BADLILY:
 1. Angry
 2. Rolleyes
 3. Smile
+4. Evil laugh

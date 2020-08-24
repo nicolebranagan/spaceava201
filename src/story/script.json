@@ -3093,5 +3093,172 @@
       "command": "SHOW_TEXT",
       "text": "And was that... Lily?!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 1
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "OFFICES-2"
+    }, 
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "AVA",
+      "face": 10,
+      "x": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Why would Lily join quantum... and to become their leader! She always hated them, without her help I would never have beaten them in the first place..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Could it be my fault? Is it because I impersonated a captain?"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Straining to Chime"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "sprite": "BADLILY",
+      "x": 12,
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: All these questions and you never bothered to ask? It's been far too long, 'Captain' the Seventh."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: So it really is you... you know, just because Spacefleet is looser with discipline than you expected"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: It has nothing to do with your ploy! That was completely irrelevant!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "It was even a little... charming..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: You abandoned me inside the black hole! You only cared about yourself and your crew! You couldn't commute that with me..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But that's not true!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: It's not..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Enough!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "GOON",
+      "face": 0,
+      "x": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "GOON",
+      "face": 0,
+      "x": 7
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Call off the invasion! We've got what we came here for. Back to the black hole!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Wait, call it off? What are you talking about? You're leaving us?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: We're leaving the Earth... but we're taking you with us!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "MEN: Shut up and calculate!"
+    }
   ]
 ]

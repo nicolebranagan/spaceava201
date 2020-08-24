@@ -45,6 +45,7 @@
 #incbin(starcombat, "bats/starcom-bg.bin")
 #incbin(earthshipbat, "bats/earthship-bg.bin")
 #incbin(innerbat, "bats/introinner.bin");
+#incbin(innerbat2, "bats/office2-bg.bin");
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -373,6 +374,16 @@ draw_background(char index, char load_new_gfx)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, innerbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, amalghqpal, 1);
+        break;
+    case 15:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, innerbat2 + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, amalghqpal, 1);
         break;
