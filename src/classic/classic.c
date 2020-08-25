@@ -19,6 +19,9 @@
 #incbin(officepal1, "palettes/office.pal");
 #incbin(officepal2, "palettes/outffice.pal");
 
+#incbin(harshpal1, "palettes/harsh.pal");
+#incbin(harshpal2, "palettes/harshout.pal");
+
 const char palette_ref[] = {
     0x10,
     0x10,
@@ -174,6 +177,21 @@ load_map_graphics(char gfx_type)
         load_palette(1, officepal1, 1);
         load_palette(2, officepal2, 1);
         break;
+    case 4:
+            cd_loadvram(
+            IMAGE_OVERLAY,
+            HARSH_SECTOR_OFFSET,
+            0x2000,
+            HARSH_SIZE);
+        cd_loadvram(
+            IMAGE_OVERLAY,
+            HARSHOUT_SECTOR_OFFSET,
+            0x2000 + (HARSH_SIZE / 2),
+            HARSHOUT_SIZE);
+
+        load_palette(1, harshpal1, 1);
+        load_palette(2, harshpal2, 1);
+        break;
     }
 }
 
@@ -210,6 +228,9 @@ wait_for_sync(char cycles)
             break;
         case 3:
             load_palette(2, officepal2 + (pal_rotate_step << 5), 1);
+            break;
+        case 4:
+            load_palette(2, harshpal2 + (pal_rotate_step << 5), 1);
             break;
         }
         satb_update();
