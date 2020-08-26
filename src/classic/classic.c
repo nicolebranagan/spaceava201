@@ -71,6 +71,10 @@ const char TILE_SOLIDITY_OFFICE[] = {
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+const char TILE_SOLIDITY_HARSH[] = {
+    0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0};
+
 const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
     TRACK_IMPOSSIBLY_BOSSY,
@@ -178,7 +182,7 @@ load_map_graphics(char gfx_type)
         load_palette(2, officepal2, 1);
         break;
     case 4:
-            cd_loadvram(
+        cd_loadvram(
             IMAGE_OVERLAY,
             HARSH_SECTOR_OFFSET,
             0x2000,
@@ -493,11 +497,26 @@ load_room()
 char is_solid(char x, char y, char is_ava)
 {
     char tile, solidity;
-    tile = map_get_tile(x, y);
 
     if (is_ava && in_boss2_mode && x == last_ava_x && y == last_ava_y)
     {
         return 1;
+    }
+
+    if (is_ava)
+    {
+        for (i = 0; i < object_count; i++)
+        {
+            if (!objects[i].active || objects[i].type != OBJ_TILE)
+            {
+                continue;
+            }
+            if (objects[i].xpos == x && objects[i].ypos == y)
+            {
+                update_tile(i);
+                return 0;
+            }
+        }
     }
 
     if (!is_ava)
@@ -522,6 +541,8 @@ char is_solid(char x, char y, char is_ava)
         }
     }
 
+    tile = map_get_tile(x, y);
+
     switch (tiles[0])
     {
     case 0:
@@ -532,6 +553,9 @@ char is_solid(char x, char y, char is_ava)
         break;
     case 3:
         solidity = TILE_SOLIDITY_OFFICE[tile];
+        break;
+    case 4:
+        solidity = TILE_SOLIDITY_HARSH[tile];
         break;
     }
 

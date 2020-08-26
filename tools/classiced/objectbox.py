@@ -4,6 +4,7 @@ OBJECT_NAME = {
     "Photon": 0,
     "Antiphoton": 1,
     "Box": 2,
+    "Tile": 3
 }
 NAME_OBJECT = {v: k for k, v in OBJECT_NAME.items()}
 

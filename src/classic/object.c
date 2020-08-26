@@ -14,10 +14,11 @@ char photon_count;
 #define OBJ_PHOTON 0
 #define OBJ_ANTIPHOTON 1
 #define OBJ_BOX 2
+#define OBJ_TILE 3
 
 struct object
 {
-    char type, active, xpos, ypos;
+    char type, active, xpos, ypos, frame;
     signed char xdel, ydel;
     int xdraw, ydraw;
 };
@@ -47,12 +48,20 @@ create_object(char type, char x, char y)
     objects[new_index].xpos = x;
     objects[new_index].ypos = y;
     objects[new_index].active = 1;
+    objects[new_index].frame = 0;
 
     spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + new_index);
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(16);
     spr_pri(1);
-    spr_pattern(AVA_VRAM + ((((int)(type + 2)) << 4) * SPR_SIZE_16x16));
+    if (type >= OBJ_BOX)
+    {
+        spr_pattern(AVA_VRAM + (65 * SPR_SIZE_16x16));
+    }
+    else
+    {
+        spr_pattern(AVA_VRAM + ((((int)(type + 2)) << 4) * SPR_SIZE_16x16));
+    }
     spr_show();
 }
 
@@ -139,6 +148,20 @@ char update_objects()
             spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
             spr_hide();
         }
+
+        if (objects[i].type == OBJ_TILE && objects[i].active && objects[i].frame > 0)
+        {
+            if (ava_x != objects[i].xpos || ava_y != objects[i].ypos)
+            {
+                if (objects[i].frame == 2)
+                    objects[i].active = 0;
+            }
+            else
+            {
+                spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
+                spr_pattern(AVA_VRAM + (66 * SPR_SIZE_16x16));
+            }
+        }
     }
 
     return photon_count && (obtained_object_count == photon_count);
@@ -164,4 +187,9 @@ char move_box(char index)
     objects[index].ydel = dy * 16;
 
     return 0;
+}
+
+char update_tile(char index)
+{
+    objects[i].frame++;
 }
