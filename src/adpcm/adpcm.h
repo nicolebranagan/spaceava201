@@ -63,13 +63,23 @@
 #define SHOVE_SECTOR_COUNT 3 
 #define SHOVE_SIZE 4267 
 
+// ./adpcm/stomp.vox
+#define STOMP_SECTOR_OFFSET 85 
+#define STOMP_SECTOR_COUNT 5 
+#define STOMP_SIZE 9130 
+
+// ./adpcm/tile.vox
+#define TILE_SECTOR_OFFSET 90 
+#define TILE_SECTOR_COUNT 4 
+#define TILE_SIZE 6851 
+
 // ./adpcm/whistle.vox
-#define WHISTLE_SECTOR_OFFSET 85 
+#define WHISTLE_SECTOR_OFFSET 94 
 #define WHISTLE_SECTOR_COUNT 5 
 #define WHISTLE_SIZE 9073 
 
 // ./adpcm/wrong.vox
-#define WRONG_SECTOR_OFFSET 90 
+#define WRONG_SECTOR_OFFSET 99 
 #define WRONG_SECTOR_COUNT 2 
 #define WRONG_SIZE 3200 
 

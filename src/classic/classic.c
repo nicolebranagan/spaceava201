@@ -94,6 +94,7 @@ initialize()
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
     ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, WILHELM_LOC);
     ad_trans(ADPCM_OVERLAY, SHOVE_SECTOR_OFFSET, SHOVE_SECTOR_COUNT, SHOVE_LOC);
+    ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
 
     disp_off();
@@ -503,19 +504,19 @@ char is_solid(char x, char y, char is_ava)
         return 1;
     }
 
-    if (is_ava)
+    for (i = 0; i < object_count; i++)
     {
-        for (i = 0; i < object_count; i++)
+        if (!objects[i].active || objects[i].type != OBJ_TILE)
         {
-            if (!objects[i].active || objects[i].type != OBJ_TILE)
-            {
-                continue;
-            }
-            if (objects[i].xpos == x && objects[i].ypos == y)
+            continue;
+        }
+        if (objects[i].xpos == x && objects[i].ypos == y)
+        {
+            if (is_ava)
             {
                 update_tile(i);
-                return 0;
             }
+            return 0;
         }
     }
 

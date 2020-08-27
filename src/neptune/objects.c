@@ -181,7 +181,7 @@ update_blobbo(char index, char dely)
         if (dely)
         {
             objects[i].active = 0;
-            ad_play(PCM_CANNON, CANNON_SIZE, 14, 0);
+            ad_play(PCM_STOMP, STOMP_SIZE, 14, 0);
             create_object(flipper ? OBJ_PHOTON : OBJ_ANTIPHOTON, objects[i].xpos, objects[i].ypos - 1, -1);
             flipper = flipper ? 0 : 1;
             return;

@@ -192,4 +192,5 @@ char move_box(char index)
 char update_tile(char index)
 {
     objects[i].frame++;
+    ad_play(TILE_SND_LOC, TILE_SIZE, 14, 0);
 }
