@@ -9,6 +9,7 @@
 #include "./story/chirp.c"
 
 #incbin(framepal, "palettes/frames.pal");
+#incbin(retropal, "palettes/retrofont.pal");
 
 #incbin(ava_facepal, "palettes/ava_face.pal");
 #incbin(cindy_facepal, "palettes/cindy_face.pal");
@@ -21,6 +22,7 @@
 #incbin(antoni_facepal, "palettes/antoni_face.pal");
 #incbin(qcindy_facepal, "palettes/qcindy_face.pal");
 #incbin(badlily_facepal, "palettes/bdlily_face.pal");
+#incbin(retro_facepal, "palettes/retro_face.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -29,6 +31,7 @@
 #incbin(sunscapepal, "palettes/sunscape.pal");
 #incbin(nepdroppal, "palettes/nepdrop.pal");
 #incbin(amalghqpal, "palettes/amalghq.pal");
+#incbin(harshartpal, "palettes/harshart.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -46,6 +49,7 @@
 #incbin(earthshipbat, "bats/earthship-bg.bin")
 #incbin(innerbat, "bats/introinner.bin");
 #incbin(innerbat2, "bats/office2-bg.bin");
+#incbin(harshartbat, "bats/harshart-bg.bin");
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -57,6 +61,7 @@ char timer;
 int pointer_to_data;
 char script[2048];
 char has_next_command;
+char in_retro;
 
 const char TRACK_MAPPING[] = {
     TRACK_BALLAD,
@@ -85,6 +90,7 @@ initialize()
     set_screen_size(SCR_SIZE_64x32);
     cls(FONT_VRAM / 16);
     timer = 0;
+    in_retro = 0;
 }
 
 #define MAX_CAST 5
@@ -198,6 +204,13 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, BDLILY_FACE_SECTOR_OFFSET, vram, BDLILY_FACE_SIZE);
             size = BDLILY_FACE_SIZE;
+            break;
+        case 12: // Evil Lily
+            load_palette(current_palette, retro_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, RETRO_FACE_SECTOR_OFFSET, vram, RETRO_FACE_SIZE);
+            size = RETRO_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
@@ -387,7 +400,26 @@ draw_background(char index, char load_new_gfx)
         }
         load_palette(1, amalghqpal, 1);
         break;
+    case 16:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, HARSHART_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, harshartbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, harshartpal, 1);
+        break;
     }
+}
+
+enter_retro()
+{
+    cls();
+    load_palette(0, retropal, 1);
+    set_xres(256);
+    cd_loadvram(IMAGE_OVERLAY, RETROFONT_SECTOR_OFFSET, FONT_VRAM, RETROFONT_SIZE);
+    in_retro = 1;
 }
 
 #define FRAME_START ((FRAME_VRAM) >> 4)
@@ -680,7 +712,7 @@ load_sfx(char sfx)
 draw_block(char more)
 {
     int parsed[1], vaddr;
-    vaddr = vram_addr(39, 25);
+    vaddr = vram_addr(in_retro ? 28 : 39, 25);
     parsed[0] = (timer & 32) ? ((127 << 1) + (FONT_VRAM >> 4) - (more ? 64 : 63)) : FONT_VRAM / 16;
     load_vram(vaddr, parsed, 1);
 }
@@ -696,6 +728,7 @@ draw_block(char more)
 #define CMD_PLAY_LOADED_SFX 9
 #define CMD_LOAD_NEXT_SEGMENT 10
 #define CMD_SHOW_SPRITE_BG 11
+#define CMD_ENTER_RETRO 12
 
 perform_command()
 {
@@ -769,6 +802,11 @@ loop:
             script[pointer_to_data + 2],
             script[pointer_to_data + 3]);
         pointer_to_data += 4;
+        goto loop;
+        break;
+    case CMD_ENTER_RETRO:
+        pointer_to_data += 1;
+        enter_retro();
         goto loop;
         break;
     }

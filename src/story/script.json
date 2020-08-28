@@ -3078,7 +3078,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track":"Evan S. Sense"
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
@@ -3102,7 +3102,7 @@
     {
       "command": "SHOW_BACKGROUND",
       "background": "OFFICES-2"
-    }, 
+    },
     {
       "command": "PLAY_MUSIC",
       "track": "Evan S. Sense"
@@ -3259,6 +3259,41 @@
     {
       "command": "SHOW_TEXT",
       "text": "MEN: Shut up and calculate!"
+    }
+  ],
+  [
+    {
+      "command": "ENTER_RETRO"
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "HARSH_ART"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Space Year 99"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "RETRO",
+      "face": 4,
+      "x": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "RETRO",
+      "face": 8,
+      "x": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily, we're heading back to the ship... do you want to come with us?"
     }
   ]
 ]

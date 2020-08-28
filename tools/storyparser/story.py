@@ -18,7 +18,8 @@ COMMANDS = {
     "LOAD_SFX": 8,
     "PLAY_LOADED_SFX": 9,
     "LOAD_NEXT_SEGMENT": 10,
-    "SHOW_SPRITE_BG": 11
+    "SHOW_SPRITE_BG": 11,
+    "ENTER_RETRO": 12
 }
 
 SPRITES = {
@@ -32,7 +33,8 @@ SPRITES = {
     "MOSSBAU": 8,
     "ANTONIA": 9,
     "QCINDY": 10,
-    "BADLILY": 11
+    "BADLILY": 11,
+    "RETRO": 12
 }
 
 BACKGROUNDS = {
@@ -51,7 +53,8 @@ BACKGROUNDS = {
     "STARSHIP_COMMUNICATION": 12,
     "STARSHIP_EARTH": 13,
     "OFFICES": 14,
-    "OFFICES-2": 15
+    "OFFICES-2": 15,
+    "HARSH_ART": 16
 }
 
 BACKGROUND_GROUPING = {
@@ -59,7 +62,8 @@ BACKGROUND_GROUPING = {
     "VOID/STARSHIP": 1,
     "SUNSCAPE": 2,
     "NEPTUNE": 3,
-    "AMALGHQ": 4
+    "AMALGHQ": 4,
+    "HARSHART": 5
 }
 
 BACKGROUNDS_TO_BACKGROUND_GROUPING = {
@@ -79,6 +83,7 @@ BACKGROUNDS_TO_BACKGROUND_GROUPING = {
     "STARSHIP_EARTH": BACKGROUND_GROUPING["VOID/STARSHIP"],
     "OFFICES": BACKGROUND_GROUPING["AMALGHQ"],
     "OFFICES-2": BACKGROUND_GROUPING["AMALGHQ"],
+    "HARSH_ART": BACKGROUND_GROUPING["HARSHART"],
 }
 
 TRACKS = {
@@ -96,21 +101,24 @@ SFXES = {
 }
 
 SCREEN_WIDTH = 36
+RETRO_SCREEN_WIDTH = 27
 LINE_COUNT = 4
 
-def parse_and_center_text(text):
+def parse_and_center_text(in_retro, text):
     initlines = text.split('\n')
     wrappedlines = []
+    screen_width = RETRO_SCREEN_WIDTH if in_retro else SCREEN_WIDTH
     for line in initlines:
-        lines = textwrap.wrap(line, SCREEN_WIDTH)
+        lines = textwrap.wrap(line, screen_width)
         for wrappedline in lines:
             length = len(wrappedline)
-            dellength = (SCREEN_WIDTH - length) // 2
+            dellength = (screen_width - length) // 2
             wrappedlines.append(wrappedline.rjust(dellength + length))
     return '\n'.join(wrappedlines)
 
-def parse_text(text):
-    lines = textwrap.wrap(text, SCREEN_WIDTH)
+def parse_text(in_retro, text):
+    screen_width = RETRO_SCREEN_WIDTH if in_retro else SCREEN_WIDTH
+    lines = textwrap.wrap(text, screen_width)
     return ['\n'.join(lines[(x*4):((x+1)*4)]) for x in range(0, math.ceil(len(lines) / 4))]
 
 def parse_single_script(script):
@@ -126,6 +134,8 @@ def parse_single_script(script):
     last_slot_for_face = {}
 
     commands = []
+
+    in_retro = False
 
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
@@ -156,7 +166,7 @@ def parse_single_script(script):
                 )
             )
         elif (command["command"] == "SHOW_TEXT"):
-            parsedsets = parse_text(command["text"])
+            parsedsets = parse_text(in_retro, command["text"])
             chirp = int(command["chirp"]) if "chirp" in command else 0
             for newtext in parsedsets:
                 commands.append(
@@ -165,7 +175,7 @@ def parse_single_script(script):
                     bytes([0])
                 )
         elif (command["command"] == "SHOW_CENTERED_TEXT"):
-            newtext = parse_and_center_text(command["text"])
+            newtext = parse_and_center_text(in_retro, command["text"])
             chirp = int(command["chirp"]) if "chirp" in command else 0
             commands.append(
                 bytes([COMMANDS["SHOW_TEXT"], chirp]) + 
@@ -229,6 +239,9 @@ def parse_single_script(script):
                     last_face[slot]
                     ])
             )
+        elif (command["command"] == "ENTER_RETRO"):
+            in_retro = True
+            commands.append(bytes([COMMANDS["ENTER_RETRO"]]))
     
     last_song = -1
     blocks = []
