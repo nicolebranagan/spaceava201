@@ -3034,7 +3034,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "MAN: Of course not, Canonical Quantizor! I assure you, all my integrals have been double-checked this time!"
+      "text": "MAN: Of course not, Canonical Quantizor! I assure you, all my integrals have been double-checked this time! I used an online solver!"
     },
     {
       "command": "SHOW_SPRITE",
