@@ -36,6 +36,8 @@ spaceava201: spaceava.iso
 	cp ../mods/seventeencrowns.wav "../build/iso/Space Ava 201 - 14 - Seventeen Crowns.wav"
 	cp ../mods/thispenance.wav "../build/iso/Space Ava 201 - 15 - This Penance.wav"
 	cp ../mods/strainingtochime.wav "../build/iso/Space Ava 201 - 16 - Straining to Chime.wav"
+	cp ../mods/harshmemories.wav "../build/iso/Space Ava 201 - 17 - Harsh Memories.wav"
+	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl
 	mv */*.s */*.ovl */*.sym ../build

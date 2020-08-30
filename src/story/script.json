@@ -3278,6 +3278,10 @@
       "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat"
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Carousel"
+    },
+    {
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "RETRO",
@@ -3348,8 +3352,7 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
-      "face": 11,
-      "x": 6
+      "face": 11
     },
     {
       "command": "SHOW_TEXT",
@@ -3358,8 +3361,7 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
-      "face": 13,
-      "x": 4
+      "face": 13
     },
     {
       "command": "SHOW_TEXT",
@@ -3369,7 +3371,7 @@
       "command": "SHOW_SPRITE",
       "slot": 0,
       "face": 23,
-      "x": 8
+      "x": 12
     },
     {
       "command": "SHOW_SPRITE",

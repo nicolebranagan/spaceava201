@@ -4,7 +4,8 @@ TRACKS = {
     "Spaceful": 0,
     "Impossibly Bossy": 1,
     "Your Soul is Lava": 2,
-    "This Penance": 3
+    "This Penance": 3,
+    "Harsh Memories": 4
 }
 
 INV_TRACKS = {v: k for k, v in TRACKS.items()}

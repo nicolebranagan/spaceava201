@@ -63,7 +63,15 @@ FILE "Space Ava 201 - 16 - Straining to Chime.wav" WAVE
   TRACK 16 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 17 - Harsh Memories.wav" WAVE
+  TRACK 17 AUDIO
+    INDEX 01 00:00:00
+
+FILE "Space Ava 201 - 18 - Never-Ending Carousel.wav" WAVE
+  TRACK 18 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 17 MODE1/2048
+  TRACK 19 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

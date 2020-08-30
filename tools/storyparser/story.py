@@ -92,7 +92,8 @@ TRACKS = {
     "Chime 2020": 2,
     "Lacked Even a Daisy": 3,
     "Seventeen Crowns": 4,
-    "Straining to Chime": 5
+    "Straining to Chime": 5,
+    "Carousel": 6
 }
 
 SFXES = {

@@ -79,7 +79,8 @@ const char MUSIC_TO_CD_TRACK[] = {
     TRACK_SPACEFUL,
     TRACK_IMPOSSIBLY_BOSSY,
     TRACK_YOUR_SOUL_LAVA,
-    TRACK_THIS_PENANCE};
+    TRACK_THIS_PENANCE,
+    TRACK_HARSH_MEMORIES};
 
 char pal_rotate_step, ava_died;
 
