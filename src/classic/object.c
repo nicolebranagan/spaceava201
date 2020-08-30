@@ -4,7 +4,7 @@
 
 #include "classic/classic.h"
 
-#define MAX_OBJECT_COUNT 4
+#define MAX_OBJECT_COUNT 6
 #define OBJECT_SPRITE_START (MAX_ENEMY_COUNT)
 
 char object_count;
@@ -54,7 +54,7 @@ create_object(char type, char x, char y)
     spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
     spr_pal(16);
     spr_pri(1);
-    if (type >= OBJ_BOX)
+    if (type > OBJ_BOX)
     {
         spr_pattern(AVA_VRAM + (65 * SPR_SIZE_16x16));
     }
@@ -193,4 +193,6 @@ char update_tile(char index)
 {
     objects[i].frame++;
     ad_play(TILE_SND_LOC, TILE_SIZE, 14, 0);
+    spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
+    spr_pattern(AVA_VRAM + (66 * SPR_SIZE_16x16));
 }

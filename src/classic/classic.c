@@ -512,10 +512,7 @@ char is_solid(char x, char y, char is_ava)
         }
         if (objects[i].xpos == x && objects[i].ypos == y)
         {
-            if (is_ava)
-            {
-                update_tile(i);
-            }
+            update_tile(i);
             return 0;
         }
     }

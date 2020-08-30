@@ -3374,11 +3374,11 @@
     {
       "command": "SHOW_SPRITE",
       "slot": 1,
-      "face": 10
+      "face": 15
     },
     {
       "command": "SHOW_TEXT",
-      "text": "And what do you want?"
+      "text": "Goodbye, Ava!"
     }
   ]
 ]
