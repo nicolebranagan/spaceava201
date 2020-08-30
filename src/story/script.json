@@ -3281,7 +3281,7 @@
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "RETRO",
-      "face": 4,
+      "face": 5,
       "x": 3
     },
     {
@@ -3294,6 +3294,91 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Lily, we're heading back to the ship... do you want to come with us?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 10
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: I'm not so sure about that, Ava... I can't just leave here."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 11
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I guess that makes sense..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "It was really good meeting you, Lily. Maybe we'll see each other again one day!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 8
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Same to you, the Seventh."
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 11,
+      "x": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 13,
+      "x": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: I wonder if I made the right decision..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "face": 23,
+      "x": 8
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "face": 10
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "And what do you want?"
     }
   ]
 ]
