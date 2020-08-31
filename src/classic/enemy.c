@@ -502,7 +502,8 @@ update_eyewalk(char index, char pause_on_turn)
     loop_iter = 0;
 eyewalk_loop:
 
-    if (loop_iter > 3) {
+    if (loop_iter > 3)
+    {
         return;
     }
 
@@ -866,6 +867,21 @@ update_enemies()
             if (enemies[i].dely)
             {
                 enemies[i].y += enemies[i].dely;
+            }
+        }
+    }
+
+    if (current_snd)
+    {
+        if (ad_stat())
+        {
+            ad_stop();
+        }
+        while (1)
+        {
+            if (!ad_stat())
+            {
+                break;
             }
         }
     }

@@ -509,6 +509,11 @@ win_ava()
     {
         ad_stop();
     }
+    while(1) {
+        if (!ad_stat()) {
+            break;
+        }
+    }
     ad_play(PCM_EUREKA, EUREKA_SIZE, 15, 0);
 
     for (i = 0; i < 10; i++)
@@ -529,6 +534,7 @@ win_ava()
         spr_hide();
     }
     satb_update();
+    cls();
     load_palette(0, nullpal, 1);
     load_palette(1, nullpal, 1);
     vsync(); // Deliberately not wait_for_sync

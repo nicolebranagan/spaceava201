@@ -77,10 +77,10 @@ initialize()
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
     scroll(0, 0, 0, 0, 223, 0xC0);
+    cls();
     load_palette(0, fontpal, 1);
     disp_on();
 
-    cls();
     reset_satb();
 }
 

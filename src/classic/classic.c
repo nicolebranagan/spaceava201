@@ -397,6 +397,13 @@ win_ava()
     {
         ad_stop();
     }
+    while (1)
+    {
+        if (!ad_stat())
+        {
+            break;
+        }
+    }
     ad_play(EUREKA_LOC, EUREKA_SIZE, 15, 0);
 
     for (i = 0; i < 10; i++)
