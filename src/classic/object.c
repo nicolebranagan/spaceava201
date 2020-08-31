@@ -153,7 +153,7 @@ char update_objects()
         {
             if (ava_x != objects[i].xpos || ava_y != objects[i].ypos)
             {
-                if (objects[i].frame == 2)
+                if (objects[i].frame >= 2)
                     objects[i].active = 0;
             }
             else
