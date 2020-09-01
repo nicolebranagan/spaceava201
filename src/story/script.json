@@ -3274,12 +3274,12 @@
       "text": "Space Year 99"
     },
     {
-      "command": "SHOW_CENTERED_TEXT",
-      "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat"
-    },
-    {
       "command": "PLAY_MUSIC",
       "track": "Carousel"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3381,6 +3381,20 @@
     {
       "command": "SHOW_TEXT",
       "text": "Goodbye, Ava!"
+    }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "HARSH_BG"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: There's something so unintuitive about this whole situation..."
     }
   ]
 ]

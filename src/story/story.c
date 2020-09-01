@@ -32,6 +32,7 @@
 #incbin(nepdroppal, "palettes/nepdrop.pal");
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(harshartpal, "palettes/harshart.pal");
+#incbin(harshbgpal, "palettes/harshbg.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -50,6 +51,7 @@
 #incbin(innerbat, "bats/introinner.bin");
 #incbin(innerbat2, "bats/office2-bg.bin");
 #incbin(harshartbat, "bats/harshart-bg.bin");
+#incbin(harshbat, "bats/harsh-bg.bin");
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -403,13 +405,23 @@ draw_background(char index, char load_new_gfx)
         break;
     case 16:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, HARSHART_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+            cd_loadvram(IMAGE_OVERLAY, HARSHART_SECTOR_OFFSET, BACKDROP_VRAM, HARSHART_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
             load_vram(addr, harshartbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, harshartpal, 1);
+        break;
+    case 17:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, HARSHBG_SECTOR_OFFSET, BACKDROP_VRAM, HARSHBG_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, harshbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, harshbgpal, 1);
         break;
     }
 }
