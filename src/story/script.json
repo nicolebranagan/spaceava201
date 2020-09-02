@@ -3396,16 +3396,16 @@
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "AVA",
-      "x": 3,
+      "x": 6,
       "face": 11
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
       "text": "AVA: There's something unintuitive about this whole situation... I just can't believe Lily would act like this."
-    },
-    {
-      "command": "PLAY_MUSIC",
-      "track":"Straining to Chime"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3444,6 +3444,52 @@
     {
       "command": "SHOW_TEXT",
       "text": "AVA: Lilith? Are you listening?"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Straining to Chime"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Ahem! It means that you shouldn't focus on how unintuitive things are! You should simply do your job and let yourself get lost in the math!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "x": 14,
+      "face": 1,
+      "sprite": "GOON"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 3,
+      "x": 16,
+      "face": 1,
+      "sprite": "MOSSBAU"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Maybe my subordinates can help you to understand that."
     }
   ]
 ]
