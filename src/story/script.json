@@ -3393,8 +3393,57 @@
       "background": "HARSH_BG"
     },
     {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "x": 3,
+      "face": 11
+    },
+    {
       "command": "SHOW_TEXT",
-      "text": "AVA: There's something so unintuitive about this whole situation..."
+      "text": "AVA: There's something unintuitive about this whole situation... I just can't believe Lily would act like this."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track":"Straining to Chime"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "BADLILY",
+      "x": 11,
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Do you know why the motto of quantum is 'shut up and calculate'?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily! Please, snap out of this!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: ..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lilith? Are you listening?"
     }
   ]
 ]

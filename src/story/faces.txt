@@ -10,6 +10,7 @@ AVA:
 8. Not wrong
 9. Hiding
 10. Sad
+11. Thinking
 
 BOB:
 0. Bob
