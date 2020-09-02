@@ -18,7 +18,7 @@
 #define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
-    CLASSIC_OVERLAY, 17,
+    CLASSIC_OVERLAY, 18,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -62,7 +62,9 @@ const char STEP_ORDER[] = {
     CLASSIC_OVERLAY, 15,
     STORY_OVERLAY, 18,
     CLASSIC_OVERLAY, 16,
-    STORY_OVERLAY, 19};
+    STORY_OVERLAY, 19,
+    CLASSIC_OVERLAY, 17,
+    CLASSIC_OVERLAY, 18};
 
 initialize()
 {
@@ -296,9 +298,9 @@ load_saved_game(char show_saved_game_warning)
     write_text(8, "Existing saved game found");
     for (;;)
     {
-        write_text(11, opt == 0 ? "> Load save data         " : "  Load save data         ");
-        write_text(13, opt == 1 ? "> Start new game         " : "  Start new game         ");
-        write_text(15, opt == 2 ? "> New game without saving" : "  New game without saving");
+        write_text(11, opt == 0 ? "> Start new game         " : "  Start new game         ");
+        write_text(13, opt == 1 ? "> New game without saving" : "  New game without saving");
+        write_text(15, opt == 2 ? "> Load save data         " : "  Load save data         ");
 
         vsync();
         joyt = joytrg(0);
@@ -312,13 +314,13 @@ load_saved_game(char show_saved_game_warning)
         }
         if ((joyt & JOY_I) || (joyt & JOY_II) || (joyt & JOY_RUN))
         {
-            if (opt == 0)
+            if (opt == 2)
             {
                 governor_step = data[0];
                 has_backup_ram = 1;
                 return;
             }
-            else if (opt == 1)
+            else if (opt == 0)
             {
                 data[0] = 0;
                 bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
