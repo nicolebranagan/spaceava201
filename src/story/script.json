@@ -3491,5 +3491,188 @@
       "command": "SHOW_TEXT",
       "text": "Maybe my subordinates can help you to understand that."
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "HARSH_BG"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "x": 7,
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "BADLILY",
+      "x": 11,
+      "face": 2
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Harsh Memories"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Enough of this, Lily! Explain yourself!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Explain myself..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "...if you insist!"
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Harsh Memories"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Miss me, Ava?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 8
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: You're a cat? That's really cute and all, but I don't understand why it explains the whole being evil and conquering a galaxy to kidnap"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Seriously, Ava? Let me jog your memory..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Can't Die Boing"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Or did you already forget about Schrodinger's Cat?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: But how! What happened to Lily? Didn't you just want to stay in the black hole?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: I am the superposition of Lilith and Schrodinger's Cat! I do what I want! And I wanted you here Ava! TO END YOU!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily! You're still in there somewhere, you don't want this..."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: It doesn't matter what she wants anymore! She misses you... those feelings are a distraction. So now I'll fix that little problem!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 12
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Hey... I'm not dead!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: That's impossible..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 12
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: That just tickles!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: No, no, no no no no no!"
+    }
   ]
 ]

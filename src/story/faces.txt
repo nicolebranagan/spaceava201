@@ -11,6 +11,7 @@ AVA:
 9. Hiding
 10. Sad
 11. Thinking
+12. Fried
 
 BOB:
 0. Bob
@@ -91,3 +92,7 @@ BADLILY:
 2. Rolleyes
 3. Smile
 4. Evil laugh
+
+5. Revealed evil laugh
+6. Revealed angery
+7. Revealed shock

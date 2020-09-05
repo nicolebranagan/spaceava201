@@ -19,7 +19,8 @@ COMMANDS = {
     "PLAY_LOADED_SFX": 9,
     "LOAD_NEXT_SEGMENT": 10,
     "SHOW_SPRITE_BG": 11,
-    "ENTER_RETRO": 12
+    "ENTER_RETRO": 12,
+    "THUNDERCLAP": 13
 }
 
 SPRITES = {
@@ -96,7 +97,9 @@ TRACKS = {
     "Lacked Even a Daisy": 3,
     "Seventeen Crowns": 4,
     "Straining to Chime": 5,
-    "Carousel": 6
+    "Carousel": 6,
+    "Harsh Memories": 7,
+    "Can't Die Boing": 8
 }
 
 SFXES = {
@@ -246,6 +249,8 @@ def parse_single_script(script):
         elif (command["command"] == "ENTER_RETRO"):
             in_retro = True
             commands.append(bytes([COMMANDS["ENTER_RETRO"]]))
+        elif (command["command"] == "THUNDERCLAP"):
+            commands.append(bytes([COMMANDS["THUNDERCLAP"]]))
     
     last_song = -1
     blocks = []

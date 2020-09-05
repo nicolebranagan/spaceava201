@@ -72,7 +72,9 @@ const char TRACK_MAPPING[] = {
     TRACK_LACKED_EVEN_DAISY,
     TRACK_SEVENTEEN_CROWNS,
     TRACK_STRAINING_CHIME,
-    TRACK_CAROUSEL};
+    TRACK_CAROUSEL,
+    TRACK_HARSH_MEMORIES,
+    TRACK_CANT_DIE_BOING};
 
 initialize()
 {
@@ -435,6 +437,40 @@ enter_retro()
     in_retro = 1;
 }
 
+#define CLAP_SFX 199
+thunderclap()
+{
+    char i, j;
+
+    load_palette(1, harshbgpal, 1);
+    for (i = 0; i < 8; i++)
+    {
+        chirp(CLAP_SFX);
+        vsync();
+    }
+    for (j = 0; j < 7; j++)
+    {
+        load_palette(1, harshbgpal + (1 << 5), 1);
+        for (i = 0; i < 16; i++)
+        {
+            chirp(CLAP_SFX);
+            vsync();
+        }
+        chirp(0);
+        load_palette(1, harshbgpal, 1);
+        for (i = 0; i < 8; i++)
+        {
+            vsync();
+        }
+    }
+    load_palette(1, harshbgpal + (2 << 5), 1);
+    for (i = 0; i < 8; i++)
+    {
+        chirp(CLAP_SFX);
+        vsync();
+    }
+}
+
 #define FRAME_START ((FRAME_VRAM) >> 4)
 draw_frame(char frame)
 {
@@ -742,6 +778,7 @@ draw_block(char more)
 #define CMD_LOAD_NEXT_SEGMENT 10
 #define CMD_SHOW_SPRITE_BG 11
 #define CMD_ENTER_RETRO 12
+#define CMD_THUNDERCLAP 13
 
 perform_command()
 {
@@ -820,6 +857,11 @@ loop:
     case CMD_ENTER_RETRO:
         pointer_to_data += 1;
         enter_retro();
+        goto loop;
+        break;
+    case CMD_THUNDERCLAP:
+        pointer_to_data += 1;
+        thunderclap();
         goto loop;
         break;
     }

@@ -71,7 +71,11 @@ FILE "Space Ava 201 - 18 - Never-Ending Carousel.wav" WAVE
   TRACK 18 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 19 - Can't Die Boing.wav" WAVE
+  TRACK 19 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 19 MODE1/2048
+  TRACK 20 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00
