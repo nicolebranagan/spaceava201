@@ -96,3 +96,9 @@ BADLILY:
 5. Revealed evil laugh
 6. Revealed angery
 7. Revealed shock
+
+FUTAVA:
+0. Blank expression
+1. Smile <_<
+2. Shock
+3. Angry

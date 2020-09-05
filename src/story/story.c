@@ -23,6 +23,7 @@
 #incbin(qcindy_facepal, "palettes/qcindy_face.pal");
 #incbin(badlily_facepal, "palettes/bdlily_face.pal");
 #incbin(retro_facepal, "palettes/retro_face.pal");
+#incbin(futava_facepal, "palettes/futava_face.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -210,12 +211,19 @@ build_cast()
             cd_loadvram(IMAGE_OVERLAY, BDLILY_FACE_SECTOR_OFFSET, vram, BDLILY_FACE_SIZE);
             size = BDLILY_FACE_SIZE;
             break;
-        case 12: // Evil Lily
+        case 12: // Retro
             load_palette(current_palette, retro_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, RETRO_FACE_SECTOR_OFFSET, vram, RETRO_FACE_SIZE);
             size = RETRO_FACE_SIZE;
+            break;
+        case 13: // Future Ava
+            load_palette(current_palette, futava_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, FUTAVA_FACE_SECTOR_OFFSET, vram, FUTAVA_FACE_SIZE);
+            size = FUTAVA_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;

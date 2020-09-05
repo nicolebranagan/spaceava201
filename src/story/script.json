@@ -3673,6 +3673,107 @@
     {
       "command": "SHOW_TEXT",
       "text": "SCHRODINGER'S CATGIRL: No, no, no no no no no!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 12
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2,
+      "x": 6
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "slot": 2,
+      "face": 1,
+      "x": 8
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: Are you okay, Ava? I can't keep this up forever!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I'm fine... but who are you?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: I could ask the same question!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "???: It's been such a long time... I'm Captain Ava, of the Spaceship Zip Dash C. Come back from the future to save my past self!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: You mean I make captain eventually? And it only costs us two more starships Zip and one eye? I'll take it!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAPTAIN AVA: Oh, you like the eyepatch? I insisted on it, can't time travel without an eyepatch or no one in the past will take you seriously."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Makes perfect sense! I'm glad I don't lose my famous sense of style in the future."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: Very charming. But that's just two of you to defeat, then. If you die in the present, then you'll never time travel to save yourself. You'll still be dead!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 11
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Is that right? Carry the two, cross the i... ugh, I should've paid attention to Nelehu when I had the chance..."
     }
   ]
 ]
