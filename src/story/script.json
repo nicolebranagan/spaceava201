@@ -3607,7 +3607,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "SCHRODINGER'S CATGIRL: I am the superposition of Lilith and Schrodinger's Cat! I do what I want! And I wanted you here Ava! TO END YOU!"
+      "text": "SCHRODINGER'S CATGIRL: I am the superposition of Lilith and Schrodinger's Cat! I do what I want, in ways that neither the singular components might have acted if they were not interacting! And I wanted you here Ava! You, personally. Because I needed to get rid of you. Once and for all."
     },
     {
       "command": "SHOW_SPRITE",
@@ -3772,8 +3772,99 @@
       "face": 0
     },
     {
+      "command": "STOP_MUSIC"
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "AVA: Is that right? Carry the two, cross the i... ugh, I should've paid attention to Nelehu when I had the chance..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAPTAIN AVA: She's not completely wrong... there are all sorts of things that are a bit weird about time traveling to your past self."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: That's right! If you two interact any closer than you already are, it'll cause a paradox!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 10
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Well, thanks for coming by to let me know my future might've been nice, at least..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 6
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAPTAIN AVA: What she's not telling you, though, is that if we can cause a paradox right near her, it should break her out of the superposition. All we have to do is touch at the exact right spot... But we only get one shot at this."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 7
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: As if... you can't... I won't let you!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: That might just be clever enough to work! I mean, I'll take your word for it..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Can't Die Boing"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "FUTAVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "BADLILY",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "SCHRODINGER'S CATGIRL: Weren't you listening?!"
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I said, I won't let you!"
     }
   ]
 ]
