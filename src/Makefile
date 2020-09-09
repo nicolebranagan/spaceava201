@@ -13,6 +13,7 @@ MIRROR_SRC = mirror/mirror.c
 TITLE_SRC = title/title.c
 INTRO_SRC = intro/intro.c
 NEPTUNE_SRC = neptune/neptune.c
+FINAL_SRC = final/final.c
 
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
@@ -40,9 +41,9 @@ spaceava201: spaceava.iso
 	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 	cp ../mods/cantdieboing.wav "../build/iso/Space Ava 201 - 19 - Can't Die Boing.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -67,6 +68,9 @@ intro.ovl: $(INTRO_SRC) images
 
 neptune.ovl: $(NEPTUNE_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(NEPTUNE_SRC) $(LIBS)
+
+final.ovl: $(FINAL_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(FINAL_SRC) $(LIBS)
 
 adpcm: adpcm/*
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
