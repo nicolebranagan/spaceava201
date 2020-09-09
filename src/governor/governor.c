@@ -120,6 +120,9 @@ level_select()
         case NEPTUNE_OVERLAY:
             write_text(13, "Neptune Gameplay");
             break;
+        case FINAL_OVERLAY:
+            write_text(13, "Final Boss Battle");
+            break;
         default:
             write_text(13, "Unknown Level Type");
             break;

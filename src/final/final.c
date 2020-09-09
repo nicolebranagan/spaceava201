@@ -435,7 +435,7 @@ main()
     char joyt;
 
     initialize();
-    cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_REPEAT);
+    cd_playtrk(TRACK_SCANDAL_NULLITY, TRACK_SCANDAL_NULLITY + 1, CDPLAY_REPEAT);
 
     for (;;)
     {

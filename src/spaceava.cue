@@ -11,7 +11,7 @@ FILE "Space Ava 201 - 03 - Fantasy World Title.wav" WAVE
   TRACK 03 AUDIO
     INDEX 01 00:00:00
 
-FILE "Space Ava 201 - 04 - Even More Spaceless.wav" WAVE
+FILE "Space Ava 201 - 04 - Space Space Ava!.wav" WAVE
   TRACK 04 AUDIO
     INDEX 01 00:00:00
 
@@ -75,7 +75,11 @@ FILE "Space Ava 201 - 19 - Can't Die Boing.wav" WAVE
   TRACK 19 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 20 - Scandal of Nullity.wav" WAVE
+  TRACK 20 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 20 MODE1/2048
+  TRACK 21 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

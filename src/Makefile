@@ -24,7 +24,7 @@ spaceava201: spaceava.iso
 	mv ../build/spaceava.iso "../build/iso/Space Ava 201 - Track 2.iso"
 	cp spaceava.cue "../build/iso/Space Ava 201.cue"
 	cp ../waves/title.wav "../build/iso/Space Ava 201 - 03 - Fantasy World Title.wav"
-	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 04 - Even More Spaceless.wav"
+	cp ../mods/spacespaceava.wav "../build/iso/Space Ava 201 - 04 - Space Space Ava!.wav"
 	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 05 - Ballad of St. Janet.wav"
 	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 06 - Evan S. Sense.wav"
 	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 07 - Spaceful.wav"
@@ -40,6 +40,7 @@ spaceava201: spaceava.iso
 	cp ../mods/harshmemories.wav "../build/iso/Space Ava 201 - 17 - Harsh Memories.wav"
 	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 	cp ../mods/cantdieboing.wav "../build/iso/Space Ava 201 - 19 - Can't Die Boing.wav"
+	cp ../mods/scandalofnullity.wav "../build/iso/Space Ava 201 - 20 - Scandal of Nullity.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata
 	mv */*.s */*.ovl */*.sym ../build

@@ -194,13 +194,16 @@ main()
     initialize();
     draw_logo();
     satb_update();
-    cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_REPEAT);
+    cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_NORMAL);
     for (;;)
     {
-        timer++;
         longTimer++;
-        if (!done)
+        if (!done && longTimer < 130)
         {
+        }
+        else if (!done)
+        {
+            timer++;
             for (i = 0; i < 8; i++)
             {
                 spr_set(i);
@@ -214,6 +217,7 @@ main()
         }
         else
         {
+            timer++;
             load_palette(16, logopal + (((timer >> 4) % 4) << 5), 1);
             load_palette(18, buttonspal + (((timer >> 4) % 4) << 5), 1);
 
@@ -263,7 +267,7 @@ main()
             selectedButton = (selectedButton + 1) & 1;
         }
 
-        if (longTimer == 1500)
+        if (longTimer == 3600)
         {
             cd_execoverlay(LOGO_OVERLAY);
         }
