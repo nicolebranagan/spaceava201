@@ -5,8 +5,6 @@ from PIL import ImageTk, Image, ImageDraw
 from enemybox import EnemyBox
 from objectbox import ObjectBox
 from tileset import getTilesets
-from musicselect import MusicSelect
-from tileselect import TileSelect
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -143,15 +141,6 @@ class Application(tk.Frame):
         addobjectbutton = tk.Button(roomcontrols, text="Add Object", command=onclickaddobject)
         addobjectbutton.grid(row=2, column=0, columnspan=2)
 
-        def onchangemusic(newmusic):
-            self.room.music = newmusic
-
-        self.musicselect = MusicSelect(roomcontrols, 0, onchangemusic)
-        self.musicselect.grid(row=3, column=0, columnspan=2)
-
-        self.tileselect = TileSelect(roomcontrols, 0, self.changetileset)
-        self.tileselect.grid(row=4, column=0, columnspan=2)
-
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=2, column=0, columnspan=3, sticky=tk.W+tk.E)
@@ -175,7 +164,6 @@ class Application(tk.Frame):
         self.roomimgTk = ImageTk.PhotoImage(self.roomimg)
         self.viewcanvas.itemconfig(self.viewcanvasimage,
                                    image=self.roomimgTk)
-        self.musicselect.setValue(self.room.music)
         self.changetileset(self.room.graphics, False)
 
     def tileclick(self, event):
