@@ -41,9 +41,9 @@ spaceava201: spaceava.iso
 	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 	cp ../mods/cantdieboing.wav "../build/iso/Space Ava 201 - 19 - Can't Die Boing.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
@@ -83,6 +83,9 @@ storydata: story/script.json
 
 mirrordata: mirrordata/mirrordata.bin
 	cp mirrordata/mirrordata.bin ../build/mirrordata.bin
+
+finaldata: finaldata/finaldata.bin
+	cp finaldata/finaldata.bin ../build/finaldata.bin
 
 images: sprites tiles 8x8fonts 8x16fonts faces
 	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr

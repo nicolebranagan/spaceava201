@@ -77,18 +77,18 @@ initialize()
     cls();
 
     load_palette(16, avapal, 1);
-    load_level_data(current_level);
+    load_level_data();
 
     load_room();
 }
 
-load_level_data(char level)
+load_level_data()
 {
     int vram_offset;
     char tiledata[STARBASE_SIZE + STARROT_SIZE];
 
     // Offsets, objects, are the second sector of a level
-    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * level) + 1, tiles, 500);
+    cd_loaddata(FINAL_DATA_OVERLAY, 1, tiles, 500);
 
     vram_offset = AVA_VRAM + (AVA_SIZE / 2);
     populate_enemies_vram(vram_offset, tiles + 3);
@@ -96,8 +96,9 @@ load_level_data(char level)
     load_map_graphics(tiles[0]);
 
     // Level data is the first sector of the level
-    cd_loaddata(CLASSIC_DATA_OVERLAY, 2 * level, tiledata, 2048);
+    cd_loaddata(FINAL_DATA_OVERLAY, 0, tiledata, 2048);
     set_map_data(tiledata, 16, 16);
+    load_map(0, 0, 0, 0, 16, 16);
 }
 
 load_map_graphics(char gfx_type)
