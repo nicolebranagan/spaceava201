@@ -24,12 +24,13 @@
 #define TOP_HALF_START 0
 #define BOTTOM_HALF_START 32
 
+#define SPRITE_START 2
+
 char ava_x;
 char ava_y;
+char not_ava_x;
+char not_ava_y;
 char ava_facing;
-
-char last_ava_x;
-char last_ava_y;
 
 char timer;
 

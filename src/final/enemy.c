@@ -31,7 +31,7 @@
 // Other
 #define DIR_FRAME_OVERRIDE 255
 
-const char PALETTE_BY_TYPE[] = {17, 18, 19, 20, 21, 22, 23};
+const char PALETTE_BY_TYPE[] = {18, 19, 20, 21, 22, 23, 24};
 
 int enemy_vram[ENEMY_TYPE_COUNT];
 char enemy_palette[ENEMY_TYPE_COUNT];
@@ -139,12 +139,12 @@ init_enemy()
 {
     char i;
     enemy_count = 0;
-    load_palette(17, bigmouthpal, 2);
-    load_palette(19, eyewalkpal, 1);
-    load_palette(20, goonbosspal, 1);
-    load_palette(21, mossbosspal, 1);
-    load_palette(22, goonguypal, 1);
-    load_palette(23, madmouthpal, 1);
+    load_palette(18, bigmouthpal, 2);
+    load_palette(20, eyewalkpal, 1);
+    load_palette(21, goonbosspal, 1);
+    load_palette(22, mossbosspal, 1);
+    load_palette(23, goonguypal, 1);
+    load_palette(24, madmouthpal, 1);
 }
 
 create_enemy(char type, char x, char y, char facing, char delx, char dely)
@@ -249,8 +249,6 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
 
     return sprite_offset + 1;
 }
-
-#define SPRITE_START 2;
 
 draw_enemies(char time_offset)
 {

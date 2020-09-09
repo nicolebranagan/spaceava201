@@ -77,6 +77,7 @@ initialize()
     cls();
 
     load_palette(16, avapal, 1);
+    load_palette(17, avapal + (2 << 5), 1);
     load_level_data();
 
     load_room();
@@ -135,6 +136,16 @@ init_ava_sprite()
     spr_pal(0);
     spr_pri(1);
     spr_show();
+
+    spr_set(TOP_HALF_START + 1);
+    spr_pal(1);
+    spr_pri(1);
+    spr_show();
+
+    spr_set(BOTTOM_HALF_START + 1);
+    spr_pal(1);
+    spr_pri(1);
+    spr_show();
 }
 
 wait_for_sync(char cycles)
@@ -153,22 +164,32 @@ wait_for_sync(char cycles)
     }
 }
 
-draw_ava(char moving, int x, int y)
+draw_ava(char moving, int x, int y, int not_x, int not_y)
 {
     char frame, frame_offset;
+    char not_frame;
     char ctrl_flags = SZ_16x16;
+    char not_ctrl_flags = SZ_16x16;
 
     switch (ava_facing)
     {
     case DOWN:
         frame = 0;
+        not_frame = 5;
         break;
     case UP:
         frame = 5;
+        not_frame = 0;
         break;
     case LEFT:
         ctrl_flags = ctrl_flags | FLIP_X;
+        frame = 3;
+        not_frame = 3;
+        break;
     case RIGHT:
+        not_ctrl_flags = not_ctrl_flags | FLIP_X;
+        frame = 3;
+        not_frame = 3;
         frame = 3;
         break;
     }
@@ -183,10 +204,12 @@ draw_ava(char moving, int x, int y)
             if (frame_offset == 1)
             {
                 frame = frame + 1;
+                not_frame = not_frame + 1;
             }
             if (frame_offset == 3)
             {
                 frame = frame + 2;
+                not_frame = not_frame + 2;
             }
             break;
         case LEFT:
@@ -194,6 +217,7 @@ draw_ava(char moving, int x, int y)
             if ((timer >> 3) & 1)
             {
                 frame = frame + 1;
+                not_frame = not_frame + 1;
             }
         }
     }
@@ -210,36 +234,51 @@ draw_ava(char moving, int x, int y)
     spr_pattern(0x5000 + (2 * frame * SPR_SIZE_16x16) + SPR_SIZE_16x16);
     spr_ctrl(FLIP_MAS | SIZE_MAS, ctrl_flags);
 
+    spr_set(TOP_HALF_START + 1);
+    spr_x(not_x);
+    spr_y(not_y - 16);
+    spr_pattern(0x5000 + (2 * not_frame * SPR_SIZE_16x16));
+    spr_ctrl(FLIP_MAS | SIZE_MAS, not_ctrl_flags);
+
+    spr_set(BOTTOM_HALF_START + 1);
+    spr_x(not_x);
+    spr_y(not_y);
+    spr_pattern(0x5000 + (2 * not_frame * SPR_SIZE_16x16) + SPR_SIZE_16x16);
+    spr_ctrl(FLIP_MAS | SIZE_MAS, not_ctrl_flags);
+
     return;
 }
 
 move_ava(signed char delx, signed char dely)
 {
     char i;
-    int x, y;
+    int x, y, nx, ny;
 
     x = ava_x * 16;
     y = ava_y * 16;
+    nx = not_ava_x * 16;
+    ny = not_ava_y * 16;
 
     for (i = 0; i < 8; i++)
     {
         x = x + delx + delx;
         y = y + dely + dely;
+        nx = nx - delx - delx;
+        ny = ny - dely - dely;
 
-        draw_ava(1, x, y);
+        draw_ava(1, x, y, nx, ny);
         wait_for_sync(1);
 
-        draw_ava(1, x, y);
+        draw_ava(1, x, y, nx, ny);
         wait_for_sync(1);
     }
 
-    last_ava_x = ava_x;
-    last_ava_y = ava_y;
-
     ava_x = ava_x + delx;
     ava_y = ava_y + dely;
+    not_ava_x = not_ava_x - delx;
+    not_ava_y = not_ava_y - dely;
 
-    draw_ava(0, ava_x * 16, ava_y * 16);
+    draw_ava(0, ava_x * 16, ava_y * 16, not_ava_x * 16, not_ava_y * 16);
 }
 
 const char DEATH_FRAMES[] = {0, 0, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 10, 10};
@@ -333,9 +372,9 @@ load_room()
 
     ava_x = tiles[2];
     ava_y = tiles[3];
-
-    last_ava_x = tiles[2];
-    last_ava_y = tiles[3] + 1;
+    
+    not_ava_x = tiles[2] + 8;
+    not_ava_y = tiles[3] - 8;
 
     init_object();
     init_enemy();
@@ -368,7 +407,7 @@ load_room()
     }
 
     init_ava_sprite();
-    draw_ava(0, ava_x * 16, ava_y * 16);
+    draw_ava(0, ava_x * 16, ava_y * 16, not_ava_x * 16, not_ava_y * 16);
     disp_on();
 }
 
