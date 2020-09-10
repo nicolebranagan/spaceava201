@@ -123,6 +123,10 @@ class Application(tk.Frame):
         setstartbutton = tk.Button(roomcontrols, text="Set Start", command=self.setstart)
         setstartbutton.grid(row=0, column=0, columnspan=2)
 
+        self.setstart2mode = False
+        setstart2button = tk.Button(roomcontrols, text="Set Start 2", command=self.setstart2)
+        setstart2button.grid(row=1, column=0, columnspan=2)
+
         def onclickaddenemy():
             def onsave(x, y, type, facing, delx, dely):
                 self.room.enemies.append(Enemy(x, y, type, facing, delx, dely))
@@ -130,7 +134,7 @@ class Application(tk.Frame):
             EnemyBox(root, onsave, Enemy(self.savedx, self.savedy, 0, 0, 0, 0))
 
         addenemybutton = tk.Button(roomcontrols, text="Add Enemy", command=onclickaddenemy)
-        addenemybutton.grid(row=1, column=0, columnspan=2)
+        addenemybutton.grid(row=2, column=0, columnspan=2)
 
         def onclickaddobject():
             def onsave(x, y, type):
@@ -139,7 +143,7 @@ class Application(tk.Frame):
             ObjectBox(root, onsave, Object(self.savedx, self.savedy, 0))
 
         addobjectbutton = tk.Button(roomcontrols, text="Add Object", command=onclickaddobject)
-        addobjectbutton.grid(row=2, column=0, columnspan=2)
+        addobjectbutton.grid(row=3, column=0, columnspan=2)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -180,6 +184,13 @@ class Application(tk.Frame):
             self.setstartmode = False 
             self.room.startx = clickX
             self.room.starty = clickY 
+            self.drawroom()
+            return 
+
+        if (self.setstart2mode):
+            self.setstart2mode = False 
+            self.room.startx2 = clickX
+            self.room.starty2 = clickY 
             self.drawroom()
             return 
 
@@ -230,6 +241,9 @@ class Application(tk.Frame):
 
     def setstart(self):
         self.setstartmode = True
+
+    def setstart2(self):
+        self.setstart2mode = True
 
     def save(self):
         filen = filedialog.asksaveasfilename(
@@ -284,9 +298,11 @@ class Application(tk.Frame):
         music = data[2049]
         startx = data[2050]
         starty = data[2051]
+        startx2 = data[2052]
+        starty2 = data[2053]
         enemies = []
         objects = []
-        offset = 2051
+        offset = 2053
         while True:
             offset = offset + 1
             x = data[offset]
@@ -316,7 +332,7 @@ class Application(tk.Frame):
             
             objects.append(Object(x, y, _type))
         
-        return Room(graphics, music, startx, starty, tiles, enemies, objects)
+        return Room(graphics, music, startx, starty, startx2, starty2, tiles, enemies, objects)
 
 class Room:
     def __init__(
@@ -325,6 +341,8 @@ class Room:
         music = 0,
         startx = 0, 
         starty = 0, 
+        startx2 = 0,
+        starty2 = 0,
         tiles = None, 
         enemies = None, 
         objects = None
@@ -343,6 +361,8 @@ class Room:
         self.music = music
         self.startx = startx
         self.starty = starty
+        self.startx2 = startx2
+        self.starty2 = starty2
         if (enemies is None):
             self.enemies = []
         else:
@@ -367,6 +387,7 @@ class Room:
                 i = i+1
         draw = ImageDraw.Draw(image)
         draw.text((self.startx*16 + 4, self.starty*16 + 4), "S", (255, 0, 0))
+        draw.text((self.startx2*16 + 4, self.starty2*16 + 4), "Z", (255, 0, 0))
         for enem in self.enemies:
             draw.text((enem.x*16 + 4, enem.y*16 + 4), "E", (0, 128, 0))
         for obj in self.objects:
@@ -381,7 +402,7 @@ class Room:
         for enem in self.enemies:
             enemies = enemies + enem.dump()
         tiledata = bytes(self.tiles)+ bytes([255 for _ in range(0, 2048 - len(self.tiles))])
-        data = tiledata + bytes([self.graphics, self.music, self.startx, self.starty]) + enemies + bytes([255]) + objects  
+        data = tiledata + bytes([self.graphics, self.music, self.startx, self.starty, self.startx2, self.starty2]) + enemies + bytes([255]) + objects  
         # Ensure all data is sector-aligned
         return data + bytes([255 for _ in range(0, 4096 - len(data))])
 

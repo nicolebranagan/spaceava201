@@ -373,12 +373,12 @@ load_room()
     ava_x = tiles[2];
     ava_y = tiles[3];
 
-    not_ava_x = tiles[2] + 1;
-    not_ava_y = tiles[3];
+    not_ava_x = tiles[4];
+    not_ava_y = tiles[5];
 
     init_object();
     init_enemy();
-    i = 3;
+    i = 5;
     for (;;)
     {
         x = tiles[++i];
@@ -416,7 +416,7 @@ char is_solid(char x, char y, char is_ava)
     char tile, solidity;
 
     if (is_ava) {
-        if ((x == ava_x && x == ava_y) || (x == not_ava_x && y == not_ava_y)) {
+        if ((x == ava_x && y == ava_y) || (x == not_ava_x && y == not_ava_y)) {
             return 1;
         }
     }
