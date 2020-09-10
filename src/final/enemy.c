@@ -7,7 +7,7 @@
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 #incbin(eyewalkpal, "palettes/eyewalk.pal");
 #incbin(goonbosspal, "palettes/goonboss.pal");
-#incbin(mossbosspal, "palettes/mossboss.pal");
+#incbin(lilybosspal, "palettes/lilyboss.pal");
 #incbin(goonguypal, "palettes/goonguy.pal");
 #incbin(madmouthpal, "palettes/madmouth.pal");
 
@@ -117,9 +117,9 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_BOSS2:
         if (!enemy_vram[TYPE_BOSS2])
         {
-            cd_loadvram(IMAGE_OVERLAY, MOSSBOSS_SECTOR_OFFSET, vram_offset, MOSSBOSS_SIZE);
+            cd_loadvram(IMAGE_OVERLAY, LILYBOSS_SECTOR_OFFSET, vram_offset, LILYBOSS_SIZE);
             enemy_vram[TYPE_BOSS2] = vram_offset;
-            vram_offset += MOSSBOSS_SIZE / 2;
+            vram_offset += LILYBOSS_SIZE / 2;
         }
         break;
     case TYPE_GOONGUY:
@@ -142,7 +142,7 @@ init_enemy()
     load_palette(18, bigmouthpal, 2);
     load_palette(20, eyewalkpal, 1);
     load_palette(21, goonbosspal, 1);
-    load_palette(22, mossbosspal, 1);
+    load_palette(22, lilybosspal, 1);
     load_palette(23, goonguypal, 1);
     load_palette(24, madmouthpal, 1);
 }
@@ -213,6 +213,12 @@ char draw_enemy(char sprite_offset, char enemyIndex, int x, int y, char moving)
         {
             frame += 2;
         }
+    }
+
+    if (enemies[enemyIndex].type == TYPE_BOSS2)
+    {
+        x += 8;
+        y += 4;
     }
 
     spr_set(TOP_HALF_START + sprite_offset);
@@ -336,7 +342,9 @@ update_bigmouth(char index, char fire_point)
 
 update_ball(char index)
 {
-    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    if (
+        (enemies[index].x == ava_x && enemies[index].y == ava_y) ||
+        (enemies[index].x == not_ava_x && enemies[index].y == not_ava_y))
     {
         ava_dead = 1;
         return;
@@ -385,8 +393,10 @@ update_ball(char index)
         break;
     }
     if (
-        (enemies[index].x + enemies[index].delx) == ava_x &&
-        (enemies[index].y + enemies[index].dely) == ava_y)
+        ((enemies[index].x + enemies[index].delx) == ava_x &&
+         (enemies[index].y + enemies[index].dely) == ava_y) ||
+        ((enemies[index].x + enemies[index].delx) == not_ava_x &&
+         (enemies[index].y + enemies[index].dely) == not_ava_y))
     {
         ava_dead = 1;
         return;
@@ -396,7 +406,9 @@ update_ball(char index)
 update_eyewalk(char index, char pause_on_turn)
 {
     char loop_iter;
-    if (enemies[index].x == ava_x && enemies[index].y == ava_y)
+    if (
+        (enemies[index].x == ava_x && enemies[index].y == ava_y) ||
+        (enemies[index].x == not_ava_x && enemies[index].y == not_ava_y))
     {
         ava_dead = 1;
         return;
@@ -474,12 +486,22 @@ eyewalk_loop:
         break;
     }
     if (
-        (enemies[index].x + enemies[index].delx) == ava_x &&
-        (enemies[index].y + enemies[index].dely) == ava_y)
+        ((enemies[index].x + enemies[index].delx) == ava_x &&
+         (enemies[index].y + enemies[index].dely) == ava_y) ||
+        ((enemies[index].x + enemies[index].delx) == not_ava_x &&
+         (enemies[index].y + enemies[index].dely) == not_ava_y))
     {
         ava_dead = 1;
         return;
     }
+}
+
+update_boss2(char index)
+{
+    char i;
+
+    enemies[index].timer++;
+    enemies[index].frame = (((enemies[index].timer) >> 2 & 1) << 1);
 }
 
 update_enemies()
@@ -521,6 +543,7 @@ update_enemies()
         }
         case TYPE_BOSS2:
         {
+            update_boss2(i);
             break;
         }
         case TYPE_GOONGUY:

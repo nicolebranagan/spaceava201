@@ -168,128 +168,133 @@
 #define LASERS_SECTOR_COUNT 2 
 #define LASERS_SIZE 4096 
 
+// ./images/lilyboss.chr
+#define LILYBOSS_SECTOR_OFFSET 86 
+#define LILYBOSS_SECTOR_COUNT 1 
+#define LILYBOSS_SIZE 2048 
+
 // ./images/logo.chr
-#define LOGO_SECTOR_OFFSET 86 
+#define LOGO_SECTOR_OFFSET 87 
 #define LOGO_SECTOR_COUNT 2 
 #define LOGO_SIZE 4096 
 
 // ./images/madmouth.chr
-#define MADMOUTH_SECTOR_OFFSET 88 
+#define MADMOUTH_SECTOR_OFFSET 89 
 #define MADMOUTH_SECTOR_COUNT 1 
 #define MADMOUTH_SIZE 2048 
 
 // ./images/mirrorsys.chr
-#define MIRRORSYS_SECTOR_OFFSET 89 
+#define MIRRORSYS_SECTOR_OFFSET 90 
 #define MIRRORSYS_SECTOR_COUNT 3 
 #define MIRRORSYS_SIZE 6144 
 
 // ./images/mossba_face.chr
-#define MOSSBA_FACE_SECTOR_OFFSET 92 
+#define MOSSBA_FACE_SECTOR_OFFSET 93 
 #define MOSSBA_FACE_SECTOR_COUNT 3 
 #define MOSSBA_FACE_SIZE 6144 
 
 // ./images/mossboss.chr
-#define MOSSBOSS_SECTOR_OFFSET 95 
+#define MOSSBOSS_SECTOR_OFFSET 96 
 #define MOSSBOSS_SECTOR_COUNT 1 
 #define MOSSBOSS_SIZE 2048 
 
 // ./images/nelehu_face.chr
-#define NELEHU_FACE_SECTOR_OFFSET 96 
+#define NELEHU_FACE_SECTOR_OFFSET 97 
 #define NELEHU_FACE_SECTOR_COUNT 3 
 #define NELEHU_FACE_SIZE 6144 
 
 // ./images/nepdrop.chr
-#define NEPDROP_SECTOR_OFFSET 99 
+#define NEPDROP_SECTOR_OFFSET 100 
 #define NEPDROP_SECTOR_COUNT 2 
 #define NEPDROP_SIZE 4096 
 
 // ./images/neptune.chr
-#define NEPTUNE_SECTOR_OFFSET 101 
+#define NEPTUNE_SECTOR_OFFSET 102 
 #define NEPTUNE_SECTOR_COUNT 2 
 #define NEPTUNE_SIZE 4096 
 
 // ./images/null.chr
-#define NULL_SECTOR_OFFSET 103 
+#define NULL_SECTOR_OFFSET 104 
 #define NULL_SECTOR_COUNT 1 
 #define NULL_SIZE 2048 
 
 // ./images/objside.chr
-#define OBJSIDE_SECTOR_OFFSET 104 
+#define OBJSIDE_SECTOR_OFFSET 105 
 #define OBJSIDE_SECTOR_COUNT 5 
 #define OBJSIDE_SIZE 10240 
 
 // ./images/office.chr
-#define OFFICE_SECTOR_OFFSET 109 
+#define OFFICE_SECTOR_OFFSET 110 
 #define OFFICE_SECTOR_COUNT 1 
 #define OFFICE_SIZE 2048 
 
 // ./images/outffice.chr
-#define OUTFFICE_SECTOR_OFFSET 110 
+#define OUTFFICE_SECTOR_OFFSET 111 
 #define OUTFFICE_SECTOR_COUNT 1 
 #define OUTFFICE_SIZE 2048 
 
 // ./images/qcindy_face.chr
-#define QCINDY_FACE_SECTOR_OFFSET 111 
+#define QCINDY_FACE_SECTOR_OFFSET 112 
 #define QCINDY_FACE_SECTOR_COUNT 3 
 #define QCINDY_FACE_SIZE 6144 
 
 // ./images/retro_face.chr
-#define RETRO_FACE_SECTOR_OFFSET 114 
+#define RETRO_FACE_SECTOR_OFFSET 115 
 #define RETRO_FACE_SECTOR_COUNT 9 
 #define RETRO_FACE_SIZE 18432 
 
 // ./images/retrofont.chr
-#define RETROFONT_SECTOR_OFFSET 123 
+#define RETROFONT_SECTOR_OFFSET 124 
 #define RETROFONT_SECTOR_COUNT 3 
 #define RETROFONT_SIZE 6144 
 
 // ./images/shade8x8.chr
-#define SHADE8X8_SECTOR_OFFSET 126 
+#define SHADE8X8_SECTOR_OFFSET 127 
 #define SHADE8X8_SECTOR_COUNT 2 
 #define SHADE8X8_SIZE 4096 
 
 // ./images/shutcalc.chr
-#define SHUTCALC_SECTOR_OFFSET 128 
+#define SHUTCALC_SECTOR_OFFSET 129 
 #define SHUTCALC_SECTOR_COUNT 11 
 #define SHUTCALC_SIZE 22528 
 
 // ./images/sidenmy.chr
-#define SIDENMY_SECTOR_OFFSET 139 
+#define SIDENMY_SECTOR_OFFSET 140 
 #define SIDENMY_SECTOR_COUNT 1 
 #define SIDENMY_SIZE 2048 
 
 // ./images/starbase.chr
-#define STARBASE_SECTOR_OFFSET 140 
+#define STARBASE_SECTOR_OFFSET 141 
 #define STARBASE_SECTOR_COUNT 1 
 #define STARBASE_SIZE 2048 
 
 // ./images/stardrop.chr
-#define STARDROP_SECTOR_OFFSET 141 
+#define STARDROP_SECTOR_OFFSET 142 
 #define STARDROP_SECTOR_COUNT 2 
 #define STARDROP_SIZE 4096 
 
 // ./images/starrot.chr
-#define STARROT_SECTOR_OFFSET 143 
+#define STARROT_SECTOR_OFFSET 144 
 #define STARROT_SECTOR_COUNT 1 
 #define STARROT_SIZE 2048 
 
 // ./images/starship.chr
-#define STARSHIP_SECTOR_OFFSET 144 
+#define STARSHIP_SECTOR_OFFSET 145 
 #define STARSHIP_SECTOR_COUNT 3 
 #define STARSHIP_SIZE 6144 
 
 // ./images/sunscape.chr
-#define SUNSCAPE_SECTOR_OFFSET 147 
+#define SUNSCAPE_SECTOR_OFFSET 148 
 #define SUNSCAPE_SECTOR_COUNT 1 
 #define SUNSCAPE_SIZE 2048 
 
 // ./images/titlefnt.chr
-#define TITLEFNT_SECTOR_OFFSET 148 
+#define TITLEFNT_SECTOR_OFFSET 149 
 #define TITLEFNT_SECTOR_COUNT 3 
 #define TITLEFNT_SIZE 6144 
 
 // ./images/titles.chr
-#define TITLES_SECTOR_OFFSET 151 
+#define TITLES_SECTOR_OFFSET 152 
 #define TITLES_SECTOR_COUNT 5 
 #define TITLES_SIZE 10240 
 

@@ -61,12 +61,10 @@ initialize()
     pal_rotate_step = 0;
 
     ad_reset();
-    ad_trans(ADPCM_OVERLAY, EUREKA_SECTOR_OFFSET, EUREKA_SECTOR_COUNT, EUREKA_LOC);
+    ad_trans(ADPCM_OVERLAY, EUREKA2_SECTOR_OFFSET, EUREKA2_SECTOR_COUNT, EUREKA_LOC);
     ad_trans(ADPCM_OVERLAY, DIE_SECTOR_OFFSET, DIE_SECTOR_COUNT, DIE_LOC);
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
-    ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, WILHELM_LOC);
-    ad_trans(ADPCM_OVERLAY, SHOVE_SECTOR_OFFSET, SHOVE_SECTOR_COUNT, SHOVE_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
 
@@ -92,7 +90,7 @@ load_level_data()
     cd_loaddata(FINAL_DATA_OVERLAY, 1, tiles, 500);
 
     vram_offset = AVA_VRAM + (AVA_SIZE / 2);
-    populate_enemies_vram(vram_offset, tiles + 3);
+    populate_enemies_vram(vram_offset, tiles + 5);
 
     load_map_graphics(tiles[0]);
 
@@ -299,11 +297,21 @@ kill_ava()
         spr_set(BOTTOM_HALF_START);
         spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_set(TOP_HALF_START + 1);
+        spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16));
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_set(BOTTOM_HALF_START + 1);
+        spr_pattern(0x5000 + (2 * DEATH_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         wait_for_sync(4);
     }
     spr_set(TOP_HALF_START);
     spr_hide();
     spr_set(BOTTOM_HALF_START);
+    spr_hide();
+    spr_set(TOP_HALF_START + 1);
+    spr_hide();
+    spr_set(BOTTOM_HALF_START + 1);
     spr_hide();
 
     load_room();
@@ -328,21 +336,7 @@ win_ava()
     }
     ad_play(EUREKA_LOC, EUREKA_SIZE, 15, 0);
 
-    for (i = 0; i < 10; i++)
-    {
-        spr_set(TOP_HALF_START);
-        spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16));
-        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        spr_set(BOTTOM_HALF_START);
-        spr_pattern(0x5000 + (2 * WIN_FRAMES[i] * SPR_SIZE_16x16) + SPR_SIZE_16x16);
-        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
-        wait_for_sync(4);
-    }
-    spr_set(TOP_HALF_START);
-    spr_hide();
-    spr_set(BOTTOM_HALF_START);
-    spr_hide();
-    wait_for_sync(8);
+    wait_for_sync(64);
 
     for (i = 0; i < 64; i++)
     {
@@ -415,8 +409,10 @@ char is_solid(char x, char y, char is_ava)
 {
     char tile, solidity;
 
-    if (is_ava) {
-        if ((x == ava_x && y == ava_y) || (x == not_ava_x && y == not_ava_y)) {
+    if (is_ava)
+    {
+        if ((x == ava_x && y == ava_y) || (x == not_ava_x && y == not_ava_y))
+        {
             return 1;
         }
     }
@@ -545,7 +541,10 @@ main()
             }
         }
 
-        if (update_objects())
+        update_objects();
+
+        if (ava_y == 7 && not_ava_y == 7 &&
+            (ava_x == 7 || not_ava_x == 7) && (ava_x == 8 || not_ava_x == 8))
         {
             win_ava();
         }
