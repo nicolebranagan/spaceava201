@@ -372,9 +372,9 @@ load_room()
 
     ava_x = tiles[2];
     ava_y = tiles[3];
-    
-    not_ava_x = tiles[2] + 8;
-    not_ava_y = tiles[3] - 8;
+
+    not_ava_x = tiles[2] + 1;
+    not_ava_y = tiles[3];
 
     init_object();
     init_enemy();
@@ -414,6 +414,12 @@ load_room()
 char is_solid(char x, char y, char is_ava)
 {
     char tile, solidity;
+
+    if (is_ava) {
+        if ((x == ava_x && x == ava_y) || (x == not_ava_x && y == not_ava_y)) {
+            return 1;
+        }
+    }
 
     for (i = 0; i < object_count; i++)
     {
@@ -483,28 +489,37 @@ main()
         ava_died = 0;
 
         joyt = joytrg(0);
-        if (joyt & JOY_UP && !is_solid(ava_x, ava_y - 1, 1))
+        if (
+            joyt & JOY_UP &&
+            !is_solid(ava_x, ava_y - 1, 1) &&
+            !is_solid(not_ava_x, not_ava_y + 1, 1))
         {
             ava_facing = UP;
             move_ava(0, -1);
             if (!ava_died)
                 update_enemies();
         }
-        if (joyt & JOY_DOWN && !is_solid(ava_x, ava_y + 1, 1))
+        if (joyt & JOY_DOWN &&
+            !is_solid(ava_x, ava_y + 1, 1) &&
+            !is_solid(not_ava_x, not_ava_y - 1, 1))
         {
             ava_facing = DOWN;
             move_ava(0, 1);
             if (!ava_died)
                 update_enemies();
         }
-        if (joyt & JOY_LEFT && !is_solid(ava_x - 1, ava_y, 1))
+        if (joyt & JOY_LEFT &&
+            !is_solid(ava_x - 1, ava_y, 1) &&
+            !is_solid(not_ava_x + 1, not_ava_y, 1))
         {
             ava_facing = LEFT;
             move_ava(-1, 0);
             if (!ava_died)
                 update_enemies();
         }
-        if (joyt & JOY_RIGHT && !is_solid(ava_x + 1, ava_y, 1))
+        if (joyt & JOY_RIGHT &&
+            !is_solid(ava_x + 1, ava_y, 1) &&
+            !is_solid(not_ava_x - 1, not_ava_y, 1))
         {
             ava_facing = RIGHT;
             move_ava(1, 0);
