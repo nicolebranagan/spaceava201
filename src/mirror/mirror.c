@@ -7,6 +7,7 @@
 #include "./adpcm/adpcm.h"
 #include "./mirror/const.h"
 #include "./images/images.h"
+#include "./sfx.c"
 #include "cd.h"
 
 #define SYSTEM_VRAM 0x1000
@@ -490,11 +491,7 @@ char run_grid()
                     (y == ((photons[j].y - TOP_Y) >> 3)) &&
                     (photons[i].type != photons[j].type))
                 {
-                    if (ad_stat())
-                    {
-                        ad_stop();
-                    }
-                    ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
+                    sfx_play(ADPCM_PHOTON, PHOTON_SIZE, 14);
                     photons[j].active = 0;
                     photons[i].type = SPACE_ANNIHILATION;
                     photons[i].x = (x << 3) + TOP_X;

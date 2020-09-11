@@ -3,6 +3,7 @@
 */
 
 #include "classic/classic.h"
+#include "./sfx.c"
 
 #define MAX_OBJECT_COUNT 6
 #define OBJECT_SPRITE_START (MAX_ENEMY_COUNT)
@@ -140,11 +141,7 @@ char update_objects()
         {
             objects[i].active = 0;
             obtained_object_count++;
-            if (ad_stat())
-            {
-                ad_stop();
-            }
-            ad_play(PHOTON_LOC, PHOTON_SIZE, 14, 0);
+            sfx_play(PHOTON_LOC, PHOTON_SIZE, 14);
             spr_set(BOTTOM_HALF_START + OBJECT_SPRITE_START + i);
             spr_hide();
         }

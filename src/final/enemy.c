@@ -4,6 +4,8 @@
 
 #include "final/classic.h"
 #include "images/images.h"
+#include "./sfx.c"
+
 #incbin(bigmouthpal, "palettes/bigmouth.pal");
 #incbin(eyewalkpal, "palettes/eyewalk.pal");
 #incbin(goonbosspal, "palettes/goonboss.pal");
@@ -588,28 +590,13 @@ update_enemies()
         }
     }
 
-    if (current_snd)
-    {
-        if (ad_stat())
-        {
-            ad_stop();
-        }
-        while (1)
-        {
-            if (!ad_stat())
-            {
-                break;
-            }
-        }
-    }
-
     switch (current_snd)
     {
     case ENEMY_CANNON:
-        ad_play(CANNON_LOC, CANNON_SIZE, 14, 0);
+        sfx_play(CANNON_LOC, CANNON_SIZE, 14);
         break;
     case ENEMY_MINIWILHELM:
-        ad_play(WILHELM_LOC, MINIWILHELM_SIZE, 14, 0);
+        sfx_play(WILHELM_LOC, MINIWILHELM_SIZE, 14);
         break;
     }
 

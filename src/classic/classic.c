@@ -9,6 +9,8 @@
 #include "classic/enemy.c"
 #include "classic/object.c"
 
+#include "./sfx.c"
+
 #incbin(avapal, "palettes/ava.pal");
 #incbin(starbasepal1, "palettes/starbase.pal");
 #incbin(starbasepal2, "palettes/starrot.pal");
@@ -364,11 +366,7 @@ kill_ava()
 {
     char i;
 
-    if (ad_stat())
-    {
-        ad_stop();
-    }
-    ad_play(DIE_LOC, DIE_SIZE, 14, 0);
+    sfx_play(DIE_LOC, DIE_SIZE, 14);
     for (i = 0; i < 16; i++)
     {
         spr_set(TOP_HALF_START);
@@ -393,18 +391,7 @@ win_ava()
 {
     char i;
     cd_reset();
-    if (ad_stat())
-    {
-        ad_stop();
-    }
-    while (1)
-    {
-        if (!ad_stat())
-        {
-            break;
-        }
-    }
-    ad_play(EUREKA_LOC, EUREKA_SIZE, 15, 0);
+    sfx_play(EUREKA_LOC, EUREKA_SIZE, 15);
 
     for (i = 0; i < 10; i++)
     {

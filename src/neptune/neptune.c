@@ -7,6 +7,7 @@
 #include "cd.h"
 #include "neptune/neptune.h"
 #include "neptune/objects.c"
+#include "./sfx.c"
 
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
@@ -388,7 +389,7 @@ ava_update(signed char delx, signed char dely)
         spr_pattern(AVA_JUMP);
         if (dely < 0)
         {
-            ad_play(PCM_JUMP, JUMP_SIZE, 14, 0);
+            sfx_play(PCM_JUMP, JUMP_SIZE, 14);
         }
     }
 
@@ -505,16 +506,8 @@ win_ava()
     char i;
     cd_reset();
     hide_pointers();
-    if (ad_stat())
-    {
-        ad_stop();
-    }
-    while(1) {
-        if (!ad_stat()) {
-            break;
-        }
-    }
-    ad_play(PCM_EUREKA, EUREKA_SIZE, 15, 0);
+
+    sfx_play(PCM_EUREKA, EUREKA_SIZE, 15);
 
     for (i = 0; i < 10; i++)
     {
@@ -548,11 +541,7 @@ kill_ava()
 {
     char i;
 
-    if (ad_stat())
-    {
-        ad_stop();
-    }
-    ad_play(PCM_DIE, DIE_SIZE, 14, 0);
+    sfx_play(PCM_DIE, DIE_SIZE, 14);
 
     for (i = 0; i < 16; i++)
     {
