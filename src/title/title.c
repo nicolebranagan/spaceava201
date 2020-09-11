@@ -198,10 +198,7 @@ main()
     for (;;)
     {
         longTimer++;
-        if (!done && longTimer < 130)
-        {
-        }
-        else if (!done)
+        if (!done)
         {
             timer++;
             for (i = 0; i < 8; i++)
