@@ -46,6 +46,7 @@ ChibiSound_NotSilent:
 		
 		lda #255
 		sta $0801		;Main Amplitude Level
+		lda #%11001100
 		sta $0805		;LR Volume
 	pla
 	
