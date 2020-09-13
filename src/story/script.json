@@ -3275,6 +3275,45 @@
   ],
   [
     {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "HARSH_BG"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "x": 6,
+      "face": 11
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily can't really think I abandoned her, could she?"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "What was it that happened back then, zero point nine space years ago... Think, Ava, think..."
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 0
+    },
+    {
+      "command": "STOP_MUSIC"
+    },
+    {
       "command": "ENTER_RETRO"
     },
     {
@@ -3283,7 +3322,8 @@
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Space Year 99"
+      "text": "Space Year 99",
+      "chirp": 76
     },
     {
       "command": "PLAY_MUSIC",
@@ -3291,14 +3331,15 @@
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat"
+      "text": "Immediately following\nthe Defeat of\nSchrodinger's Cat",
+      "chirp": 76
     },
     {
       "command": "SHOW_SPRITE",
       "slot": 0,
       "sprite": "RETRO",
       "face": 5,
-      "x": 3
+      "x": 4
     },
     {
       "command": "SHOW_SPRITE",
