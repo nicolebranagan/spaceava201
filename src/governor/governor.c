@@ -19,7 +19,6 @@
 #define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
-    STORY_OVERLAY, 22,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
