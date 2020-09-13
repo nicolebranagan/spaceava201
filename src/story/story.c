@@ -477,6 +477,7 @@ thunderclap()
         chirp(CLAP_SFX);
         vsync();
     }
+    chirp(0);
 }
 
 #define FRAME_START ((FRAME_VRAM) >> 4)
