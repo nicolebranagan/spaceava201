@@ -24,6 +24,8 @@
 #incbin(badlily_facepal, "palettes/bdlily_face.pal");
 #incbin(retro_facepal, "palettes/retro_face.pal");
 #incbin(futava_facepal, "palettes/futava_face.pal");
+#incbin(gdlily_facepal, "palettes/gdlily_face.pal");
+#incbin(schcat_facepal, "palettes/schcat_face.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -243,6 +245,20 @@ build_cast()
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, FUTAVA_FACE_SECTOR_OFFSET, vram, FUTAVA_FACE_SIZE);
             size = FUTAVA_FACE_SIZE;
+            break;
+        case 14: // Good Lily
+            load_palette(current_palette, gdlily_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, GDLILY_FACE_SECTOR_OFFSET, vram, GDLILY_FACE_SIZE);
+            size = GDLILY_FACE_SIZE;
+            break;
+        case 15: // Future Ava
+            load_palette(current_palette, schcat_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, SCHCAT_FACE_SECTOR_OFFSET, vram, SCHCAT_FACE_SIZE);
+            size = SCHCAT_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;

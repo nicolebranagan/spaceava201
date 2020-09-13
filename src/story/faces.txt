@@ -102,3 +102,15 @@ FUTAVA:
 1. Smile <_<
 2. Shock
 3. Angry
+
+GOODLILY:
+0. Smile
+1. Ugh...
+2. Passed out
+3. Ugh, but happy
+
+SCHCAT:
+0. Cat
+1. Trying to be cute
+2. Dead
+3. Evil

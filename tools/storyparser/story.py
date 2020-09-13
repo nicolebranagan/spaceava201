@@ -37,7 +37,9 @@ SPRITES = {
     "QCINDY": 10,
     "BADLILY": 11,
     "RETRO": 12,
-    "FUTAVA": 13
+    "FUTAVA": 13,
+    "GOODLILY": 14,
+    "SCHCAT": 15
 }
 
 BACKGROUNDS = {

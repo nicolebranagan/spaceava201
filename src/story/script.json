@@ -3919,5 +3919,190 @@
       "command": "SHOW_TEXT",
       "text": "I said, I won't let you!"
     }
+  ],
+  [
+    {
+      "command": "SHOW_FRAME",
+      "frame": 2
+    },
+    {
+      "command": "SHOW_BACKGROUND",
+      "background": "HARSH_BG"
+    },
+    {
+      "command": "THUNDERCLAP"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 0,
+      "sprite": "AVA",
+      "face": 10,
+      "x": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: She's gone... did that even really happen? This better not be how I die, I hate knowing the ending of stories before they even start..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 1,
+      "sprite": "GOODLILY",
+      "face": 0,
+      "x": 12
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "slot": 2,
+      "sprite": "SCHCAT",
+      "face": 2,
+      "x": 14
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Don't worry. I'm sure that the arrow of time just pushed her forward to your future... Ava, it's so good to see you again..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily! For real, Lily! I'm so happy to see you too! It's been too long!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: We really need to catch up, I wish I had gone with y... yo..."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Harsh Memories"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOODLILY",
+      "face": 1
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 0
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily! No!"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAT: She'll be alright. She just needs time to rest."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOODLILY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Schrodinger's Cat! You did this all! Why would you? To possess Lily, and to try to kill me... I don't like getting angry!"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Can't Die Boing"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAT: You dare challenge Schrodinger's Cat? All actions I take are fully justified and fully quantized!"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Harsh Memories"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "I'm too weak to fight... I would never have attempted the superposition had I known what would happen. I just thought maybe it would allow me to escape this curse of undeath."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Still..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "SCHCAT",
+      "face": 1
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CAT: You don't need to forgive me."
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 10
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I will never understand that cat..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 11
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "But what am I supposed to do now? Lily's hurt, and now I don't even have a spaceship to escape this black hole with..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "Some happy ending this is."
+    }
   ]
 ]
