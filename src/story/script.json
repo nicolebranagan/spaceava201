@@ -4103,6 +4103,107 @@
     {
       "command": "SHOW_TEXT",
       "text": "Some happy ending this is."
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Even More Spaceless"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "slot": 2,
+      "face": 2,
+      "x": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Ava! Am I glad to see you!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 4
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Cindy! How'd you get here?"
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: You can thank Antonia for that. She tracked your signal using the Neptune station you helped clear out."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: I guess it's a good thing we ran out of fuel!"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 7
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Make sure to tell Lieutenant Nelehu that. They've been beating themselves up over it, insisting that this wouldn't have happened."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 10
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: They shouldn't do that, everyone makes mistakes... They should be more ashamed of that quantum stunt."
+    }, 
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "CINDY",
+      "face": 2
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "CINDY: Well, I think we've hung around here long enough. Can you help Lilith up? We can give her some medical care."
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Of course!"
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 2
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 0,
+      "x": 10
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "AVA: Lily... can you stand? I want to help you over to our ship..."
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "GOODLILY",
+      "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "LILY: Ava... Thank you."
     }
   ]
 ]

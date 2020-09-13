@@ -103,7 +103,8 @@ TRACKS = {
     "Straining to Chime": 5,
     "Carousel": 6,
     "Harsh Memories": 7,
-    "Can't Die Boing": 8
+    "Can't Die Boing": 8,
+    "Even More Spaceless": 9
 }
 
 SFXES = {

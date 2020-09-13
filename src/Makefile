@@ -41,6 +41,7 @@ spaceava201: spaceava.iso
 	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 	cp ../mods/cantdieboing.wav "../build/iso/Space Ava 201 - 19 - Can't Die Boing.wav"
 	cp ../mods/scandalofnullity.wav "../build/iso/Space Ava 201 - 20 - Scandal of Nullity.wav"
+	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 21 - Even More Spaceless.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata
 	mv */*.s */*.ovl */*.sym ../build
