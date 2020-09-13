@@ -588,8 +588,19 @@ main()
             ava_update(1, 0);
         }
 
-        if (joyt & JOY_STRT) {
-            win_ava();
+        if (joytrg(0) & JOY_RUN)
+        {
+            cd_pause();
+            for (;;)
+            {
+                vsync(); // Deliberately not wait_for_sync
+                joyt = joytrg(0);
+                if (joyt & JOY_RUN)
+                {
+                    cd_unpause();
+                    break;
+                }
+            }
         }
     }
 }
