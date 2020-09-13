@@ -9,6 +9,7 @@
 
 #define FONT_VRAM 0x0800
 #incbin(fontpal, "palettes/8x8.pal");
+#incbin(nullpal, "palettes/null.pal");
 
 #define BACKUP_RAM_SIZE 1
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
@@ -18,6 +19,7 @@
 #define LEVEL_SELECT 253
 
 const char STEP_ORDER[] = {
+    NEPTUNE_OVERLAY, 9,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -79,13 +81,14 @@ initialize()
     satb_update();
 
     disp_off();
-    cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
     scroll(0, 0, 0, 0, 223, 0xC0);
     cls();
-    load_palette(0, fontpal, 1);
     disp_on();
+    load_palette(0, nullpal, 1);
+    cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
+    load_palette(0, fontpal, 1);
 
     reset_satb();
 }

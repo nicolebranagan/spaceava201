@@ -93,7 +93,6 @@ initialize()
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     load_palette(SIDENMY_PAL, sidenmypal, 1);
     draw_map();
-    load_palette(0, neptunepal, 1);
     init_ava();
     disp_on();
 }
@@ -155,6 +154,7 @@ load_room()
     }
 
     ava_update(0, 0);
+    load_palette(0, neptunepal, 1);
 }
 
 #define MAP_BYTE_WIDTH (LEVEL_WIDTH_16x16 * 2)
@@ -520,6 +520,8 @@ win_ava()
     spr_set(AVA_SPRITE);
     spr_hide();
     wait_for_sync(8);
+    load_palette(0, nullpal, 1);
+    load_palette(1, nullpal, 1);
 
     for (i = 0; i < 64; i++)
     {
@@ -527,11 +529,6 @@ win_ava()
         spr_hide();
     }
     satb_update();
-    cls();
-    load_palette(0, nullpal, 1);
-    load_palette(1, nullpal, 1);
-    vsync(); // Deliberately not wait_for_sync
-
     // Return to governor
     cd_execoverlay(GOVERNOR_OVERLAY);
 }
@@ -589,6 +586,10 @@ main()
         {
             facing_left = 0;
             ava_update(1, 0);
+        }
+
+        if (joyt & JOY_STRT) {
+            win_ava();
         }
     }
 }
