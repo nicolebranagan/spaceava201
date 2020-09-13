@@ -99,6 +99,25 @@ initialize()
     in_retro = 0;
 }
 
+load_new_segment(char segment)
+{
+    char i;
+    cls(FONT_VRAM / 16);
+    for (i = 0; i < 64; i++)
+    {
+        spr_set(i);
+        spr_hide();
+    }
+    satb_update();
+    current_level = segment;
+    cd_loaddata(STORY_DATA_OVERLAY, current_level, script, 2048);
+    build_cast();
+
+    ad_reset();
+    timer = 0;
+    in_retro = 0;
+}
+
 #define MAX_CAST 5
 int face_vram[MAX_CAST];
 char palettes[MAX_CAST];
@@ -788,6 +807,7 @@ draw_block(char more)
 #define CMD_SHOW_SPRITE_BG 11
 #define CMD_ENTER_RETRO 12
 #define CMD_THUNDERCLAP 13
+#define CMD_LOAD_NEW_SEGMENT 14
 
 perform_command()
 {
@@ -871,6 +891,10 @@ loop:
     case CMD_THUNDERCLAP:
         pointer_to_data += 1;
         thunderclap();
+        goto loop;
+        break;
+    case CMD_LOAD_NEW_SEGMENT:
+        load_new_segment(script[pointer_to_data + 1]);
         goto loop;
         break;
     }

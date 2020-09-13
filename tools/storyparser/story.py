@@ -20,7 +20,8 @@ COMMANDS = {
     "LOAD_NEXT_SEGMENT": 10,
     "SHOW_SPRITE_BG": 11,
     "ENTER_RETRO": 12,
-    "THUNDERCLAP": 13
+    "THUNDERCLAP": 13,
+    "LOAD_NEW_SEGMENT": 14
 }
 
 SPRITES = {
@@ -252,6 +253,8 @@ def parse_single_script(script):
             commands.append(bytes([COMMANDS["ENTER_RETRO"]]))
         elif (command["command"] == "THUNDERCLAP"):
             commands.append(bytes([COMMANDS["THUNDERCLAP"]]))
+        elif (command["command"] == "LOAD_NEW_SEGMENT"):
+            commands.append(bytes([COMMANDS["LOAD_NEW_SEGMENT"], command["slot"]]))
     
     last_song = -1
     blocks = []

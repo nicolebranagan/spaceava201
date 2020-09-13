@@ -687,6 +687,10 @@
     {
       "command": "SHOW_TEXT",
       "text": "CINDY: Then it's set! Onwards... to the Milky Way Galaxy!"
+    },
+    {
+      "command": "LOAD_NEW_SEGMENT",
+      "slot": 4
     }
   ],
   [
@@ -1955,6 +1959,10 @@
     {
       "command": "SHOW_TEXT",
       "text": "BLUE ???: Isn't anyone going to untie me?!"
+    },
+    {
+      "command": "LOAD_NEW_SEGMENT",
+      "slot": 10
     }
   ],
   [
@@ -2369,7 +2377,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "I saw you making photon-antiphoton pairs earlier. It's a good idea, but they've figured it out. Apparently some of those blobs now have grabbed the photons for themselves."
+      "text": "I saw you making photon-antiphoton pairs earlier. It's a good idea, but they've figured it out. Apparently some of those blobs now have grabbed the photons for themselves. They've also grabbed silly hats, which should help you know which ones have the photons, at least."
     },
     {
       "command": "SHOW_SPRITE",
@@ -2544,6 +2552,10 @@
     {
       "command": "SHOW_TEXT",
       "text": "ANTONIA: Don't worry, I don't know either!"
+    },
+    {
+      "command": "LOAD_NEW_SEGMENT",
+      "slot": 14
     }
   ],
   [
