@@ -9,6 +9,7 @@
 #include "./images/images.h"
 #include "./sfx.c"
 #include "cd.h"
+#include "mirror/sgx.c"
 
 #define SYSTEM_VRAM 0x1000
 #define CURSOR_VRAM (SYSTEM_VRAM + (MIRRORSYS_SIZE / 2))
@@ -45,6 +46,8 @@ char photon_count;
 struct photon photons[MAX_PHOTONS];
 char rawdata[(GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE];
 
+char tiledata[2048];
+
 initialize()
 {
     x = 0;
@@ -68,6 +71,15 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
     cd_loaddata(MIRROR_DATA_OVERLAY, current_level, rawdata, (GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE);
     cls();
+
+    if (is_sgx()) {
+        char i;
+        sgx_init();
+        cd_loaddata(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, tiledata, STARROT_SIZE);
+        for (i = 0; i < 16; i++) {
+            sgx_load_vram(2048 * i, tiledata, STARROT_SIZE);
+        }
+    }
 
     load_palette(1, systempal, 1);
     load_palette(2, avasmlpal, 1);
@@ -646,6 +658,11 @@ main()
         satb_update();
 
         joyt = joytrg(0);
+
+        if (is_sgx())
+        {
+            scroll_sgx(timer, timer);
+        }
 
         if ((joyt & JOY_I))
         {

@@ -8,7 +8,6 @@
 #include "classic/classic.h"
 #include "classic/enemy.c"
 #include "classic/object.c"
-#include "classic/sgx.c"
 
 #include "./sfx.c"
 
@@ -90,6 +89,7 @@ char pal_rotate_step, ava_died;
 
 initialize()
 {
+    char i;
     pal_rotate_step = 0;
 
     ad_reset();
@@ -101,11 +101,6 @@ initialize()
     ad_trans(ADPCM_OVERLAY, SHOVE_SECTOR_OFFSET, SHOVE_SECTOR_COUNT, SHOVE_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
-    if (is_sgx())
-    {
-        //cd_loaddata(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, tiledata, 2048);
-        //sgx_load_vram(0, tiledata, 2048);
-    }
 
     disp_off();
     reset_satb();
@@ -115,7 +110,6 @@ initialize()
 
     load_palette(16, avapal, 1);
     load_level_data(current_level);
-
 
     load_room();
 }
