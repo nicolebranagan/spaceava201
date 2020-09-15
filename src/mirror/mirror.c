@@ -31,6 +31,7 @@
 #incbin(cursorpal, "palettes/cursors.pal");
 #incbin(laserpal, "palettes/lasers.pal");
 #incbin(avasmlpal, "palettes/avasml.pal");
+#incbin(avasml2pal, "palettes/avasml2.pal");
 #incbin(starrotpal, "palettes/starrot.pal");
 
 #incbin(systembat, "bats/mirrorsys.bin");
@@ -78,22 +79,26 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, MIRRORSYS_SECTOR_OFFSET, SYSTEM_VRAM, MIRRORSYS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, CURSORS_SECTOR_OFFSET, CURSOR_VRAM, CURSORS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LASERS_SECTOR_OFFSET, LASER_VRAM, LASERS_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
     cd_loaddata(MIRROR_DATA_OVERLAY, current_level, rawdata, (GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE);
     cls();
 
     if (is_sgx())
     {
-        char i;
+        cd_loadvram(IMAGE_OVERLAY, AVASML2_SECTOR_OFFSET, FACE_VRAM, AVASML2_SIZE);
         load_palette(SGX_PAL, starrotpal, 1);
         cd_loaddata(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, tiledata, STARROT_SIZE);
         sgx_load_vram(0x1000, tiledata, STARROT_SIZE);
         sgx_load_vram(0, fieldbat, 32 * 32 * 2);
         sgx_init();
+        load_palette(2, avasml2pal, 1);
+    }
+    else
+    {
+        cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
+        load_palette(2, avasmlpal, 1);
     }
 
     load_palette(1, systempal, 1);
-    load_palette(2, avasmlpal, 1);
     load_palette(16, cursorpal, 1);
     load_palette(17, laserpal, 1);
     load_vram(0, systembat, 24 * 16 * 4);
@@ -115,8 +120,27 @@ wait_for_sync(char cycles)
             scroll_sgx(x_scr, y_scr);
             if (!running)
             {
-                y_scr--;
-                x_scr--;
+                char dir;
+                dir = current_level & 3;
+                switch (dir)
+                {
+                case 0:
+                    y_scr--;
+                    x_scr--;
+                    break;
+                case 1:
+                    y_scr++;
+                    x_scr--;
+                    break;
+                case 2:
+                    y_scr++;
+                    x_scr++;
+                    break;
+                case 3:
+                    y_scr--;
+                    x_scr++;
+                    break;
+                }
             }
         }
     }
@@ -602,6 +626,10 @@ start_grid()
         cls();
         scroll(0, 0, 0, 0, 223, 0xC0);
         scroll_disable(1);
+        if (is_sgx())
+        {
+            sgx_disable();
+        }
         cd_execoverlay(GOVERNOR_OVERLAY);
         return;
     }
