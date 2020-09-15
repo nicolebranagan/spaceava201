@@ -8,6 +8,7 @@
 #include "classic/classic.h"
 #include "classic/enemy.c"
 #include "classic/object.c"
+#include "classic/sgx.c"
 
 #include "./sfx.c"
 
@@ -59,6 +60,7 @@ const char palette_ref[] = {
     0x20};
 
 char tiles[500]; // Placeholder for memory
+char tiledata[STARBASE_SIZE + STARROT_SIZE];
 
 // TODO: Make this a bitfield if you need to
 const char TILE_SOLIDITY_STARBASE[] = {
@@ -99,6 +101,11 @@ initialize()
     ad_trans(ADPCM_OVERLAY, SHOVE_SECTOR_OFFSET, SHOVE_SECTOR_COUNT, SHOVE_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
+    if (is_sgx())
+    {
+        //cd_loaddata(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, tiledata, 2048);
+        //sgx_load_vram(0, tiledata, 2048);
+    }
 
     disp_off();
     reset_satb();
@@ -109,13 +116,13 @@ initialize()
     load_palette(16, avapal, 1);
     load_level_data(current_level);
 
+
     load_room();
 }
 
 load_level_data(char level)
 {
     int vram_offset;
-    char tiledata[STARBASE_SIZE + STARROT_SIZE];
 
     // Offsets, objects, are the second sector of a level
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * level) + 1, tiles, 500);
