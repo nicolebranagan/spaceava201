@@ -31,6 +31,10 @@ sgx_init()
     //  Init VPC
     poke(0x08, 0x33);
     poke(0x09, 0x33);
+    poke(0x0a, 0x00);
+    poke(0x0b, 0x00);
+    poke(0x0c, 0x00);
+    poke(0x0d, 0x00);
 
     // Set scroll of VDC #2 to 0,0
     poke(0x10, 0x07);
@@ -41,15 +45,33 @@ sgx_init()
     poke(0x12, 0);
     poke(0x13, 0);
 
+    // Set MWR
+    poke(0x10, 0x09);
+    poke(0x12, 0x00);
+    poke(0x13, 0x00);
+
     // Set XRES
-    // x = 256
-    // 100000: HDW
-    // hde = (38 - ( (18-(x/16)) + (x/8) )) = 4
-    // 00000001 00100000
-    // 01 32
     poke(0x10, 0x0B);
-    poke(0x12, 32);
+    poke(0x12, 0x1F);
     poke(0x13, 1);
+
+    // Set YRES
+    poke(0x10, 0x0C);
+    poke(0x12, 0x02);
+    poke(0x13, 0x17);
+
+    poke(0x10, 0x0D);
+    poke(0x12, 0xDF);
+    poke(0x13, 0x00);
+
+    poke(0x10, 0x0E);
+    poke(0x12, 0x0C);
+    poke(0x13, 0x00);
+
+    // Set control register
+    poke(0x10, 0x5);
+    poke(0x12, 0xC0); // 1100 0000
+    poke(0x13, 0);
 }
 
 sgx_disable()
@@ -59,13 +81,11 @@ sgx_disable()
     poke(0x09, 0x11);
 }
 
-scroll_sgx(char x, char y)
+scroll_sgx(int x, int y)
 {
     poke(0x10, 0x07);
-    poke(0x12, x);
-    poke(0x13, 0);
+    pokew(0x12, x);
 
     poke(0x10, 0x08);
-    poke(0x12, y);
-    poke(0x13, 0);
+    pokew(0x12, y);
 }

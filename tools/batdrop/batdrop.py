@@ -19,6 +19,7 @@ class Application(tk.Frame):
 
         self.select = 0
         self.vramoffset = 0x1000
+        self.palette = 1
 
         tiles2x, tileset, tilesTk = tilesets[0]
         self.tiles2x = tiles2x
@@ -92,6 +93,11 @@ class Application(tk.Frame):
 
         resizebutton = tk.Button(controls, text="Resize", command=self.resizeroom)
         resizebutton.grid(row=6, column=0, columnspan=2)
+
+        tk.Label(controls, text="Palette:").grid(row=7, column=0)
+        self.palentry = tk.Entry(controls, width=4)
+        self.palentry.insert(0, self.palette)
+        self.palentry.grid(row=7, column=1)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -167,6 +173,7 @@ class Application(tk.Frame):
                 filetypes=(("Binary files", "*.bin"),
                            ("All files", "*")),
                 title="Save")
+        self.palette = int(self.palentry.get())
         if filen != () and filen != "":
             with open(filen, "wb") as fileo:
                 tiles_by_offset = [
@@ -191,10 +198,12 @@ class Application(tk.Frame):
                 output = []
                 def to_binary(input):
                     return bin(input)[2:].zfill(12) # strip 0b and make 12 digits
+                def to_binary_4(input):
+                    return bin(input)[2:].zfill(4)
                 for tile in tiles_by_offset:
                     index = to_binary(tile_base + tile)
                     output.append(int(f'{index[4:]}', 2))
-                    output.append(int(f'0001{index[0:4]}', 2))
+                    output.append(int(f'{to_binary_4(self.palette)}{index[0:4]}', 2))
                 output.append(self.room.tileset)
                 output.append(self.room.width)
                 output.append(self.room.height)

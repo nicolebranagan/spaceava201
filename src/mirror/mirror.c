@@ -25,14 +25,19 @@
 
 #define SPR_SIZE_16x16 0x40
 
+#define SGX_PAL 4
+
 #incbin(systempal, "palettes/mirrorsys.pal");
 #incbin(cursorpal, "palettes/cursors.pal");
 #incbin(laserpal, "palettes/lasers.pal");
 #incbin(avasmlpal, "palettes/avasml.pal");
+#incbin(starrotpal, "palettes/starrot.pal");
 
 #incbin(systembat, "bats/mirrorsys.bin");
+#incbin(fieldbat, "bats/starfield.bin");
 
-char x, y, timer, joytimer, holding;
+char x, y, timer, joytimer, holding, running;
+char pal_rotate_step;
 
 char palette[PALETTE_SIZE];
 char grid[GRID_WIDTH * GRID_HEIGHT];
@@ -47,13 +52,18 @@ struct photon photons[MAX_PHOTONS];
 char rawdata[(GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE];
 
 char tiledata[2048];
+int x_scr, y_scr;
 
 initialize()
 {
     x = 0;
     y = 0;
+    x_scr = 0;
+    y_scr = 0;
+    pal_rotate_step = 0;
     timer = 0;
     joytimer = 0;
+    running = 0;
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
     scroll(0, 0, 0, 0, 223, 0xC0);
@@ -72,13 +82,14 @@ initialize()
     cd_loaddata(MIRROR_DATA_OVERLAY, current_level, rawdata, (GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE);
     cls();
 
-    if (is_sgx()) {
+    if (is_sgx())
+    {
         char i;
-        sgx_init();
+        load_palette(SGX_PAL, starrotpal, 1);
         cd_loaddata(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, tiledata, STARROT_SIZE);
-        for (i = 0; i < 16; i++) {
-            sgx_load_vram(2048 * i, tiledata, STARROT_SIZE);
-        }
+        sgx_load_vram(0x1000, tiledata, STARROT_SIZE);
+        sgx_load_vram(0, fieldbat, 32 * 32 * 2);
+        sgx_init();
     }
 
     load_palette(1, systempal, 1);
@@ -86,6 +97,29 @@ initialize()
     load_palette(16, cursorpal, 1);
     load_palette(17, laserpal, 1);
     load_vram(0, systembat, 24 * 16 * 4);
+}
+
+wait_for_sync(char cycles)
+{
+    char i;
+    for (i = 0; i < cycles; i++)
+    {
+        timer++;
+        load_palette(SGX_PAL, starrotpal + (pal_rotate_step << 5), 1);
+        if (!(timer % 16))
+            pal_rotate_step = (pal_rotate_step + 1) % 4;
+
+        vsync();
+        if (is_sgx())
+        {
+            scroll_sgx(x_scr, y_scr);
+            if (!running)
+            {
+                y_scr--;
+                x_scr--;
+            }
+        }
+    }
 }
 
 reset_grid()
@@ -164,7 +198,7 @@ draw_cursor()
     {
         spr_set(0);
         spr_pattern(CURSOR_VRAM + (5 * SPR_SIZE_16x16));
-        draw_mirror(2, draw_x, TOP_Y + (y << 4), 0, holding == SPACE_LEFT_RIGHT_MIRROR);
+        draw_mirror(2, draw_x, TOP_Y + (y << 4), 0, holding == SPACE_LEFT_RIGHT_MIRROR, x >= GRID_WIDTH);
     }
     else
     {
@@ -185,7 +219,7 @@ draw_beam(char sprdex, char i, int vram_offset)
     spr_show();
 }
 
-draw_mirror(char sprdex, char x, char y, char solid, char flip)
+draw_mirror(char sprdex, char x, char y, char solid, char flip, char on_pal)
 {
     spr_set(sprdex);
     spr_x(x);
@@ -193,7 +227,7 @@ draw_mirror(char sprdex, char x, char y, char solid, char flip)
     spr_ctrl(FLIP_MAS | SIZE_MAS, flip ? (SZ_16x16 | FLIP_X) : SZ_16x16);
     spr_pattern(LASER_VRAM + (SPR_SIZE_16x16 << 4) + (solid ? SPR_SIZE_16x16 : 0));
     spr_pal(1);
-    spr_pri(0);
+    spr_pri(on_pal);
     spr_show();
 }
 
@@ -223,22 +257,22 @@ draw_grid()
         }
         case SPACE_LEFT_RIGHT_MIRROR:
         {
-            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 1);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 1, 0);
             break;
         }
         case SPACE_RIGHT_LEFT_MIRROR:
         {
-            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 0);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 0, 0, 0);
             break;
         }
         case SPACE_LEFT_RIGHT_SOLMIR:
         {
-            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 1);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 1, 0);
             break;
         }
         case SPACE_RIGHT_LEFT_SOLMIR:
         {
-            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 0);
+            draw_mirror(grid_sprite, TOP_X + ((i % GRID_WIDTH) << 4), TOP_Y + ((i / GRID_WIDTH) << 4), 1, 0, 0);
             break;
         }
         }
@@ -252,7 +286,7 @@ draw_grid()
         {
             continue;
         }
-        draw_mirror(grid_sprite, 216, TOP_Y + (i << 4), 0, palette[i] == SPACE_LEFT_RIGHT_MIRROR);
+        draw_mirror(grid_sprite, 216, TOP_Y + (i << 4), 0, palette[i] == SPACE_LEFT_RIGHT_MIRROR, 1);
         grid_sprite++;
     }
 
@@ -314,7 +348,7 @@ wait_for_input()
     char joyt;
     for (;;)
     {
-        vsync();
+        wait_for_sync(1);
         joyt = joytrg(0);
 
         if (joyt)
@@ -375,13 +409,14 @@ draw_grid_frame()
 char run_grid()
 {
     char i, j, count, x, y, allInactive;
+    running = 1;
     for (i = 0; i < 64; i++)
     {
         spr_set(i);
         spr_hide();
     }
     satb_update();
-    vsync();
+    wait_for_sync(1);
 
     photon_count = 0;
     for (i = 0; i < GRID_WIDTH * GRID_HEIGHT; i++)
@@ -403,9 +438,8 @@ char run_grid()
 
     for (;;)
     {
-        timer++;
         draw_grid_frame();
-        vsync();
+        wait_for_sync(1);
         for (i = 0; i < photon_count; i++)
         {
             switch (photons[i].facing)
@@ -527,11 +561,13 @@ char run_grid()
                  photons[i].x > ((TOP_X + 8) + ((GRID_WIDTH - 1) * 16)) ||
                  photons[i].y > ((TOP_Y + 8) + (GRID_HEIGHT * 16))))
             {
+                running = 0;
                 return 0;
             }
         }
         if (allInactive)
         {
+            running = 0;
             return 1;
         }
     }
@@ -650,19 +686,13 @@ main()
 
     for (;;)
     {
-        timer++;
         joytimer++;
-        vsync();
+        wait_for_sync(1);
         draw_grid();
         draw_cursor();
         satb_update();
 
         joyt = joytrg(0);
-
-        if (is_sgx())
-        {
-            scroll_sgx(timer, timer);
-        }
 
         if ((joyt & JOY_I))
         {
