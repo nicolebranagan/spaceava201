@@ -127,7 +127,13 @@ class Application(tk.Frame):
         x = math.floor(self.tilecanvas.canvasx(event.x) / 32)
         y = math.floor(self.tilecanvas.canvasy(event.y) / 32)
 
-        self.select = x + (y * MAX_TILESET_WIDTH)
+        tile = x + (y * MAX_TILESET_WIDTH)
+        
+        if (tile >= len(tilesets[self.room.tileset][1])):
+            print(f"Clicked illegal tile {tile}")
+            return
+
+        self.select = tile
 
     def viewclick(self, event):
         clickX = math.floor(self.viewcanvas.canvasx(event.x) / 32)

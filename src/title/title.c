@@ -7,11 +7,14 @@
 #include "./images/images.h"
 #include "cd.h"
 #include "./adpcm/adpcm.h"
+#include "./sgx.c"
 
 #incbin(titlepal, "palettes/titles.pal");
 #incbin(logopal, "palettes/logo.pal");
+#incbin(superpal, "palettes/super.pal");
 #incbin(titlebat, "bats/title-bg.bin");
 #incbin(buttonspal, "palettes/buttons.pal");
+#incbin(superbat, "bats/superbat.bin");
 
 #define TITLE_VRAM 0x1000
 #define LOGO_VRAM (TITLE_VRAM + (TITLES_SIZE / 2))
@@ -22,6 +25,8 @@
 #define NEW_GAME 254
 #define LEVEL_SELECT 253
 
+#define SGX_PAL 4
+
 char timer;
 char done;
 char selectedButton;
@@ -29,10 +34,14 @@ char hasNoSavedData;
 char unlockedLevelSelect;
 char codePoint;
 int longTimer;
+int scr_y;
+
+char buffer[2048];
 
 initialize()
 {
     char i;
+    scr_y = 128;
     done = 0;
     timer = 0;
     longTimer = 0;
@@ -67,14 +76,33 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
     ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, 0);
     load_vram(0, titlebat, 0x700);
+    if (is_sgx())
+    {
+        sgx_init();
+        sgx_disable();
+        disp_off();
+        sgx_load_vram(0, superbat, 32 * 32 * 2);
+        for (i = 0; i < SUPER_SECTOR_COUNT; i++)
+        {
+            cd_loaddata(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
+            sgx_load_vram(0x1000 + (1024 * i), buffer, 2048);
+        }
+        load_palette(SGX_PAL, superpal, 1);
+    }
     load_palette(1, titlepal, 1);
     load_palette(16, logopal, 1);
     load_palette(17, buttonspal, 1);
     load_palette(18, buttonspal, 1);
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
+    set_color(0, 0x01);
     scroll(0, 0, 0, 0, 223, 0xC0);
     disp_on();
+    if (is_sgx())
+    {
+        sgx_init();
+        scroll_sgx(0, scr_y);
+    }
 }
 
 draw_logo()
@@ -198,6 +226,14 @@ main()
     for (;;)
     {
         longTimer++;
+        if (scr_y < 264)
+        {
+            scr_y += 2;
+            if (is_sgx())
+            {
+                scroll_sgx(0, scr_y);
+            }
+        }
         if (!done)
         {
             timer++;
@@ -243,6 +279,10 @@ main()
             cls();
             vsync();
             governor_step = SELECTED_BUTTON_TO_ACTION[selectedButton];
+            if (is_sgx())
+            {
+                sgx_disable();
+            }
             cd_execoverlay(GOVERNOR_OVERLAY);
         }
 
@@ -266,6 +306,10 @@ main()
 
         if (longTimer == 3600)
         {
+            if (is_sgx())
+            {
+                sgx_disable();
+            }
             cd_execoverlay(LOGO_OVERLAY);
         }
     }

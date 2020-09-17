@@ -9,7 +9,7 @@
 #include "./images/images.h"
 #include "./sfx.c"
 #include "cd.h"
-#include "mirror/sgx.c"
+#include "./sgx.c"
 
 #define SYSTEM_VRAM 0x1000
 #define CURSOR_VRAM (SYSTEM_VRAM + (MIRRORSYS_SIZE / 2))
