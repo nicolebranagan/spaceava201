@@ -81,13 +81,13 @@ initialize()
         sgx_init();
         sgx_disable();
         disp_off();
-        sgx_load_vram(0, superbat, 32 * 32 * 2);
         for (i = 0; i < SUPER_SECTOR_COUNT; i++)
         {
             cd_loaddata(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
             sgx_load_vram(0x1000 + (1024 * i), buffer, 2048);
         }
         load_palette(SGX_PAL, superpal, 1);
+        sgx_load_vram(0, superbat, 32 * 32 * 2);
     }
     load_palette(1, titlepal, 1);
     load_palette(16, logopal, 1);
