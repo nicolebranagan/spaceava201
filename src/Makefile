@@ -27,7 +27,7 @@ spaceava201: spaceava.iso
 	cp ../mods/spacespaceava.wav "../build/iso/Space Ava 201 - 04 - Space Space Ava!.wav"
 	cp ../mods/ballad.wav "../build/iso/Space Ava 201 - 05 - Ballad of St. Janet.wav"
 	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 06 - Evan S. Sense.wav"
-	cp ../mods/spaceful.wav "../build/iso/Space Ava 201 - 07 - Spaceful.wav"
+	cp ../waves/spaceful.wav "../build/iso/Space Ava 201 - 07 - Spaceful.wav"
 	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 08 - Chime 2020.wav"
 	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 09 - Impossibly Bossy.wav"
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 10 - Nothing is Hope.wav"
