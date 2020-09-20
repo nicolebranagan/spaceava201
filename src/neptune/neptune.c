@@ -109,10 +109,17 @@ initialize()
     set_screen_size(SCR_SIZE_128x64);
     cls();
 
+    if (current_level == DK_LEVEL)
+    {
+        load_palette(SGX_PAL, neptbg2pal, 1);
+    }
+    else
+    {
+        load_palette(SGX_PAL, neptbg1pal, 1);
+    }
     load_palette(16, avapal, 1);
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     load_palette(SIDENMY_PAL, sidenmypal, 1);
-    load_palette(SGX_PAL, current_level == DK_LEVEL ? neptbg2pal : neptbg1pal, 1);
     draw_map();
     init_ava();
     disp_on();
@@ -127,18 +134,21 @@ initialize()
 #define FRAME_START ((SGX_VRAM) >> 4)
 #define SGX_ROWS 32
 #define SGX_WIDTH 32
-populate_sgx_vram() {
+populate_sgx_vram()
+{
     char i, j;
     int vaddr, k;
     k = FRAME_START;
-    for (i = 0; i < SGX_ROWS; i++) {
+    for (i = 0; i < SGX_ROWS; i++)
+    {
         unsigned int data[SGX_WIDTH];
-        for (j = 0; j < SGX_WIDTH; j++) {
+        for (j = 0; j < SGX_WIDTH; j++)
+        {
             //palette 4
-            data[j] = 0x4000 + k; 
+            data[j] = 0x4000 + k;
             k++;
         }
-        
+
         sgx_load_vram((i) * (SGX_WIDTH), data, SGX_WIDTH << 1);
     }
 }
