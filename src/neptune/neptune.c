@@ -8,12 +8,20 @@
 #include "neptune/neptune.h"
 #include "neptune/objects.c"
 #include "./sfx.c"
+#include "./sgx.c"
 
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
 #incbin(sideobjpal, "palettes/objside.pal");
 #incbin(sidenmypal, "palettes/sidenmy.pal");
 #incbin(nullpal, "palettes/null.pal");
+#incbin(neptbg1pal, "palettes/neptbg1.pal")
+#incbin(neptbg2pal, "palettes/neptbg2.pal")
+
+#define SGX_VRAM 0x1000
+#define SGX_PAL 4
+
+#define DK_LEVEL 11
 
 char tiles[2048];
 char objdata[500];
@@ -65,7 +73,7 @@ initialize()
 {
     pal_cycle = 0;
     timer = 0;
-    load_palette(0, nullpal, 1);
+    //load_palette(0, nullpal, 1);
     load_palette(1, nullpal, 1);
     ad_reset();
     ad_trans(ADPCM_OVERLAY, JUMP_SECTOR_OFFSET, JUMP_SECTOR_COUNT, PCM_JUMP);
@@ -75,13 +83,25 @@ initialize()
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, PCM_CANNON);
     ad_trans(ADPCM_OVERLAY, STOMP_SECTOR_OFFSET, STOMP_SECTOR_COUNT, PCM_STOMP);
 
-    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
-    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level + 1), objdata, 500);
-
-    cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
+    if (is_sgx())
+    {
+        cd_loadvram(IMAGE_OVERLAY, NEPTSUP_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTSUP_SIZE);
+        for (i = 0; i < NEPTBG1_SECTOR_COUNT; i++)
+        {
+            cd_loaddata(IMAGE_OVERLAY, (current_level == DK_LEVEL ? NEPTBG2_SECTOR_OFFSET : NEPTBG1_SECTOR_OFFSET) + i, tiles, 2048);
+            sgx_load_vram(SGX_VRAM + (1024 * i), tiles, 2048);
+        }
+        populate_sgx_vram();
+    }
+    else
+    {
+        cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
+    }
     cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
     cd_loadvram(IMAGE_OVERLAY, SIDENMY_SECTOR_OFFSET, SIDENMY_VRAM, SIDENMY_SIZE);
+    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
+    cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level + 1), objdata, 500);
 
     disp_off();
     reset_satb();
@@ -92,9 +112,35 @@ initialize()
     load_palette(16, avapal, 1);
     load_palette(SIDEOBJ_PAL, sideobjpal, 1);
     load_palette(SIDENMY_PAL, sidenmypal, 1);
+    load_palette(SGX_PAL, current_level == DK_LEVEL ? neptbg2pal : neptbg1pal, 1);
     draw_map();
     init_ava();
     disp_on();
+
+    if (is_sgx())
+    {
+        sgx_init();
+        scroll_sgx(0, 0);
+    }
+}
+
+#define FRAME_START ((SGX_VRAM) >> 4)
+#define SGX_ROWS 32
+#define SGX_WIDTH 32
+populate_sgx_vram() {
+    char i, j;
+    int vaddr, k;
+    k = FRAME_START;
+    for (i = 0; i < SGX_ROWS; i++) {
+        unsigned int data[SGX_WIDTH];
+        for (j = 0; j < SGX_WIDTH; j++) {
+            //palette 4
+            data[j] = 0x4000 + k; 
+            k++;
+        }
+        
+        sgx_load_vram((i) * (SGX_WIDTH), data, SGX_WIDTH << 1);
+    }
 }
 
 load_room()
