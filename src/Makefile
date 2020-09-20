@@ -1,9 +1,9 @@
 all: spaceava201
 
-HUC_ROOT = /mnt/c/Users/nicol/apps/huc
+HUC_ROOT = /mnt/c/Users/nicol/apps/huc-release
 
 CC = PCE_INCLUDE=$(HUC_ROOT)/include/pce PCE_PCEAS=$(HUC_ROOT)/bin/pceas $(HUC_ROOT)/bin/huc
-ISOLINK = $(HUC_ROOT)/bin/isolink
+ISOLINK = PCE_INCLUDE=$(HUC_ROOT)/include/pce PCE_PCEAS=$(HUC_ROOT)/bin/pceas $(HUC_ROOT)/bin/isolink
 
 LOGO_SRC = logo/logo.c
 CLASSIC_SRC = classic/classic.c
@@ -15,8 +15,12 @@ INTRO_SRC = intro/intro.c
 NEPTUNE_SRC = neptune/neptune.c
 FINAL_SRC = final/final.c
 
+CDERR_SRC = cderr/cderr.c
+
 CFLAGS ?= -fno-recursive -msmall
 CDFLAGS = -scd -over
+
+CDERRFLAG = -cd -over
 
 spaceava201: spaceava.iso
 	rm ../build/iso/*
@@ -29,7 +33,7 @@ spaceava201: spaceava.iso
 	cp ../mods/evanssense.wav "../build/iso/Space Ava 201 - 06 - Evan S. Sense.wav"
 	cp ../waves/spaceful.wav "../build/iso/Space Ava 201 - 07 - Spaceful.wav"
 	cp ../mods/chime2020.wav "../build/iso/Space Ava 201 - 08 - Chime 2020.wav"
-	cp ../mods/impossiblybossy.wav "../build/iso/Space Ava 201 - 09 - Impossibly Bossy.wav"
+	cp ../waves/impossiblybossy.wav "../build/iso/Space Ava 201 - 09 - Impossibly Bossy.wav"
 	cp ../mods/nothingishope.wav "../build/iso/Space Ava 201 - 10 - Nothing is Hope.wav"
 	cp ../mods/lackedevenadaisy.wav "../build/iso/Space Ava 201 - 11 - Lacked Even a Daisy.wav"
 	cp ../mods/yoursoulislava.wav "../build/iso/Space Ava 201 - 12 - Your Soul is Lava.wav"
@@ -43,9 +47,12 @@ spaceava201: spaceava.iso
 	cp ../mods/scandalofnullity.wav "../build/iso/Space Ava 201 - 20 - Scandal of Nullity.wav"
 	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 21 - Even More Spaceless.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata cderr.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin -cderr ../build/cderr.ovl
+
+cderr.ovl: $(CDERR_SRC)
+	$(CC) $(CFLAGS) $(CDERRFLAG) $(CDERR_SRC) $(LIBS)
 
 logo.ovl: $(LOGO_SRC)
 	$(CC) $(CFLAGS) $(CDFLAGS) $(LOGO_SRC) $(LIBS)
