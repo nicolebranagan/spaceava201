@@ -21,7 +21,8 @@ COMMANDS = {
     "SHOW_SPRITE_BG": 11,
     "ENTER_RETRO": 12,
     "THUNDERCLAP": 13,
-    "LOAD_NEW_SEGMENT": 14
+    "LOAD_NEW_SEGMENT": 14,
+    "ENTER_CREDITS": 15
 }
 
 SPRITES = {
@@ -104,7 +105,8 @@ TRACKS = {
     "Carousel": 6,
     "Harsh Memories": 7,
     "Can't Die Boing": 8,
-    "Even More Spaceless": 9
+    "Even More Spaceless": 9,
+    "Yes! We Have No Bananas": 10
 }
 
 SFXES = {
@@ -258,6 +260,8 @@ def parse_single_script(script):
             commands.append(bytes([COMMANDS["THUNDERCLAP"]]))
         elif (command["command"] == "LOAD_NEW_SEGMENT"):
             commands.append(bytes([COMMANDS["LOAD_NEW_SEGMENT"], command["slot"]]))
+        elif (command["command"] == "ENTER_CREDITS"):
+            commands.append(bytes([COMMANDS["ENTER_CREDITS"]]))
     
     last_song = -1
     blocks = []

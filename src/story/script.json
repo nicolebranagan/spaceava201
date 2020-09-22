@@ -4205,5 +4205,113 @@
       "command": "SHOW_TEXT",
       "text": "LILY: Ava... Thank you."
     }
+  ],
+  [
+    {
+      "command": "ENTER_CREDITS"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "AVA",
+      "face": 3,
+      "x": 10,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_FRAME",
+      "frame": 0
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Yes! We Have No Bananas"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Space Ava 201\nCredits"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Game Concept\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Programming\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "\nWith thanks to\nChibiAkuma"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Level Design\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Graphics\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Music\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Music\n \nJoseph Samuel's\nMelody Masters"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Sound Effects\n \nNicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Testing"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Testing\n \n...Nicole"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Special Thanks"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "HuC Developers"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "MilkyTracker"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "itch.io"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "The PC Engine\nSoftware Bible\nForums"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "NEC and\nHudson Soft"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "(Turbo Technologies too)"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "And of course,\nMarion"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "And a big special thanks...\n \nto you!"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "A Nicole Express\nProduction"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Thanks for playing!"
+    }
   ]
 ]

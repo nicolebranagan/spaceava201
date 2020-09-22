@@ -83,7 +83,11 @@ FILE "Space Ava 201 - 21 - Even More Spaceless.wav" WAVE
   TRACK 21 AUDIO
     INDEX 01 00:00:00
 
+FILE "Space Ava 201 - 22 - Yes! We Have No Bananas.wav" WAVE
+  TRACK 22 AUDIO
+    INDEX 01 00:00:00
+
 FILE "Space Ava 201 - Track 2.iso" BINARY
-  TRACK 22 MODE1/2048
+  TRACK 23 MODE1/2048
     PREGAP 00:03:00
     INDEX 01 00:00:00

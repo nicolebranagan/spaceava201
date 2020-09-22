@@ -9,6 +9,7 @@
 #include "./story/chirp.c"
 
 #incbin(framepal, "palettes/frames.pal");
+#incbin(framepal2, "palettes/frames2.pal");
 #incbin(retropal, "palettes/retrofont.pal");
 
 #incbin(ava_facepal, "palettes/ava_face.pal");
@@ -67,6 +68,7 @@ int pointer_to_data;
 char script[2048];
 char has_next_command;
 char in_retro;
+char in_credits;
 
 const char TRACK_MAPPING[] = {
     TRACK_BALLAD,
@@ -78,7 +80,8 @@ const char TRACK_MAPPING[] = {
     TRACK_CAROUSEL,
     TRACK_HARSH_MEMORIES,
     TRACK_CANT_DIE_BOING,
-    TRACK_SPACELESS};
+    TRACK_SPACELESS,
+    TRACK_WE_HAVE_NO_BANANAS};
 
 initialize()
 {
@@ -100,6 +103,7 @@ initialize()
     cls(FONT_VRAM / 16);
     timer = 0;
     in_retro = 0;
+    in_credits = 0;
 }
 
 load_new_segment(char segment)
@@ -481,6 +485,14 @@ enter_retro()
     in_retro = 1;
 }
 
+enter_credits()
+{
+    cd_loadvram(IMAGE_OVERLAY, TITLEFNT_SECTOR_OFFSET, FONT_VRAM, TITLEFNT_SIZE);
+    cd_loadvram(IMAGE_OVERLAY, FRAMES2_SECTOR_OFFSET, FRAME_VRAM, FRAMES2_SIZE);
+    draw_frame(0);
+    in_credits = 1;
+}
+
 #define CLAP_SFX 199
 thunderclap()
 {
@@ -523,7 +535,14 @@ draw_frame(char frame)
     int addr, frame_start;
     int data[BACKDROP_WIDTH + 4];
 
-    load_palette(0, framepal + (frame << 5), 1);
+    if (in_credits)
+    {
+        load_palette(0, framepal2 + (frame << 5), 1);
+    }
+    else
+    {
+        load_palette(0, framepal + (frame << 5), 1);
+    }
     frame_start = FRAME_START + (frame << 5);
 
     for (x = 0; x < (BACKDROP_WIDTH + 4); x++)
@@ -825,6 +844,7 @@ draw_block(char more)
 #define CMD_ENTER_RETRO 12
 #define CMD_THUNDERCLAP 13
 #define CMD_LOAD_NEW_SEGMENT 14
+#define CMD_ENTER_CREDITS 15
 
 perform_command()
 {
@@ -914,6 +934,11 @@ loop:
         load_new_segment(script[pointer_to_data + 1]);
         goto loop;
         break;
+    case CMD_ENTER_CREDITS:
+        pointer_to_data += 1;
+        enter_credits();
+        goto loop;
+        break;
     }
 
     if (script[pointer_to_data] == 255)
@@ -955,21 +980,35 @@ main()
 
         joyt = joytrg(0);
 
-        if (joyt & JOY_RUN)
+        if (!in_credits)
         {
-            done();
-        }
+            if (joyt & JOY_I || joyt & JOY_II)
+            {
+                if (joyt & JOY_RUN)
+                {
+                    done();
+                }
 
-        if (joyt & JOY_I || joyt & JOY_II)
+                if (has_next_command)
+                {
+                    perform_command();
+                }
+                else
+                {
+                    done();
+                }
+            }
+        }
+        else
         {
-            if (has_next_command)
+            if (!has_next_command)
             {
-                perform_command();
+                in_credits = 0;
+                continue;
             }
-            else
-            {
-                done();
-            }
+            vsync(200);
+            vsync(100);
+            perform_command();
         }
     }
 }
