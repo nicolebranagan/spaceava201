@@ -17,6 +17,7 @@
 #define CONTINUE 255
 #define NEW_GAME 254
 #define LEVEL_SELECT 253
+#define STORY_MODE 252
 
 const char STEP_ORDER[] = {
     STORY_OVERLAY, 0,
@@ -362,7 +363,12 @@ write_text(char y, char *text)
 
 continue_cycle()
 {
-    char state;
+loop:
+    if (story_mode && STEP_ORDER[governor_step << 1] != STORY_OVERLAY)
+    {
+        governor_step++;
+        goto loop;
+    }
     current_level = STEP_ORDER[(governor_step << 1) + 1];
     cd_execoverlay(STEP_ORDER[governor_step << 1]);
 }
@@ -375,21 +381,34 @@ main()
     vsync();
     if (governor_step == LEVEL_SELECT)
     {
+        story_mode = 0;
         cls();
         level_select();
     }
     else if (governor_step == NEW_GAME || governor_step == CONTINUE)
     {
+        story_mode = 0;
         start_new_game(governor_step == NEW_GAME);
+        cls();
+        write_text(11, "Loading...");
+    }
+    else if (governor_step == STORY_MODE)
+    {
+        story_mode = 1;
+        has_backup_ram = 0;
+        governor_step = 0;
         cls();
         write_text(11, "Loading...");
     }
     else
     {
-
         governor_step++;
 
-        if (has_backup_ram)
+        if (story_mode)
+        {
+            write_text(11, "And then...");
+        }
+        else if (has_backup_ram)
         {
             write_text(11, "Saving...");
             data[0] = governor_step;

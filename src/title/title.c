@@ -24,6 +24,7 @@
 #define CONTINUE 255
 #define NEW_GAME 254
 #define LEVEL_SELECT 253
+#define STORY_MODE 252
 
 #define SGX_PAL 4
 
@@ -32,7 +33,9 @@ char done;
 char selectedButton;
 char hasNoSavedData;
 char unlockedLevelSelect;
+char unlockedStoryMode;
 char codePoint;
+char storyCodePoint;
 int longTimer;
 int scr_y;
 
@@ -46,7 +49,9 @@ initialize()
     timer = 0;
     longTimer = 0;
     unlockedLevelSelect = 0;
+    unlockedStoryMode = 0;
     codePoint = 0;
+    storyCodePoint = 0;
 
     if (!bm_check() || !bm_exist(BACKUP_RAM_NAME))
     {
@@ -145,6 +150,8 @@ draw_button(char sprdex, char button_identity, char x, char y)
 
 #define BUTTON_LS_OFF 20
 #define BUTTON_LS_ON 26
+#define BUTTON_SM_OFF 32
+#define BUTTON_SM_ON 38
 
 draw_level_select_button(char sprdex, char button_identity, char x, char y)
 {
@@ -156,7 +163,7 @@ draw_level_select_button(char sprdex, char button_identity, char x, char y)
         spr_y(y);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         spr_show();
-        spr_pal((button_identity == BUTTON_LS_ON) ? 2 : 1);
+        spr_pal(((button_identity == BUTTON_LS_ON) || (button_identity == BUTTON_SM_ON)) ? 2 : 1);
         spr_pri(1);
         spr_pattern(BUTTONS_VRAM + ((i + button_identity) * 0x40));
     }
@@ -205,6 +212,36 @@ unlock_level_select(char joyt)
     }
 }
 
+const char STORY_MODE_CODE[] = {
+    JOY_UP,
+    JOY_DOWN,
+    JOY_LEFT,
+    JOY_RIGHT};
+
+unlock_story_mode(char joyt)
+{
+    if (unlockedStoryMode)
+    {
+        return;
+    }
+
+    if (joyt & STORY_MODE_CODE[storyCodePoint])
+    {
+        storyCodePoint++;
+    }
+    else if (joyt)
+    {
+        storyCodePoint = 0;
+    }
+
+    if (storyCodePoint == 4)
+    {
+        unlockedStoryMode = 1;
+        selectedButton = 3;
+        ad_play(0, MINIWILHELM_SIZE, 14, 0);
+    }
+}
+
 #define BUTTON_Y 128
 #define BUTTON_1_X 16
 #define BUTTON_2_X 176
@@ -212,7 +249,8 @@ unlock_level_select(char joyt)
 const char SELECTED_BUTTON_TO_ACTION[] = {
     NEW_GAME,
     CONTINUE,
-    LEVEL_SELECT};
+    LEVEL_SELECT,
+    STORY_MODE};
 
 main()
 {
@@ -261,6 +299,10 @@ main()
             {
                 draw_level_select_button(20, (selectedButton == 2 ? BUTTON_LS_ON : BUTTON_LS_OFF), 80, BUTTON_Y - 32);
             }
+            if (unlockedStoryMode)
+            {
+                draw_level_select_button(26, (selectedButton == 3 ? BUTTON_SM_ON : BUTTON_SM_OFF), 88, BUTTON_Y + 32);
+            }
         }
 
         satb_update();
@@ -269,6 +311,7 @@ main()
         joyt = joytrg(0);
 
         unlock_level_select(joyt);
+        unlock_story_mode(joyt);
         if (joyt)
         {
             longTimer = 0;
@@ -288,23 +331,39 @@ main()
 
         if (unlockedLevelSelect)
         {
-
-            if (joyt & JOY_UP)
+            if (selectedButton != 3 && joyt & JOY_UP)
             {
                 selectedButton = 2;
+                continue;
             }
             if (selectedButton == 2 && joyt & JOY_DOWN)
             {
                 selectedButton = 0;
+                continue;
+            }
+        }
+
+        if (unlockedStoryMode)
+        {
+            if (selectedButton == 3 && joyt & JOY_UP)
+            {
+                selectedButton = 0;
+                continue;
+            }
+            if (selectedButton != 2 && joyt & JOY_DOWN)
+            {
+                selectedButton = 3;
+                continue;
             }
         }
 
         if (!hasNoSavedData && (joyt & JOY_SLCT || joyt & JOY_LEFT || joyt & JOY_RIGHT))
         {
             selectedButton = (selectedButton + 1) & 1;
+            continue;
         }
 
-        if (longTimer == 3600)
+        if (longTimer >= 3600)
         {
             if (is_sgx())
             {
