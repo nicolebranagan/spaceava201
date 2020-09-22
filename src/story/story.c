@@ -865,6 +865,7 @@ draw_block(char more)
 #define CMD_THUNDERCLAP 13
 #define CMD_LOAD_NEW_SEGMENT 14
 #define CMD_ENTER_CREDITS 15
+#define CMD_PLAY_MUSIC_ONCE 16
 
 perform_command()
 {
@@ -957,6 +958,12 @@ loop:
     case CMD_ENTER_CREDITS:
         pointer_to_data += 1;
         enter_credits();
+        goto loop;
+        break;
+    case CMD_PLAY_MUSIC_ONCE:
+        chirp_type = TRACK_MAPPING[script[pointer_to_data + 1]];
+        cd_playtrk(chirp_type, chirp_type + 1, CDPLAY_NORMAL);
+        pointer_to_data += 2;
         goto loop;
         break;
     }

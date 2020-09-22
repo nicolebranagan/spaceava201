@@ -22,7 +22,8 @@ COMMANDS = {
     "ENTER_RETRO": 12,
     "THUNDERCLAP": 13,
     "LOAD_NEW_SEGMENT": 14,
-    "ENTER_CREDITS": 15
+    "ENTER_CREDITS": 15,
+    "PLAY_MUSIC_ONCE": 16
 }
 
 SPRITES = {
@@ -266,6 +267,13 @@ def parse_single_script(script):
             commands.append(bytes([COMMANDS["LOAD_NEW_SEGMENT"], command["slot"]]))
         elif (command["command"] == "ENTER_CREDITS"):
             commands.append(bytes([COMMANDS["ENTER_CREDITS"]]))
+        elif (command["command"] == "PLAY_MUSIC_ONCE"):
+            commands.append(
+                bytes(
+                    [COMMANDS["PLAY_MUSIC_ONCE"],
+                    TRACKS[command["track"]]]
+                )
+            )
     
     last_song = -1
     blocks = []

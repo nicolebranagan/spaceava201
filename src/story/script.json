@@ -4226,7 +4226,7 @@
       "background": "ARCHES"
     },
     {
-      "command": "PLAY_MUSIC",
+      "command": "PLAY_MUSIC_ONCE",
       "track": "Yes! We Have No Bananas"
     },
     {
