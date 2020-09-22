@@ -1009,13 +1009,13 @@ main()
 
         if (!in_credits)
         {
+            if (joyt & JOY_RUN)
+            {
+                done();
+            }
+
             if (joyt & JOY_I || joyt & JOY_II)
             {
-                if (joyt & JOY_RUN)
-                {
-                    done();
-                }
-
                 if (has_next_command)
                 {
                     perform_command();
