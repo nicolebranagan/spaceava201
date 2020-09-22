@@ -27,6 +27,7 @@
 #incbin(futava_facepal, "palettes/futava_face.pal");
 #incbin(gdlily_facepal, "palettes/gdlily_face.pal");
 #incbin(schcat_facepal, "palettes/schcat_face.pal");
+#incbin(_1920s_facepal, "palettes/1920s_face.pal");
 
 #incbin(nullpal, "palettes/null.pal");
 
@@ -37,6 +38,7 @@
 #incbin(amalghqpal, "palettes/amalghq.pal");
 #incbin(harshartpal, "palettes/harshart.pal");
 #incbin(harshbgpal, "palettes/harshbg.pal");
+#incbin(archespal, "palettes/arches.pal");
 
 #incbin(starbasebat, "bats/starbase-bg.bin")
 #incbin(chipbasebat, "bats/basechip-bg.bin")
@@ -56,6 +58,7 @@
 #incbin(innerbat2, "bats/office2-bg.bin");
 #incbin(harshartbat, "bats/harshart-bg.bin");
 #incbin(harshbat, "bats/harsh-bg.bin");
+#incbin(archesbat, "bats/arches-bg.bin");
 
 #define BACKDROP_VRAM 0x1000
 #define FRAME_VRAM 0x2000
@@ -258,12 +261,19 @@ build_cast()
             cd_loadvram(IMAGE_OVERLAY, GDLILY_FACE_SECTOR_OFFSET, vram, GDLILY_FACE_SIZE);
             size = GDLILY_FACE_SIZE;
             break;
-        case 15: // Future Ava
+        case 15: // sCHRODINGER'S cAT
             load_palette(current_palette, schcat_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
             cd_loadvram(IMAGE_OVERLAY, SCHCAT_FACE_SECTOR_OFFSET, vram, SCHCAT_FACE_SIZE);
             size = SCHCAT_FACE_SIZE;
+            break;
+        case 16: // Future Ava
+            load_palette(current_palette, _1920s_facepal, 1);
+            palettes[index] = current_palette;
+            current_palette++;
+            cd_loadvram(IMAGE_OVERLAY, _1920S_FACE_SECTOR_OFFSET, vram, _1920S_FACE_SIZE);
+            size = _1920S_FACE_SIZE;
             break;
         }
         face_vram[index] = vram;
@@ -472,6 +482,16 @@ draw_background(char index, char load_new_gfx)
             load_vram(addr, harshbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
         }
         load_palette(1, harshbgpal, 1);
+        break;
+    case 18:
+        if (load_new_gfx)
+            cd_loadvram(IMAGE_OVERLAY, ARCHES_SECTOR_OFFSET, BACKDROP_VRAM, ARCHES_SIZE);
+        for (y = 0; y < BACKDROP_HEIGHT; y++)
+        {
+            addr = vram_addr(XTOP, YLEFT + y);
+            load_vram(addr, archesbat + ((BACKDROP_WIDTH << 1) * y), BACKDROP_WIDTH);
+        }
+        load_palette(1, archespal, 1);
         break;
     }
 }

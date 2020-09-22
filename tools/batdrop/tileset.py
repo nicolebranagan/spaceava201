@@ -16,7 +16,8 @@ TILESET_NAME = {
     "Harsh Art": 9,
     "Harsh Moderne": 10,
     "Star Rotate": 11,
-    "Super": 12
+    "Super": 12,
+    "Arches": 13
 }
 
 NAME_TILESET = {v: k for k, v in TILESET_NAME.items()}
@@ -61,5 +62,6 @@ def getTilesets():
         getTileset("../../images/tiles/harshart.terra"),
         getTileset("../../images/tiles/harshbg.terra"),
         getTileset("../../images/tiles/starrot.terra"),
-        getTileset("../../images/tiles/super.terra")
+        getTileset("../../images/tiles/super.terra"),
+        getTileset("../../images/tiles/arches.terra")
     ]

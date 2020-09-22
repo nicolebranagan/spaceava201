@@ -4212,8 +4212,8 @@
     },
     {
       "command": "SHOW_SPRITE",
-      "sprite": "AVA",
-      "face": 3,
+      "sprite": "1920S",
+      "face": 0,
       "x": 10,
       "slot": 0
     },
@@ -4222,12 +4222,34 @@
       "frame": 0
     },
     {
+      "command": "SHOW_BACKGROUND",
+      "background": "ARCHES"
+    },
+    {
       "command": "PLAY_MUSIC",
       "track": "Yes! We Have No Bananas"
     },
     {
       "command": "SHOW_CENTERED_TEXT",
-      "text": "Space Ava 201\nCredits"
+      "text": "Space Ava 201\nQuantum Field Theory"
+    },
+    {
+      "command": "SHOW_CENTERED_TEXT",
+      "text": "Credits"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 2,
+      "x": 8,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 1,
+      "x": 12,
+      "slot": 1
     },
     {
       "command": "SHOW_CENTERED_TEXT",
@@ -4242,12 +4264,37 @@
       "text": "\nWith thanks to\nChibiAkuma"
     },
     {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 6,
+      "x": 10,
+      "slot": 0
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
       "command": "SHOW_CENTERED_TEXT",
       "text": "Level Design\n \nNicole"
     },
     {
       "command": "SHOW_CENTERED_TEXT",
       "text": "Graphics\n \nNicole"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 3,
+      "x": 8,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 4,
+      "x": 12,
+      "slot": 1
     },
     {
       "command": "SHOW_CENTERED_TEXT",
@@ -4262,12 +4309,37 @@
       "text": "Sound Effects\n \nNicole"
     },
     {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 5,
+      "x": 10,
+      "slot": 0
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 1
+    },
+    {
       "command": "SHOW_CENTERED_TEXT",
       "text": "Testing"
     },
     {
       "command": "SHOW_CENTERED_TEXT",
       "text": "Testing\n \n...Nicole"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 7,
+      "x": 8,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 8,
+      "x": 12,
+      "slot": 1
     },
     {
       "command": "SHOW_CENTERED_TEXT",
@@ -4296,6 +4368,20 @@
     {
       "command": "SHOW_CENTERED_TEXT",
       "text": "(Turbo Technologies too)"
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 9,
+      "x": 9,
+      "slot": 0
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "1920S",
+      "face": 10,
+      "x": 11,
+      "slot": 1
     },
     {
       "command": "SHOW_CENTERED_TEXT",
