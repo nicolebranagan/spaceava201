@@ -1001,6 +1001,10 @@ main()
     vsync();
     for (;;)
     {
+        if (in_credits) {
+            // Make flickery lines when being old-timey
+            load_palette(7, ava_facepal, 1);
+        }
         vsync();
         timer++;
         draw_block(has_next_command);
