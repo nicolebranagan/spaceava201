@@ -227,6 +227,8 @@ wait_for_sync(char cycles)
             draw_boss2();
         }
         draw_objects();
+        satb_update();
+        vsync();
         switch (tiles[0])
         {
         case 0:
@@ -242,9 +244,7 @@ wait_for_sync(char cycles)
             load_palette(2, harshpal2 + (pal_rotate_step << 5), 1);
             break;
         }
-        satb_update();
         timer++;
-        vsync();
         if (!(timer % 16))
             pal_rotate_step = (pal_rotate_step + 1) % 4;
     }

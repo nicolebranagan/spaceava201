@@ -110,11 +110,12 @@ wait_for_sync(char cycles)
     for (i = 0; i < cycles; i++)
     {
         timer++;
-        load_palette(SGX_PAL, starrotpal + (pal_rotate_step << 5), 1);
         if (!(timer % 16))
             pal_rotate_step = (pal_rotate_step + 1) % 4;
 
         vsync();
+        load_palette(SGX_PAL, starrotpal + (pal_rotate_step << 5), 1);
+        
         if (is_sgx())
         {
             scroll_sgx(x_scr, y_scr);

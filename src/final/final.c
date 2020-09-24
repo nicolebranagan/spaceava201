@@ -153,11 +153,11 @@ wait_for_sync(char cycles)
     for (i = 0; i < cycles; i++)
     {
         draw_objects();
+        satb_update();
+        vsync();
         load_palette(2, harshpal2 + (pal_rotate_step << 5), 1);
 
-        satb_update();
         timer++;
-        vsync();
         if (!(timer % 16))
             pal_rotate_step = (pal_rotate_step + 1) % 4;
     }
