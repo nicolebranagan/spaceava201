@@ -15,6 +15,7 @@
 #incbin(titlebat, "bats/title-bg.bin");
 #incbin(buttonspal, "palettes/buttons.pal");
 #incbin(superbat, "bats/superbat.bin");
+#incbin(nullpal, "palettes/null.pal");
 
 #define TITLE_VRAM 0x1000
 #define LOGO_VRAM (TITLE_VRAM + (TITLES_SIZE / 2))
@@ -44,6 +45,12 @@ char buffer[2048];
 initialize()
 {
     char i;
+
+    // Clear palettes from intro
+    load_palette(0, nullpal, 1);
+    load_palette(1, nullpal, 1);
+    load_palette(SGX_PAL, nullpal, 1);
+
     scr_y = 128;
     done = 0;
     timer = 0;
@@ -74,7 +81,7 @@ initialize()
         spr_hide();
     }
     satb_update();
-
+    
     disp_off();
     cd_loadvram(IMAGE_OVERLAY, TITLES_SECTOR_OFFSET, TITLE_VRAM, TITLES_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
