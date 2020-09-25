@@ -90,7 +90,7 @@ initialize()
     load_vram(0, titlebat, 0x700);
     if (is_sgx())
     {
-        sgx_init();
+        sgx_init(SCR_SIZE_32x32);
         sgx_disable();
         disp_off();
         for (i = 0; i < SUPER_SECTOR_COUNT; i++)
@@ -112,7 +112,7 @@ initialize()
     disp_on();
     if (is_sgx())
     {
-        sgx_init();
+        sgx_init(SCR_SIZE_32x32);
         scroll_sgx(0, scr_y);
     }
 }

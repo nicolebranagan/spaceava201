@@ -89,7 +89,7 @@ initialize()
         cd_loaddata(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, tiledata, STARROT_SIZE);
         sgx_load_vram(0x1000, tiledata, STARROT_SIZE);
         sgx_load_vram(0, fieldbat, 32 * 32 * 2);
-        sgx_init();
+        sgx_init(SCR_SIZE_32x32);
         load_palette(2, avasml2pal, 1);
     }
     else

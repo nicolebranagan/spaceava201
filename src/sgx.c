@@ -26,7 +26,7 @@ sgx_load_vram(int vaddr, int *data, int nb)
     return;
 }
 
-sgx_init()
+sgx_init(char size)
 {
     //  Init VPC
     poke(0x08, 0x33);
@@ -47,7 +47,7 @@ sgx_init()
 
     // Set MWR
     poke(0x10, 0x09);
-    poke(0x12, 0x00);
+    poke(0x12, size << 4);
     poke(0x13, 0x00);
 
     // Set XRES

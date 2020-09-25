@@ -131,7 +131,7 @@ level_select()
 
         leveltxt = "Singularityxx";
         level_num = STEP_ORDER[(governor_step << 1) + 1];
-        if (level_num > 10)
+        if (level_num > 9)
         {
             leveltxt[11] = ASCII_ZERO + (level_num / 10);
             leveltxt[12] = ASCII_ZERO + (level_num % 10);

@@ -25,6 +25,7 @@
 
 char tiles[2048];
 char objdata[500];
+char scroll_bg;
 
 const char TILE_SOLIDITY[] = {
     TILE_EMPTY,
@@ -73,6 +74,7 @@ initialize()
 {
     pal_cycle = 0;
     timer = 0;
+    scroll_bg = 0;
     //load_palette(0, nullpal, 1);
     load_palette(1, nullpal, 1);
     ad_reset();
@@ -91,7 +93,15 @@ initialize()
             cd_loaddata(IMAGE_OVERLAY, (current_level == DK_LEVEL ? NEPTBG2_SECTOR_OFFSET : NEPTBG1_SECTOR_OFFSET) + i, tiles, 2048);
             sgx_load_vram(SGX_VRAM + (1024 * i), tiles, 2048);
         }
-        populate_sgx_vram();
+        if (current_level == DK_LEVEL)
+        {
+            populate_sgx_vram_bg2();
+        }
+        else
+        {
+            scroll_bg = 1;
+            populate_sgx_vram_bg1();
+        }
     }
     else
     {
@@ -126,7 +136,7 @@ initialize()
 
     if (is_sgx())
     {
-        sgx_init();
+        sgx_init(current_level == DK_LEVEL ? SCR_SIZE_32x32 : SCR_SIZE_64x32);
         scroll_sgx(0, 0);
     }
 }
@@ -134,7 +144,30 @@ initialize()
 #define FRAME_START ((SGX_VRAM) >> 4)
 #define SGX_ROWS 32
 #define SGX_WIDTH 32
-populate_sgx_vram()
+populate_sgx_vram_bg1()
+{
+    char i, j;
+    int vaddr, k;
+    k = FRAME_START;
+    for (i = 0; i < SGX_ROWS; i++)
+    {
+        unsigned int data[SGX_WIDTH * 2];
+        for (j = 0; j < SGX_WIDTH; j++)
+        {
+            //palette 4
+            data[j] = 0x4000 + k;
+            k++;
+        }
+        for (j = 0; j < SGX_WIDTH; j++)
+        {
+            //palette 4
+            data[j + SGX_WIDTH] = 0x4000 + FRAME_START;
+        }
+
+        sgx_load_vram((i) * (SGX_WIDTH << 1), data, SGX_WIDTH << 2);
+    }
+}
+populate_sgx_vram_bg2()
 {
     char i, j;
     int vaddr, k;
@@ -259,6 +292,10 @@ void wait_for_sync(char cycles)
         draw_objects();
         satb_update();
         vsync();
+        if (scroll_bg)
+        {
+            scroll_sgx(sx >> 2, 0);
+        }
     }
 }
 
@@ -586,6 +623,9 @@ win_ava()
     }
     satb_update();
     // Return to governor
+    if (is_sgx()) {
+        sgx_disable();
+    }
     cd_execoverlay(GOVERNOR_OVERLAY);
 }
 
