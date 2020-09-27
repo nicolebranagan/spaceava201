@@ -3454,7 +3454,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Evan S. Sense"
+      "track": "Straining to Chime"
     },
     {
       "command": "SHOW_TEXT",
@@ -3499,10 +3499,6 @@
       "text": "AVA: Lilith? Are you listening?"
     },
     {
-      "command": "PLAY_MUSIC",
-      "track": "Straining to Chime"
-    },
-    {
       "command": "SHOW_SPRITE",
       "sprite": "BADLILY",
       "face": 1
@@ -3511,6 +3507,10 @@
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "face": 5
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
     },
     {
       "command": "SHOW_TEXT",
