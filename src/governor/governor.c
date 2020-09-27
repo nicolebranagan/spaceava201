@@ -20,7 +20,6 @@
 #define STORY_MODE 252
 
 const char STEP_ORDER[] = {
-    POSTCREDITS_OVERLAY, 0,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -67,7 +66,8 @@ const char STEP_ORDER[] = {
     STORY_OVERLAY, 20, // Also STORY_OVERLAY 21
     FINAL_OVERLAY, 0,
     STORY_OVERLAY, 22,
-    STORY_OVERLAY, 23};
+    STORY_OVERLAY, 23,
+    POSTCREDITS_OVERLAY, 0};
 
 initialize()
 {
