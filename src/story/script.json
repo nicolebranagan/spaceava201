@@ -3509,10 +3509,6 @@
       "face": 5
     },
     {
-      "command": "PLAY_MUSIC",
-      "track": "Chime 2020"
-    },
-    {
       "command": "SHOW_TEXT",
       "text": "LILY: Ahem! It means that you shouldn't focus on how unintuitive things are! You should simply do your job and let yourself get lost in the math!"
     },
@@ -3539,6 +3535,10 @@
       "command": "SHOW_SPRITE",
       "sprite": "BADLILY",
       "face": 4
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Chime 2020"
     },
     {
       "command": "SHOW_TEXT",
