@@ -236,7 +236,7 @@ main()
 
     init_sprites();
     satb_update();
-    cd_playtrk(TRACK_SPACELESS, TRACK_SPACELESS + 1, CDPLAY_NORMAL);
+    cd_playtrk(TRACK_SPACELESS, TRACK_SPACELESS + 1, CDPLAY_REPEAT);
 
     for (;;)
     {
