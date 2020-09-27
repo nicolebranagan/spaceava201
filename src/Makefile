@@ -14,6 +14,7 @@ TITLE_SRC = title/title.c
 INTRO_SRC = intro/intro.c
 NEPTUNE_SRC = neptune/neptune.c
 FINAL_SRC = final/final.c
+POSTCREDITS_SRC = postcredits/postcredits.c
 
 CDERR_SRC = cderr/cderr.c
 
@@ -48,9 +49,9 @@ spaceava201: spaceava.iso
 	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 21 - Even More Spaceless.wav"
 	cp ../waves/yeswehavenobananas.wav "../build/iso/Space Ava 201 - 22 - Yes! We Have No Bananas.wav"
 
-spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata cderr.ovl
+spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata postcredits.ovl cderr.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin -cderr ../build/cderr.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin ../build/postcredits.ovl -cderr ../build/cderr.ovl
 
 cderr.ovl: $(CDERR_SRC)
 	$(CC) $(CFLAGS) $(CDERRFLAG) $(CDERR_SRC) $(LIBS)
@@ -81,6 +82,9 @@ neptune.ovl: $(NEPTUNE_SRC) images
 
 final.ovl: $(FINAL_SRC) images
 	$(CC) $(CFLAGS) $(CDFLAGS) $(FINAL_SRC) $(LIBS)
+
+postcredits.ovl: $(POSTCREDITS_SRC) images
+	$(CC) $(CFLAGS) $(CDFLAGS) $(POSTCREDITS_SRC) $(LIBS)
 
 adpcm: adpcm/*
 	python3 ../tools/overlay/overlay.py ../build/adpcm.bin ./adpcm/adpcm.h ./adpcm/*.vox
