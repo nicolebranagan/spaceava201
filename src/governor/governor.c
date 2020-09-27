@@ -11,7 +11,7 @@
 #incbin(fontpal, "palettes/8x8.pal");
 #incbin(nullpal, "palettes/null.pal");
 
-#define BACKUP_RAM_SIZE 1
+#define BACKUP_RAM_SIZE 5
 #define BACKUP_RAM_NAME "\0\0SPACE AVA"
 
 #define CONTINUE 255
@@ -174,8 +174,9 @@ start_new_game(char show_saved_game_warning)
 {
     char backupmem_exists;
     int free_mem;
-    char data[BACKUP_RAM_SIZE];
     governor_step = 0;
+    steps = 0;
+    deaths = 0;
 
     if (!bm_check())
     {
@@ -208,8 +209,20 @@ start_new_game(char show_saved_game_warning)
     }
 
     bm_create(BACKUP_RAM_NAME, BACKUP_RAM_SIZE);
-    bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+    save_data();
     return;
+}
+
+save_data()
+{
+    char data[BACKUP_RAM_SIZE];
+
+    data[0] = governor_step;
+    data[1] = ((steps & 0xFF00) >> 8);
+    data[2] = (steps & 0x00FF);
+    data[3] = (deaths & 0xFF00) >> 8;
+    data[4] = deaths & 0x00FF;
+    bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
 }
 
 no_backup_ram(char *message)
@@ -241,7 +254,6 @@ format()
 {
     char opt;
     char joyt;
-    char data[BACKUP_RAM_SIZE];
 
     opt = 1;
 
@@ -268,10 +280,9 @@ format()
         {
             if (opt)
             {
-                data[0] = 0;
                 bm_format();
                 bm_create(BACKUP_RAM_NAME, BACKUP_RAM_SIZE);
-                bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+                save_data();
                 has_backup_ram = 1;
                 return;
             }
@@ -289,13 +300,24 @@ load_saved_game(char show_saved_game_warning)
     char opt;
     char joyt;
     char data[BACKUP_RAM_SIZE];
+    char new_gov_step;
+    int new_steps;
+    int new_deaths;
 
     opt = 0;
 
     bm_read(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+    governor_step = data[0];
+    steps = (((int)(data[1])) << 8) + data[2];
+    deaths = (((int)(data[3])) << 8) + data[4];
+
     if (data[0] == 0 || !show_saved_game_warning)
     {
-        governor_step = data[0];
+        if (show_saved_game_warning)
+        {
+            steps = 0;
+            deaths = 0;
+        }
         has_backup_ram = 1;
         return;
     }
@@ -322,19 +344,23 @@ load_saved_game(char show_saved_game_warning)
         {
             if (opt == 2)
             {
-                governor_step = data[0];
                 has_backup_ram = 1;
                 return;
             }
             else if (opt == 0)
             {
                 data[0] = 0;
+                steps = 0;
+                deaths = 0;
                 bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
                 has_backup_ram = 1;
                 return;
             }
             else
             {
+                data[0] = 0;
+                steps = 0;
+                deaths = 0;
                 has_backup_ram = 0;
                 return;
             }
@@ -375,8 +401,6 @@ loop:
 
 main()
 {
-    char data[BACKUP_RAM_SIZE];
-
     initialize();
     vsync();
     if (governor_step == LEVEL_SELECT)
@@ -411,8 +435,7 @@ main()
         else if (has_backup_ram)
         {
             write_text(11, "Saving...");
-            data[0] = governor_step;
-            bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+            save_data();
         }
         else
         {

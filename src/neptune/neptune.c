@@ -443,6 +443,10 @@ ava_update(signed char delx, signed char dely)
     char new_x, new_y, old_state;
     int drawx, drawy;
 
+    if (delx || dely) {
+        steps++;
+    }
+
     new_x = ava_x + delx;
     new_y = ava_y + dely;
 
@@ -633,7 +637,7 @@ const char DEATH_FRAMES[] = {0, 0, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 2
 kill_ava()
 {
     char i;
-
+    deaths++;
     sfx_play(PCM_DIE, DIE_SIZE, 14);
 
     for (i = 0; i < 16; i++)

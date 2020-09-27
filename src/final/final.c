@@ -253,6 +253,8 @@ move_ava(signed char delx, signed char dely)
     char i;
     int x, y, nx, ny;
 
+    deaths += 2;
+
     x = ava_x * 16;
     y = ava_y * 16;
     nx = not_ava_x * 16;
@@ -284,6 +286,8 @@ const char DEATH_FRAMES[] = {0, 0, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 8, 9, 10, 10};
 kill_ava()
 {
     char i;
+
+    deaths += 2;
 
     sfx_play(DIE_LOC, DIE_SIZE, 14);
     for (i = 0; i < 16; i++)

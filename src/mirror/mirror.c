@@ -637,6 +637,7 @@ start_grid()
     else
     {
         // lose
+        deaths++;
         draw_lower_face(1);
         write_text(8, 35, "I was so close!      ");
         write_text(8, 36, "Maybe try again?     ");
@@ -657,6 +658,7 @@ start_grid()
 action()
 {
     char i;
+    steps++;
 
     if (x == GRID_WIDTH && y == (GRID_HEIGHT - 1))
     {
