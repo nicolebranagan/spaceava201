@@ -221,6 +221,10 @@ main()
 {
     char *stepstxt, *deathstxt;
     char joyt;
+    
+    if (story_mode) {
+        cd_execoverlay(LOGO_OVERLAY);
+    }
 
     stepstxt = "Steps:       ";
     deathstxt = "Deaths:       ";
