@@ -155,6 +155,7 @@ def parse_single_script(script):
     commands = []
 
     in_retro = False
+    first_text = None
 
     for command in script:
         if (command["command"] == "SHOW_SPRITE"):
@@ -185,6 +186,8 @@ def parse_single_script(script):
                 )
             )
         elif (command["command"] == "SHOW_TEXT"):
+            if first_text is None:
+                first_text = command["text"]
             parsedsets = parse_text(in_retro, command["text"])
             chirp = int(command["chirp"]) if "chirp" in command else 0
             for newtext in parsedsets:
@@ -280,7 +283,7 @@ def parse_single_script(script):
     current_block = bytes(cast) + bytes([255])
     for cmd in commands:
         if (len(current_block + cmd) > (2048 - 3)): 
-            print("Expanding block")
+            print(f"Expanding block in {first_text}")
             current_block = current_block + (
                 bytes([COMMANDS["LOAD_NEXT_SEGMENT"]])
             )

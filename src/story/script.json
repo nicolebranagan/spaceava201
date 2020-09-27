@@ -92,7 +92,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: I've just been so excited since getting my promotion."
+      "text": "But I've just been so excited since getting my promotion!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -133,7 +133,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: Perhaps it was due to misuse. The amount of matter in the universe is limited, after all."
+      "text": "NELEHU: Perhaps your replicator failed due to misuse. The amount of matter in the universe is limited, after all."
     },
     {
       "command": "SHOW_SPRITE",
@@ -179,7 +179,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: And I was about to say, the only one in the entire Amalgamation who's defeated quantum before... is Ava."
+      "text": "CINDY: You all should know, the only one in the entire Amalgamation who's defeated quantum before... is Ava."
     },
     {
       "command": "SHOW_SPRITE",
@@ -207,7 +207,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: I don't think I'd have put it like that, Lieutenant, but you have a good point. Ava, it's been awhile since you've done quantum stuff. Do you remember how it works?"
+      "text": "CINDY: I don't think I'd have put it like that, Lieutenant! Ava, it's been awhile since you've done quantum stuff. Do you remember how it works?"
     },
     {
       "command": "SHOW_SPRITE",
@@ -230,7 +230,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: Don't worry. Perhaps our new overlords will be more respectful of limited resources."
+      "text": "NELEHU: Don't worry. There may be benefits to this. Perhaps our new overlords will be more respectful of limited resources."
     },
     {
       "command": "SHOW_SPRITE",
@@ -267,7 +267,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: That's a great idea, Lieutenant! Nelehu, you can set up a quantum field in the landing bay. I'm sure Ava will get right back into the swing of things with a little practice!"
+      "text": "CINDY: That's a great idea, Lieutenant! Nelehu, you can set up a quantum field in the cargo bay. I'm sure Ava will get right back into the swing of things with a little practice!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -313,7 +313,8 @@
       "text": "AVA: See! I knew I could do it! So now we need to go and save the Earth! That's the one with the rings, right?"
     },
     {
-      "command": "STOP_MUSIC"
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
@@ -328,10 +329,6 @@
       "command": "SHOW_TEXT",
       "text": "CINDY: Minor?! Nelehu, this is no time for understatement!",
       "chirp": 200
-    },
-    {
-      "command": "PLAY_MUSIC",
-      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_TEXT",
@@ -387,7 +384,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: I don't think these are just test chambers anymore... what's going on in here?"
+      "text": "AVA: I don't think these are just test setups anymore... what's going on in here?"
     },
     {
       "command": "SHOW_TEXT",
@@ -439,7 +436,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "Now that we've escaped the confines of the black hole, the entire universe will be placed inside a quantum field! It's what you deserve!"
+      "text": "Now that we've escaped the confines of the black hole, the entire universe will quiver at a resonant frequency! But you, who humiliated, will quiver most of all!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -453,7 +450,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: And what's with the giant eye balls! Those are weirding me out just a little."
+      "text": "AVA: So does that explain the giant eyeballs?"
     },
     {
       "command": "SHOW_SPRITE",
@@ -467,7 +464,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "MAN: You can't have quantum without the observers!"
+      "text": "MAN: No! But you can't have quantum without the observers!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -481,7 +478,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: But this all doesn't make sense... I met Schrodinger's Cat, you all just wanted to stay inside the black hole. Why would you leave now? What's changed?"
+      "text": "AVA: And one more thing! This doesn't make sense... I met Schrodinger's Cat, you all just wanted to stay inside the black hole. Why would you leave now? What's changed?"
     },
     {
       "command": "SHOW_SPRITE",
@@ -642,11 +639,11 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: It would have been nice to have a prisoner..."
+      "text": "CINDY: I wonder if it would have been nice to have a prisoner..."
     },
     {
       "command": "SHOW_SPRITE",
-      "text": "NELEHU: It is likely for the best."
+      "text": "NELEHU: It is likely for the best. We don't even have a \"brig\"."
     },
     {
       "command": "SHOW_TEXT",
@@ -668,7 +665,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Bob, I can count on you to hold down the fort while we're gone, right?"
+      "text": "Bob, I can count on you to hold down the fort while we're gone, right?"
     },
     {
       "command": "SHOW_SPRITE",
@@ -852,7 +849,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: Nevertheless, that is what the ship reports."
+      "text": "NELEHU: Nevertheless, that is what the ship reports. Perhaps it is some kind of quantum foam."
     },
     {
       "command": "SHOW_SPRITE",
@@ -974,7 +971,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: I mean Ensign Ava I was just having a little fun come on don't tell Cindy I want her job please she might not be as nice as Harmony was"
+      "text": "AVA: I mean Ensign Ava I was just having a little fun come on don't tell Cindy I want her job please she might not be as nice as Stella was"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1161,7 +1158,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Great work, Ava! Now we're on our way to Earth!"
+      "text": "CINDY: Great work, Ava! Now set a direct course to Earth!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1226,7 +1223,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: They're in the Betelgeuse system. We should be able to avoid that."
+      "text": "AVA: They're in the Betelgeuse system. We should be able to avoid that easily enough."
     },
     {
       "command": "SHOW_TEXT",
@@ -1258,7 +1255,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: I know you all know that part! But what you probably don't know is that we don't know why we did it. There's no civilization that we know of. The star's just been left alone since then."
+      "text": "CINDY: I know you all know that part! But what you probably don't know is that we didn't actually do it. There's no civilization that we know of. It just reformed. The star's been left alone since then."
     },
     {
       "command": "SHOW_SPRITE",
@@ -1376,7 +1373,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: I fail to understand why an organization called Quantum would want to occupy a star. Stars are governed by gravity, which is not compatible with quantum physics."
+      "text": "NELEHU: I fail to understand why an organization called Quantum would want to control a star. Stars are dominated by gravity, which is not compatible with quantum physics."
     },
     {
       "command": "SHOW_SPRITE",
@@ -1390,7 +1387,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: Unless they're trying to figure out a grand unified theorem..."
+      "text": "CINDY: Unless they're trying to figure out a grand unified theory..."
     },
     {
       "command": "SHOW_SPRITE",
@@ -1507,7 +1504,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: I'm not trying to blow up the star! I'm not even sure why I'm here! I was trying to save Earth! You know, the red planet!"
+      "text": "AVA: I'm not trying to blow up the star! I'm not even sure why I'm here! I was trying to save Earth! You know, the red planet! Not the red star!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1667,7 +1664,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Wait, what did I do? I'm here to defeat quantum!"
+      "text": "AVA: Wait, what did I do? I'm here to defeat quantum, not you!"
     },
     {
       "command": "PLAY_LOADED_SFX"
@@ -1779,7 +1776,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "In the wild, iron 57 is only point zero two percent of iron. But in your bodies now, it is nearly 25%. Which means I control a quarter of your movements."
+      "text": "In the wild, iron 57 is only point zero two percent of iron. But in your bodies now, it is nearly 25%. Which means I control a quarter of your movements. Every step, one direction will be closed off to you."
     },
     {
       "command": "SHOW_SPRITE",
@@ -1875,7 +1872,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Now do you believe me? I was just here to stop them, and now that I'm done, it's back on the ship and off to Venus!"
+      "text": "AVA: Now do you believe me? I was just here to stop them, and now that I'm done, it's back on the ship and off to Venus! The planet of love!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -1912,7 +1909,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "PINK ???: I wouldn't go that far..."
+      "text": "PINK ???: I wouldn't go that far... it wasn't that important."
     },
     {
       "command": "SHOW_TEXT",
@@ -2249,7 +2246,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Well, about that... In orbit over the planet, gravity will be much lower... I've never had to jump in quantum space. I don't know if it'll work."
+      "text": "AVA: Well, about that... In orbit over the planet, gravity will be much lower... I've never had to jump in quantum space."
     },
     {
       "command": "PLAY_MUSIC",
@@ -2280,7 +2277,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "NELEHU: I must admit that you are not only our only hope, Ava, but you are therefore our best hope."
+      "text": "NELEHU: I must admit that because we've decided that you are our only hope, Ava, you are therefore our best hope."
     },
     {
       "command": "SHOW_TEXT",
@@ -2399,7 +2396,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "ANTONIA: Don't worry! All you have to do is jump on them! Since they're holding a photon they'll probably be distracted, absorb the photon and then emit it, destroying them but not hurting you!"
+      "text": "ANTONIA: Don't worry! All you have to do is jump on them! Sure, most of the time that'd be a terrible idea. But Since they're holding a photon they'll probably be distracted, absorb the photon and then emit it, destroying them but not hurting you!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -2439,7 +2436,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "Now if only I could get used to jumping in quantum fields..."
+      "text": "More jumping... really?"
     }
   ],
   [
@@ -2524,7 +2521,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: What?! Of course not! I thought you lived here! Like Lily lived in the black hole!"
+      "text": "AVA: What?! Of course not! I thought you lived here! Like Lily lived in the black hole! And I was going to ask you!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -2805,7 +2802,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "CINDY: We can't give up hope... there has to be some way to get through this."
+      "text": "CINDY: We can't give up hope... there has to be some way to get through this. Just keep going, Ava!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -2814,7 +2811,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: And what am I supposed to do? If this isn't working I'm not going to keep doing it! I'm the one moving those mirrors around!"
+      "text": "AVA: If this isn't working I'm not going to keep doing it! I'm the one moving those mirrors around! You take the helm then!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3198,7 +3195,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "LILY: You abandoned me inside the black hole! You only cared about yourself and your crew! You couldn't commute that with me..."
+      "text": "LILY: You abandoned me inside the black hole! You only cared about yourself and your crew! You couldn't commute that with me... I missed you, Ava!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3207,7 +3204,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: But that's not true!"
+      "text": "AVA: But that's not true! I mean, I missed you too, but I didn't abandon you!"
     },
     {
       "command": "SHOW_TEXT",
@@ -3660,7 +3657,7 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "SCHRODINGER'S CATGIRL: I am the superposition of Lilith and Schrodinger's Cat! I do what I want, in ways that neither the singular components might have acted if they were not interacting! And I wanted you here Ava! You, personally. Because I needed to get rid of you. Once and for all."
+      "text": "SCHRODINGER'S CATGIRL: I am the superposition of Lilith and Schrodinger's Cat! I do what I want, in ways that neither the singular components might have acted if they were not interacting! And I wanted you here Ava! You, personally. Because I need to get rid of you. Once and for all. It seems I can no longer leave that task to my subordinates."
     },
     {
       "command": "SHOW_SPRITE",
@@ -3669,11 +3666,11 @@
     },
     {
       "command": "SHOW_TEXT",
-      "text": "AVA: Lily! You're still in there somewhere, you don't want this..."
+      "text": "AVA: Lily! You're still in there somehow, you don't want this..."
     },
     {
       "command": "SHOW_TEXT",
-      "text": "SCHRODINGER'S CATGIRL: It doesn't matter what she wants anymore! She misses you... those feelings are a distraction. So now I'll fix that little problem!"
+      "text": "SCHRODINGER'S CATGIRL: It doesn't matter what she wants anymore! She misses you... and Schrodinger's cat loathes you. So now I'll fix those little problems!"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3941,7 +3938,7 @@
       "slot": 0,
       "sprite": "AVA",
       "face": 10,
-      "x": 7
+      "x": 9
     },
     {
       "command": "SHOW_TEXT",
@@ -4106,14 +4103,14 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Even More Spaceless"
+      "track": "Ballad of St. Janet"
     },
     {
       "command": "SHOW_SPRITE",
       "sprite": "CINDY",
       "slot": 2,
       "face": 2,
-      "x": 4
+      "x": 6
     },
     {
       "command": "SHOW_TEXT",
@@ -4129,6 +4126,17 @@
       "text": "AVA: Cindy! How'd you get here?"
     },
     {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "slot": 3,
+      "face": 2,
+      "x": 4
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Seventeen Crowns"
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "CINDY: You can thank Antonia for that. She tracked your signal using the Neptune station you helped clear out."
     },
@@ -4136,6 +4144,15 @@
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "face": 3
+    },
+    {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 5
+    },
+    {
+      "command": "SHOW_TEXT",
+      "text": "ANTONIA: Thanks for your help! Neptune's a-okay now, and we couldn't have done it without your help!"
     },
     {
       "command": "SHOW_TEXT",
@@ -4170,6 +4187,11 @@
       "face": 2
     },
     {
+      "command": "SHOW_SPRITE",
+      "sprite": "ANTONIA",
+      "face": 0
+    },
+    {
       "command": "SHOW_TEXT",
       "text": "CINDY: Well, I think we've hung around here long enough. Can you help Lilith up? We can give her some medical care."
     },
@@ -4180,6 +4202,14 @@
     {
       "command": "DELETE_SPRITE",
       "slot": 2
+    },
+    {
+      "command": "DELETE_SPRITE",
+      "slot": 3
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Even More Spaceless"
     },
     {
       "command": "SHOW_SPRITE",
@@ -4204,6 +4234,10 @@
     {
       "command": "SHOW_TEXT",
       "text": "LILY: Ava... Thank you."
+    },
+    {
+      "command": "LOAD_NEW_SEGMENT",
+      "slot": 24
     }
   ],
   [

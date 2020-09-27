@@ -65,8 +65,7 @@ const char STEP_ORDER[] = {
     CLASSIC_OVERLAY, 18,
     STORY_OVERLAY, 20, // Also STORY_OVERLAY 21
     FINAL_OVERLAY, 0,
-    STORY_OVERLAY, 22,
-    STORY_OVERLAY, 23,
+    STORY_OVERLAY, 22, // Also STORY_OVERLAY 23, 24
     POSTCREDITS_OVERLAY, 0};
 
 initialize()
@@ -391,7 +390,9 @@ write_text(char y, char *text)
 continue_cycle()
 {
 loop:
-    if (story_mode && STEP_ORDER[governor_step << 1] != STORY_OVERLAY)
+    if (story_mode &&
+        (STEP_ORDER[governor_step << 1] != STORY_OVERLAY &&
+         STEP_ORDER[governor_step << 1] != POSTCREDITS_OVERLAY))
     {
         governor_step++;
         goto loop;
