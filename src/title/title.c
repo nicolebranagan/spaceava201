@@ -29,6 +29,8 @@
 
 #define SGX_PAL 4
 
+#define ADPCM_PHOTON 0x8000
+
 char timer;
 char done;
 char selectedButton;
@@ -87,6 +89,7 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
     cd_loadvram(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
     ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, 0);
+    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, ADPCM_PHOTON);
     load_vram(0, titlebat, 0x700);
     if (is_sgx())
     {
@@ -245,7 +248,7 @@ unlock_story_mode(char joyt)
     {
         unlockedStoryMode = 1;
         selectedButton = 3;
-        ad_play(0, MINIWILHELM_SIZE, 14, 0);
+        ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
     }
 }
 
