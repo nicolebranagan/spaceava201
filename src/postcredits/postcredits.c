@@ -175,14 +175,14 @@ convert_to_text(char *text, int value)
     digits[3] = ASCII_ZERO + ((value / 10) % 10);
     digits[4] = ASCII_ZERO + ((value) % 10);
 
-    if (digits[3] == ASCII_ZERO)
+    if (digits[3] == ASCII_ZERO && digits[2] == ASCII_ZERO && digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
     {
         text[0] = digits[4];
         text[1] = 0;
         return;
     }
 
-    if (digits[2] == ASCII_ZERO)
+    if (digits[2] == ASCII_ZERO && digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
     {
         text[0] = digits[3];
         text[1] = digits[4];
@@ -190,7 +190,7 @@ convert_to_text(char *text, int value)
         return;
     }
 
-    if (digits[1] == ASCII_ZERO)
+    if (digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
     {
         text[0] = digits[2];
         text[1] = digits[3];
@@ -221,8 +221,9 @@ main()
 {
     char *stepstxt, *deathstxt;
     char joyt;
-    
-    if (story_mode) {
+
+    if (story_mode)
+    {
         cd_execoverlay(LOGO_OVERLAY);
     }
 
