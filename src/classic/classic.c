@@ -386,8 +386,8 @@ kill_ava()
     spr_set(BOTTOM_HALF_START);
     spr_hide();
 
-    load_room();
     ava_died = 1;
+    load_room();
 }
 
 const char WIN_FRAMES[] = {0, 0, 11, 12, 13, 13, 13, 14, 14, 15};
@@ -487,10 +487,15 @@ load_room()
     {
         sy = 0;
     }
-    scroll(0, sx, sy, 0, 223, 0xC0);
+
+    if (ava_died)
+    {
+        scroll(0, sx, sy, 0, 223, 0xC0);
+    }
     load_map(sx >> 4, sy >> 4, sx >> 4, sy >> 4, 17, 15);
 
     draw_ava(0, ava_x * 16, ava_y * 16);
+
     disp_on();
 }
 
@@ -583,6 +588,18 @@ main()
     initialize();
     track = MUSIC_TO_CD_TRACK[tiles[1]];
     cd_playtrk(track, track + 1, CDPLAY_REPEAT);
+
+    joyt = 0;
+    for (;;)
+    {
+        joyt += 9;
+        scroll(0, sx, sy, 0, joyt > 223 ? 223 : joyt, 0xC0);
+        if (joyt > 223)
+        {
+            break;
+        }
+        vsync();
+    }
 
     for (;;)
     {

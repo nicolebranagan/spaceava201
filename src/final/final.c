@@ -253,7 +253,7 @@ move_ava(signed char delx, signed char dely)
     char i;
     int x, y, nx, ny;
 
-    deaths += 2;
+    steps += 2;
 
     x = ava_x * 16;
     y = ava_y * 16;
@@ -467,6 +467,18 @@ main()
 
     initialize();
     cd_playtrk(TRACK_SCANDAL_NULLITY, TRACK_SCANDAL_NULLITY + 1, CDPLAY_REPEAT);
+
+    joyt = 0;
+    for (;;)
+    {
+        joyt += 2;
+        scroll(0, 0, 0, 0, joyt > 223 ? 223 : joyt, 0xC0);
+        if (joyt > 223)
+        {
+            break;
+        }
+        vsync();
+    }
 
     for (;;)
     {
