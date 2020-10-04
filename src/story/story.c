@@ -1003,6 +1003,11 @@ main()
     {
         if (in_credits) {
             // Make flickery lines when being old-timey
+            int i;
+
+            for (i = 0; i < 257; i++) {
+                2 + i;
+            }
             load_palette(7, ava_facepal, 1);
         }
         vsync();

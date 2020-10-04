@@ -75,7 +75,7 @@ initialize()
     pal_cycle = 0;
     timer = 0;
     scroll_bg = 0;
-    load_palette(0, nullpal, 1);
+    //
     load_palette(1, nullpal, 1);
     ad_reset();
     ad_trans(ADPCM_OVERLAY, JUMP_SECTOR_OFFSET, JUMP_SECTOR_COUNT, PCM_JUMP);
@@ -116,6 +116,7 @@ initialize()
     disp_off();
     reset_satb();
     set_xres(256);
+    load_palette(0, nullpal, 1);
     set_screen_size(SCR_SIZE_128x64);
     cls();
 
