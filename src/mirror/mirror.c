@@ -57,6 +57,7 @@ int x_scr, y_scr;
 
 initialize()
 {
+    char joyt;
     x = 0;
     y = 0;
     x_scr = 0;
@@ -67,7 +68,6 @@ initialize()
     running = 0;
     set_xres(256);
     set_screen_size(SCR_SIZE_32x64);
-    scroll(0, 0, 0, 0, 223, 0xC0);
 
     ad_reset();
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, ADPCM_PHOTON);
@@ -80,7 +80,6 @@ initialize()
     cd_loadvram(IMAGE_OVERLAY, CURSORS_SECTOR_OFFSET, CURSOR_VRAM, CURSORS_SIZE);
     cd_loadvram(IMAGE_OVERLAY, LASERS_SECTOR_OFFSET, LASER_VRAM, LASERS_SIZE);
     cd_loaddata(MIRROR_DATA_OVERLAY, current_level, rawdata, (GRID_WIDTH * GRID_HEIGHT) + PALETTE_SIZE);
-    cls();
 
     if (is_sgx())
     {
@@ -89,7 +88,6 @@ initialize()
         cd_loaddata(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, tiledata, STARROT_SIZE);
         sgx_load_vram(0x1000, tiledata, STARROT_SIZE);
         sgx_load_vram(0, fieldbat, 32 * 32 * 2);
-        sgx_init(SCR_SIZE_32x32);
         load_palette(2, avasml2pal, 1);
     }
     else
@@ -97,7 +95,8 @@ initialize()
         cd_loadvram(IMAGE_OVERLAY, AVASML_SECTOR_OFFSET, FACE_VRAM, AVASML_SIZE);
         load_palette(2, avasmlpal, 1);
     }
-
+    
+    scroll(0, 0, 0, 0, 0, 0xC0);
     load_palette(1, systempal, 1);
     load_palette(16, cursorpal, 1);
     load_palette(17, laserpal, 1);
@@ -115,7 +114,7 @@ wait_for_sync(char cycles)
 
         vsync();
         load_palette(SGX_PAL, starrotpal + (pal_rotate_step << 5), 1);
-        
+
         if (is_sgx())
         {
             scroll_sgx(x_scr, y_scr);
@@ -714,6 +713,26 @@ main()
     initialize();
     reset_grid();
     cd_playtrk(TRACK_NOTHING_IS_HOPE, TRACK_NOTHING_IS_HOPE + 1, CDPLAY_REPEAT);
+
+    for (;;)
+    {
+        joyt += 4;
+        scroll(0, 0,
+               (128 - joyt) < 0 ? 0 : (128 - joyt),
+               (128 - joyt) < 0 ? 0 : (128 - joyt),
+               (128 + joyt) > 223 ? 223 : (128 + joyt),
+               0xC0);
+        if (joyt > 223)
+        {
+            break;
+        }
+        vsync();
+    }
+
+    if (is_sgx())
+    {
+        sgx_init(SCR_SIZE_32x32);
+    }
 
     for (;;)
     {

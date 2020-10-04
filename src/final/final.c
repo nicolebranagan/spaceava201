@@ -68,6 +68,7 @@ initialize()
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
     cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
+    scroll(0, 0, 0, 0, 0, 0xC0);
 
     disp_off();
     reset_satb();
