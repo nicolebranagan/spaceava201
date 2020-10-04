@@ -349,16 +349,16 @@ load_saved_game(char show_saved_game_warning)
             }
             else if (opt == 0)
             {
-                data[0] = 0;
+                governor_step = 0;
                 steps = 0;
                 deaths = 0;
-                bm_write(data, BACKUP_RAM_NAME, 0, BACKUP_RAM_SIZE);
+                save_data();
                 has_backup_ram = 1;
                 return;
             }
             else
             {
-                data[0] = 0;
+                governor_step = 0;
                 steps = 0;
                 deaths = 0;
                 has_backup_ram = 0;
