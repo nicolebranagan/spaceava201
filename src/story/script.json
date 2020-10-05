@@ -3747,7 +3747,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Ballad of St. Janet"
+      "track": "Digi-Ballad 9000"
     },
     {
       "command": "SHOW_TEXT",
@@ -3931,7 +3931,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Ballad of St. Janet"
+      "track": "Digi-Ballad 9000"
     },
     {
       "command": "SHOW_SPRITE",
@@ -4209,7 +4209,7 @@
     },
     {
       "command": "PLAY_MUSIC",
-      "track": "Even More Spaceless"
+      "track": "Ballad of St. Janet"
     },
     {
       "command": "SHOW_SPRITE",

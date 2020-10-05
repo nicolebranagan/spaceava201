@@ -45,9 +45,10 @@ spaceava201: spaceava.iso
 	cp ../mods/harshmemories.wav "../build/iso/Space Ava 201 - 17 - Harsh Memories.wav"
 	cp ../waves/carousel.wav "../build/iso/Space Ava 201 - 18 - Never-Ending Carousel.wav"
 	cp ../mods/cantdieboing.wav "../build/iso/Space Ava 201 - 19 - Can't Die Boing.wav"
-	cp ../mods/scandalofnullity.wav "../build/iso/Space Ava 201 - 20 - Scandal of Nullity.wav"
-	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 21 - Even More Spaceless.wav"
-	cp ../waves/yeswehavenobananas.wav "../build/iso/Space Ava 201 - 22 - Yes! We Have No Bananas.wav"
+	cp ../mods/digi-ballad9000.wav "../build/iso/Space Ava 201 - 20 - Digi-Ballad 9000.wav"
+	cp ../mods/scandalofnullity.wav "../build/iso/Space Ava 201 - 21 - Scandal of Nullity.wav"
+	cp ../waves/evenmorespaceless.wav "../build/iso/Space Ava 201 - 22 - Even More Spaceless.wav"
+	cp ../waves/yeswehavenobananas.wav "../build/iso/Space Ava 201 - 23 - Yes! We Have No Bananas.wav"
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata postcredits.ovl cderr.ovl
 	mv */*.s */*.ovl */*.sym ../build

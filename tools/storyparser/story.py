@@ -111,7 +111,8 @@ TRACKS = {
     "Harsh Memories": 7,
     "Can't Die Boing": 8,
     "Even More Spaceless": 9,
-    "Yes! We Have No Bananas": 10
+    "Yes! We Have No Bananas": 10,
+    "Digi-Ballad 9000": 11
 }
 
 SFXES = {
