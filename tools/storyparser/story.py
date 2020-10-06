@@ -278,29 +278,21 @@ def parse_single_script(script):
                     TRACKS[command["track"]]]
                 )
             )
+        elif (command["command"] == "LOAD_NEXT_SEGMENT"):
+            commands.append(bytes([COMMANDS["LOAD_NEXT_SEGMENT"]]))
     
-    last_song = -1
     blocks = []
     current_block = bytes(cast) + bytes([255])
     for cmd in commands:
-        if (len(current_block + cmd) > (2048 - 3)): 
+        if (cmd[0] ==COMMANDS["LOAD_NEXT_SEGMENT"]):
             print(f"Expanding block in {first_text}")
-            current_block = current_block + (
-                bytes([COMMANDS["LOAD_NEXT_SEGMENT"]])
-            )
+            current_block = current_block + cmd
             blocks.append(current_block)
-            if last_song > -1:
-                current_block = bytes([
-                    COMMANDS["PLAY_MUSIC"],
-                    last_song
-                ]) + cmd
-            else:
-                current_block = cmd
+            current_block = b''
+        elif (len(current_block + cmd) > (2048 - 3)): 
+            print(f"Tried to expand block in {first_text}")
+            raise OverflowError() 
         else:
-            if (cmd[0] == COMMANDS["PLAY_MUSIC"]):
-                last_song = cmd[1]
-            elif (cmd[0] == COMMANDS["STOP_MUSIC"]):
-                last_song = -1
             current_block = current_block + cmd
     blocks.append(current_block + bytes([255]))
 

@@ -2135,6 +2135,10 @@
       "chirp": 66
     },
     {
+      "command": "PLAY_MUSIC",
+      "track": "Ballad of St. Janet"
+    },
+    {
       "command": "SHOW_SPRITE",
       "sprite": "AVA",
       "face": 5
@@ -2179,6 +2183,13 @@
     {
       "command": "SHOW_TEXT",
       "text": "I suppose therefore this is also my responsibility."
+    },
+    {
+      "command": "LOAD_NEXT_SEGMENT"
+    },
+    {
+      "command": "PLAY_MUSIC",
+      "track": "Evan S. Sense"
     },
     {
       "command": "SHOW_SPRITE",
@@ -3746,6 +3757,9 @@
       "x": 8
     },
     {
+      "command": "LOAD_NEXT_SEGMENT"
+    },
+    {
       "command": "PLAY_MUSIC",
       "track": "Digi-Ballad 9000"
     },
@@ -4100,6 +4114,9 @@
     {
       "command": "SHOW_TEXT",
       "text": "Some happy ending this is."
+    },
+    {
+      "command": "LOAD_NEXT_SEGMENT"
     },
     {
       "command": "PLAY_MUSIC",
