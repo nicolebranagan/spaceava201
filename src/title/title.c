@@ -101,7 +101,6 @@ initialize()
             cd_loaddata(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
             sgx_load_vram(0x1000 + (1024 * i), buffer, 2048);
         }
-        load_palette(SGX_PAL, superpal, 1);
         sgx_load_vram(0, superbat, 32 * 32 * 2);
     }
     load_palette(1, titlepal, 1);
@@ -115,6 +114,7 @@ initialize()
     disp_on();
     if (is_sgx())
     {
+        load_palette(SGX_PAL, superpal, 1);
         sgx_init(SCR_SIZE_32x32);
         scroll_sgx(0, scr_y);
     }
