@@ -5,6 +5,7 @@
 #include <huc.h>
 #include "adpcm/adpcm.h"
 #include "cd.h"
+#include "acd.c"
 
 #incspr(chr, "logo/images/train.png");
 #incpal(trainpal, "logo/images/train.png");
@@ -20,14 +21,26 @@ main()
 	char timer = 0;
 	int i;
 
+	if (is_acd())
+	{
+		if (arcade_card_initialized != ACD_INITIALIZED)
+		{
+			cd_execoverlay(ARCADE_OVERLAY);
+		}
+	}
+	else
+	{
+		arcade_card_initialized = ACD_CANT_INITIALIZED;
+	}
+
 	disp_off();
 
-    for (i = 0; i < 64; i++)
-    {
-        spr_set(i);
-        spr_hide();
-    }
-    satb_update();
+	for (i = 0; i < 64; i++)
+	{
+		spr_set(i);
+		spr_hide();
+	}
+	satb_update();
 	set_screen_size(SCR_SIZE_32x32);
 
 	ad_reset();
