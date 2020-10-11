@@ -15,7 +15,6 @@ INTRO_SRC = intro/intro.c
 NEPTUNE_SRC = neptune/neptune.c
 FINAL_SRC = final/final.c
 POSTCREDITS_SRC = postcredits/postcredits.c
-TITLEPCE_SRC = titlepce/title.c
 
 CDERR_SRC = cderr/cderr.c
 
@@ -140,9 +139,6 @@ faces:../images/faces/*.terra
 	do \
 		python3 ../tools/turboize/turboize.py face $$f ./images/$$(basename $$f .terra)_face.chr ./palettes/$$(basename $$f .terra)_face.pal; \
 	done;
-
-titlepce: $(TITLEPCE_SRC)
-	$(CC) $(CFLAGS) $(TITLEPCE_SRC) $(LIBS)
 
 clean:
 	rm -f ../build/*
