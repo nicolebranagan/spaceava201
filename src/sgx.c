@@ -10,10 +10,6 @@ sgx_load_vram(int vaddr, int *data, int nb)
 {
     int i;
 
-    poke(0x10, 0x5);
-    poke(0x12, 0xC0); // 1100 0000
-    poke(0x13, 0);
-
     poke(0x10, 0x00);
     pokew(0x12, vaddr);
 

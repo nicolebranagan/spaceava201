@@ -17,19 +17,21 @@
 #incbin(superbat, "bats/superbat.bin");
 #incbin(nullpal, "palettes/null.pal");
 
+#incbin(titlesgfx, "images/titles.chr");
+#incbin(logogfx, "images/logo.chr");
+#incbin(buttonsgfx, "images/buttons.chr");
+#incbin(supergfx, "images/super.chr")
+
 #define TITLE_VRAM 0x1000
 #define LOGO_VRAM (TITLE_VRAM + (TITLES_SIZE / 2))
 #define BUTTONS_VRAM (LOGO_VRAM + (LOGO_SIZE / 2))
 
-#define BACKUP_RAM_NAME "\0\0SPACE AVA"
 #define CONTINUE 255
 #define NEW_GAME 254
 #define LEVEL_SELECT 253
 #define STORY_MODE 252
 
 #define SGX_PAL 4
-
-#define ADPCM_PHOTON 0x8000
 
 char timer;
 char done;
@@ -61,17 +63,8 @@ initialize()
     unlockedStoryMode = 0;
     codePoint = 0;
     storyCodePoint = 0;
-
-    if (!bm_check() || !bm_exist(BACKUP_RAM_NAME))
-    {
-        hasNoSavedData = 1;
-        selectedButton = 0;
-    }
-    else
-    {
-        hasNoSavedData = 0;
-        selectedButton = 1;
-    }
+    hasNoSavedData = 1;
+    selectedButton = 0;
 
     // Clear global state
     current_level = 255;
@@ -85,21 +78,19 @@ initialize()
     satb_update();
 
     disp_off();
-    cd_loadvram(IMAGE_OVERLAY, TITLES_SECTOR_OFFSET, TITLE_VRAM, TITLES_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
-    ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, 0);
-    ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, ADPCM_PHOTON);
     load_vram(0, titlebat, 0x700);
+    load_vram(TITLE_VRAM, titlesgfx, TITLES_SIZE / 2);
+    load_vram(LOGO_VRAM, logogfx, LOGO_SIZE / 2);
+    load_vram(BUTTONS_VRAM, buttonsgfx, BUTTONS_SIZE / 2);
+
     if (is_sgx())
     {
         sgx_init(SCR_SIZE_32x32);
         sgx_disable();
         disp_off();
-        for (i = 0; i < SUPER_SECTOR_COUNT; i++)
+        for (i = 0; i < 3; i++)
         {
-            cd_loaddata(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
-            sgx_load_vram(0x1000 + (1024 * i), buffer, 2048);
+            sgx_load_vram(0x1000 + (1024 * i), supergfx + (2048 * i), 2048);
         }
         sgx_load_vram(0, superbat, 32 * 32 * 2);
     }
@@ -109,6 +100,7 @@ initialize()
     load_palette(18, buttonspal, 1);
     set_xres(256);
     set_screen_size(SCR_SIZE_32x32);
+    set_color(0, 0x02);
     scroll(0, 0, 0, 0, 223, 0xC0);
     disp_on();
     if (is_sgx())
@@ -116,11 +108,7 @@ initialize()
         load_palette(SGX_PAL, superpal, 1);
         sgx_init(SCR_SIZE_32x32);
         scroll_sgx(0, scr_y);
-        set_color(0, 0x02);
-    }
-    else
-    {
-        set_color(0, 0x01);
+        set_color(256, 0x01);
     }
 }
 
@@ -222,7 +210,6 @@ unlock_level_select(char joyt)
     {
         unlockedLevelSelect = 1;
         selectedButton = 2;
-        ad_play(0, MINIWILHELM_SIZE, 14, 0);
     }
 }
 
@@ -252,7 +239,6 @@ unlock_story_mode(char joyt)
     {
         unlockedStoryMode = 1;
         selectedButton = 3;
-        ad_play(ADPCM_PHOTON, PHOTON_SIZE, 14, 0);
     }
 }
 
@@ -274,7 +260,6 @@ main()
     initialize();
     draw_logo();
     satb_update();
-    cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_NORMAL);
     for (;;)
     {
         longTimer++;
@@ -340,7 +325,6 @@ main()
             {
                 sgx_disable();
             }
-            cd_execoverlay(GOVERNOR_OVERLAY);
         }
 
         if (unlockedLevelSelect)
@@ -383,7 +367,6 @@ main()
             {
                 sgx_disable();
             }
-            cd_execoverlay(LOGO_OVERLAY);
         }
     }
 }
