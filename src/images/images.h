@@ -348,4 +348,5 @@
 #define TITLES_SECTOR_COUNT 5 
 #define TITLES_SIZE 10240 
 
+#define IMAGES_TOTAL_SECTOR 209 
 #endif

@@ -57,6 +57,7 @@ with open(headerfile, "w") as header:
         header.write(f'#define {variable_name}_SIZE {filedata["size"]} \n\n')
         sector_offset = sector_offset + filedata["sectorcount"]
         fulldata = fulldata + filedata["data"]
+    header.write(f'#define {header_name}_TOTAL_SECTOR {sector_offset} \n')
     header.write("#endif")
 
 with open(outputfile, "wb") as output:

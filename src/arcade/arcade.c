@@ -123,6 +123,70 @@ int write_text(char *text)
     return len;
 }
 
+give_up() {
+    write_text("LILY: Actually, never mind.");
+    vsync();
+
+    arcade_card_initialized = ACD_CANT_INITIALIZED;
+    cd_execoverlay(LOGO_OVERLAY);
+}
+
+char buffer[2048];
+char dummy[2];
+write_images_to_card()
+{
+    int i, j;
+    char joyt;
+
+    poke(0x1A02, 00);
+    poke(0x1A03, 00);
+    poke(0x1A04, 00);
+
+    poke(0x1A05, 0);
+    poke(0x1A06, 0);
+
+    // Auto-increment
+    poke(0x1A07, 1);
+    poke(0x1A08, 0);
+
+    // Control register
+    // 0001 0001
+    poke(0x1A09, 0x11);
+
+    for (i = 0; i < IMAGES_TOTAL_SECTOR; i++)
+    {
+        joyt = joy(0);
+        if (joyt & JOY_RUN) {
+            give_up();
+        }
+        cd_loaddata(IMAGE_OVERLAY, i, buffer, 2048);
+        #asm
+        pha
+
+        ldx #0
+        ldy #0
+
+        lda _buffer
+        sta zp_ptr1
+        lda _buffer + 1
+        sta zp_ptr1 + 1
+
+    SectorLoopStart:
+        lda (zp_ptr1),Y
+        sta $1A00
+        iny
+        bne SectorLoopStart
+        inx
+        cpx #$20
+        beq SectorLoopDone
+        inc zp_ptr1 + 1
+        bra SectorLoopStart
+    SectorLoopDone:
+        pla
+        #endasm
+    }
+}
+
 main()
 {
     initialize();
@@ -131,8 +195,10 @@ main()
     draw_person(1, 8, 8);
     draw_person(2, 19, 3);
     draw_person(3, 20, 11);
-    write_text("AVA: Wow, Lily, you got the\nArcade Card?\nLILY: That's right! Let's \nfill it with data!"); for (;;)
-    {
-        vsync();
-    }
+    write_text("AVA: Wow, Lily, you got the\nArcade Card?\nLILY: That's right! Let's \nfill it with data!");
+    vsync();
+
+    write_images_to_card();
+    arcade_card_initialized = ACD_INITIALIZED;
+    cd_execoverlay(LOGO_OVERLAY);
 }

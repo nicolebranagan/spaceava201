@@ -88,4 +88,5 @@
 #define WRONG_SECTOR_COUNT 2 
 #define WRONG_SIZE 3200 
 
+#define ADPCM_TOTAL_SECTOR 108 
 #endif

@@ -23,7 +23,9 @@ main()
 
 	if (is_acd())
 	{
-		if (arcade_card_initialized != ACD_INITIALIZED)
+		if (
+			arcade_card_initialized != ACD_INITIALIZED &&
+			arcade_card_initialized != ACD_CANT_INITIALIZED)
 		{
 			cd_execoverlay(ARCADE_OVERLAY);
 		}
