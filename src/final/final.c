@@ -4,6 +4,7 @@
 
 #include <huc.h>
 #include "images/images.h"
+#include "acd.c"
 
 #include "final/classic.h"
 #include "final/enemy.c"
@@ -67,7 +68,7 @@ initialize()
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, PHOTON_LOC);
     ad_trans(ADPCM_OVERLAY, CANNON_SECTOR_OFFSET, CANNON_SECTOR_COUNT, CANNON_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
-    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
     scroll(0, 0, 0, 0, 0, 0xC0);
 
     disp_off();
@@ -110,16 +111,8 @@ load_map_graphics(char gfx_type)
     set_tile_data(tiledata, 32, palette_ref, 32);
     load_tile(0x2000);
 
-    cd_loadvram(
-        IMAGE_OVERLAY,
-        HARSH_SECTOR_OFFSET,
-        0x2000,
-        HARSH_SIZE);
-    cd_loadvram(
-        IMAGE_OVERLAY,
-        HARSHOUT_SECTOR_OFFSET,
-        0x2000 + (HARSH_SIZE / 2),
-        HARSHOUT_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, HARSH_SECTOR_OFFSET, 0x2000, HARSH_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, HARSHOUT_SECTOR_OFFSET, 0x2000 + (HARSH_SIZE / 2), HARSHOUT_SIZE);
 
     load_palette(1, harshpal1, 1);
     load_palette(2, harshpal2, 1);

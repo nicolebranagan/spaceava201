@@ -6,6 +6,7 @@
 
 #include "./images/images.h"
 #include "cd.h"
+#include "acd.c"
 
 #define FONT_VRAM 0x0800
 #define AVASIDE_VRAM (FONT_VRAM + _8X8_SIZE)
@@ -40,9 +41,9 @@ initialize()
     scroll(0, 0, 0, 0, 223, 0xC0);
     cls();
     disp_on();
-    //cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVASIDE_VRAM, AVASIDE_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, LILYSIDE_SECTOR_OFFSET, LILYSIDE_VRAM, LILYSIDE_SIZE);
+    //CD_LOADVRAM(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVASIDE_VRAM, AVASIDE_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, LILYSIDE_SECTOR_OFFSET, LILYSIDE_VRAM, LILYSIDE_SIZE);
 
     load_palette(0, fontpal, 1);
     load_palette(16, avasidepal, 1);

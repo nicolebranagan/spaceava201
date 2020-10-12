@@ -9,6 +9,7 @@
 #include "neptune/objects.c"
 #include "./sfx.c"
 #include "./sgx.c"
+#include "acd.c"
 
 #incbin(avapal, "palettes/avaside.pal");
 #incbin(neptunepal, "palettes/neptune.pal");
@@ -87,7 +88,7 @@ initialize()
 
     if (is_sgx())
     {
-        cd_loadvram(IMAGE_OVERLAY, NEPTSUP_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTSUP_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, NEPTSUP_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTSUP_SIZE);
         for (i = 0; i < NEPTBG1_SECTOR_COUNT; i++)
         {
             cd_loaddata(IMAGE_OVERLAY, (current_level == DK_LEVEL ? NEPTBG2_SECTOR_OFFSET : NEPTBG1_SECTOR_OFFSET) + i, tiles, 2048);
@@ -105,11 +106,11 @@ initialize()
     }
     else
     {
-        cd_loadvram(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, NEPTUNE_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTUNE_SIZE);
     }
-    cd_loadvram(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, SIDENMY_SECTOR_OFFSET, SIDENMY_VRAM, SIDENMY_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, AVASIDE_SECTOR_OFFSET, AVA_VRAM, AVASIDE_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, OBJSIDE_SECTOR_OFFSET, SIDEOBJ_VRAM, OBJSIDE_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, SIDENMY_SECTOR_OFFSET, SIDENMY_VRAM, SIDENMY_SIZE);
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level), tiles, 2048);
     cd_loaddata(CLASSIC_DATA_OVERLAY, (2 * current_level + 1), objdata, 500);
 

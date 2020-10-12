@@ -85,7 +85,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_MADMOUTH:
         if (!enemy_vram[TYPE_MADMOUTH])
         {
-            cd_loadvram(IMAGE_OVERLAY, MADMOUTH_SECTOR_OFFSET, vram_offset, MADMOUTH_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, MADMOUTH_SECTOR_OFFSET, vram_offset, MADMOUTH_SIZE);
             enemy_vram[TYPE_MADMOUTH] = vram_offset;
             vram_offset += MADMOUTH_SIZE / 2;
         }
@@ -94,7 +94,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_BALL:
         if (!enemy_vram[TYPE_BIGMOUTH])
         {
-            cd_loadvram(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, BIGMOUTH_SECTOR_OFFSET, vram_offset, BIGMOUTH_SIZE);
             enemy_vram[TYPE_BIGMOUTH] = vram_offset;
             // The ball is on the Bigmouth graphics file
             enemy_vram[TYPE_BALL] = vram_offset + 12 * SPR_SIZE_16x16;
@@ -104,7 +104,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_EYEWALK:
         if (!enemy_vram[TYPE_EYEWALK])
         {
-            cd_loadvram(IMAGE_OVERLAY, EYEWALK_SECTOR_OFFSET, vram_offset, EYEWALK_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, EYEWALK_SECTOR_OFFSET, vram_offset, EYEWALK_SIZE);
             enemy_vram[TYPE_EYEWALK] = vram_offset;
             vram_offset += EYEWALK_SIZE / 2;
         }
@@ -112,7 +112,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_BOSS1:
         if (!enemy_vram[TYPE_BOSS1])
         {
-            cd_loadvram(IMAGE_OVERLAY, GOONBOSS_SECTOR_OFFSET, vram_offset, GOONBOSS_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, GOONBOSS_SECTOR_OFFSET, vram_offset, GOONBOSS_SIZE);
             enemy_vram[TYPE_BOSS1] = vram_offset;
             vram_offset += GOONBOSS_SIZE / 2;
         }
@@ -120,7 +120,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_BOSS2:
         if (!enemy_vram[TYPE_BOSS2])
         {
-            cd_loadvram(IMAGE_OVERLAY, MOSSBOSS_SECTOR_OFFSET, vram_offset, MOSSBOSS_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, MOSSBOSS_SECTOR_OFFSET, vram_offset, MOSSBOSS_SIZE);
             enemy_vram[TYPE_BOSS2] = vram_offset;
             vram_offset += MOSSBOSS_SIZE / 2;
         }
@@ -128,7 +128,7 @@ int populate_enemy_vram(int vram_offset, char type)
     case TYPE_GOONGUY:
         if (!enemy_vram[TYPE_GOONGUY])
         {
-            cd_loadvram(IMAGE_OVERLAY, GOONGUY_SECTOR_OFFSET, vram_offset, GOONGUY_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, GOONGUY_SECTOR_OFFSET, vram_offset, GOONGUY_SIZE);
             enemy_vram[TYPE_GOONGUY] = vram_offset;
             vram_offset += GOONGUY_SIZE / 2;
         }

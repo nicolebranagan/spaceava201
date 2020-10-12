@@ -4,6 +4,7 @@
 
 #include <huc.h>
 #include "images/images.h"
+#include "acd.c"
 
 #include "classic/classic.h"
 #include "classic/enemy.c"
@@ -100,7 +101,7 @@ initialize()
     ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, WILHELM_LOC);
     ad_trans(ADPCM_OVERLAY, SHOVE_SECTOR_OFFSET, SHOVE_SECTOR_COUNT, SHOVE_LOC);
     ad_trans(ADPCM_OVERLAY, TILE_SECTOR_OFFSET, TILE_SECTOR_COUNT, TILE_SND_LOC);
-    cd_loadvram(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, AVA_SECTOR_OFFSET, AVA_VRAM, AVA_SIZE);
     scroll(0, 0, 0, 0, 0, 0xC0);
     disp_off();
     reset_satb();
@@ -141,62 +142,30 @@ load_map_graphics(char gfx_type)
     switch (gfx_type)
     {
     case 0:
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            STARBASE_SECTOR_OFFSET,
-            0x2000,
-            STARBASE_SIZE);
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            STARROT_SECTOR_OFFSET,
-            0x2000 + (STARBASE_SIZE / 2),
-            STARROT_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, STARBASE_SECTOR_OFFSET, 0x2000, STARBASE_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, STARROT_SECTOR_OFFSET, 0x2000 + (STARBASE_SIZE / 2), STARROT_SIZE);
 
         load_palette(1, starbasepal1, 1);
         load_palette(2, starbasepal2, 1);
         break;
     case 1:
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            BETELLAND_SECTOR_OFFSET,
-            0x2000,
-            BETELLAND_SIZE);
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            BETELROT_SECTOR_OFFSET,
-            0x2000 + (BETELLAND_SIZE / 2),
-            BETELROT_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, BETELLAND_SECTOR_OFFSET, 0x2000, BETELLAND_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, BETELROT_SECTOR_OFFSET, 0x2000 + (BETELLAND_SIZE / 2), BETELROT_SIZE);
 
         load_palette(16, avapal + (1 << 5), 1);
         load_palette(1, betelpal1, 1);
         load_palette(2, betelpal2, 1);
         break;
     case 3: // case 2 is neptune, not supported
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            OFFICE_SECTOR_OFFSET,
-            0x2000,
-            OFFICE_SIZE);
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            OUTFFICE_SECTOR_OFFSET,
-            0x2000 + (OFFICE_SIZE / 2),
-            OUTFFICE_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, OFFICE_SECTOR_OFFSET, 0x2000, OFFICE_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, OUTFFICE_SECTOR_OFFSET, 0x2000 + (OFFICE_SIZE / 2), OUTFFICE_SIZE);
 
         load_palette(1, officepal1, 1);
         load_palette(2, officepal2, 1);
         break;
     case 4:
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            HARSH_SECTOR_OFFSET,
-            0x2000,
-            HARSH_SIZE);
-        cd_loadvram(
-            IMAGE_OVERLAY,
-            HARSHOUT_SECTOR_OFFSET,
-            0x2000 + (HARSH_SIZE / 2),
-            HARSHOUT_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, HARSH_SECTOR_OFFSET, 0x2000, HARSH_SIZE);
+        CD_LOADVRAM(IMAGE_OVERLAY, HARSHOUT_SECTOR_OFFSET, 0x2000 + (HARSH_SIZE / 2), HARSHOUT_SIZE);
 
         load_palette(1, harshpal1, 1);
         load_palette(2, harshpal2, 1);

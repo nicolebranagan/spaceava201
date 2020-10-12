@@ -7,6 +7,7 @@
 #include "./images/images.h"
 #include "cd.h"
 #include "./story/chirp.c"
+#include "acd.c"
 
 #incbin(framepal, "palettes/frames.pal");
 #incbin(framepal2, "palettes/frames2.pal");
@@ -94,8 +95,8 @@ initialize()
     ad_reset();
 
     disp_off();
-    cd_loadvram(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, BIZCAT_SECTOR_OFFSET, FONT_VRAM, BIZCAT_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, FRAMES_SECTOR_OFFSET, FRAME_VRAM, FRAMES_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, BIZCAT_SECTOR_OFFSET, FONT_VRAM, BIZCAT_SIZE);
     cls(FONT_VRAM / 16);
     disp_on();
 
@@ -158,7 +159,7 @@ build_cast()
             load_palette(current_palette, ava_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, AVA_FACE_SECTOR_OFFSET, vram, AVA_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, AVA_FACE_SECTOR_OFFSET, vram, AVA_FACE_SIZE);
             size = AVA_FACE_SIZE;
             break;
 
@@ -166,7 +167,7 @@ build_cast()
             load_palette(current_palette, cindy_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, CINDY_FACE_SECTOR_OFFSET, vram, CINDY_FACE_SIZE);
             size = CINDY_FACE_SIZE;
             break;
 
@@ -174,7 +175,7 @@ build_cast()
             load_palette(current_palette, nelehu_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, NELEHU_FACE_SECTOR_OFFSET, vram, NELEHU_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, NELEHU_FACE_SECTOR_OFFSET, vram, NELEHU_FACE_SIZE);
             size = NELEHU_FACE_SIZE;
             break;
 
@@ -182,7 +183,7 @@ build_cast()
             load_palette(current_palette, bob_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, BOB_FACE_SECTOR_OFFSET, vram, BOB_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, BOB_FACE_SECTOR_OFFSET, vram, BOB_FACE_SIZE);
             size = BOB_FACE_SIZE;
             break;
 
@@ -190,7 +191,7 @@ build_cast()
             load_palette(current_palette, goon_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, GOON_FACE_SECTOR_OFFSET, vram, GOON_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, GOON_FACE_SECTOR_OFFSET, vram, GOON_FACE_SIZE);
             size = GOON_FACE_SIZE;
             break;
 
@@ -198,7 +199,7 @@ build_cast()
             load_palette(current_palette, bunny_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, BUNNY_FACE_SECTOR_OFFSET, vram, BUNNY_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, BUNNY_FACE_SECTOR_OFFSET, vram, BUNNY_FACE_SIZE);
             size = BUNNY_FACE_SIZE;
             break;
 
@@ -206,7 +207,7 @@ build_cast()
             load_palette(current_palette, bagbunny_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, BAGBUN_FACE_SECTOR_OFFSET, vram, BAGBUN_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, BAGBUN_FACE_SECTOR_OFFSET, vram, BAGBUN_FACE_SIZE);
             size = BAGBUN_FACE_SIZE;
             break;
 
@@ -214,7 +215,7 @@ build_cast()
             load_palette(current_palette, mossbau_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, MOSSBA_FACE_SECTOR_OFFSET, vram, MOSSBA_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, MOSSBA_FACE_SECTOR_OFFSET, vram, MOSSBA_FACE_SIZE);
             size = MOSSBA_FACE_SIZE;
             break;
 
@@ -222,7 +223,7 @@ build_cast()
             load_palette(current_palette, antoni_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, ANTONI_FACE_SECTOR_OFFSET, vram, ANTONI_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, ANTONI_FACE_SECTOR_OFFSET, vram, ANTONI_FACE_SIZE);
             size = ANTONI_FACE_SIZE;
             break;
 
@@ -230,7 +231,7 @@ build_cast()
             load_palette(current_palette, qcindy_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, QCINDY_FACE_SECTOR_OFFSET, vram, QCINDY_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, QCINDY_FACE_SECTOR_OFFSET, vram, QCINDY_FACE_SIZE);
             size = QCINDY_FACE_SIZE;
             break;
 
@@ -238,42 +239,42 @@ build_cast()
             load_palette(current_palette, badlily_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, BDLILY_FACE_SECTOR_OFFSET, vram, BDLILY_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, BDLILY_FACE_SECTOR_OFFSET, vram, BDLILY_FACE_SIZE);
             size = BDLILY_FACE_SIZE;
             break;
         case 12: // Retro
             load_palette(current_palette, retro_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, RETRO_FACE_SECTOR_OFFSET, vram, RETRO_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, RETRO_FACE_SECTOR_OFFSET, vram, RETRO_FACE_SIZE);
             size = RETRO_FACE_SIZE;
             break;
         case 13: // Future Ava
             load_palette(current_palette, futava_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, FUTAVA_FACE_SECTOR_OFFSET, vram, FUTAVA_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, FUTAVA_FACE_SECTOR_OFFSET, vram, FUTAVA_FACE_SIZE);
             size = FUTAVA_FACE_SIZE;
             break;
         case 14: // Good Lily
             load_palette(current_palette, gdlily_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, GDLILY_FACE_SECTOR_OFFSET, vram, GDLILY_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, GDLILY_FACE_SECTOR_OFFSET, vram, GDLILY_FACE_SIZE);
             size = GDLILY_FACE_SIZE;
             break;
         case 15: // sCHRODINGER'S cAT
             load_palette(current_palette, schcat_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, SCHCAT_FACE_SECTOR_OFFSET, vram, SCHCAT_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, SCHCAT_FACE_SECTOR_OFFSET, vram, SCHCAT_FACE_SIZE);
             size = SCHCAT_FACE_SIZE;
             break;
         case 16: // Future Ava
             load_palette(current_palette, _1920s_facepal, 1);
             palettes[index] = current_palette;
             current_palette++;
-            cd_loadvram(IMAGE_OVERLAY, _1920S_FACE_SECTOR_OFFSET, vram, _1920S_FACE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, _1920S_FACE_SECTOR_OFFSET, vram, _1920S_FACE_SIZE);
             size = _1920S_FACE_SIZE;
             break;
         }
@@ -301,7 +302,7 @@ draw_background(char index, char load_new_gfx)
     case 0:
     {
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -313,7 +314,7 @@ draw_background(char index, char load_new_gfx)
     case 1:
     {
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -325,7 +326,7 @@ draw_background(char index, char load_new_gfx)
     case 2:
     {
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARDROP_SECTOR_OFFSET, BACKDROP_VRAM, STARDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -336,7 +337,7 @@ draw_background(char index, char load_new_gfx)
     }
     case 3:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -346,7 +347,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 4:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -356,7 +357,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 5:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -366,7 +367,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 6:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -376,7 +377,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 7:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -386,7 +387,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 8:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, SUNSCAPE_SECTOR_OFFSET, BACKDROP_VRAM, SUNSCAPE_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, SUNSCAPE_SECTOR_OFFSET, BACKDROP_VRAM, SUNSCAPE_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -396,7 +397,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 9:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -406,7 +407,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 10:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -416,7 +417,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 11:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, NEPDROP_SECTOR_OFFSET, BACKDROP_VRAM, NEPDROP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -426,7 +427,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 12:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -436,7 +437,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 13:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, STARSHIP_SECTOR_OFFSET, BACKDROP_VRAM, STARSHIP_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -446,7 +447,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 14:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -456,7 +457,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 15:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, AMALGHQ_SECTOR_OFFSET, BACKDROP_VRAM, AMALGHQ_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -466,7 +467,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 16:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, HARSHART_SECTOR_OFFSET, BACKDROP_VRAM, HARSHART_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, HARSHART_SECTOR_OFFSET, BACKDROP_VRAM, HARSHART_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -476,7 +477,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 17:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, HARSHBG_SECTOR_OFFSET, BACKDROP_VRAM, HARSHBG_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, HARSHBG_SECTOR_OFFSET, BACKDROP_VRAM, HARSHBG_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -486,7 +487,7 @@ draw_background(char index, char load_new_gfx)
         break;
     case 18:
         if (load_new_gfx)
-            cd_loadvram(IMAGE_OVERLAY, ARCHES_SECTOR_OFFSET, BACKDROP_VRAM, ARCHES_SIZE);
+            CD_LOADVRAM(IMAGE_OVERLAY, ARCHES_SECTOR_OFFSET, BACKDROP_VRAM, ARCHES_SIZE);
         for (y = 0; y < BACKDROP_HEIGHT; y++)
         {
             addr = vram_addr(XTOP, YLEFT + y);
@@ -502,14 +503,14 @@ enter_retro()
     cls();
     load_palette(0, retropal, 1);
     set_xres(256);
-    cd_loadvram(IMAGE_OVERLAY, RETROFONT_SECTOR_OFFSET, FONT_VRAM, RETROFONT_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, RETROFONT_SECTOR_OFFSET, FONT_VRAM, RETROFONT_SIZE);
     in_retro = 1;
 }
 
 enter_credits()
 {
-    cd_loadvram(IMAGE_OVERLAY, TITLEFNT_SECTOR_OFFSET, FONT_VRAM, TITLEFNT_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, FRAMES2_SECTOR_OFFSET, FRAME_VRAM, FRAMES2_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, TITLEFNT_SECTOR_OFFSET, FONT_VRAM, TITLEFNT_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, FRAMES2_SECTOR_OFFSET, FRAME_VRAM, FRAMES2_SIZE);
     draw_frame(0);
     in_credits = 1;
 }

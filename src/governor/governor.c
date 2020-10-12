@@ -6,6 +6,7 @@
 
 #include "./images/images.h"
 #include "cd.h"
+#include "acd.c"
 
 #define FONT_VRAM 0x0800
 #incbin(fontpal, "palettes/8x8.pal");
@@ -20,7 +21,6 @@
 #define STORY_MODE 252
 
 const char STEP_ORDER[] = {
-    STORY_OVERLAY, 18,
     STORY_OVERLAY, 0,
     CLASSIC_OVERLAY, 0,
     STORY_OVERLAY, 1,
@@ -87,10 +87,8 @@ initialize()
     cls();
     disp_on();
     load_palette(0, nullpal, 1);
-    cd_loadvram(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, _8X8_SECTOR_OFFSET, FONT_VRAM, _8X8_SIZE);
     load_palette(0, fontpal, 1);
-
-    reset_satb();
 }
 
 #define ASCII_ZERO 48
