@@ -160,33 +160,21 @@ write_images_to_card()
             give_up();
         }
         cd_loaddata(IMAGE_OVERLAY, i, buffer, 2048);
-        for (j = 0; j < 2048; j++) {
-            poke(0x1A00, buffer[j]);
-        }
-        /*#asm
-        pha
+        #asm
+            pha
+            tma6
+            pha 
+            lda #$40
+            tam6
 
-        ldx #0
-        ldy #0
+            sei
+            tii _buffer, $C000, $0800
+            cli
 
-        lda _buffer
-        sta zp_ptr1
-        lda _buffer + 1
-        sta zp_ptr1 + 1
-
-    SectorLoopStart:
-        lda (zp_ptr1),Y
-        sta $1A00
-        iny
-        bne SectorLoopStart
-        inx
-        cpx #$20
-        beq SectorLoopDone
-        inc zp_ptr1 + 1
-        bra SectorLoopStart
-    SectorLoopDone:
-        pla
-        #endasm */
+            pla 
+            tam6 
+            pla 
+        #endasm
     }
 }
 
