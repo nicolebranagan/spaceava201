@@ -145,14 +145,15 @@ draw_arcade()
 {
     char i;
 
-    if (arcade_card_initialized != ACD_INITIALIZED) {
+    if (arcade_card_initialized != ACD_INITIALIZED)
+    {
         return;
     }
 
     for (i = 0; i < 4; i++)
     {
         spr_set(i + 34);
-        spr_x(0 + (i << 4));
+        spr_x(-56 + (i << 4));
         spr_y(50);
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         spr_show();
@@ -165,15 +166,16 @@ draw_arcade()
 move_arcade(char new_pos)
 {
     char i;
-    
-    if (arcade_card_initialized != ACD_INITIALIZED) {
+
+    if (arcade_card_initialized != ACD_INITIALIZED)
+    {
         return;
     }
 
     for (i = 0; i < 4; i++)
     {
         spr_set(i + 34);
-        spr_x(new_pos + (i << 4));
+        spr_x(-56 + new_pos + (i << 4));
     }
 }
 
@@ -332,7 +334,7 @@ main()
                 spr_set(i);
                 spr_x(256 - (timer << 2) + (i << 5));
             }
-            if (timer < 48)
+            if (timer < 64)
             {
                 move_arcade(timer << 2);
             }
