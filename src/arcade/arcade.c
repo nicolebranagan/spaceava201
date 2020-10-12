@@ -124,15 +124,27 @@ int write_text(char *text)
 }
 
 give_up() {
+    draw_person(0, 1, 6);
+    draw_person(1, 10, 8);
     write_text("LILY: Actually, never mind.");
-    vsync();
+    vsync(100);
 
     arcade_card_initialized = ACD_CANT_INITIALIZED;
     cd_execoverlay(LOGO_OVERLAY);
 }
 
+#define ASCII_ZERO 48
+convert_to_text(char *text, int value)
+{
+    char digit_count;
+
+    text[0] = ASCII_ZERO + ((value / 100) % 10);
+    text[1] = ASCII_ZERO + ((value / 10) % 10);
+    text[2] = ASCII_ZERO + ((value) % 10);
+}
+
 char buffer[2048];
-char dummy[2];
+char val[3];
 write_images_to_card()
 {
     int i, j;
@@ -175,6 +187,11 @@ write_images_to_card()
             tam6 
             pla 
         #endasm
+
+        convert_to_text(val, IMAGES_TOTAL_SECTOR - i);
+        write_char(15, 14, val[0]);
+        write_char(16, 14, val[1]);
+        write_char(17, 14, val[2]);
     }
 }
 
