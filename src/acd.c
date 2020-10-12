@@ -1,3 +1,8 @@
+#ifndef TIA_INSTRUCTION
+#define TIA_INSTRUCTION 1
+char tia_instruction[8];
+#endif
+
 #ifndef ARCADE_CARD_C
 #define ARCADE_CARD_C 1
 
@@ -14,7 +19,6 @@ char is_acd()
 // Highest sector offset is 1111 1111
 // Bottom 8 bits will always be 0
 int true_vaddr;
-char tia_instruction[8];
 char load_from_acd(
     int sector_offset,
     int vaddr,
@@ -108,11 +112,51 @@ char load_from_acd(
         tam6 
         pla 
     #endasm
+}
 
+load_from_acd_local(
+    int sector_offset,
+    int addr,
+    int nb)
+{
+    poke(0x1A02, 00);
+    pokew(0x1A03, sector_offset << 3);
 
+    poke(0x1A05, 0);
+    poke(0x1A06, 0);
 
+    // Auto-increment
+    poke(0x1A07, 1);
+    poke(0x1A08, 0);
+
+    // Control register
+    // 0001 0001
+    poke(0x1A09, 0x11);
+
+    // tai $1A00, dest, nb
+    // rts
+    tia_instruction[0] = 0xf3; // This isn't a TIA_INSTRUCTION wtf
+    tia_instruction[1] = 0x00;
+    tia_instruction[2] = 0x1A;
+    tia_instruction[3] = addr & 0x00FF;
+    tia_instruction[4] = (addr & 0xFF00) >> 8;
+    tia_instruction[5] = nb & 0x00FF;
+    tia_instruction[6] = (nb & 0xFF00) >> 8;
+    tia_instruction[7] = 0x60;
+
+    #asm
+        pha
+
+        sei
+        jsr _tia_instruction
+        cli
+
+        pla 
+    #endasm
 }
 
 #define CD_LOADVRAM(ovl_idx, sector_offset, vramaddr, bytes) (arcade_card_initialized == ACD_INITIALIZED ? load_from_acd(sector_offset, vramaddr, bytes) : cd_loadvram(ovl_idx, sector_offset, vramaddr, bytes))
+
+#define CD_LOADDATA(ovl_idx, sector_offset, buffer, bytes) (arcade_card_initialized == ACD_INITIALIZED ? load_from_acd_local(sector_offset, buffer, bytes) : cd_loaddata(ovl_idx, sector_offset, buffer, bytes))
 
 #endif

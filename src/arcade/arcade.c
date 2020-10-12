@@ -136,14 +136,7 @@ give_up() {
 }
 
 #define ASCII_ZERO 48
-convert_to_text(char *text, int value)
-{
-    char digit_count;
 
-    text[0] = ASCII_ZERO + ((value / 100) % 10);
-    text[1] = ASCII_ZERO + ((value / 10) % 10);
-    text[2] = ASCII_ZERO + ((value) % 10);
-}
 
 char buffer[2048];
 char val[3];
@@ -176,21 +169,19 @@ write_images_to_card()
         cd_loaddata(IMAGE_OVERLAY, i, buffer, 2048);
         #asm
             pha
-            tma6
-            pha 
-            lda #$40
-            tam6
 
             sei
-            tii _buffer, $C000, $0800
+            tia _buffer, $1A00, $0800
             cli
-
-            pla 
-            tam6 
+ 
             pla 
         #endasm
 
-        convert_to_text(val, IMAGES_TOTAL_SECTOR - i);
+        j = IMAGES_TOTAL_SECTOR - i;
+
+        val[0] = ASCII_ZERO + ((j / 100) % 10);
+        val[1] = ASCII_ZERO + ((j / 10) % 10);
+        val[2] = ASCII_ZERO + ((j) % 10);
         write_char(15, 14, val[0]);
         write_char(16, 14, val[1]);
         write_char(17, 14, val[2]);

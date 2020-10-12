@@ -1,3 +1,8 @@
+#ifndef TIA_INSTRUCTION
+#define TIA_INSTRUCTION 1
+char tia_instruction[8];
+#endif
+
 char is_sgx()
 {
     // FF:0018 is 0xFF on a SuperGrafx, and "something else" on a PC Engine
@@ -10,15 +15,39 @@ sgx_load_vram(int vaddr, int *data, int nb)
 {
     int i;
 
+    // This function might not work if you try to transfer
+    // more than 2048 bytes of data. Sorry
+
+    // tia data, $0012, $0800
+    // rts
+    tia_instruction[0] = 0xe3;
+    tia_instruction[1] = data & 0x00FF;
+    tia_instruction[2] = (data & 0xFF00) >> 8;
+    tia_instruction[3] = 0x12;
+    tia_instruction[4] = 0x00;
+    tia_instruction[5] = 0x00;
+    tia_instruction[6] = 0x08;
+    tia_instruction[7] = 0x60;
+
+    if (nb != 2048) {
+        tia_instruction[5] = nb & 0x00FF;
+        tia_instruction[6] = (nb & 0xFF00) >> 8;
+    }
+
     poke(0x10, 0x00);
     pokew(0x12, vaddr);
 
-    for (i = 0; i < (nb >> 1); i++)
-    {
-        poke(0x10, 0x02);
-        pokew(0x12, data[i]);
-    }
+    #asm
+        pha
 
+        sei
+        lda #$02
+        sta $0010
+        jsr _tia_instruction
+        cli
+
+        pla 
+    #endasm
     return;
 }
 

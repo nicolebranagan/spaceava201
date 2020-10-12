@@ -91,7 +91,7 @@ initialize()
         CD_LOADVRAM(IMAGE_OVERLAY, NEPTSUP_SECTOR_OFFSET, NEPTUNE_VRAM, NEPTSUP_SIZE);
         for (i = 0; i < NEPTBG1_SECTOR_COUNT; i++)
         {
-            cd_loaddata(IMAGE_OVERLAY, (current_level == DK_LEVEL ? NEPTBG2_SECTOR_OFFSET : NEPTBG1_SECTOR_OFFSET) + i, tiles, 2048);
+            CD_LOADDATA(IMAGE_OVERLAY, (current_level == DK_LEVEL ? NEPTBG2_SECTOR_OFFSET : NEPTBG1_SECTOR_OFFSET) + i, tiles, 2048);
             sgx_load_vram(SGX_VRAM + (1024 * i), tiles, 2048);
         }
         if (current_level == DK_LEVEL)

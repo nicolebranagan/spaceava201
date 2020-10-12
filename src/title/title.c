@@ -99,7 +99,7 @@ initialize()
         disp_off();
         for (i = 0; i < SUPER_SECTOR_COUNT; i++)
         {
-            cd_loaddata(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
+            CD_LOADDATA(IMAGE_OVERLAY, SUPER_SECTOR_OFFSET + i, buffer, 2048);
             sgx_load_vram(0x1000 + (1024 * i), buffer, 2048);
         }
         sgx_load_vram(0, superbat, 32 * 32 * 2);
@@ -158,7 +158,7 @@ draw_arcade()
         spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
         spr_show();
         spr_pal(1);
-        spr_pri(1);
+        spr_pri(0);
         spr_pattern(BUTTONS_VRAM + ((44 + i) * 0x40));
     }
 }
