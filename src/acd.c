@@ -80,6 +80,10 @@ char load_from_acd(
         true_vaddr += 0x1000;
     }
 
+    if (!remainder) {
+        return;
+    }
+
     tia_instruction[5] = remainder & 0x00FF;
     tia_instruction[6] = (remainder & 0xFF00) >> 8;
 
