@@ -16,7 +16,7 @@ sgx_load_vram(int vaddr, int *data, int nb)
     int i;
 
     // This function might not work if you try to transfer
-    // more than 2048 bytes of data. Sorry
+    // more than $ffff bytes of data. Sorry
 
     // tia data, $0012, $0800
     // rts
