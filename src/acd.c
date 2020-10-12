@@ -20,6 +20,7 @@ char load_from_acd(
     int nb)
 {
     int i;
+    char val;
     true_vaddr = vaddr;
 
     poke(0x1A02, 00);
@@ -36,13 +37,14 @@ char load_from_acd(
     // 0001 0001
     poke(0x1A09, 0x11);
 
-    /*#asm
+    #asm
         pha
         tma6
         pha 
         lda #$40
         tam6
 
+        sei
         vreg #0
         lda _true_vaddr
         sta $0002
@@ -50,20 +52,12 @@ char load_from_acd(
         sta $0003
         vreg #2
         tia $C000, $0002, $2000
+        cli
 
         pla 
         tam6 
         pla 
-    #endasm*/
-
-    for (i = 0; i < (nb >> 1); i++)
-    {
-        poke(0x00, 0x00);
-        pokew(0x02, vaddr + i);
-        poke(0x00, 0x02);
-        poke(0x02, peek(0x1A00));
-        poke(0x03, peek(0x1A00));
-    }
+    #endasm
 }
 
 #define CD_LOADVRAM(ovl_idx, sector_offset, vramaddr, bytes) (arcade_card_initialized == ACD_INITIALIZED ? load_from_acd(sector_offset, vramaddr, bytes) : cd_loadvram(ovl_idx, sector_offset, vramaddr, bytes))

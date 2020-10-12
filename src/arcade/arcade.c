@@ -160,7 +160,10 @@ write_images_to_card()
             give_up();
         }
         cd_loaddata(IMAGE_OVERLAY, i, buffer, 2048);
-        #asm
+        for (j = 0; j < 2048; j++) {
+            poke(0x1A00, buffer[j]);
+        }
+        /*#asm
         pha
 
         ldx #0
@@ -183,7 +186,7 @@ write_images_to_card()
         bra SectorLoopStart
     SectorLoopDone:
         pla
-        #endasm
+        #endasm */
     }
 }
 
