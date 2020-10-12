@@ -8,6 +8,7 @@
 #include "cd.h"
 #include "./adpcm/adpcm.h"
 #include "./sgx.c"
+#include "acd.c"
 
 #incbin(titlepal, "palettes/titles.pal");
 #incbin(logopal, "palettes/logo.pal");
@@ -85,9 +86,9 @@ initialize()
     satb_update();
 
     disp_off();
-    cd_loadvram(IMAGE_OVERLAY, TITLES_SECTOR_OFFSET, TITLE_VRAM, TITLES_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
-    cd_loadvram(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, TITLES_SECTOR_OFFSET, TITLE_VRAM, TITLES_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, LOGO_SECTOR_OFFSET, LOGO_VRAM, LOGO_SIZE);
+    CD_LOADVRAM(IMAGE_OVERLAY, BUTTONS_SECTOR_OFFSET, BUTTONS_VRAM, BUTTONS_SIZE);
     ad_trans(ADPCM_OVERLAY, MINIWILHELM_SECTOR_OFFSET, MINIWILHELM_SECTOR_COUNT, 0);
     ad_trans(ADPCM_OVERLAY, PHOTON_SECTOR_OFFSET, PHOTON_SECTOR_COUNT, ADPCM_PHOTON);
     load_vram(0, titlebat, 0x700);
