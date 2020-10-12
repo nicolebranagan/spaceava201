@@ -126,6 +126,8 @@ int write_text(char *text)
 give_up() {
     draw_person(0, 1, 6);
     draw_person(1, 10, 8);
+    draw_person(2, 16, 3);
+    draw_person(3, 16, 11);
     write_text("LILY: Actually, never mind.");
     vsync(100);
 

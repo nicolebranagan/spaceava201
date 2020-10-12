@@ -141,6 +141,42 @@ draw_logo()
     }
 }
 
+draw_arcade()
+{
+    char i;
+
+    if (arcade_card_initialized != ACD_INITIALIZED) {
+        return;
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        spr_set(i + 34);
+        spr_x(0 + (i << 4));
+        spr_y(50);
+        spr_ctrl(FLIP_MAS | SIZE_MAS, SZ_16x16);
+        spr_show();
+        spr_pal(1);
+        spr_pri(1);
+        spr_pattern(BUTTONS_VRAM + ((44 + i) * 0x40));
+    }
+}
+
+move_arcade(char new_pos)
+{
+    char i;
+    
+    if (arcade_card_initialized != ACD_INITIALIZED) {
+        return;
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        spr_set(i + 34);
+        spr_x(new_pos + (i << 4));
+    }
+}
+
 #define BUTTON_NEW_OFF 0
 #define BUTTON_NEW_ON 1
 #define BUTTON_CON_OFF 2
@@ -274,6 +310,7 @@ main()
 
     initialize();
     draw_logo();
+    draw_arcade();
     satb_update();
     cd_playtrk(TRACK_EVEN_MORE_SPACELESS, TRACK_EVEN_MORE_SPACELESS + 1, CDPLAY_NORMAL);
     for (;;)
@@ -294,6 +331,10 @@ main()
             {
                 spr_set(i);
                 spr_x(256 - (timer << 2) + (i << 5));
+            }
+            if (timer < 48)
+            {
+                move_arcade(timer << 2);
             }
             if (timer == 64)
             {
