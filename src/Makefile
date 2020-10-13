@@ -55,7 +55,7 @@ spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.o
 	mv */*.s */*.ovl */*.sym ../build
 	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin ../build/postcredits.ovl ../build/arcade.ovl -cderr ../build/cderr.ovl
 
-cderr.ovl: $(CDERR_SRC)
+cderr.ovl: $(CDERR_SRC) images
 	$(CC) $(CFLAGS) $(CDERRFLAG) $(CDERR_SRC) $(LIBS)
 
 logo.ovl: $(LOGO_SRC)
