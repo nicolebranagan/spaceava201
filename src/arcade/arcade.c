@@ -89,6 +89,14 @@ write_char(char x, char y, char character)
     load_vram(vaddr, parsed, 1);
 }
 
+write_single_char(char x, char y, char character)
+{
+    int parsed[1], vaddr;
+    vaddr = vram_addr(x, y);
+    parsed[0] = (character << 1) + (FONT_VRAM >> 4) - 64;
+    load_vram(vaddr, parsed, 1);
+}
+
 int write_text(char *text)
 {
     char x, y, i;
@@ -123,7 +131,8 @@ int write_text(char *text)
     return len;
 }
 
-give_up() {
+give_up()
+{
     draw_person(0, 1, 6);
     draw_person(1, 10, 8);
     draw_person(2, 16, 3);
@@ -137,13 +146,12 @@ give_up() {
 
 #define ASCII_ZERO 48
 
-
 char buffer[2048];
 char val[3];
 write_images_to_card()
 {
-    int i, j;
-    char joyt;
+    int i;
+    char joyt, j;
 
     poke(0x1A02, 00);
     poke(0x1A03, 00);
@@ -160,13 +168,16 @@ write_images_to_card()
     // 0001 0001
     poke(0x1A09, 0x11);
 
+    j = (IMAGES_TOTAL_SECTOR >> 1);
     for (i = 0; i < IMAGES_TOTAL_SECTOR; i++)
     {
         joyt = joy(0);
-        if (joyt & JOY_RUN) {
+        if (joyt & JOY_RUN & JOY_SLCT)
+        {
             give_up();
         }
         cd_loaddata(IMAGE_OVERLAY, i, buffer, 2048);
+
         #asm
             pha
 
@@ -177,14 +188,15 @@ write_images_to_card()
             pla 
         #endasm
 
-        if (i % 2){
-            j = (IMAGES_TOTAL_SECTOR - i) >> 1;
-            val[0] = ASCII_ZERO + ((j / 100) % 10);
+        if (i % 2)
+        {
+            j--;
+            val[0] = (j > 99 ? (ASCII_ZERO + 1) : ASCII_ZERO);
             val[1] = ASCII_ZERO + ((j / 10) % 10);
             val[2] = ASCII_ZERO + ((j) % 10);
-            write_char(15, 14, val[0]);
-            write_char(16, 14, val[1]);
-            write_char(17, 14, val[2]);
+            write_single_char(15, 14, val[0]);
+            write_single_char(16, 14, val[1]);
+            write_single_char(17, 14, val[2]);
         }
     }
 }
