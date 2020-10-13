@@ -19,6 +19,9 @@
 #incbin(neptbg1pal, "palettes/neptbg1.pal")
 #incbin(neptbg2pal, "palettes/neptbg2.pal")
 
+#incbin(supernep, "bats/supernep-1.bin");
+#incbin(supernep2, "bats/supernep-2.bin")
+
 #define SGX_VRAM 0x1000
 #define SGX_PAL 4
 
@@ -96,12 +99,12 @@ initialize()
         }
         if (current_level == DK_LEVEL)
         {
-            populate_sgx_vram_bg2();
+            sgx_load_vram(0, supernep2, 2048);
         }
         else
         {
             scroll_bg = 1;
-            populate_sgx_vram_bg1();
+            sgx_load_vram(0, supernep, 4096);
         }
     }
     else
@@ -140,51 +143,6 @@ initialize()
     {
         sgx_init(current_level == DK_LEVEL ? SCR_SIZE_32x32 : SCR_SIZE_64x32);
         scroll_sgx(0, 0);
-    }
-}
-
-#define FRAME_START ((SGX_VRAM) >> 4)
-#define SGX_ROWS 32
-#define SGX_WIDTH 32
-populate_sgx_vram_bg1()
-{
-    char i, j;
-    int vaddr, k;
-    k = FRAME_START;
-    for (i = 0; i < SGX_ROWS; i++)
-    {
-        unsigned int data[SGX_WIDTH * 2];
-        for (j = 0; j < SGX_WIDTH; j++)
-        {
-            //palette 4
-            data[j] = 0x4000 + k;
-            k++;
-        }
-        for (j = 0; j < SGX_WIDTH; j++)
-        {
-            //palette 4
-            data[j + SGX_WIDTH] = 0x4000 + FRAME_START;
-        }
-
-        sgx_load_vram((i) * (SGX_WIDTH << 1), data, SGX_WIDTH << 2);
-    }
-}
-populate_sgx_vram_bg2()
-{
-    char i, j;
-    int vaddr, k;
-    k = FRAME_START;
-    for (i = 0; i < SGX_ROWS; i++)
-    {
-        unsigned int data[SGX_WIDTH];
-        for (j = 0; j < SGX_WIDTH; j++)
-        {
-            //palette 4
-            data[j] = 0x4000 + k;
-            k++;
-        }
-
-        sgx_load_vram((i) * (SGX_WIDTH), data, SGX_WIDTH << 1);
     }
 }
 
@@ -445,7 +403,8 @@ ava_update(signed char delx, signed char dely)
     char new_x, new_y, old_state;
     int drawx, drawy;
 
-    if (delx || dely) {
+    if (delx || dely)
+    {
         steps++;
     }
 
@@ -629,7 +588,8 @@ win_ava()
     }
     satb_update();
     // Return to governor
-    if (is_sgx()) {
+    if (is_sgx())
+    {
         sgx_disable();
     }
     cd_execoverlay(GOVERNOR_OVERLAY);
