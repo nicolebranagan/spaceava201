@@ -177,14 +177,15 @@ write_images_to_card()
             pla 
         #endasm
 
-        j = IMAGES_TOTAL_SECTOR - i;
-
-        val[0] = ASCII_ZERO + ((j / 100) % 10);
-        val[1] = ASCII_ZERO + ((j / 10) % 10);
-        val[2] = ASCII_ZERO + ((j) % 10);
-        write_char(15, 14, val[0]);
-        write_char(16, 14, val[1]);
-        write_char(17, 14, val[2]);
+        if (i % 2){
+            j = (IMAGES_TOTAL_SECTOR - i) >> 1;
+            val[0] = ASCII_ZERO + ((j / 100) % 10);
+            val[1] = ASCII_ZERO + ((j / 10) % 10);
+            val[2] = ASCII_ZERO + ((j) % 10);
+            write_char(15, 14, val[0]);
+            write_char(16, 14, val[1]);
+            write_char(17, 14, val[2]);
+        }
     }
 }
 

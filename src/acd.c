@@ -6,8 +6,6 @@ char tia_instruction[8];
 #ifndef ARCADE_CARD_C
 #define ARCADE_CARD_C 1
 
-char dummy0;
-
 char is_acd()
 {
     // Technically, we could detect an Arcade Card Duo in a Turbo Duo
@@ -27,7 +25,6 @@ char load_from_acd(
     char i;
     int bigSteps;
     int remainder;
-    char val;
     true_vaddr = vaddr;
 
     poke(0x1A02, 00);
