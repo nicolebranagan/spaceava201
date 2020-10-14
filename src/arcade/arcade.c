@@ -172,7 +172,7 @@ write_images_to_card()
     for (i = 0; i < IMAGES_TOTAL_SECTOR; i++)
     {
         joyt = joy(0);
-        if (joyt & JOY_RUN & JOY_SLCT)
+        if (joyt & JOY_RUN)
         {
             give_up();
         }
