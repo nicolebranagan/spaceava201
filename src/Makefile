@@ -107,7 +107,7 @@ finaldata: finaldata/finaldata.bin
 	cp finaldata/finaldata.bin ../build/finaldata.bin
 
 images: sprites tiles 8x8fonts 8x16fonts faces
-	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr
+	python3 ../tools/overlay/overlay.py ../build/images.bin ./images/images.h ./images/*.chr --exclude "./images/introtxt.chr" "./images/shutcalc.chr"
 
 sprites: ../images/sprites/*.terra
 	FILES=../images/sprites/*.terra;\

@@ -191,10 +191,9 @@ write_images_to_card()
         if (i % 2)
         {
             j--;
-            val[0] = (j > 99 ? (ASCII_ZERO + 1) : ASCII_ZERO);
             val[1] = ASCII_ZERO + ((j / 10) % 10);
             val[2] = ASCII_ZERO + ((j) % 10);
-            write_single_char(15, 14, val[0]);
+            write_single_char(15, 14, ASCII_ZERO);
             write_single_char(16, 14, val[1]);
             write_single_char(17, 14, val[2]);
         }

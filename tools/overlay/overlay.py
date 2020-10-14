@@ -41,6 +41,12 @@ headerfile = sys.argv[2]
 
 binaryfiles = sys.argv[3:]
 
+exclusions = []
+if ("--exclude" in binaryfiles):
+    index = binaryfiles.index("--exclude")
+    exclusions = binaryfiles[(index+1):]
+    binaryfiles = [filename for filename in binaryfiles[:index] if filename not in exclusions]
+
 parsed_files = [get_sector_aligned_data(filename) for filename in binaryfiles]
 fulldata = b''
 

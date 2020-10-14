@@ -33,6 +33,11 @@
 
 #define SPR_SIZE_16x16 0x40
 
+// These were originally generated in images.h, but had to be moved here
+// in order to shrink IMAGE_OVERLAY and speed up arcade card loading
+#define INTROTXT_SIZE 28672
+#define SHUTCALC_SIZE 22528 
+
 #define AMALGHQ_VRAM 0x1000
 #define FONT_VRAM (AMALGHQ_VRAM + (INTROTXT_SIZE / 2))
 #define ADMIRAL_VRAM (FONT_VRAM + (TITLEFNT_SIZE / 2))
