@@ -239,7 +239,6 @@ void wait_for_sync(char cycles)
     for (i = 0; i < cycles; i++)
     {
         pal = PAL_CYCLE[pal_cycle];
-        load_palette(0, neptunepal + (pal << 5), 1);
         timer++;
         if (!(timer % 16))
         {
@@ -252,6 +251,7 @@ void wait_for_sync(char cycles)
         draw_objects();
         satb_update();
         vsync();
+        load_palette(0, neptunepal + (pal << 5), 1);
         if (scroll_bg)
         {
             scroll_sgx(sx >> 2, 0);
