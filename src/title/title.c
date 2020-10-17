@@ -42,6 +42,7 @@ char codePoint;
 char storyCodePoint;
 int longTimer;
 int scr_y;
+char darkpal;
 
 char buffer[2048];
 
@@ -62,6 +63,7 @@ initialize()
     unlockedStoryMode = 0;
     codePoint = 0;
     storyCodePoint = 0;
+    darkpal = 0;
 
     if (!bm_check() || !bm_exist(BACKUP_RAM_NAME))
     {
@@ -112,16 +114,22 @@ initialize()
     set_screen_size(SCR_SIZE_32x32);
     scroll(0, 0, 0, 0, 223, 0xC0);
     disp_on();
+    set_color(0, 0x02);
     if (is_sgx())
     {
         load_palette(SGX_PAL, superpal, 1);
         sgx_init(SCR_SIZE_32x32);
         scroll_sgx(0, scr_y);
-        set_color(0, 0x02);
-    }
-    else
-    {
-        set_color(0, 0x01);
+        if (arcade_card_initialized == ACD_INITIALIZED)
+        {
+            load_palette(1, titlepal + (1 << 5), 1);
+            load_palette(SGX_PAL, superpal + (1 << 5), 1);
+            load_palette(17, buttonspal + (4 << 5), 1);
+            load_palette(18, buttonspal + (4 << 5), 1);
+
+            set_color(0, 0x8);
+            darkpal = 1;
+        }
     }
 }
 
@@ -348,7 +356,7 @@ main()
         {
             timer++;
             load_palette(16, logopal + (((timer >> 4) % 4) << 5), 1);
-            load_palette(18, buttonspal + (((timer >> 4) % 4) << 5), 1);
+            load_palette(18, buttonspal + (((timer >> 4) % 4) << 5) + (darkpal ? (4 << 5) : 0), 1);
 
             draw_button(8, selectedButton == 0 ? BUTTON_NEW_ON : BUTTON_NEW_OFF, BUTTON_1_X, BUTTON_Y);
             draw_button(16, hasNoSavedData ? BUTTON_CON_DIS : (selectedButton == 1 ? BUTTON_CON_ON : BUTTON_CON_OFF), BUTTON_2_X, BUTTON_Y);

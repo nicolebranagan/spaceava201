@@ -6,6 +6,7 @@
 #include "adpcm/adpcm.h"
 #include "cd.h"
 #include "acd.c"
+#include "sgx.c"
 
 #incspr(chr, "logo/images/train.png");
 #incpal(trainpal, "logo/images/train.png");
@@ -20,6 +21,11 @@ main()
 	char logox = 0;
 	char timer = 0;
 	int i;
+
+	if (is_sgx())
+	{
+		sgx_disable();
+	}
 
 	if (is_acd())
 	{
