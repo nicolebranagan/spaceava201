@@ -205,12 +205,12 @@ main()
     vsync(255);
     initialize2();
 
-    cd_playtrk(TRACK_CAROUSEL, TRACK_CAROUSEL + 1, CDPLAY_NORMAL);
-    draw_person(0, 3, 6);
-    draw_person(1, 9, 8);
+    cd_playtrk(TRACK_CAROUSEL, TRACK_CAROUSEL + 1, CDPLAY_REPEAT);
+    draw_person(0, 0, 6);
+    draw_person(1, 3, 8);
     draw_person(2, 17, 3);
     draw_person(3, 16, 11);
-    write_text("LILY: Ava! Don't tell me \nyou forgot to use the \nSuper System Card!\nAVA: What?!");
+    write_text("SPACE JACK McCOY: Ava, if\nyou don't get me the\nSuper System Card, I'll\nput your whole family\nin jail!");
 
     for (;;)
     {
