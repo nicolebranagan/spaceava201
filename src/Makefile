@@ -53,7 +53,7 @@ spaceava201: spaceava.iso
 
 spaceava.iso: logo.ovl classic.ovl governor.ovl adpcm classicdata images story.ovl storydata mirror.ovl mirrordata title.ovl intro.ovl neptune.ovl final.ovl finaldata postcredits.ovl arcade.ovl cderr.ovl
 	mv */*.s */*.ovl */*.sym ../build
-	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin ../build/postcredits.ovl ../build/arcade.ovl -cderr ../build/cderr.ovl
+	$(ISOLINK) ../build/spaceava.iso ../build/logo.ovl -cderr ../build/cderr.ovl ../build/adpcm.bin ../build/classic.ovl ../build/classicdata.bin ../build/images.bin ../build/governor.ovl ../build/story.ovl ../build/storydata.bin ../build/mirror.ovl ../build/mirrordata.bin ../build/title.ovl ../build/intro.ovl ../build/neptune.ovl ../build/final.ovl ../build/finaldata.bin ../build/postcredits.ovl ../build/arcade.ovl
 
 cderr.ovl: $(CDERR_SRC) images
 	$(CC) $(CFLAGS) $(CDERRFLAG) $(CDERR_SRC) $(LIBS)
