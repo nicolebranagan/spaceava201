@@ -181,7 +181,8 @@ main()
     initialize();
     //vsync();
     cls();
-
+    
+    vsync(INTERLINE_DELAY);
     write_smltext(3, "In the space criminal justice system");
     vsync(INTERLINE_DELAY);
     write_smltext(5, "the space people are represented by two");
@@ -198,7 +199,7 @@ main()
     write_smltext(16, "attorneys who prosecute");
     vsync(INTERLINE_DELAY);
     write_smltext(18, "the space offenders.");
-    vsync(INTERLINE_DELAY);
+    vsync(2 * INTERLINE_DELAY);
 
     write_smltext(21, "These are their space stories.");
     vsync(255);
