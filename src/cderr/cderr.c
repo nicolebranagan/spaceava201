@@ -1,5 +1,10 @@
 /*
 	CD Error. For when you absolutely, positively, use the wrong system card
+
+    NOTE: For this to work properly, you need to make sure that init_vdc
+    and init_psg are moved out of LIB2_BANK in your library.asm in HuC.
+
+    So sorry!
 */
 
 #include <huc.h>
