@@ -993,6 +993,24 @@ done()
     cd_execoverlay(GOVERNOR_OVERLAY);
 }
 
+waste_time()
+{
+    // Make flickery lines when being old-timey
+    int i, j;
+
+    for (i = 0; i < 257; i++)
+    {
+        2 + i;
+    }
+
+    j = rand() & 0x0FFF;
+    for (i = 0; i < j; i++)
+    {
+        2 + i;
+    }
+    load_palette(7, ava_facepal, 1);
+}
+
 main()
 {
     char joyt;
@@ -1003,14 +1021,9 @@ main()
     vsync();
     for (;;)
     {
-        if (in_credits) {
-            // Make flickery lines when being old-timey
-            int i;
-
-            for (i = 0; i < 257; i++) {
-                2 + i;
-            }
-            load_palette(7, ava_facepal, 1);
+        if (in_credits)
+        {
+            waste_time();
         }
         vsync();
         timer++;
@@ -1039,13 +1052,20 @@ main()
         }
         else
         {
+            char j;
             if (!has_next_command)
             {
                 in_credits = 0;
                 continue;
             }
-            vsync(200);
-            vsync(100);
+            j = (rand() & 0x003F);
+            vsync(100 - j);
+            waste_time();
+            vsync(100 + j);
+            waste_time();
+            vsync(50 + j);
+            waste_time();
+            vsync(50 - j);
             perform_command();
         }
     }
