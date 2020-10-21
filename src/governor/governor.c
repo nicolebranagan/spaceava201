@@ -400,8 +400,62 @@ loop:
     cd_execoverlay(STEP_ORDER[governor_step << 1]);
 }
 
+convert_to_text(char *text, int value)
+{
+    char digit_count;
+    char digits[5];
+
+    digits[0] = ASCII_ZERO + (value / 10000);
+    digits[1] = ASCII_ZERO + ((value / 1000) % 10);
+    digits[2] = ASCII_ZERO + ((value / 100) % 10);
+    digits[3] = ASCII_ZERO + ((value / 10) % 10);
+    digits[4] = ASCII_ZERO + ((value) % 10);
+
+    if (digits[3] == ASCII_ZERO && digits[2] == ASCII_ZERO && digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
+    {
+        text[0] = digits[4];
+        text[1] = 0;
+        return;
+    }
+
+    if (digits[2] == ASCII_ZERO && digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
+    {
+        text[0] = digits[3];
+        text[1] = digits[4];
+        text[2] = 0;
+        return;
+    }
+
+    if (digits[1] == ASCII_ZERO && digits[0] == ASCII_ZERO)
+    {
+        text[0] = digits[2];
+        text[1] = digits[3];
+        text[2] = digits[4];
+        text[3] = 0;
+        return;
+    }
+
+    if (digits[0] == ASCII_ZERO)
+    {
+        text[0] = digits[1];
+        text[1] = digits[2];
+        text[2] = digits[3];
+        text[3] = digits[4];
+        text[4] = 0;
+        return;
+    }
+
+    text[0] = digits[0];
+    text[1] = digits[1];
+    text[2] = digits[2];
+    text[3] = digits[3];
+    text[4] = digits[4];
+    text[5] = 0;
+}
+
 main()
 {
+    char *stepstxt, *deathstxt;
     initialize();
     vsync();
     if (governor_step == LEVEL_SELECT)
@@ -435,12 +489,24 @@ main()
         }
         else if (has_backup_ram)
         {
-            write_text(11, "Saving...");
-            save_data();
-        }
-        else
-        {
-            write_text(11, "Loading...");
+            stepstxt = "Steps:       ";
+            deathstxt = "Deaths:       ";
+            convert_to_text(stepstxt + 7, steps);
+            convert_to_text(deathstxt + 8, deaths);
+            if (has_backup_ram)
+            {
+                write_text(11, "Saving...");
+                save_data();
+            }
+            else
+            {
+                write_text(11, "Loading...");
+            }
+            if (steps > 0)
+            {
+                write_text(17, stepstxt);
+                write_text(19, deathstxt);
+            }
         }
     }
     continue_cycle();
